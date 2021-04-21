@@ -94,6 +94,7 @@ class _AuthSecondScreenState extends State<AuthSecondScreen> {
       containerWidth: MediaQuery.of(context).size.width*0.35,
       containerHeight: MediaQuery.of(context).size.height*0.060,
       buttonColor: AppColors.BUTTON_COLOR,
+      borderColor: AppColors.BUTTON_COLOR,
       elevation: 7.0,
       buttonText: AppStrings.LOGIN_TEXT,
       textColor: AppColors.WHITE_COLOR,

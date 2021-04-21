@@ -13,34 +13,36 @@ class AuthFirstScreen extends StatefulWidget {
 class _AuthFirstScreenState extends State<AuthFirstScreen> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-       Padding(
-         padding: EdgeInsets.only(top:MediaQuery.of(context).size.height*0.13),
-         child: Text(AppStrings.WELCOME_TO_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600,letterSpacing: 1.5),textScaleFactor: 1.6,),
-       ),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+         Padding(
+           padding: EdgeInsets.only(top:MediaQuery.of(context).size.height*0.13),
+           child: Text(AppStrings.WELCOME_TO_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600,letterSpacing: 1.5),textScaleFactor: 1.6,),
+         ),
 
-       _prayerImageWidget(),
+         _prayerImageWidget(),
 
-        Container(
-          width: MediaQuery.of(context).size.width*0.75,
-          margin: EdgeInsets.only(top: 10.0),
-          child: Text(AppStrings.GET_STARTED_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600,letterSpacing: 1.0),textScaleFactor: 1.1,textAlign: TextAlign.center,),
-        ),
-
-        Container(
-          width: MediaQuery.of(context).size.width*0.75,
-          margin: EdgeInsets.only(top: 35.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _loginButtonWidget(),
-              _signUpButtonWidget(),
-            ],
+          Container(
+            width: MediaQuery.of(context).size.width*0.75,
+            margin: EdgeInsets.only(top: 10.0),
+            child: Text(AppStrings.GET_STARTED_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600,letterSpacing: 1.0),textScaleFactor: 1.1,textAlign: TextAlign.center,),
           ),
-        ),
 
-      ],
+          Container(
+            width: MediaQuery.of(context).size.width*0.75,
+            margin: EdgeInsets.only(top: 35.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _loginButtonWidget(),
+                _signUpButtonWidget(),
+              ],
+            ),
+          ),
+
+        ],
+      ),
     );
   }
 
@@ -65,6 +67,7 @@ class _AuthFirstScreenState extends State<AuthFirstScreen> {
       containerWidth: MediaQuery.of(context).size.width*0.35,
       containerHeight: MediaQuery.of(context).size.height*0.061,
       buttonColor: AppColors.BUTTON_COLOR,
+      borderColor: AppColors.BUTTON_COLOR,
       elevation: 7.0,
       buttonText: AppStrings.LOGIN_TEXT,
       textColor: AppColors.WHITE_COLOR,
