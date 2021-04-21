@@ -40,6 +40,9 @@ class _AuthFirstScreenState extends State<AuthFirstScreen> {
               ],
             ),
           ),
+          SizedBox(
+            height: 5.0,
+          )
 
         ],
       ),

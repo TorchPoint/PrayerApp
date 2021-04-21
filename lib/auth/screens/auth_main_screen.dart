@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/auth/screens/auth_first_screen.dart';
+import 'package:prayer_hybrid_app/auth/screens/auth_login_screen.dart';
 import 'package:prayer_hybrid_app/auth/screens/auth_second_screen.dart';
 import 'package:prayer_hybrid_app/auth/screens/auth_sign_up_screen.dart';
 import 'package:prayer_hybrid_app/auth/screens/auth_third_screen.dart';
@@ -15,7 +16,7 @@ class AuthMainScreen extends StatefulWidget {
 
 class _AuthMainScreenState extends State<AuthMainScreen> {
   PageController _authPageController = PageController();
-  List<Widget> authWidgetList = [AuthFirstScreen(),AuthSecondScreen(),AuthThirdScreen(),AuthSignUpScreen(),AuthFirstScreen()];
+  List<Widget> authWidgetList = [AuthFirstScreen(),AuthSecondScreen(),AuthThirdScreen(),AuthSignUpScreen(),AuthLoginScreen()];
   @override
   Widget build(BuildContext context) {
     return CustomBackgroundContainer(
