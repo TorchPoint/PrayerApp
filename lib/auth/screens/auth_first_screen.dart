@@ -6,6 +6,9 @@ import 'package:prayer_hybrid_app/widgets/custom_raised_button.dart';
 
 
 class AuthFirstScreen extends StatefulWidget {
+  PageController pageController;
+  AuthFirstScreen({this.pageController});
+
   @override
   _AuthFirstScreenState createState() => _AuthFirstScreenState();
 }
@@ -78,6 +81,7 @@ class _AuthFirstScreenState extends State<AuthFirstScreen> {
       fontSize: 1.25,
       onPressed: (){
       print("login");
+      widget.pageController.jumpToPage(4);
       },
     );
   }
@@ -96,6 +100,7 @@ class _AuthFirstScreenState extends State<AuthFirstScreen> {
       fontSize: 1.25,
       onPressed: (){
         print("SignUp");
+        widget.pageController.jumpToPage(3);
       },
     );
   }

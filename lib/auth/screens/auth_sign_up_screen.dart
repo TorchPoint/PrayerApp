@@ -1,14 +1,19 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'package:prayer_hybrid_app/utils/constants.dart';
 import 'package:prayer_hybrid_app/widgets/custom_raised_button.dart';
-import 'package:prayer_hybrid_app/widgets/custom_social_container.dart';
+import 'package:prayer_hybrid_app/widgets/custom_social_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 class AuthSignUpScreen extends StatefulWidget {
+  PageController pageController;
+
+  AuthSignUpScreen({this.pageController});
+
   @override
   _AuthSignUpScreenState createState() => _AuthSignUpScreenState();
 }
@@ -94,7 +99,7 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
   {
     return CustomTextFormField(
       textController: _firstNameController,
-      containerWidth: 0.8,
+      containerWidth: MediaQuery.of(context).size.width*0.85,
       hintText: AppStrings.FIRST_NAME_HINT_TEXT,
       borderRadius: 30.0,
       contentPaddingLeft: 0.0,
@@ -116,7 +121,7 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
   {
     return CustomTextFormField(
       textController: _lastNameController,
-      containerWidth: 0.8,
+      containerWidth: MediaQuery.of(context).size.width*0.85,
       hintText: AppStrings.LAST_NAME_HINT_TEXT,
       borderRadius: 30.0,
       contentPaddingLeft: 0.0,
@@ -138,7 +143,7 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
   {
     return CustomTextFormField(
       textController: _emailController,
-      containerWidth: 0.8,
+      containerWidth: MediaQuery.of(context).size.width*0.85,
       hintText: AppStrings.EMAIL_HINT_TEXT,
       borderRadius: 30.0,
       contentPaddingLeft: 0.0,
@@ -165,7 +170,7 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
   {
     return CustomTextFormField(
       textController: _passwordController,
-      containerWidth: 0.8,
+      containerWidth: MediaQuery.of(context).size.width*0.85,
       hintText: AppStrings.PASSWORD_HINT_TEXT,
       borderRadius: 30.0,
       contentPaddingLeft: 0.0,
@@ -193,7 +198,7 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
   Widget _signUpButtonWidget()
   {
     return CustomRaisedButton(
-      containerWidth: MediaQuery.of(context).size.width*0.8,
+      containerWidth: MediaQuery.of(context).size.width*0.85,
       containerHeight: MediaQuery.of(context).size.height*0.072,
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
@@ -205,7 +210,7 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
       onPressed: (){
         if(_signUpKey.currentState.validate())
           {
-
+             print("sign up");
           }
       },
     );
@@ -218,15 +223,24 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
 //Already have account Widget
 Widget _alreadyAccountRichTextWidget()
  {
-   return RichText(
-       text: TextSpan(
-       text: AppStrings.ALREADY_HAVE_ACCOUNT_TEXT,
-       style: TextStyle(color: AppColors.WHITE_COLOR,fontSize: 15.0,letterSpacing: 1.0),
-   children: <TextSpan>[
-   TextSpan(text: AppStrings.SIGN_IN_DASH_TEXT, style: TextStyle(fontWeight: FontWeight.w600,letterSpacing: 1.0,decoration: TextDecoration.underline,decorationColor: AppColors.WHITE_COLOR, decorationThickness: 2.0,)),
+   return Container(
+     width: MediaQuery.of(context).size.width*0.85,
+     child: RichText(
+       textAlign: TextAlign.center,
+         text: TextSpan(
+         text: AppStrings.ALREADY_HAVE_ACCOUNT_TEXT,
+         style: TextStyle(color: AppColors.WHITE_COLOR,fontSize: 15.0,letterSpacing: 1.0),
+     children: <TextSpan>[
+     TextSpan(
+         text: AppStrings.SIGN_IN_DASH_TEXT, style: TextStyle(fontWeight: FontWeight.w600,letterSpacing: 1.0,decoration: TextDecoration.underline,decorationColor: AppColors.WHITE_COLOR, decorationThickness: 2.0,),
+         recognizer: TapGestureRecognizer()..onTap = () {
+           widget.pageController.jumpToPage(4);
+         }
+     ),
 
  ],
-   )
+     )
+     ),
    );
 
  }

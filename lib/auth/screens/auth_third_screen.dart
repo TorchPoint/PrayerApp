@@ -5,6 +5,9 @@ import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'package:prayer_hybrid_app/widgets/custom_raised_button.dart';
 
 class AuthThirdScreen extends StatefulWidget {
+  PageController pageController;
+  AuthThirdScreen({this.pageController});
+
   @override
   _AuthThirdScreenState createState() => _AuthThirdScreenState();
 }
@@ -102,6 +105,7 @@ class _AuthThirdScreenState extends State<AuthThirdScreen> {
       fontSize: 1.25,
       onPressed: (){
         print("login");
+        widget.pageController.jumpToPage(4);
       },
     );
   }
@@ -120,6 +124,7 @@ class _AuthThirdScreenState extends State<AuthThirdScreen> {
       fontSize: 1.25,
       onPressed: (){
         print("SignUp");
+        widget.pageController.jumpToPage(3);
       },
     );
   }

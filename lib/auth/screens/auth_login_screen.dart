@@ -1,13 +1,18 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'package:prayer_hybrid_app/utils/constants.dart';
 import 'package:prayer_hybrid_app/widgets/custom_raised_button.dart';
-import 'package:prayer_hybrid_app/widgets/custom_social_container.dart';
+import 'package:prayer_hybrid_app/widgets/custom_social_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
 
 class AuthLoginScreen extends StatefulWidget {
+  PageController pageController;
+
+  AuthLoginScreen({this.pageController});
+
   @override
   _AuthLoginScreenState createState() => _AuthLoginScreenState();
 }
@@ -101,7 +106,7 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
   {
     return CustomTextFormField(
       textController: _emailController,
-      containerWidth: 0.8,
+      containerWidth: MediaQuery.of(context).size.width*0.85,
       hintText: AppStrings.EMAIL_HINT_TEXT,
       borderRadius: 30.0,
       contentPaddingLeft: 0.0,
@@ -128,7 +133,7 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
   {
     return CustomTextFormField(
       textController: _passwordController,
-      containerWidth: 0.8,
+      containerWidth: MediaQuery.of(context).size.width*0.85,
       hintText: AppStrings.PASSWORD_HINT_TEXT,
       borderRadius: 30.0,
       contentPaddingLeft: 0.0,
@@ -156,7 +161,7 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
   Widget _loginButtonWidget()
   {
     return CustomRaisedButton(
-      containerWidth: MediaQuery.of(context).size.width*0.8,
+      containerWidth: MediaQuery.of(context).size.width*0.85,
       containerHeight: MediaQuery.of(context).size.height*0.072,
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
@@ -182,7 +187,7 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
       },
       child: Container(
         width: MediaQuery.of(context).size.width*0.85,
-        margin: EdgeInsets.only(right: MediaQuery.of(context).size.width*0.05),
+        margin: EdgeInsets.only(right: MediaQuery.of(context).size.width*0.02),
         child: Text(AppStrings.FORGET_PASSWORD_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600,letterSpacing: 0.5,decoration: TextDecoration.underline,decorationColor: AppColors.WHITE_COLOR, decorationThickness: 1.0,),textScaleFactor: 1.05,textAlign: TextAlign.right,),
       ),
     );
@@ -191,15 +196,24 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
   //Don't have account Widget
   Widget _dontHaveAccountRichTextWidget()
   {
-    return RichText(
-        text: TextSpan(
-          text: AppStrings.DONT_HAVE_ACCOUNT_TEXT,
-          style: TextStyle(color: AppColors.WHITE_COLOR,fontSize: 15.0,letterSpacing: 1.0),
-          children: <TextSpan>[
-            TextSpan(text: AppStrings.SIGN_UP_TEXT, style: TextStyle(fontWeight: FontWeight.w600,letterSpacing: 1.0,decoration: TextDecoration.underline,decorationColor: AppColors.WHITE_COLOR, decorationThickness: 2.0,)),
+    return Container(
+      width: MediaQuery.of(context).size.width*0.85,
+      child: RichText(
+        textAlign: TextAlign.center,
+          text: TextSpan(
+            text: AppStrings.DONT_HAVE_ACCOUNT_TEXT,
+            style: TextStyle(color: AppColors.WHITE_COLOR,fontSize: 15.0,letterSpacing: 1.0),
+            children: <TextSpan>[
+              TextSpan(
+                  text: AppStrings.SIGN_UP_TEXT, style: TextStyle(fontWeight: FontWeight.w600,letterSpacing: 1.0,decoration: TextDecoration.underline,decorationColor: AppColors.WHITE_COLOR, decorationThickness: 2.0,),
+                  recognizer: TapGestureRecognizer()..onTap = () {
+                    widget.pageController.jumpToPage(3);
+                  }
+              ),
 
-          ],
-        )
+            ],
+          )
+      ),
     );
 
   }
@@ -207,8 +221,8 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
   //Sign in With Apple
   Widget _signInAppleButtonWidget()
   {
-    return CustomSocialContainer(
-      containerWidth: MediaQuery.of(context).size.width*0.8,
+    return CustomSocialButton(
+      containerWidth: MediaQuery.of(context).size.width*0.85,
       containerHeight: MediaQuery.of(context).size.height*0.072,
       buttonColor: AppColors.WHITE_COLOR,
       labelText: AppStrings.SIGN_IN_APPLE_TEXT,
@@ -225,8 +239,8 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
   //Sign in With Facebook
   Widget _signInFacebookButtonWidget()
   {
-    return CustomSocialContainer(
-      containerWidth: MediaQuery.of(context).size.width*0.8,
+    return CustomSocialButton(
+      containerWidth: MediaQuery.of(context).size.width*0.85,
       containerHeight: MediaQuery.of(context).size.height*0.072,
       buttonColor: AppColors.FACEBOOK_BUTTON_COLOR,
       labelText: AppStrings.SIGN_IN_FACEBOOK_TEXT,
@@ -245,8 +259,8 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
   //Sign in With Google
   Widget _signInGoogleButtonWidget()
   {
-    return CustomSocialContainer(
-      containerWidth: MediaQuery.of(context).size.width*0.8,
+    return CustomSocialButton(
+      containerWidth: MediaQuery.of(context).size.width*0.85,
       containerHeight: MediaQuery.of(context).size.height*0.072,
       buttonColor: AppColors.GOOGLE_BUTTON_COLOR,
       labelText: AppStrings.SIGN_IN_GOOGLE_TEXT,

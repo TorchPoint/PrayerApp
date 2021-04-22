@@ -5,6 +5,10 @@ import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'package:prayer_hybrid_app/widgets/custom_raised_button.dart';
 
 class AuthSecondScreen extends StatefulWidget {
+  PageController pageController;
+
+  AuthSecondScreen({this.pageController});
+
   @override
   _AuthSecondScreenState createState() => _AuthSecondScreenState();
 }
@@ -102,6 +106,7 @@ class _AuthSecondScreenState extends State<AuthSecondScreen> {
       fontSize: 1.25,
       onPressed: (){
         print("login");
+        widget.pageController.jumpToPage(4);
       },
     );
   }
@@ -120,6 +125,7 @@ class _AuthSecondScreenState extends State<AuthSecondScreen> {
       fontSize: 1.25,
       onPressed: (){
         print("SignUp");
+        widget.pageController.jumpToPage(3);
       },
     );
   }

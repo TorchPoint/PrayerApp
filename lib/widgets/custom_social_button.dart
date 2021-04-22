@@ -4,13 +4,13 @@ import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 
 
 
-class CustomSocialContainer extends StatelessWidget {
+class CustomSocialButton extends StatelessWidget {
   double containerWidth,containerHeight,iconWidth;
   Color buttonColor,labelTextColor,iconColor;
   Function onPressed;
   String labelText,iconPath;
 
-  CustomSocialContainer({this.containerWidth,this.containerHeight,this.buttonColor,this.labelText,this.labelTextColor,this.iconPath,this.iconWidth,this.iconColor,this.onPressed});
+  CustomSocialButton({this.containerWidth,this.containerHeight,this.buttonColor,this.labelText,this.labelTextColor,this.iconPath,this.iconWidth,this.iconColor,this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class CustomSocialContainer extends StatelessWidget {
         elevation: 0.0,
         highlightElevation: 0.0,
         onPressed: onPressed,
-        label: Text(labelText,style: TextStyle(color: labelTextColor,fontWeight: FontWeight.w700,letterSpacing: 1.0),textScaleFactor: 1.15),
+        label: Text(labelText,style: TextStyle(color: labelTextColor,fontWeight: FontWeight.w700,letterSpacing: 1.0),textScaleFactor: 1.08),
         icon: Image.asset(iconPath,width: iconWidth,color: iconColor,),
       ),
     );

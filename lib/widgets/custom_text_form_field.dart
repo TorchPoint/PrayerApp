@@ -17,7 +17,7 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width*containerWidth,
+      width: containerWidth,
       child: TextFormField(
         controller: textController,
         validator: onValidate,
@@ -33,14 +33,18 @@ class CustomTextFormField extends StatelessWidget {
           ),
           errorBorder:OutlineInputBorder(
               borderRadius: BorderRadius.circular(borderRadius),
-              borderSide: BorderSide(color: AppColors.ERROR_COLOR,width: 1.5)
+              borderSide: BorderSide(color: AppColors.ERROR_COLOR,width: 1.3)
           ),
 
           focusedErrorBorder:OutlineInputBorder(
               borderRadius: BorderRadius.circular(borderRadius),
-              borderSide: BorderSide(color: AppColors.ERROR_COLOR,width: 1.5)
+              borderSide: BorderSide(color: AppColors.ERROR_COLOR,width: 1.3)
           ),
 
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(borderRadius),
+                //borderSide: BorderSide(color: AppColors.WHITE_COLOR)
+            ),
 
           hintText: hintText,
           hintStyle: TextStyle(

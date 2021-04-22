@@ -16,7 +16,15 @@ class AuthMainScreen extends StatefulWidget {
 
 class _AuthMainScreenState extends State<AuthMainScreen> {
   PageController _authPageController = PageController();
-  List<Widget> authWidgetList = [AuthFirstScreen(),AuthSecondScreen(),AuthThirdScreen(),AuthSignUpScreen(),AuthLoginScreen()];
+  List<Widget> authWidgetList = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    authWidgetList = [AuthFirstScreen(pageController:_authPageController),AuthSecondScreen(pageController:_authPageController),AuthThirdScreen(pageController:_authPageController),AuthSignUpScreen(pageController:_authPageController),AuthLoginScreen(pageController:_authPageController)];
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomBackgroundContainer(
