@@ -173,7 +173,7 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
       onPressed: (){
         if(_loginKey.currentState.validate())
         {
-
+       print("Login");
         }
       },
     );
