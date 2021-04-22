@@ -14,7 +14,9 @@ class AppStrings
   static const String SIGN_IN_FACEBOOK_TEXT = "SIGN IN WITH FACEBOOK";
   static const String FORGET_PASSWORD_TEXT = "Forget Password?";
   static const String DONT_HAVE_ACCOUNT_TEXT = "Don\'t have an Account? ";
-
+  static const String HOME_TEXT = "Home";
+  static const String USER_NAME_TEXT = "Martin Nicholson";
+  static const String USER_EMAIL_TEXT = "martin@gmail.com";
 
 
   // ------------- Hint Text ---------------- //
