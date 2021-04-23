@@ -15,8 +15,20 @@ class AppStrings
   static const String FORGET_PASSWORD_TEXT = "Forget Password?";
   static const String DONT_HAVE_ACCOUNT_TEXT = "Don\'t have an Account? ";
   static const String HOME_TEXT = "Home";
-  static const String USER_NAME_TEXT = "Martin Nicholson";
-  static const String USER_EMAIL_TEXT = "martin@gmail.com";
+  static const String USER_NAME_TEXT = "John Smith";
+  static const String USER_PHONE_NO_TEXT = "+1585 6985 265";
+  static const String USER_EMAIL_TEXT = "john.smith@domain.com";
+  static const String MY_PRAYER_LIST_TEXT = "My Prayer List";
+  static const String MY_PRAISE_LIST_TEXT = "My Praise List";
+  static const String SHARED_PRAYERS_TEXT = "Shared Prayers";
+  static const String PRAYER_GROUPS_TEXT = "Prayer Groups";
+  static const String REPORT_TEXT = "Report";
+  static const String SETTINGS_TEXT = "Settings";
+  static const String NOTIFICATION_TEXT = "Notification";
+  static const String TIMER_TEXT = "Timer";
+  static const String SECURITY_TEXT = "Security";
+  static const String LOGOUT_TEXT = "Logout";
+
 
 
   // ------------- Hint Text ---------------- //

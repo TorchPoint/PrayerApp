@@ -19,7 +19,17 @@ class AssetPaths
   static const String APPLE_ICON = "assets/icons/apple_icon.png";
   static const String MENU_ICON = "assets/icons/menu_icon.png";
   static const String NOTIFICATION_ICON = "assets/icons/notification_icon.png";
-
+  static const String EDIT_MENU_ICON = "assets/icons/edit_menu_icon.png";
+  static const String PRAYER_LIST_MENU_ICON = "assets/icons/prayer_list_menu_icon.png";
+  static const String PRAISE_LIST_MENU_ICON = "assets/icons/praise_list_menu_icon.png";
+  static const String SHARED_PRAYERS_MENU_ICON = "assets/icons/shared_prayers_menu_icon.png";
+  static const String PRAYER_GROUPS_MENU_ICON = "assets/icons/prayer_groups_menu_icon.png";
+  static const String REPORT_MENU_ICON = "assets/icons/report_menu_icon.png";
+  static const String SETTINGS_MENU_ICON = "assets/icons/settings_menu_icon.png";
+  static const String NOTIFICATION_MENU_ICON = "assets/icons/notification_menu_icon.png";
+  static const String TIMER_MENU_ICON = "assets/icons/timer_menu_icon.png";
+  static const String SECURITY_MENU_ICON = "assets/icons/security_menu_icon.png";
+  static const String LOGOUT_MENU_ICON = "assets/icons/logout_menu_icon.png";
 
 
 }

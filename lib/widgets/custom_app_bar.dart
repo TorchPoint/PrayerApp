@@ -18,6 +18,7 @@ class CustomAppBar extends StatelessWidget {
         width: MediaQuery.of(context).size.width*0.9,
         height: MediaQuery.of(context).size.height*0.1,
         margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.05,right: MediaQuery.of(context).size.width*0.05),
+        padding: EdgeInsets.only(top: 4.0,bottom: 4.0),
         color: AppColors.TRANSPARENT_COLOR,
         child: Row(
           children: [

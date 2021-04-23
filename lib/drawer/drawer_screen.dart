@@ -2,17 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
+import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 
 
-class DrawerScreen extends StatefulWidget {
+class DrawerScreen extends StatefulWidget{
   @override
   _DrawerScreenState createState() => _DrawerScreenState();
 }
 
-class _DrawerScreenState extends State<DrawerScreen> {
+class _DrawerScreenState extends State<DrawerScreen> with SingleTickerProviderStateMixin {
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  bool settingsOn = false;
+  AnimationController _animationController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _animationController = AnimationController(vsync: this,duration: Duration(milliseconds: 200));
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomBackgroundContainer(
@@ -27,11 +38,11 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   color: AppColors.WHITE_COLOR,
                   child: Column(
                     children: [
-                      SizedBox(height: 20.0,),
                       //For Profile Container
                       Container(
                         color:AppColors.WHITE_COLOR,
-                        child: profileImage(),
+                        //height: MediaQuery.of(context).size.height*0.35,
+                        child: profileData(),
                       ),
                       //For Menu Container
                       Expanded(
@@ -40,7 +51,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                           decoration: BoxDecoration(
                             image: DecorationImage(image: AssetImage(AssetPaths.DRAWER_BACKGROUND_IMAGE),fit: BoxFit.fill),
                           ),
-                          //child: userMenuData(),
+                          child: userMenuData(),
                         ),
                       )
 
@@ -71,32 +82,72 @@ class _DrawerScreenState extends State<DrawerScreen> {
      },
      trailingIconPath: AssetPaths.NOTIFICATION_ICON,
      trailingTap: (){
-
+       print("Notification Icon");
      },
     );
   }
 
-
-  //Profile Data
-  Widget profileImage()
+ //It includes user image and and close drawer button
+  Widget profileData()
   {
     return Column(
       children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            GestureDetector(
+              onTap: (){
+                AppNavigation.navigatorPop(context);
+              },
+              child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 6.0,vertical: 7.0),
+                  decoration: BoxDecoration(
+                      color: AppColors.MENU_TEXT_COLOR,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(10.0),
+                      )
+                  ),
+                  child:Icon(Icons.close,color: AppColors.WHITE_COLOR,size: 25.0,)
+              ),
+            ),
+          ],
+        ),
+
         Container(
           width: 120.0,
           height: 120.0,
-          decoration: BoxDecoration(
-              color:AppColors.WHITE_COLOR,
-              shape: BoxShape.circle,
-              border: Border.all(color: AppColors.IMAGE_BACKGROUND_COLOR,width: 4.0)
-          ),
-          child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 1.2,vertical: 1.2),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(image: AssetImage(AssetPaths.PROFILE_IMAGE),
-              fit: BoxFit.fill),
-            ),
+          color: AppColors.WHITE_COLOR,
+          child: Stack(
+            children: [
+              Container(
+                width: 120.0,
+                height: 120.0,
+                decoration: BoxDecoration(
+                    color:AppColors.WHITE_COLOR,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: AppColors.MENU_TEXT_COLOR,width: 4.0)
+                ),
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 1.2,vertical: 1.2),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        image:AssetImage(AssetPaths.PROFILE_IMAGE),
+                        fit: BoxFit.fill),
+                  ),
+                ),
+              ),
+
+              Align(
+                alignment: Alignment.bottomRight,
+                child: GestureDetector(
+                    onTap: (){
+                      AppNavigation.navigatorPop(context);
+                    },
+                    child: Image.asset(AssetPaths.EDIT_MENU_ICON,width: 42.0,)
+                ),
+              )
+            ],
           ),
         ),
 
@@ -106,28 +157,29 @@ class _DrawerScreenState extends State<DrawerScreen> {
     );
   }
 
-  //Profile Sub Data
+  //It includes user name , user phone no, user email
   Widget profileSubData()
   {
     return GestureDetector(
       onTap: (){
-        //AppNavigation.navigatorPop(context);
-        //goToCompleteProfileScreen();
-        //AppNavigation.navigatorPop(context);
+        AppNavigation.navigatorPop(context);
       },
       child: Column(
         children: [
-          SizedBox(height: 7.0,),
+          SizedBox(height: 8.0,),
           Padding(
-            padding: EdgeInsets.only(left: 2.0,right: 2.0),
-              child: Text(AppStrings.USER_NAME_TEXT,style: TextStyle(color: AppColors.IMAGE_BACKGROUND_COLOR,fontWeight: FontWeight.w600),textScaleFactor: 1.4,textAlign: TextAlign.center,),
+              padding: EdgeInsets.only(left: 5.0,right: 5.0),
+              child: Text(AppStrings.USER_NAME_TEXT,style: TextStyle(color: AppColors.MENU_TEXT_COLOR,fontWeight: FontWeight.w800,letterSpacing: 0.5),textScaleFactor: 1.5,textAlign: TextAlign.center,)
           ),
-
           SizedBox(height: 6.0,),
-
           Padding(
-            padding: EdgeInsets.only(left: 2.0,right: 2.0),
-              child: Text(AppStrings.USER_EMAIL_TEXT,style: TextStyle(color: AppColors.IMAGE_BACKGROUND_COLOR,letterSpacing: 1.0,fontWeight: FontWeight.w500),textScaleFactor: 1.1,textAlign: TextAlign.center,)
+              padding: EdgeInsets.only(left: 5.0,right: 5.0),
+              child: Text(AppStrings.USER_PHONE_NO_TEXT,style: TextStyle(color: AppColors.BLACK_COLOR,fontWeight: FontWeight.w700),textScaleFactor: 1.1,textAlign: TextAlign.center,)
+          ),
+          SizedBox(height: 5.0,),
+          Padding(
+              padding: EdgeInsets.only(left: 5.0,right: 5.0),
+              child: Text(AppStrings.USER_EMAIL_TEXT,style: TextStyle(color: AppColors.BLACK_COLOR,fontWeight: FontWeight.w700),textScaleFactor: 1.1,textAlign: TextAlign.center,)
           ),
           SizedBox(height: 6.0,),
         ],
@@ -135,48 +187,172 @@ class _DrawerScreenState extends State<DrawerScreen> {
     );
   }
 
-  // Widget menuData()
-  // {
-  //   return Column(
-  //     children: [
-  //       SizedBox(height: MediaQuery.of(context).size.height*0.15,),
-  //       Expanded(
-  //         child: ListView(
-  //           children: [
-  //             //For home
-  //             menuListTile(imagePath: AssetPaths.HOME_MENU_ICON,title: AppStrings.HOME_TEXT,index:1),
-  //
-  //
-  //             //For Schedule
-  //             menuListTile(imagePath: AssetPaths.SCHEDULE_MENU_ICON,title: AppStrings.SCHEDULE_TEXT,index:2),
-  //
-  //
-  //             //For Payment Cards
-  //             menuListTile(imagePath: AssetPaths.PAYMENT_MENU_ICON,title: AppStrings.PAYMENT_MENU_TEXT,index:3),
-  //
-  //
-  //             //For Terms And Conditions
-  //             menuListTile(imagePath: AssetPaths.TC_MENU_ICON,title: AppStrings.TERMS_CONDITIONS_TEXT,index:4),
-  //
-  //             //For Privacy Policy
-  //             menuListTile(imagePath: AssetPaths.PRIVACY_POLICY_MENU_ICON,title: AppStrings.PRIVACY_POLICY_TEXT,index:5),
-  //
-  //             //For History
-  //             menuListTile(imagePath: AssetPaths.HISTORY_MENU_ICON,title: AppStrings.HISTORY_TEXT,index:6,iconColor: AppColors.DARK_YELLOW_COLOR),
-  //
-  //
-  //             //For Help And Feedback
-  //             menuListTile(imagePath: AssetPaths.HELP_FEEDBACK_MENU_ICON,title: AppStrings.HELP_FEEDBACK_TEXT,index:7,iconColor: AppColors.DARK_YELLOW_COLOR),
-  //
-  //             //For Logout
-  //             menuListTile(imagePath: AssetPaths.LOGOUT_MENU_ICON,title: AppStrings.LOGOUT_TEXT,index:8),
-  //           ],
-  //         ),
-  //       )
-  //     ],
-  //   );
-  // }
+  Widget userMenuData()
+  {
+    return Column(
+      children: [
+        SizedBox(height: MediaQuery.of(context).size.height*0.15,),
+        Expanded(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+
+              //For My Prayer List
+              menuListTile(imagePath: AssetPaths.PRAYER_LIST_MENU_ICON,title: AppStrings.MY_PRAYER_LIST_TEXT,index:1,topMargin:9.0,bottomMargin:9.0,imageWidth: 23,sizedBoxWidth:19,leftPadding:20.0),
+
+              //For My Praise List
+              menuListTile(imagePath: AssetPaths.PRAISE_LIST_MENU_ICON,title: AppStrings.MY_PRAISE_LIST_TEXT,index:2,topMargin:9.0,bottomMargin:9.0,imageWidth: 30,sizedBoxWidth:14,leftPadding:18.0),
+
+              //For Shared Prayers
+              menuListTile(imagePath: AssetPaths.SHARED_PRAYERS_MENU_ICON,title: AppStrings.SHARED_PRAYERS_TEXT,index:3,topMargin:9.0,bottomMargin:9.0,imageWidth: 23,sizedBoxWidth:21,leftPadding:18.0),
+
+              //For Prayer Groups List
+              menuListTile(imagePath: AssetPaths.PRAYER_GROUPS_MENU_ICON,title: AppStrings.PRAYER_GROUPS_TEXT,index:4,topMargin:9.0,bottomMargin:9.0,imageWidth: 23,sizedBoxWidth:21,leftPadding:18.0),
+
+              //For Report
+              menuListTile(imagePath: AssetPaths.REPORT_MENU_ICON,title: AppStrings.REPORT_TEXT,index:5,topMargin:9.0,bottomMargin:9.0,imageWidth: 22,sizedBoxWidth:20,leftPadding:20.0),
+
+              //For Settings
+              menuListTile(imagePath: AssetPaths.SETTINGS_MENU_ICON,title: AppStrings.SETTINGS_TEXT,index:6,topMargin:settingsOn == true ? 12.0 : 9.0,bottomMargin:settingsOn == true ? 9.0 : 9.0,imageWidth: 22,sizedBoxWidth:20,leftPadding:20.0,backgroundContainerColor: settingsOn == true ? AppColors.SETTINGS_BACK_COLOR.withOpacity(0.9) : AppColors.TRANSPARENT_COLOR,settingIcon: settingsOn == true ? Icons.keyboard_arrow_down : null),
+
+              //For Settings Option
+              SizeTransition(
+                sizeFactor: CurvedAnimation(
+                  curve: Curves.linear,
+                  parent: _animationController,
+                ),
+              child: Container(
+                color: AppColors.SETTINGS_BACK_COLOR.withOpacity(0.5),
+                  child: Column(
+                    children: [
+                      //For Notification
+                      menuListTile(imagePath: AssetPaths.NOTIFICATION_MENU_ICON,title: AppStrings.NOTIFICATION_TEXT,index:7,topMargin:9.0,bottomMargin:9.0,imageWidth: 21,sizedBoxWidth:35,leftPadding:20.0),
+
+                      //For Timer
+                      menuListTile(imagePath: AssetPaths.TIMER_MENU_ICON,title: AppStrings.TIMER_TEXT,index:8,topMargin:9.0,bottomMargin:9.0,imageWidth: 22,sizedBoxWidth:34,leftPadding:20.0),
+
+                      //For Security
+                      menuListTile(imagePath: AssetPaths.SECURITY_MENU_ICON,title: AppStrings.SECURITY_TEXT,index:9,topMargin:9.0,bottomMargin:9.0,imageWidth: 20,sizedBoxWidth:37,leftPadding:20.0),
+                    ],
+                  ),
+                )
+
+           ),
+
+              //For Logout
+              menuListTile(imagePath: AssetPaths.LOGOUT_MENU_ICON,title: AppStrings.LOGOUT_TEXT,index:10,topMargin:9.0,bottomMargin:9.0,imageWidth: 18,sizedBoxWidth:26,leftPadding:20.0,imageColor: AppColors.WHITE_COLOR.withOpacity(0.8)),
+
+              SizedBox(height: 5.0,),
 
 
+
+
+
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget menuListTile({String imagePath,String title,Widget menuWidget,int index,Color imageColor,double topMargin,double bottomMargin,double imageWidth,double sizedBoxWidth,double leftPadding,Color backgroundContainerColor,IconData settingIcon})
+  {
+    return GestureDetector(
+      onTap: ()
+      {
+        navigateToNewScreen(navigateIndex:index);
+      },
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        color: backgroundContainerColor ?? AppColors.TRANSPARENT_COLOR,
+        padding: EdgeInsets.only(left: leftPadding,top: topMargin,bottom: bottomMargin),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Image.asset(imagePath,width: imageWidth,color: imageColor),
+            SizedBox(width: sizedBoxWidth,),
+            Expanded(child: Text(title,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600),textScaleFactor: 1.1,)),
+            settingIcon != null ?
+            Padding(
+              padding: EdgeInsets.only(right: 10.0),
+                child: Icon(settingIcon,color: AppColors.WHITE_COLOR.withOpacity(0.9),)
+            )
+            :Container(),
+
+          ],
+        ),
+      ),
+    );
+  }
+
+
+  void navigateToNewScreen({int navigateIndex})
+  {
+    //For My Prayer List
+    if(navigateIndex == 1)
+    {
+      AppNavigation.navigatorPop(context);
+    }
+    //For My Praise List
+    else if(navigateIndex == 2)
+    {
+      AppNavigation.navigatorPop(context);
+    }
+    //For Shared Prayers
+    else if(navigateIndex == 3)
+    {
+      AppNavigation.navigatorPop(context);
+    }
+    //For Prayer Groups List
+    else if(navigateIndex == 4)
+    {
+      AppNavigation.navigatorPop(context);
+    }
+    //For Report
+    else if(navigateIndex == 5)
+    {
+      AppNavigation.navigatorPop(context);
+    }
+    //For Settings
+    else if(navigateIndex == 6)
+    {
+      //AppNavigation.navigatorPop(context);
+
+        settingsOn = !settingsOn;
+        settingsOn == true ? _animationController.forward() : _animationController.reverse();
+        setState(() {
+
+        });
+
+    }
+    //For Notification
+    else if(navigateIndex == 7)
+    {
+      AppNavigation.navigatorPop(context);
+    }
+    //For Timer
+    else if(navigateIndex == 8)
+    {
+      AppNavigation.navigatorPop(context);
+    }
+    //For Security
+    else if(navigateIndex == 9)
+    {
+      AppNavigation.navigatorPop(context);
+    }
+    //For Logout
+    else if(navigateIndex == 10)
+    {
+      AppNavigation.navigatorPop(context);
+    }
+  }
+
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _animationController.dispose();
+  }
 
 }
