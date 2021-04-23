@@ -167,7 +167,7 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
       containerHeight: MediaQuery.of(context).size.height*0.072,
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
-      elevation: 0.0,
+      elevation: 7.0,
       buttonText: AppStrings.LOGIN_TEXT,
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,

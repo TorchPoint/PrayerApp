@@ -274,7 +274,7 @@ class _AddPrayerScreenState extends State<AddPrayerScreen> {
       containerHeight: MediaQuery.of(context).size.height*0.075,
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
-      elevation: 0.0,
+      elevation: 7.0,
       buttonText: AppStrings.ADD_PRAYER_TEXT,
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,
