@@ -28,6 +28,9 @@ class AppStrings
   static const String TIMER_TEXT = "Timer";
   static const String SECURITY_TEXT = "Security";
   static const String LOGOUT_TEXT = "Logout";
+  static const String DESCRIPTION_TEXT = "Description";
+  static const String ADD_PRAYER_TEXT = "ADD PRAYER";
+
 
 
 
@@ -36,6 +39,12 @@ class AppStrings
   static const String LAST_NAME_HINT_TEXT = "Last Name";
   static const String EMAIL_HINT_TEXT = "Email";
   static const String PASSWORD_HINT_TEXT = "Password";
+  static const String PRAYER_TITLE_HINT_TEXT = "Enter Prayer Title";
+  static const String ADD_NAME_HINT_TEXT = "Add Name";
+  static const String CATEGORY_HINT_TEXT = "Category";
+  static const String DESCRIPTION_HINT_TEXT = "Enter Description";
+
+
 
 
   // ------------- Error Text ---------------- //
@@ -45,6 +54,12 @@ class AppStrings
   static const String EMAIL_INVALID_ERROR = 'Email is not valid.';
   static const String PASSWORD_EMPTY_ERROR = 'Password can\'t be empty.';
   static const String PASSWORD_INVALID_ERROR = 'Password must be 8 characters long and contains at least 1 upper case, 1 lower case, 1 digit & 1 special character.';
+  static const String PRAYER_TITLE_EMPTY_ERROR = 'Prayer title can\'t be empty.';
+  static const String ADD_NAME_EMPTY_ERROR = 'Add name can\'t be empty.';
+  static const String CATEGORY_EMPTY_ERROR = 'Category can\'t be empty.';
+  static const String DESCRIPTION_EMPTY_ERROR = 'Description can\'t be empty.';
+
+
 
 
 }

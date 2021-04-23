@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_hybrid_app/add_prayer/screens/add_prayer_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
@@ -213,7 +214,7 @@ class _DrawerScreenState extends State<DrawerScreen> with SingleTickerProviderSt
               menuListTile(imagePath: AssetPaths.REPORT_MENU_ICON,title: AppStrings.REPORT_TEXT,index:5,topMargin:9.0,bottomMargin:9.0,imageWidth: 22,sizedBoxWidth:20,leftPadding:20.0),
 
               //For Settings
-              menuListTile(imagePath: AssetPaths.SETTINGS_MENU_ICON,title: AppStrings.SETTINGS_TEXT,index:6,topMargin:settingsOn == true ? 12.0 : 9.0,bottomMargin:settingsOn == true ? 9.0 : 9.0,imageWidth: 22,sizedBoxWidth:20,leftPadding:20.0,backgroundContainerColor: settingsOn == true ? AppColors.SETTINGS_BACK_COLOR.withOpacity(0.9) : AppColors.TRANSPARENT_COLOR,settingIcon: settingsOn == true ? Icons.keyboard_arrow_down : null),
+              menuListTile(imagePath: AssetPaths.SETTINGS_MENU_ICON,title: AppStrings.SETTINGS_TEXT,index:6,topMargin:settingsOn == true ? 12.0 : 9.0,bottomMargin:settingsOn == true ? 9.0 : 9.0,imageWidth: 22,sizedBoxWidth:20,leftPadding:20.0,backgroundContainerColor: settingsOn == true ? AppColors.SETTINGS_OPTIONS_COLOR.withOpacity(0.9) : AppColors.TRANSPARENT_COLOR,settingIcon: settingsOn == true ? Icons.keyboard_arrow_down : null),
 
               //For Settings Option
               SizeTransition(
@@ -222,7 +223,7 @@ class _DrawerScreenState extends State<DrawerScreen> with SingleTickerProviderSt
                   parent: _animationController,
                 ),
               child: Container(
-                color: AppColors.SETTINGS_BACK_COLOR.withOpacity(0.5),
+                color: AppColors.SETTINGS_OPTIONS_COLOR.withOpacity(0.5),
                   child: Column(
                     children: [
                       //For Notification
@@ -302,6 +303,7 @@ class _DrawerScreenState extends State<DrawerScreen> with SingleTickerProviderSt
     else if(navigateIndex == 3)
     {
       AppNavigation.navigatorPop(context);
+      AppNavigation.navigateTo(context, AddPrayerScreen());
     }
     //For Prayer Groups List
     else if(navigateIndex == 4)

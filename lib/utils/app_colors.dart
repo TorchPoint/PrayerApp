@@ -11,7 +11,7 @@ class AppColors
   static const Color FACEBOOK_BUTTON_COLOR = Color(0XFF4267B2);
   static const Color BLACK_COLOR = Colors.black;
   static const Color MENU_TEXT_COLOR = Color(0XFF02BECA);
-  static const Color SETTINGS_BACK_COLOR = Color(0XFF007B83);
+  static const Color SETTINGS_OPTIONS_COLOR = Color(0XFF007B83);
 
 
 }

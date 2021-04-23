@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:prayer_hybrid_app/add_prayer/screens/add_prayer_screen.dart';
 import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/splash/splash_screen.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Quicksand',
       ),
-      home: DrawerScreen(),
+      home: SplashScreen(),
     );
   }
 }

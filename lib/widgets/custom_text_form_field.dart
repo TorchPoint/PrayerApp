@@ -8,9 +8,9 @@ class CustomTextFormField extends StatelessWidget {
   bool obscureText;
   TextEditingController textController;
   Function(String) onValidate;
-  int errorMaxLines;
+  int errorMaxLines,maxLines;
 
-  CustomTextFormField({this.textController,this.containerWidth,this.hintText,this.borderRadius,this.contentPaddingTop,this.contentPaddingBottom,this.contentPaddingLeft,this.contentPaddingRight,this.prefixIcon,this.prefixIconWidth,this.suffixIcon,this.suffixIconWidth,this.obscureText,this.errorMaxLines,this.onValidate});
+  CustomTextFormField({this.textController,this.containerWidth,this.hintText,this.borderRadius,this.contentPaddingTop,this.contentPaddingBottom,this.contentPaddingLeft,this.contentPaddingRight,this.prefixIcon,this.prefixIconWidth,this.suffixIcon,this.suffixIconWidth,this.obscureText,this.errorMaxLines,this.onValidate,this.maxLines});
 
 
 
@@ -85,6 +85,7 @@ class CustomTextFormField extends StatelessWidget {
         keyboardType: TextInputType.emailAddress,
         obscureText: obscureText ?? false,
         cursorColor: Colors.white,
+        maxLines: maxLines ?? 1,
       ),
     );
   }
