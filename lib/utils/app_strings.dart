@@ -37,6 +37,7 @@ class AppStrings
   static const String REMINDER_TEXT = "Reminder";
   static const String PENDING_PRAYERS_TEXT = "There are no pending prayers";
   static const String START_PRAYING_TEXT = "lets start praying!";
+  static const String REMINDERS_TEXT = "Reminders";
 
 
 

@@ -3,6 +3,7 @@ import 'package:prayer_hybrid_app/add_praise/screens/add_praise_screen.dart';
 import 'package:prayer_hybrid_app/add_prayer/screens/add_prayer_screen.dart';
 import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/pray_now_screen.dart';
+import 'package:prayer_hybrid_app/reminder/screens/reminder_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
@@ -120,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
   {
     return GestureDetector(
       onTap: (){
-
+      AppNavigation.navigateTo(context, ReminderScreen());
       },
       child: _categoryContainerWidget(AppStrings.REMINDER_TEXT,AssetPaths.REMINDER_IMAGE,6.0,0.09),
     );

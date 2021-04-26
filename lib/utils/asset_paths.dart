@@ -37,6 +37,7 @@ class AssetPaths
   static const String SECURITY_MENU_ICON = "assets/icons/security_menu_icon.png";
   static const String LOGOUT_MENU_ICON = "assets/icons/logout_menu_icon.png";
   static const String BACK_ICON = "assets/icons/back_icon.png";
+  static const String ADD_ICON = "assets/icons/add_icon.png";
 
 
 }
