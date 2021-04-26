@@ -65,7 +65,6 @@ class _DrawerScreenState extends State<DrawerScreen> with SingleTickerProviderSt
         body:Column(
           children: [
             _customAppBar(),
-            Text("ok"),
           ],
         )
       )

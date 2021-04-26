@@ -8,14 +8,14 @@ import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/widgets/custom_raised_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
 
-class AddPrayerScreen extends StatefulWidget {
+class AddPraiseScreen extends StatefulWidget {
   @override
-  _AddPrayerScreenState createState() => _AddPrayerScreenState();
+  _AddPraiseScreenState createState() => _AddPraiseScreenState();
 }
 
-class _AddPrayerScreenState extends State<AddPrayerScreen> {
-  final GlobalKey<FormState> _addPrayerKey = GlobalKey<FormState>();
-  TextEditingController _prayerTitleController = TextEditingController();
+class _AddPraiseScreenState extends State<AddPraiseScreen> {
+  final GlobalKey<FormState> _addPraiseKey = GlobalKey<FormState>();
+  TextEditingController _praiseTitleController = TextEditingController();
   TextEditingController _addNameController = TextEditingController();
   TextEditingController _categoryController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
@@ -32,16 +32,16 @@ class _AddPrayerScreenState extends State<AddPrayerScreen> {
               child: SingleChildScrollView(
                 padding: EdgeInsets.zero,
                 child: Form(
-                  key: _addPrayerKey,
+                  key: _addPraiseKey,
                   child: Column(
                     children: [
-                     SizedBox(height: MediaQuery.of(context).size.height*0.05,),
+                      SizedBox(height: MediaQuery.of(context).size.height*0.05,),
 
-                    _prayerTitleWidget(),
+                      _praiseTitleWidget(),
 
-                     SizedBox(height: 25.0),
+                      SizedBox(height: 25.0),
 
-                     _addNameWidget(),
+                      _addNameWidget(),
 
                       SizedBox(height: 25.0,),
 
@@ -61,7 +61,7 @@ class _AddPrayerScreenState extends State<AddPrayerScreen> {
 
                       SizedBox(height: 25.0,),
 
-                      _addPrayerButtonWidget(),
+                      _addPraiseButtonWidget(),
 
                       SizedBox(height: 10.0,),
 
@@ -96,20 +96,20 @@ class _AddPrayerScreenState extends State<AddPrayerScreen> {
   }
 
 
-  //Prayer Title Widget
-  Widget _prayerTitleWidget()
+  //Praise Title Widget
+  Widget _praiseTitleWidget()
   {
     return CustomTextFormField(
-      textController: _prayerTitleController,
+      textController: _praiseTitleController,
       containerWidth: MediaQuery.of(context).size.width*0.85,
-      hintText: AppStrings.PRAYER_TITLE_HINT_TEXT,
+      hintText: AppStrings.PRAISE_TITLE_HINT_TEXT,
       borderRadius: 30.0,
       contentPaddingLeft: 16.0,
       onValidate: (value){
         if(value.trim().isEmpty)
-          {
-           return AppStrings.PRAYER_TITLE_EMPTY_ERROR;
-          }
+        {
+          return AppStrings.PRAISE_TITLE_EMPTY_ERROR;
+        }
         return null;
       },
 
@@ -149,40 +149,40 @@ class _AddPrayerScreenState extends State<AddPrayerScreen> {
               dropdownColor: AppColors.WHITE_COLOR,
               decoration: InputDecoration(
 
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                    borderSide: BorderSide(color: AppColors.WHITE_COLOR)
-                ),
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide: BorderSide(color: AppColors.WHITE_COLOR)
+                  ),
 
-                focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                    borderSide: BorderSide(color: AppColors.WHITE_COLOR)
-                ),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide: BorderSide(color: AppColors.WHITE_COLOR)
+                  ),
 
-                errorBorder:OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                    borderSide: BorderSide(color: AppColors.ERROR_COLOR)
-                ),
+                  errorBorder:OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide: BorderSide(color: AppColors.ERROR_COLOR)
+                  ),
 
-                focusedErrorBorder:OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                    borderSide: BorderSide(color: AppColors.ERROR_COLOR)
-                ),
+                  focusedErrorBorder:OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide: BorderSide(color: AppColors.ERROR_COLOR)
+                  ),
 
-                border: InputBorder.none,
-                errorStyle: TextStyle(
-                  fontSize: 13.0,
-                  color:  AppColors.ERROR_COLOR,
-                  fontWeight: FontWeight.w600,
-                ),
-                errorMaxLines: 2,
-                hintText: AppStrings.CATEGORY_HINT_TEXT,
-                hintStyle: TextStyle(
-                  fontSize: 17.0,
-                  color: AppColors.WHITE_COLOR,
-                  fontWeight: FontWeight.w400,
-                ),
-                contentPadding: EdgeInsets.only(top: 14.0,bottom: 14.0,left: 16.0,right: 14.0)
+                  border: InputBorder.none,
+                  errorStyle: TextStyle(
+                    fontSize: 13.0,
+                    color:  AppColors.ERROR_COLOR,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  errorMaxLines: 2,
+                  hintText: AppStrings.CATEGORY_HINT_TEXT,
+                  hintStyle: TextStyle(
+                    fontSize: 17.0,
+                    color: AppColors.WHITE_COLOR,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  contentPadding: EdgeInsets.only(top: 14.0,bottom: 14.0,left: 16.0,right: 14.0)
               ),
               isDense: true,
               value: currentCategoryValue,
@@ -261,8 +261,8 @@ class _AddPrayerScreenState extends State<AddPrayerScreen> {
   }
 
 
-  //Add Prayer Button Widget
-  Widget _addPrayerButtonWidget()
+  //Add Praise Button Widget
+  Widget _addPraiseButtonWidget()
   {
     return CustomRaisedButton(
       containerWidth: MediaQuery.of(context).size.width*0.85,
@@ -270,12 +270,12 @@ class _AddPrayerScreenState extends State<AddPrayerScreen> {
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
       elevation: 7.0,
-      buttonText: AppStrings.ADD_PRAYER_TEXT,
+      buttonText: AppStrings.ADD_PRAISE_TEXT,
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,
       fontSize: 1.25,
       onPressed: (){
-        if(_addPrayerKey.currentState.validate())
+        if(_addPraiseKey.currentState.validate())
         {
 
         }
@@ -288,7 +288,7 @@ class _AddPrayerScreenState extends State<AddPrayerScreen> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    _prayerTitleController.dispose();
+    _praiseTitleController.dispose();
     _addNameController.dispose();
     _categoryController.dispose();
     _descriptionController.dispose();
