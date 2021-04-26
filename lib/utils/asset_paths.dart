@@ -7,7 +7,12 @@ class AssetPaths
   static const String AUTH_THIRD_SCREEN_IMAGE  = "assets/images/auth_third_screen_image.png";
   static const String PROFILE_IMAGE  = "assets/images/profile_image.jpg";
   static const String DRAWER_BACKGROUND_IMAGE  = "assets/images/drawer_background_image.png";
-
+  static const String PRAY_NOW_IMAGE  = "assets/images/pray_now_image.png";
+  static const String ADD_PRAYER_IMAGE  = "assets/images/add_prayer_image.png";
+  static const String BIBLE_IMAGE  = "assets/images/bible_image.png";
+  static const String ADD_PRAISE_IMAGE  = "assets/images/add_praise_image.png";
+  static const String PRAYER_PARTNER_SUBSCRIPTION_IMAGE  = "assets/images/prayer_partners_subs_image.png";
+  static const String REMINDER_IMAGE  = "assets/images/reminder_image.png";
 
 
   //Icons

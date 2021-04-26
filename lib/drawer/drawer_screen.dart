@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/add_prayer/screens/add_prayer_screen.dart';
+import 'package:prayer_hybrid_app/home/home_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
@@ -65,6 +66,9 @@ class _DrawerScreenState extends State<DrawerScreen> with SingleTickerProviderSt
         body:Column(
           children: [
             _customAppBar(),
+            Expanded(
+              child:HomeScreen(),
+            ),
           ],
         )
       )

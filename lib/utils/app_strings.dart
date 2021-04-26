@@ -29,8 +29,12 @@ class AppStrings
   static const String SECURITY_TEXT = "Security";
   static const String LOGOUT_TEXT = "Logout";
   static const String DESCRIPTION_TEXT = "Description";
-  static const String ADD_PRAYER_TEXT = "ADD PRAYER";
-  static const String ADD_PRAISE_TEXT = "ADD PRAISE";
+  static const String ADD_PRAYER_TEXT = "Add Prayer";
+  static const String ADD_PRAISE_TEXT = "Add Praise";
+  static const String PRAY_NOW_TEXT = "Pray Now";
+  static const String BIBLE_TEXT = "The Bible";
+  static const String PRAYER_PARTNERS_TEXT = "Prayer Partners";
+  static const String REMINDER_TEXT = "Reminder";
 
 
 

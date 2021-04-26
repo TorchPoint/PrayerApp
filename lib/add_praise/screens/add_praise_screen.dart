@@ -270,7 +270,7 @@ class _AddPraiseScreenState extends State<AddPraiseScreen> {
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
       elevation: 7.0,
-      buttonText: AppStrings.ADD_PRAISE_TEXT,
+      buttonText: AppStrings.ADD_PRAISE_TEXT.toUpperCase(),
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,
       fontSize: 1.25,
