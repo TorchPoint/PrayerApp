@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Quicksand',
       ),
-      home: PrayNowScreen(),
+      home: SplashScreen(),
     );
   }
 }

@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_hybrid_app/add_praise/screens/add_praise_screen.dart';
+import 'package:prayer_hybrid_app/add_prayer/screens/add_prayer_screen.dart';
+import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
+import 'package:prayer_hybrid_app/prayer_praise_info/pray_now_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
+import 'package:prayer_hybrid_app/utils/navigation.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -58,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
   {
     return GestureDetector(
       onTap: (){
-
+        AppNavigation.navigateTo(context, PrayNowScreen());
       },
         child: _categoryContainerWidget(AppStrings.PRAY_NOW_TEXT,AssetPaths.PRAY_NOW_IMAGE,6.0,0.13),
     );
@@ -70,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
   {
     return GestureDetector(
       onTap: (){
-
+        AppNavigation.navigateTo(context, AddPrayerScreen());
       },
       child: _categoryContainerWidget(AppStrings.ADD_PRAYER_TEXT,AssetPaths.ADD_PRAYER_IMAGE,7.5,0.13),
     );
@@ -82,7 +87,6 @@ class _HomeScreenState extends State<HomeScreen> {
   {
     return GestureDetector(
       onTap: (){
-
       },
       child: _categoryContainerWidget(AppStrings.BIBLE_TEXT,AssetPaths.BIBLE_IMAGE,6.0,0.13),
     );
@@ -94,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
   {
     return GestureDetector(
       onTap: (){
-
+        AppNavigation.navigateTo(context, AddPraiseScreen());
       },
       child: _categoryContainerWidget(AppStrings.ADD_PRAISE_TEXT,AssetPaths.ADD_PRAISE_IMAGE,6.0,0.16),
     );
@@ -161,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Expanded(
             child: Padding(
               padding: EdgeInsets.only(left: 2.0,right: 2.0),
-                child: Text(title.toString(),style:TextStyle(color: AppColors.BLACK_COLOR,fontWeight: FontWeight.w700),textScaleFactor:1.1,overflow: TextOverflow.ellipsis,maxLines: 3,)
+                child: Text(title.toString(),style:TextStyle(color: AppColors.BLACK_COLOR,fontWeight: FontWeight.w700),textScaleFactor:1.1,overflow: TextOverflow.ellipsis,maxLines: 2,)
             ),
           )
 

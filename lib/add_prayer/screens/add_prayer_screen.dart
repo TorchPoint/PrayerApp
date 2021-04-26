@@ -82,7 +82,6 @@ class _AddPrayerScreenState extends State<AddPrayerScreen> {
   Widget _customAppBar()
   {
     return CustomAppBar(
-      title: "",
       leadingIconPath: AssetPaths.BACK_ICON,
       leadingTap: (){
         print("Leading tap");

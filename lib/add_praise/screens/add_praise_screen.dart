@@ -82,7 +82,6 @@ class _AddPraiseScreenState extends State<AddPraiseScreen> {
   Widget _customAppBar()
   {
     return CustomAppBar(
-      title: "",
       leadingIconPath: AssetPaths.BACK_ICON,
       leadingTap: (){
         print("Leading tap");

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
+import 'package:prayer_hybrid_app/utils/navigation.dart';
+import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 
 class PrayNowScreen extends StatefulWidget {
@@ -16,8 +18,9 @@ class _PrayNowScreenState extends State<PrayNowScreen> {
       child: Scaffold(
         backgroundColor: AppColors.TRANSPARENT_COLOR,
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            _customAppBar(),
+            Spacer(),
             Align(
               alignment: Alignment.center,
                 child: Text(AppStrings.PENDING_PRAYERS_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600,letterSpacing: 0.6),textScaleFactor: 1.45,textAlign:TextAlign.center,)
@@ -29,11 +32,27 @@ class _PrayNowScreenState extends State<PrayNowScreen> {
             ),
             SizedBox(height: 25.0,),
             _prayNowContainerWidget(),
+            Spacer(),
           ],
         ),
       ),
     );
   }
+
+
+  //Custom App Bar Widget
+  Widget _customAppBar()
+  {
+    return CustomAppBar(
+      leadingIconPath: AssetPaths.BACK_ICON,
+      leadingTap: (){
+        print("Leading tap");
+        AppNavigation.navigatorPop(context);
+      },
+
+    );
+  }
+
 
 //Pray Now Container Widget
   Widget _prayNowContainerWidget()
@@ -44,7 +63,7 @@ class _PrayNowScreenState extends State<PrayNowScreen> {
       },
       child: Container(
         width: MediaQuery.of(context).size.width*0.36,
-        height: MediaQuery.of(context).size.height*0.20,
+        height: MediaQuery.of(context).size.height*0.2,
         decoration: BoxDecoration(
             color: AppColors.WHITE_COLOR,
             borderRadius: BorderRadius.circular(8.0)
@@ -75,7 +94,7 @@ class _PrayNowScreenState extends State<PrayNowScreen> {
             Expanded(
               child: Padding(
                   padding: EdgeInsets.only(left: 2.0,right: 2.0),
-                  child: Text(AppStrings.PRAY_NOW_TEXT,style:TextStyle(color: AppColors.BLACK_COLOR,fontWeight: FontWeight.w700),textScaleFactor:1.35,overflow: TextOverflow.ellipsis,maxLines: 3,)
+                  child: Text(AppStrings.PRAY_NOW_TEXT,style:TextStyle(color: AppColors.BLACK_COLOR,fontWeight: FontWeight.w700),textScaleFactor:1.35,overflow: TextOverflow.ellipsis,maxLines: 2,)
               ),
             )
 
