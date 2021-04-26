@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
@@ -32,6 +33,7 @@ class _PrayNowScreenState extends State<PrayNowScreen> {
             ),
             SizedBox(height: 25.0,),
             _prayNowContainerWidget(),
+            SizedBox(height: 25.0,),
             Spacer(),
           ],
         ),
