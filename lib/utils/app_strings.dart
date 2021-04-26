@@ -35,6 +35,8 @@ class AppStrings
   static const String BIBLE_TEXT = "The Bible";
   static const String PRAYER_PARTNERS_TEXT = "Prayer Partners";
   static const String REMINDER_TEXT = "Reminder";
+  static const String PENDING_PRAYERS_TEXT = "There are no pending prayers";
+  static const String START_PRAYING_TEXT = "lets start praying!";
 
 
 

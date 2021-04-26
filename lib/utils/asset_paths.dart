@@ -13,6 +13,7 @@ class AssetPaths
   static const String ADD_PRAISE_IMAGE  = "assets/images/add_praise_image.png";
   static const String PRAYER_PARTNER_SUBSCRIPTION_IMAGE  = "assets/images/prayer_partners_subs_image.png";
   static const String REMINDER_IMAGE  = "assets/images/reminder_image.png";
+  static const String PRAY_NOW_SECOND_IMAGE  = "assets/images/pray_now_second_image.png";
 
 
   //Icons
