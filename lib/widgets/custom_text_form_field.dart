@@ -5,12 +5,14 @@ import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 class CustomTextFormField extends StatelessWidget {
   double containerWidth,borderRadius,contentPaddingTop,contentPaddingBottom,contentPaddingLeft,contentPaddingRight,prefixIconWidth,suffixIconWidth;
   String hintText,prefixIcon,suffixIcon;
-  bool obscureText;
+  bool obscureText,isCollapsed;
   TextEditingController textController;
   Function(String) onValidate;
   int errorMaxLines,maxLines;
+  double hintSize,textSize;
 
-  CustomTextFormField({this.textController,this.containerWidth,this.hintText,this.borderRadius,this.contentPaddingTop,this.contentPaddingBottom,this.contentPaddingLeft,this.contentPaddingRight,this.prefixIcon,this.prefixIconWidth,this.suffixIcon,this.suffixIconWidth,this.obscureText,this.errorMaxLines,this.onValidate,this.maxLines});
+
+  CustomTextFormField({this.textController,this.containerWidth,this.hintText,this.borderRadius,this.contentPaddingTop,this.contentPaddingBottom,this.contentPaddingLeft,this.contentPaddingRight,this.prefixIcon,this.prefixIconWidth,this.suffixIcon,this.suffixIconWidth,this.obscureText,this.errorMaxLines,this.onValidate,this.maxLines,this.hintSize,this.textSize,this.isCollapsed});
 
 
 
@@ -22,6 +24,7 @@ class CustomTextFormField extends StatelessWidget {
         controller: textController,
         validator: onValidate,
         decoration: InputDecoration(
+          isCollapsed: isCollapsed ?? false,
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(borderRadius),
               borderSide: BorderSide(color: AppColors.WHITE_COLOR)
@@ -48,7 +51,7 @@ class CustomTextFormField extends StatelessWidget {
 
           hintText: hintText,
           hintStyle: TextStyle(
-            fontSize: 17.0,
+            fontSize: hintSize ?? 17.0,
             color: AppColors.WHITE_COLOR,
             fontWeight: FontWeight.w400,
           ),
@@ -78,7 +81,7 @@ class CustomTextFormField extends StatelessWidget {
           errorMaxLines: errorMaxLines ?? 1
         ),
         style: TextStyle(
-          fontSize: 17.0,
+          fontSize: textSize ?? 17.0,
           color: AppColors.WHITE_COLOR,
           fontWeight: FontWeight.w600,
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:prayer_hybrid_app/prayer_praise_info/screens/prayer_praise_tab.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
@@ -61,7 +62,7 @@ class _PrayNowScreenState extends State<PrayNowScreen> {
   {
     return GestureDetector(
       onTap: (){
-           print("Pray Now");
+           AppNavigation.navigateTo(context, PrayerPraiseTab(tabInitialIndex: 0));
       },
       child: Container(
         width: MediaQuery.of(context).size.width*0.36,

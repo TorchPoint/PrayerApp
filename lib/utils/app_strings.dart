@@ -38,6 +38,10 @@ class AppStrings
   static const String PENDING_PRAYERS_TEXT = "There are no pending prayers";
   static const String START_PRAYING_TEXT = "lets start praying!";
   static const String REMINDERS_TEXT = "Reminders";
+  static const String PRAYERS_TEXT = "Prayers";
+  static const String PRAISES_TEXT = "Praises";
+  static const String ADD_NEW_PRAISE_TEXT = "Add New Praise";
+  static const String ADD_NEW_PRAYER_TEXT = "Add New Prayer";
 
 
 
@@ -52,6 +56,7 @@ class AppStrings
   static const String CATEGORY_HINT_TEXT = "Category";
   static const String DESCRIPTION_HINT_TEXT = "Enter Description";
   static const String PRAISE_TITLE_HINT_TEXT = "Enter Praise Title";
+  static const String SEARCH_HINT_TEXT = "Search";
 
 
 
