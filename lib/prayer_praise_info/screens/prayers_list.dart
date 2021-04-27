@@ -6,6 +6,7 @@ import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_raised_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
+import 'package:prayer_hybrid_app/prayer_praise_info/screens/finish_praying.dart';
 
 class PrayersList extends StatefulWidget {
   @override
@@ -75,6 +76,7 @@ class _PrayersListState extends State<PrayersList> {
     return GestureDetector(
       onTap: (){
         print("next screen");
+        AppNavigation.navigateTo(context, FinishPraying());
       },
       onLongPress: (){
         setState(() {

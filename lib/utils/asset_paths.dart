@@ -14,6 +14,7 @@ class AssetPaths
   static const String PRAYER_PARTNER_SUBSCRIPTION_IMAGE  = "assets/images/prayer_partners_subs_image.png";
   static const String REMINDER_IMAGE  = "assets/images/reminder_image.png";
   static const String PRAY_NOW_SECOND_IMAGE  = "assets/images/pray_now_second_image.png";
+  static const String STOP_WATCH_IMAGE  = "assets/images/stop_watch_image.png";
 
 
   //Icons
@@ -42,5 +43,11 @@ class AssetPaths
   static const String SEARCH_ICON = "assets/icons/search_icon.png";
   static const String DELETE_ICON = "assets/icons/delete_icon.png";
   static const String ARROW_ICON = "assets/icons/arrow_icon.png";
+  static const String CANCEL_ICON = "assets/icons/cancel_icon.png";
+  static const String ANSWERED_ICON = "assets/icons/answered_icon.png";
+  static const String SHARE_ICON = "assets/icons/share_icon.png";
+  static const String EDIT_ICON = "assets/icons/edit_icon.png";
+
+
 
 }
