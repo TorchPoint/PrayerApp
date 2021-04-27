@@ -74,6 +74,9 @@ class _PraiseListState extends State<PraiseList> {
   {
     return GestureDetector(
       onTap: (){
+        print("next screen");
+      },
+      onLongPress: (){
         setState(() {
           selectIndex = praiseIndex;
         });

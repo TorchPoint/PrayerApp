@@ -19,12 +19,21 @@ class PrayerPraiseTab extends StatefulWidget {
 
 class _PrayerPraiseTabState extends State<PrayerPraiseTab> with SingleTickerProviderStateMixin {
   TabController _tabController;
+  int titleIndex = 0;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _tabController = new TabController(vsync: this, length: 2,initialIndex:widget.tabInitialIndex);
+    _tabController.addListener((){
+      print("Tab Controller Index:${_tabController.index}");
+      setState(() {
+        titleIndex = _tabController.index;
+      });
+    });
+
+
   }
   @override
   Widget build(BuildContext context) {
@@ -45,7 +54,7 @@ class _PrayerPraiseTabState extends State<PrayerPraiseTab> with SingleTickerProv
                         controller: _tabController,
                         children: [
                           PrayersList(),
-                         PraiseList(),
+                          PraiseList(),
                         ]
                     ),
                   ),
@@ -64,7 +73,7 @@ class _PrayerPraiseTabState extends State<PrayerPraiseTab> with SingleTickerProv
   Widget _customAppBar()
   {
     return CustomAppBar(
-      title: AppStrings.PRAYERS_TEXT,
+      title: titleIndex == 0 ? AppStrings.PRAYERS_TEXT : AppStrings.PRAISES_TEXT,
       leadingIconPath: AssetPaths.BACK_ICON,
       leadingTap: (){
         AppNavigation.navigatorPop(context);
@@ -113,5 +122,12 @@ Widget _tabBarWidget()
     ),
   );
 }
+
+@override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _tabController.dispose();
+  }
 
 }

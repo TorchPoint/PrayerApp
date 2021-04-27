@@ -74,6 +74,9 @@ class _PrayersListState extends State<PrayersList> {
   {
     return GestureDetector(
       onTap: (){
+        print("next screen");
+      },
+      onLongPress: (){
         setState(() {
           selectIndex = prayerIndex;
         });
