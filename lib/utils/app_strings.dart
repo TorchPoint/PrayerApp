@@ -54,6 +54,8 @@ class AppStrings
   static const String HIGHLIGHTS_TEXT = "Highlights";
   static const String NOTES_TEXT = "Notes";
   static const String OLD_TESTAMENT_TEXT = "Old Testament";
+  static const String GENESIS_TEXT = "Genesis";
+
 
 
   // ------------- Hint Text ---------------- //
