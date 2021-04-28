@@ -6,14 +6,14 @@ import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_raised_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
-import 'package:prayer_hybrid_app/prayer_praise_info/screens/finish_praying.dart';
+import 'package:prayer_hybrid_app/prayer_praise_info/screens/finish_praying_screen.dart';
 
-class PrayersList extends StatefulWidget {
+class PrayersListScreen extends StatefulWidget {
   @override
-  _PrayersListState createState() => _PrayersListState();
+  _PrayersListScreenState createState() => _PrayersListScreenState();
 }
 
-class _PrayersListState extends State<PrayersList> {
+class _PrayersListScreenState extends State<PrayersListScreen> {
   TextEditingController _searchController = TextEditingController();
   int selectIndex = 0;
   List<String> prayerList = ["Test","Marriage","Car","Medical Emergency","Loan","Mom"];
@@ -60,8 +60,8 @@ class _PrayersListState extends State<PrayersList> {
       containerWidth: MediaQuery.of(context).size.width*0.85,
       hintText: AppStrings.SEARCH_HINT_TEXT,
       borderRadius: 28.0,
-      contentPaddingTop: 12.0,
-      contentPaddingBottom: 12.0,
+      contentPaddingTop: 13.0,
+      contentPaddingBottom: 13.0,
       contentPaddingRight: 8.0,
       suffixIcon: AssetPaths.SEARCH_ICON,
       suffixIconWidth: 15,
@@ -76,7 +76,7 @@ class _PrayersListState extends State<PrayersList> {
     return GestureDetector(
       onTap: (){
         print("next screen");
-        AppNavigation.navigateTo(context, FinishPraying());
+        AppNavigation.navigateTo(context, FinishPrayingScreen());
       },
       onLongPress: (){
         setState(() {
@@ -86,7 +86,7 @@ class _PrayersListState extends State<PrayersList> {
       child: Container(
         width: MediaQuery.of(context).size.width*0.85,
         margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.075,right: MediaQuery.of(context).size.width*0.075,top: 7.0,bottom: 7.0),
-        padding: EdgeInsets.only(top: 12.0,bottom: 12.0,left: 15.0,right: selectIndex == prayerIndex ? 2.0 : 5.0),
+        padding: EdgeInsets.only(top: 13.0,bottom: 13.0,left: 15.0,right: selectIndex == prayerIndex ? 2.0 : 5.0),
         decoration: BoxDecoration(
           color: selectIndex == prayerIndex ? AppColors.BUTTON_COLOR : AppColors.WHITE_COLOR,
           borderRadius: BorderRadius.circular(23.0),
@@ -105,7 +105,7 @@ class _PrayersListState extends State<PrayersList> {
         child: Row(
           children: [
             Expanded(
-              child: Text(prayerList[prayerIndex].toString(),style: TextStyle(fontSize: 14.0,color: selectIndex == prayerIndex ? AppColors.WHITE_COLOR : AppColors.BLACK_COLOR,fontWeight: FontWeight.w700),maxLines: 1,overflow: TextOverflow.ellipsis,),
+              child: Text(prayerList[prayerIndex].toString(),style: TextStyle(fontSize: 14.5,color: selectIndex == prayerIndex ? AppColors.WHITE_COLOR : AppColors.BLACK_COLOR,fontWeight: FontWeight.w700),maxLines: 1,overflow: TextOverflow.ellipsis,),
             ),
 
             _arrowDeleteIcons(prayerIndex),

@@ -1,8 +1,8 @@
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prayer_hybrid_app/prayer_praise_info/screens/praise_list.dart';
-import 'package:prayer_hybrid_app/prayer_praise_info/screens/prayers_list.dart';
+import 'package:prayer_hybrid_app/prayer_praise_info/screens/praise_list_screen.dart';
+import 'package:prayer_hybrid_app/prayer_praise_info/screens/prayers_list_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
@@ -10,14 +10,14 @@ import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 
-class PrayerPraiseTab extends StatefulWidget {
+class PrayerPraiseTabScreen extends StatefulWidget {
   int tabInitialIndex;
-  PrayerPraiseTab({this.tabInitialIndex = 0});
+  PrayerPraiseTabScreen({this.tabInitialIndex = 0});
   @override
-  _PrayerPraiseTabState createState() => _PrayerPraiseTabState();
+  _PrayerPraiseTabScreenState createState() => _PrayerPraiseTabScreenState();
 }
 
-class _PrayerPraiseTabState extends State<PrayerPraiseTab> with SingleTickerProviderStateMixin {
+class _PrayerPraiseTabScreenState extends State<PrayerPraiseTabScreen> with SingleTickerProviderStateMixin {
   TabController _tabController;
   int titleIndex = 0;
 
@@ -46,6 +46,7 @@ class _PrayerPraiseTabState extends State<PrayerPraiseTab> with SingleTickerProv
             Expanded(
               child: Column(
                 children: [
+                  SizedBox(height: 8.0,),
                  _tabBarWidget(),
 
                   SizedBox(height: 10.0,),
@@ -53,8 +54,8 @@ class _PrayerPraiseTabState extends State<PrayerPraiseTab> with SingleTickerProv
                     child: TabBarView(
                         controller: _tabController,
                         children: [
-                          PrayersList(),
-                          PraiseList(),
+                          PrayersListScreen(),
+                          PraiseListScreen(),
                         ]
                     ),
                   ),

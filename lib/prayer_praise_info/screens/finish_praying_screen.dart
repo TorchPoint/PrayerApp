@@ -7,12 +7,12 @@ import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/widgets/custom_gesture_detector_container.dart';
 
-class FinishPraying extends StatefulWidget {
+class FinishPrayingScreen extends StatefulWidget {
   @override
-  _FinishPrayingState createState() => _FinishPrayingState();
+  _FinishPrayingScreenState createState() => _FinishPrayingScreenState();
 }
 
-class _FinishPrayingState extends State<FinishPraying> {
+class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
 
   bool answerTick = false;
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/add_praise/screens/add_praise_screen.dart';
 import 'package:prayer_hybrid_app/add_prayer/screens/add_prayer_screen.dart';
+import 'package:prayer_hybrid_app/bible/screens/bible_tab_screen.dart';
 import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/pray_now_screen.dart';
 import 'package:prayer_hybrid_app/reminder/screens/reminder_screen.dart';
@@ -88,6 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
   {
     return GestureDetector(
       onTap: (){
+        AppNavigation.navigateTo(context, BibleTabScreen());
       },
       child: _categoryContainerWidget(AppStrings.BIBLE_TEXT,AssetPaths.BIBLE_IMAGE,6.0,0.13),
     );
@@ -134,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _categoryContainerWidget(String title,String imagePath,double sizeHeight,double imageWidth)
   {
     return Container(
-      width: MediaQuery.of(context).size.width*0.37,
+      width: MediaQuery.of(context).size.width*0.39,
       height: MediaQuery.of(context).size.height*0.2,
       decoration: BoxDecoration(
           color: AppColors.WHITE_COLOR,
@@ -143,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         children: [
           Container(
-            width: MediaQuery.of(context).size.width*0.37,
+            width: MediaQuery.of(context).size.width*0.40,
             height: MediaQuery.of(context).size.height*0.113,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,

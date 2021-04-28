@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prayer_hybrid_app/prayer_praise_info/screens/prayer_praise_tab.dart';
+import 'package:prayer_hybrid_app/prayer_praise_info/screens/prayer_praise_tab_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
@@ -22,7 +22,7 @@ class _PrayNowScreenState extends State<PrayNowScreen> {
         body: Column(
           children: [
             _customAppBar(),
-            Spacer(),
+             Spacer(),
             Align(
               alignment: Alignment.center,
                 child: Text(AppStrings.PENDING_PRAYERS_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600,letterSpacing: 0.6),textScaleFactor: 1.45,textAlign:TextAlign.center,)
@@ -34,8 +34,9 @@ class _PrayNowScreenState extends State<PrayNowScreen> {
             ),
             SizedBox(height: 25.0,),
             _prayNowContainerWidget(),
-            SizedBox(height: 25.0,),
+            SizedBox(height: MediaQuery.of(context).size.height*0.09),
             Spacer(),
+
           ],
         ),
       ),
@@ -62,10 +63,10 @@ class _PrayNowScreenState extends State<PrayNowScreen> {
   {
     return GestureDetector(
       onTap: (){
-           AppNavigation.navigateTo(context, PrayerPraiseTab(tabInitialIndex: 0));
+           AppNavigation.navigateTo(context, PrayerPraiseTabScreen(tabInitialIndex: 0));
       },
       child: Container(
-        width: MediaQuery.of(context).size.width*0.36,
+        width: MediaQuery.of(context).size.width*0.40,
         height: MediaQuery.of(context).size.height*0.2,
         decoration: BoxDecoration(
             color: AppColors.WHITE_COLOR,

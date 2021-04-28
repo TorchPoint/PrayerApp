@@ -50,6 +50,10 @@ class AppStrings
   static const String ANSWERED_TEXT = "ANSWERED";
   static const String SHARE_TEXT = "SHARE";
   static const String EDIT_PRAYER_TEXT = "Edit Prayer";
+  static const String BIBLE_SECOND_TEXT = "Bible";
+  static const String HIGHLIGHTS_TEXT = "Highlights";
+  static const String NOTES_TEXT = "Notes";
+  static const String OLD_TESTAMENT_TEXT = "Old Testament";
 
 
   // ------------- Hint Text ---------------- //

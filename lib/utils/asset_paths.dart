@@ -47,6 +47,7 @@ class AssetPaths
   static const String ANSWERED_ICON = "assets/icons/answered_icon.png";
   static const String SHARE_ICON = "assets/icons/share_icon.png";
   static const String EDIT_ICON = "assets/icons/edit_icon.png";
+  static const String SETTING_ICON = "assets/icons/setting_icon.png";
 
 
 
