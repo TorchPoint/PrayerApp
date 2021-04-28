@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_hybrid_app/prayer_praise_info/screens/stop_watch_alert_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
@@ -15,6 +16,7 @@ class FinishPrayingScreen extends StatefulWidget {
 class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
 
   bool answerTick = false;
+  StopWatchAlertScreen stopWatchAlertScreen = StopWatchAlertScreen();
 
   @override
   Widget build(BuildContext context) {
@@ -118,6 +120,7 @@ class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
     return GestureDetector(
       onTap: (){
         print("Stop Watch Image Widget");
+        stopWatchAlertScreen.StopWatchAlert(context);
       },
       child: Container(
         width: MediaQuery.of(context).size.width*0.3,

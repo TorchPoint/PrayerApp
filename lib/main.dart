@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Quicksand',
       ),
-      home: BibleTabScreen(),
+      home: SplashScreen(),
     );
   }
 }
