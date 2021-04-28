@@ -55,6 +55,7 @@ class AppStrings
   static const String NOTES_TEXT = "Notes";
   static const String OLD_TESTAMENT_TEXT = "Old Testament";
   static const String GENESIS_TEXT = "Genesis";
+  static const String GENESIS_ONE_TEXT = "Genesis1";
 
 
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_hybrid_app/bible/screens/bible_chapter_details_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
@@ -61,8 +62,8 @@ class _BibleChapterScreenState extends State<BibleChapterScreen> {
   {
     return GestureDetector(
       onTap: (){
-        print("next screen");
-        AppNavigation.navigateTo(context, BibleChapterScreen());
+        print("bible chapter screen");
+        AppNavigation.navigateTo(context, BibleChapterDetailsScreen());
       },
       child: Container(
         width: MediaQuery.of(context).size.width*0.85,
