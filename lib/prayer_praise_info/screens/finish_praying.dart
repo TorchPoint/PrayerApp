@@ -148,14 +148,14 @@ class _FinishPrayingState extends State<FinishPraying> {
     );
   }
 
-  //Answered Promises Widget
+  //Answered Widget
   Widget _answeredPromisesWidget()
   {
     return CustomGestureDetectorContainer(
       buttonColor: AppColors.BUTTON_COLOR,
       title: AppStrings.ANSWERED_TEXT,
-      containerVertical: 9.0,
-      containerHorizontal: 21.0,
+      containerVertical: answerTick == true ? 9.0 : 12.0,
+      containerHorizontal: answerTick == true ? 21.0 : 34.0,
       borderRadius: 22.0,
       textSize: 0.95,
       suffixImagePath: answerTick == true ? AssetPaths.ANSWERED_ICON : null,
@@ -168,7 +168,7 @@ class _FinishPrayingState extends State<FinishPraying> {
     );
   }
 
-  //Share Promises Widget
+  //Share Widget
   Widget _sharePromisesWidget()
   {
     return CustomGestureDetectorContainer(
