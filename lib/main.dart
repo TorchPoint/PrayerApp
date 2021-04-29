@@ -9,6 +9,7 @@ import 'package:prayer_hybrid_app/prayer_praise_info/screens/finish_praying_scre
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/pray_now_screen.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/prayer_praise_tab_screen.dart';
 import 'package:prayer_hybrid_app/reminder/screens/reminder_screen.dart';
+import 'package:prayer_hybrid_app/subscription/buy_now_subscription.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/splash/splash_screen.dart';
 import 'package:device_preview/device_preview.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Quicksand',
       ),
-      home: SplashScreen(),
+      home: BuyNowSubscription(),
     );
   }
 }

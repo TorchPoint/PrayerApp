@@ -63,6 +63,7 @@ class _PraiseListScreenState extends State<PraiseListScreen> {
       contentPaddingTop: 13.0,
       contentPaddingBottom: 13.0,
       contentPaddingRight: 8.0,
+      contentPaddingLeft: 20.0,
       suffixIcon: AssetPaths.SEARCH_ICON,
       suffixIconWidth: 15,
       hintSize: 15.0,
@@ -86,7 +87,7 @@ class _PraiseListScreenState extends State<PraiseListScreen> {
       child: Container(
         width: MediaQuery.of(context).size.width*0.85,
         margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.075,right: MediaQuery.of(context).size.width*0.075,top: 7.0,bottom: 7.0),
-        padding: EdgeInsets.only(top: 13.0,bottom: 13.0,left: 15.0,right: selectIndex == praiseIndex ? 2.0 : 5.0),
+        padding: EdgeInsets.only(top: 13.0,bottom: 13.0,left: 20.0,right: selectIndex == praiseIndex ? 6.0 : 20.0),
         decoration: BoxDecoration(
             color: selectIndex == praiseIndex ? AppColors.BUTTON_COLOR : AppColors.WHITE_COLOR,
             borderRadius: BorderRadius.circular(23.0),

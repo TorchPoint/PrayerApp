@@ -7,12 +7,12 @@ import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 
-class BibleChapterScreen extends StatefulWidget {
+class BibleChapterListScreen extends StatefulWidget {
   @override
-  _BibleChapterScreenState createState() => _BibleChapterScreenState();
+  _BibleChapterListScreenState createState() => _BibleChapterListScreenState();
 }
 
-class _BibleChapterScreenState extends State<BibleChapterScreen> {
+class _BibleChapterListScreenState extends State<BibleChapterListScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomBackgroundContainer(
@@ -68,7 +68,7 @@ class _BibleChapterScreenState extends State<BibleChapterScreen> {
       child: Container(
         width: MediaQuery.of(context).size.width*0.85,
         margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.075,right: MediaQuery.of(context).size.width*0.075,top: 7.5,bottom: bibleChapterIndex == 9 ? 15.0 : 7.5),
-        padding: EdgeInsets.only(top: 13.0,bottom: 13.0,left: 15.0,right: 5.0),
+        padding: EdgeInsets.only(top: 13.0,bottom: 13.0,left: 20.0,right: 20.0),
         decoration: BoxDecoration(
           color: AppColors.WHITE_COLOR,
           borderRadius: BorderRadius.circular(23.0),

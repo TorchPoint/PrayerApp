@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_hybrid_app/bible/screens/bible_chapter_screen.dart';
+import 'package:prayer_hybrid_app/bible/screens/bible_chapter_list_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
@@ -38,12 +38,12 @@ class _BiblePrayerListScreenState extends State<BiblePrayerListScreen> {
     return GestureDetector(
       onTap: (){
         print("next screen");
-        AppNavigation.navigateTo(context, BibleChapterScreen());
+        AppNavigation.navigateTo(context, BibleChapterListScreen());
       },
       child: Container(
         width: MediaQuery.of(context).size.width*0.85,
         margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.075,right: MediaQuery.of(context).size.width*0.075,top: 7.5,bottom: biblePrayerIndex == biblePrayerList.length -1 ? 15.0 : 7.5),
-        padding: EdgeInsets.only(top: 13.0,bottom: 13.0,left: 15.0,right: 5.0),
+        padding: EdgeInsets.only(top: 13.0,bottom: 13.0,left: 20.0,right: 20.0),
         decoration: BoxDecoration(
             color: AppColors.WHITE_COLOR,
             borderRadius: BorderRadius.circular(23.0),
