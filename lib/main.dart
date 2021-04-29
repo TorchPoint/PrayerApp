@@ -5,6 +5,7 @@ import 'package:prayer_hybrid_app/add_prayer/screens/add_prayer_screen.dart';
 import 'package:prayer_hybrid_app/bible/screens/bible_prayer_list_screen.dart';
 import 'package:prayer_hybrid_app/bible/screens/bible_tab_screen.dart';
 import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
+import 'package:prayer_hybrid_app/prayer_group/screens/create_prayer_group_screen.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/finish_praying_screen.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/pray_now_screen.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/prayer_praise_tab_screen.dart';
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Quicksand',
       ),
-      home: PaySubscription(),
+      home: CreatePrayerGroupScreen(),
     );
   }
 }

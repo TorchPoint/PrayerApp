@@ -10,9 +10,10 @@ class CustomTextFormField extends StatelessWidget {
   Function(String) onValidate;
   int errorMaxLines,maxLines;
   double hintSize,textSize;
+  Color borderColor,filledColor;
 
 
-  CustomTextFormField({this.textController,this.containerWidth,this.hintText,this.borderRadius,this.contentPaddingTop,this.contentPaddingBottom,this.contentPaddingLeft,this.contentPaddingRight,this.prefixIcon,this.prefixIconWidth,this.suffixIcon,this.suffixIconWidth,this.obscureText,this.errorMaxLines,this.onValidate,this.maxLines,this.hintSize,this.textSize,this.isCollapsed});
+  CustomTextFormField({this.textController,this.containerWidth,this.hintText,this.borderRadius,this.contentPaddingTop,this.contentPaddingBottom,this.contentPaddingLeft,this.contentPaddingRight,this.prefixIcon,this.prefixIconWidth,this.suffixIcon,this.suffixIconWidth,this.obscureText,this.errorMaxLines,this.onValidate,this.maxLines,this.hintSize,this.textSize,this.isCollapsed,this.borderColor,this.filledColor});
 
 
 
@@ -27,12 +28,12 @@ class CustomTextFormField extends StatelessWidget {
           isCollapsed: isCollapsed ?? false,
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(borderRadius),
-              borderSide: BorderSide(color: AppColors.WHITE_COLOR)
+              borderSide: BorderSide(color: borderColor ?? AppColors.WHITE_COLOR)
           ),
 
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(borderRadius),
-              borderSide: BorderSide(color: AppColors.WHITE_COLOR)
+              borderSide: BorderSide(color: borderColor ?? AppColors.WHITE_COLOR)
           ),
           errorBorder:OutlineInputBorder(
               borderRadius: BorderRadius.circular(borderRadius),
@@ -78,7 +79,9 @@ class CustomTextFormField extends StatelessWidget {
           :
              null,
           suffixIconConstraints: BoxConstraints(),
-          errorMaxLines: errorMaxLines ?? 1
+          errorMaxLines: errorMaxLines ?? 1,
+          fillColor: filledColor ?? AppColors.TRANSPARENT_COLOR,
+          filled: true
         ),
         style: TextStyle(
           fontSize: textSize ?? 17.0,

@@ -65,6 +65,9 @@ class AppStrings
   static const String SUBSCRIBE_TEXT = "Subscribe";
   static const String LOREM_IPSUM_TEXT2 = "Lorem ipsum dolor";
   static const String PAY_DOLLAR_TEXT = "PAY \$9.99";
+  static const String GROUP_TITLE_TEXT = "Enter Group Title";
+  static const String GROUP_MEMBERS_TEXT = "Enter Group Members";
+  static const String CREATE_GROUP_TEXT = "Create Group";
 
 
 
@@ -79,6 +82,7 @@ class AppStrings
   static const String DESCRIPTION_HINT_TEXT = "Enter Description";
   static const String PRAISE_TITLE_HINT_TEXT = "Enter Praise Title";
   static const String SEARCH_HINT_TEXT = "Search";
+  static const String GROUP_TITLE_HINT_TEXT = "Enter Group Title";
 
 
 
@@ -94,6 +98,7 @@ class AppStrings
   static const String CATEGORY_EMPTY_ERROR = 'Category can\'t be empty.';
   static const String DESCRIPTION_EMPTY_ERROR = 'Description can\'t be empty.';
   static const String PRAISE_TITLE_EMPTY_ERROR = 'Praise title can\'t be empty.';
+  static const String GROUP_TITLE_EMPTY_ERROR = 'Group title can\'t be empty.';
 
   // ------------------ Prayer And Praise Dropdown Strings -----------------//
   static const String HOME_DROPDOWN_TEXT = 'Home';
