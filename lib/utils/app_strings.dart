@@ -63,6 +63,8 @@ class AppStrings
   static const String DOLLAR_NINE_TEXT = "\$9.99";
   static const String BUY_NOW_TEXT = "BUY NOW";
   static const String SUBSCRIBE_TEXT = "Subscribe";
+  static const String LOREM_IPSUM_TEXT2 = "Lorem ipsum dolor";
+  static const String PAY_DOLLAR_TEXT = "PAY \$9.99";
 
 
 

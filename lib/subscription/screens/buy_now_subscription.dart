@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_hybrid_app/subscription/screens/pay_subscription_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
@@ -152,7 +153,7 @@ class _BuyNowSubscriptionState extends State<BuyNowSubscription> {
       fontWeight: FontWeight.w700,
       fontSize: 0.9,
       onPressed: (){
-        print("login");
+        AppNavigation.navigateTo(context, PaySubscription());
       },
     );
   }
