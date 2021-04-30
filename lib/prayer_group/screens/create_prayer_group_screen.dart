@@ -55,7 +55,7 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
                          children: [
                            ListView.builder
                              (
-                             padding: EdgeInsets.zero,
+                               padding: EdgeInsets.zero,
                                itemCount: groupMemberList.length,
                                shrinkWrap: true,
                                physics: NeverScrollableScrollPhysics(),
@@ -64,18 +64,17 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
                                }
                            ),
 
-                           SizedBox(height: 5.0,),
-
                            Align(
                                alignment: Alignment.center,
                                child: _createGroupWidget()
                            ),
+
                            SizedBox(height: 10.0,)
+
                          ],
                        ),
                      ),
                    ),
-
 
 
                ],
