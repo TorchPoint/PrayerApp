@@ -35,11 +35,17 @@ dependencies:
   stop_watch_timer: ^0.7.0
   flutter_contact: ^0.6.5+1
   permission_handler: ^5.1.0+2
-
+  flutter_launcher_icons: ^0.8.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/app_icon/prayer_app_icon.jpg"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
