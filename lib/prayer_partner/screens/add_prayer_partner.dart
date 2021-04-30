@@ -7,6 +7,8 @@ import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_raised_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
+import 'package:prayer_hybrid_app/prayer_partner/screens/prayer_partner_list_screen.dart';
+
 class AddPrayerPartner extends StatefulWidget {
   @override
   _AddPrayerPartnerState createState() => _AddPrayerPartnerState();
@@ -15,6 +17,8 @@ class AddPrayerPartner extends StatefulWidget {
 class _AddPrayerPartnerState extends State<AddPrayerPartner> {
   TextEditingController _addNameController = TextEditingController();
   TextEditingController _addMobileNoController = TextEditingController();
+  bool errorBoolName = true,errorBoolMobile = true;
+  String errorName = "",errorMobile ="";
   @override
   Widget build(BuildContext context) {
     return CustomBackgroundContainer(
@@ -39,8 +43,7 @@ class _AddPrayerPartnerState extends State<AddPrayerPartner> {
                         child: _addNameTextFormField()
                     ),
 
-
-                    //_errorGroupTitleWidget(),
+                    _errorWidget(errorBoolName,errorName),
 
                     SizedBox(height: 18.0,),
 
@@ -55,6 +58,8 @@ class _AddPrayerPartnerState extends State<AddPrayerPartner> {
                         child: _addMobileNoTextFormField()
                     ),
 
+                    _errorWidget(errorBoolMobile,errorMobile),
+
                     SizedBox(height: MediaQuery.of(context).size.height*0.06,),
 
                     Align(
@@ -66,7 +71,7 @@ class _AddPrayerPartnerState extends State<AddPrayerPartner> {
 
                     Align(
                         alignment: Alignment.center,
-                        child: _searchContactListWidget()
+                        child: _searchContactButtonWidget()
                     ),
 
                     SizedBox(height: 15.0,),
@@ -122,7 +127,7 @@ class _AddPrayerPartnerState extends State<AddPrayerPartner> {
         hintSize: 15.0,
         textSize: 15.0,
         isCollapsed: true,
-        borderColor: AppColors.TRANSPARENT_COLOR,
+        borderColor: errorBoolName == true ? AppColors.TRANSPARENT_COLOR : AppColors.ERROR_COLOR,
         filledColor: AppColors.BUTTON_COLOR,
       ),
     );
@@ -144,7 +149,7 @@ class _AddPrayerPartnerState extends State<AddPrayerPartner> {
       hintSize: 15.0,
       textSize: 15.0,
       isCollapsed: true,
-      borderColor: AppColors.TRANSPARENT_COLOR,
+      borderColor: errorBoolMobile == true ? AppColors.TRANSPARENT_COLOR : AppColors.ERROR_COLOR,
       filledColor: AppColors.WHITE_COLOR,
       hintColor: AppColors.BLACK_COLOR,
       textColor: AppColors.BLACK_COLOR,
@@ -152,6 +157,20 @@ class _AddPrayerPartnerState extends State<AddPrayerPartner> {
       keyBoardType: TextInputType.phone,
     );
   }
+
+
+  //Error Widget
+  Widget _errorWidget(bool errorBool,String errorMessage)
+  {
+    return errorBool == true ?
+    Container()
+        :
+    Padding(
+        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.1,right: MediaQuery.of(context).size.width*0.075,top: 10.0),
+        child: Text(errorMessage.toString(),style: TextStyle(fontSize: 13.0, color:  AppColors.ERROR_COLOR, fontWeight: FontWeight.w600,),)
+    );
+  }
+
 
 
   //Create Group Button Widget
@@ -167,26 +186,15 @@ class _AddPrayerPartnerState extends State<AddPrayerPartner> {
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,
       fontSize: 1.2,
-      onPressed: (){
-      //   if(_groupTitleController.text.trim().isEmpty)
-      //   {
-      //     setState(() {
-      //       groupTitleBool = false;
-      //     });
-      //   }
-      //   else{
-      //     setState(() {
-      //       groupTitleBool = true;
-      //     });
-      //     AppNavigation.navigateTo(context,PrayerGroupListScreen());
-      //   }
-       },
+      onPressed: () {
+        _addPrayerPartnerMethod();
+      }
     );
   }
 
 
-  //Create Group Button Widget
-  Widget _searchContactListWidget()
+  //Create Search Contact Button Widget
+  Widget _searchContactButtonWidget()
   {
     return CustomRaisedButton(
       containerWidth: MediaQuery.of(context).size.width*0.75,
@@ -214,6 +222,49 @@ class _AddPrayerPartnerState extends State<AddPrayerPartner> {
       },
     );
   }
+
+
+  void _addPrayerPartnerMethod()
+    {
+      if(_addNameController.text.trim().isEmpty)
+        {
+          errorName = AppStrings.ADD_NAME_EMPTY_ERROR;
+          errorBoolName = false;
+        }
+
+      else
+        {
+          errorName = "";
+          errorBoolName = true;
+        }
+
+      if(_addMobileNoController.text.trim().isEmpty)
+        {
+          errorMobile = AppStrings.MOBILE_NO_EMPTY_ERROR;
+          errorBoolMobile = false;
+        }
+      else
+        {
+          errorMobile = "";
+          errorBoolMobile = true;
+        }
+
+      if(errorBoolName && errorBoolMobile)
+        {
+          print("next");
+          AppNavigation.navigateTo(context, PrayerPartnerListScreen());
+          // _addNameController.text = "";
+          // _addMobileNoController.text = "";
+        }
+
+      setState(() {
+
+      });
+
+    }
+
+
+
 
 
 }

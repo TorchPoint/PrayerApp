@@ -74,7 +74,7 @@ class AppStrings
   static const String ADD_MOBILE_TEXT = "Add Mobile";
   static const String ADD_PRAYER_PARTNER_TEXT = "Add Prayer Partner";
   static const String SEARCH_CONTACT_LIST_TEXT = "Search Contact List";
-
+  static const String ADD_NEW_PRAYER_PARTNER_TEXT = "Add New Prayer Partner";
 
 
 
@@ -107,6 +107,7 @@ class AppStrings
   static const String DESCRIPTION_EMPTY_ERROR = 'Description can\'t be empty.';
   static const String PRAISE_TITLE_EMPTY_ERROR = 'Praise title can\'t be empty.';
   static const String GROUP_TITLE_EMPTY_ERROR = 'Group title can\'t be empty.';
+  static const String MOBILE_NO_EMPTY_ERROR = 'Mobile No can\'t be empty.';
 
   // ------------------ Prayer And Praise Dropdown Strings -----------------//
   static const String HOME_DROPDOWN_TEXT = 'Home';
