@@ -10,10 +10,11 @@ class CustomTextFormField extends StatelessWidget {
   Function(String) onValidate;
   int errorMaxLines,maxLines;
   double hintSize,textSize;
-  Color borderColor,filledColor;
+  Color borderColor,filledColor,hintColor,textColor,cursorColor;
+  TextInputType keyBoardType;
 
 
-  CustomTextFormField({this.textController,this.containerWidth,this.hintText,this.borderRadius,this.contentPaddingTop,this.contentPaddingBottom,this.contentPaddingLeft,this.contentPaddingRight,this.prefixIcon,this.prefixIconWidth,this.suffixIcon,this.suffixIconWidth,this.obscureText,this.errorMaxLines,this.onValidate,this.maxLines,this.hintSize,this.textSize,this.isCollapsed,this.borderColor,this.filledColor});
+  CustomTextFormField({this.textController,this.containerWidth,this.hintText,this.borderRadius,this.contentPaddingTop,this.contentPaddingBottom,this.contentPaddingLeft,this.contentPaddingRight,this.prefixIcon,this.prefixIconWidth,this.suffixIcon,this.suffixIconWidth,this.obscureText,this.errorMaxLines,this.onValidate,this.maxLines,this.hintSize,this.textSize,this.isCollapsed,this.borderColor,this.filledColor,this.hintColor,this.textColor,this.cursorColor,this.keyBoardType});
 
 
 
@@ -53,7 +54,7 @@ class CustomTextFormField extends StatelessWidget {
           hintText: hintText,
           hintStyle: TextStyle(
             fontSize: hintSize ?? 17.0,
-            color: AppColors.WHITE_COLOR,
+            color: hintColor ?? AppColors.WHITE_COLOR,
             fontWeight: FontWeight.w400,
           ),
           errorStyle: TextStyle(
@@ -81,16 +82,16 @@ class CustomTextFormField extends StatelessWidget {
           suffixIconConstraints: BoxConstraints(),
           errorMaxLines: errorMaxLines ?? 1,
           fillColor: filledColor ?? AppColors.TRANSPARENT_COLOR,
-          filled: true
+          filled: true,
         ),
         style: TextStyle(
           fontSize: textSize ?? 17.0,
-          color: AppColors.WHITE_COLOR,
+          color: textColor ?? AppColors.WHITE_COLOR,
           fontWeight: FontWeight.w600,
         ),
-        keyboardType: TextInputType.emailAddress,
+        keyboardType: keyBoardType ?? TextInputType.emailAddress,
         obscureText: obscureText ?? false,
-        cursorColor: Colors.white,
+        cursorColor: cursorColor ?? Colors.white,
         maxLines: maxLines ?? 1,
       ),
     );

@@ -69,6 +69,12 @@ class AppStrings
   static const String GROUP_MEMBERS_TEXT = "Enter Group Members";
   static const String CREATE_GROUP_TEXT = "Create Group";
   static const String ADD_NEW_GROUP_TEXT = "Add New Group";
+  static const String PRAYER_PARTNER_TEXT = "Prayer Partner";
+  static const String ADD_NAME_TEXT = "Add Name";
+  static const String ADD_MOBILE_TEXT = "Add Mobile";
+  static const String ADD_PRAYER_PARTNER_TEXT = "Add Prayer Partner";
+  static const String SEARCH_CONTACT_LIST_TEXT = "Search Contact List";
+
 
 
 
@@ -84,6 +90,7 @@ class AppStrings
   static const String PRAISE_TITLE_HINT_TEXT = "Enter Praise Title";
   static const String SEARCH_HINT_TEXT = "Search";
   static const String GROUP_TITLE_HINT_TEXT = "Enter Group Title";
+  static const String ADD_MOBILE_NO_HINT_TEXT = "Add Mobile No";
 
 
 

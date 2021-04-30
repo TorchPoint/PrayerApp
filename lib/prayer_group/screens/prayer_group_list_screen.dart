@@ -127,7 +127,7 @@ class _PrayerGroupListScreenState extends State<PrayerGroupListScreen> {
       fontWeight: FontWeight.w700,
       fontSize: 1.25,
       onPressed: (){
-
+        AppNavigation.navigatorPop(context);
       },
     );
   }

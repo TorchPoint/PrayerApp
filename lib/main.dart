@@ -15,6 +15,7 @@ import 'file:///D:/Ubaid_Suhail_Projects/Ubaid_Technado_Projects/prayer_app/pray
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/splash/splash_screen.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:prayer_hybrid_app/prayer_partner/screens/add_prayer_partner.dart';
 
 void main() {
   runApp(MyApp());
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Quicksand',
       ),
-      home: BibleTabScreen(),
+      home: AddPrayerPartner(),
     );
   }
 }
