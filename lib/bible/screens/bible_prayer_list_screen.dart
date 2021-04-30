@@ -17,7 +17,7 @@ class _BiblePrayerListScreenState extends State<BiblePrayerListScreen> {
     return Column(
       children: [
         Text(AppStrings.OLD_TESTAMENT_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600),textScaleFactor: 1.55,),
-        SizedBox(height: 15.0,),
+        SizedBox(height: 12.0,),
         Expanded(
           child:ListView.builder
             (

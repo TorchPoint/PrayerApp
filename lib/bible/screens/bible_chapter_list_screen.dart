@@ -26,7 +26,7 @@ class _BibleChapterListScreenState extends State<BibleChapterListScreen> {
                 children: [
                   SizedBox(height: 10.0,),
                   Text(AppStrings.GENESIS_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600,letterSpacing: 1.0),textScaleFactor: 1.5,),
-                  SizedBox(height: 15.0,),
+                  SizedBox(height: 12.0,),
                   Expanded(
                     child:ListView.builder
                       (

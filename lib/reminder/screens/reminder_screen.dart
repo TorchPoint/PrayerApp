@@ -22,6 +22,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
         body: Column(
           children: [
             _customAppBar(),
+            SizedBox(height: 10.0,),
             Expanded(
                 child:ListView.builder(
                     itemCount: title.length,
@@ -58,7 +59,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
   {
     return Container(
       width: MediaQuery.of(context).size.width*0.85,
-      margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.075,right: MediaQuery.of(context).size.width*0.075,top:reminderIndex == 0 ? 25.0 : 8.0,bottom: reminderIndex == title.length -1 ? 16.0 : 8.0),
+      margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.075,right: MediaQuery.of(context).size.width*0.075,top:reminderIndex == 0 ? 15.0 : 8.0,bottom: reminderIndex == title.length -1 ? 16.0 : 8.0),
       padding: EdgeInsets.only(left: 15.0,right: 15.0,top: 13.0,bottom: 13.0),
       decoration: BoxDecoration(
         color: reminderIndex == 0 ?AppColors.BUTTON_COLOR :AppColors.WHITE_COLOR,

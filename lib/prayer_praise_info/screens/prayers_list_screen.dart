@@ -16,14 +16,14 @@ class PrayersListScreen extends StatefulWidget {
 class _PrayersListScreenState extends State<PrayersListScreen> {
   TextEditingController _searchController = TextEditingController();
   int selectIndex = 0;
-  List<String> prayerList = ["Test","Marriage","Car","Medical Emergency","Loan","Mom"];
+  List<String> prayerList = ["Test","Marriage","Car","Medical Emergency","Loan","Mom","Medical Emergency","Loan","Mom"];
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 10.0,),
+        SizedBox(height: 15.0,),
         _searchTextFormField(),
-         SizedBox(height: 7.0,),
+         SizedBox(height: 10.0,),
         Expanded(
           child: SingleChildScrollView(
             child: Column(
