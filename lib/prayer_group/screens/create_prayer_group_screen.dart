@@ -17,6 +17,7 @@ class CreatePrayerGroupScreen extends StatefulWidget {
 
 class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
   TextEditingController _groupTitleController = TextEditingController();
+  TextEditingController _addMemberController = TextEditingController();
   List<String> groupMemberList = ["Victoria","Mildred","Andy"];
   bool groupTitleBool = true;
 
@@ -239,7 +240,7 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
 
 
 
-  //Add group member alert
+  //Add group member alert Work Start
   void _addGroupMemberAlert()
   {
     showDialog(
@@ -248,22 +249,22 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
           return Dialog(
             insetPadding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.09,right: MediaQuery.of(context).size.width*0.09),
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)
+                borderRadius: BorderRadius.circular(10.0)
             ),
-            child:Container(
-              height: MediaQuery.of(context).size.height*0.5,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  _groupMemberTextFormField()
+            child:Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(height: MediaQuery.of(context).size.height*0.05,),
+                Padding(
+                  padding: EdgeInsets.only(left: 15.0,right: 15.0),
+                    child: _addMembersTextFormField()
+                ),
 
+                SizedBox(height: MediaQuery.of(context).size.height*0.05,),
+                _addMemberButtonWidget(),
+                SizedBox(height: MediaQuery.of(context).size.height*0.05,),
 
-
-
-
-
-                ],
-              ),
+              ],
             )
 
 
@@ -273,26 +274,65 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
   }
 
 
-  //Group Member Text Form Field
-  Widget _groupMemberTextFormField()
+  //Add Group Memebers Text Form Field End
+  Widget _addMembersTextFormField()
   {
-    return CustomTextFormField(
-      textController: _groupTitleController,
-      containerWidth: MediaQuery.of(context).size.width*0.85,
-      hintText: AppStrings.GROUP_TITLE_HINT_TEXT,
-      borderRadius: 28.0,
-      contentPaddingTop: 13.0,
-      contentPaddingBottom: 13.0,
-      contentPaddingRight: 20.0,
-      contentPaddingLeft: 20.0,
-      hintSize: 15.0,
-      textSize: 15.0,
-      isCollapsed: true,
+    return Container(
+      width: MediaQuery.of(context).size.width*0.85,
+      decoration: BoxDecoration(
+        color: AppColors.BUTTON_COLOR,
+        borderRadius: BorderRadius.circular(28.0),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.LIGHT_BLACK_COLOR.withOpacity(0.2),
+            blurRadius: 6,
+            offset: Offset(0, 5), // Shadow position
+          ),
+        ],
+      ),
+      child: CustomTextFormField(
+        textController: _addMemberController,
+        containerWidth: MediaQuery.of(context).size.width*0.6,
+        hintText: AppStrings.GROUP_MEMBER_HINT_TEXT,
+        borderRadius: 10.0,
+        contentPaddingTop: 13.0,
+        contentPaddingBottom: 13.0,
+        contentPaddingRight: 20.0,
+        contentPaddingLeft: 20.0,
+        hintSize: 15.0,
+        textSize: 15.0,
+        isCollapsed: true,
+        borderColor: AppColors.TRANSPARENT_COLOR,
+        filledColor: AppColors.BUTTON_COLOR,
+      ),
+    );
+  }
+
+
+  //Add Group Member Button Widget
+  Widget _addMemberButtonWidget()
+  {
+    return CustomRaisedButton(
+      containerWidth: MediaQuery.of(context).size.width*0.5,
+      containerHeight: MediaQuery.of(context).size.height*0.065,
+      buttonColor: AppColors.WHITE_COLOR,
+      borderColor: AppColors.BUTTON_COLOR,
+      elevation: 0.0,
+      buttonText: AppStrings.ADD_MEMBER_TEXT,
+      textColor: AppColors.BUTTON_COLOR,
+      fontWeight: FontWeight.w700,
+      fontSize: 1.25,
+      onPressed: (){
+        AppNavigation.navigatorPop(context);
+      },
     );
   }
 
 
 
+
+
+  //App Alert End
 
 
 

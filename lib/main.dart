@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Quicksand',
       ),
-      home: AddPrayerPartner(),
+      home: CreatePrayerGroupScreen(),
     );
   }
 }

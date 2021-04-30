@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_contact/contacts.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
@@ -19,6 +22,7 @@ class _AddPrayerPartnerState extends State<AddPrayerPartner> {
   TextEditingController _addMobileNoController = TextEditingController();
   bool errorBoolName = true,errorBoolMobile = true;
   String errorName = "",errorMobile ="";
+  bool _hasPermission;
   @override
   Widget build(BuildContext context) {
     return CustomBackgroundContainer(
@@ -219,6 +223,7 @@ class _AddPrayerPartnerState extends State<AddPrayerPartner> {
         //     });
         //     AppNavigation.navigateTo(context,PrayerGroupListScreen());
         //   }
+        //_askPermissions();
       },
     );
   }
@@ -264,7 +269,81 @@ class _AddPrayerPartnerState extends State<AddPrayerPartner> {
     }
 
 
-
+//     void contactList() async{
+//       // Get all contacts without thumbnail(faster)
+//
+//       final contacts = Contacts.listContacts();
+//       final total = await contacts.length;
+//       print(total.toString());
+//
+// // This will fetch the page this contact belongs to, and return the contact
+//       final contact = await contacts.get(total - 1);
+//
+//       while(await contacts.moveNext()) {
+//         final contact = await contacts.current;
+//         print(contact.displayName);
+//         print(contact.phones.toString());
+//       }
+//     }
+//
+//
+//   Future<void> _askPermissions() async {
+//     PermissionStatus permissionStatus;
+//     while (permissionStatus != PermissionStatus.granted) {
+//       try {
+//         permissionStatus = await _getContactPermission();
+//         if (permissionStatus != PermissionStatus.granted) {
+//           _hasPermission = false;
+//           _handleInvalidPermissions(permissionStatus);
+//         } else {
+//           _hasPermission = true;
+//         }
+//       } catch (e) {
+//         if (await showDialog(
+//             context: context,
+//             builder: (context) {
+//               return AlertDialog(
+//                 title: Text('Contact Permissions'),
+//                 content: Text(
+//                     'We are having problems retrieving permissions.  Would you like to '
+//                         'open the app settings to fix?'),
+//                 actions: [
+//                   Text('Close')
+//                 ],
+//               );
+//             }) ==
+//             true) {
+//           await openAppSettings();
+//         }
+//       }
+//     }
+//
+//     contactList();
+//   }
+//
+//   Future<PermissionStatus> _getContactPermission() async {
+//     final status = await Permission.contacts.status;
+//     if (!status.isGranted) {
+//       final result = await Permission.contacts.request();
+//       return result;
+//     } else {
+//       return status;
+//     }
+//   }
+//
+//   void _handleInvalidPermissions(PermissionStatus permissionStatus) {
+//     if (permissionStatus == PermissionStatus.denied) {
+//       throw PlatformException(
+//           code: 'PERMISSION_DENIED',
+//           message: 'Access to location data denied',
+//           details: null);
+//     } else if (permissionStatus == PermissionStatus.restricted) {
+//       throw PlatformException(
+//           code: 'PERMISSION_DISABLED',
+//           message: 'Location data is not available on device',
+//           details: null);
+//     }
+//   }
 
 
 }

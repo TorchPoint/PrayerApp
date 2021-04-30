@@ -75,6 +75,7 @@ class AppStrings
   static const String ADD_PRAYER_PARTNER_TEXT = "Add Prayer Partner";
   static const String SEARCH_CONTACT_LIST_TEXT = "Search Contact List";
   static const String ADD_NEW_PRAYER_PARTNER_TEXT = "Add New Prayer Partner";
+  static const String ADD_MEMBER_TEXT = "Add Member";
 
 
 
@@ -91,6 +92,7 @@ class AppStrings
   static const String SEARCH_HINT_TEXT = "Search";
   static const String GROUP_TITLE_HINT_TEXT = "Enter Group Title";
   static const String ADD_MOBILE_NO_HINT_TEXT = "Add Mobile No";
+  static const String GROUP_MEMBER_HINT_TEXT = "Enter Name";
 
 
 
