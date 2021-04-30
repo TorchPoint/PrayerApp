@@ -49,6 +49,7 @@ class AssetPaths
   static const String EDIT_ICON = "assets/icons/edit_icon.png";
   static const String SETTING_ICON = "assets/icons/setting_icon.png";
   static const String TICK_ICON = "assets/icons/tick_icon.png";
+  static const String EDIT_ICON_2 = "assets/icons/edit_icon2.png";
 
 
 

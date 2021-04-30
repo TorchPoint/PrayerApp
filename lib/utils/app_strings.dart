@@ -68,6 +68,7 @@ class AppStrings
   static const String GROUP_TITLE_TEXT = "Enter Group Title";
   static const String GROUP_MEMBERS_TEXT = "Enter Group Members";
   static const String CREATE_GROUP_TEXT = "Create Group";
+  static const String ADD_NEW_GROUP_TEXT = "Add New Group";
 
 
 
