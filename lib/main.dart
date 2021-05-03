@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Quicksand',
       ),
-      home: ChatScreen(),
+      home: DrawerScreen(),
     );
   }
 }

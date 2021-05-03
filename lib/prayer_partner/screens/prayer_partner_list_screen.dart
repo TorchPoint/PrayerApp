@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_hybrid_app/chat/screens/chat_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
@@ -69,6 +70,7 @@ class _PrayerPartnerListScreenState extends State<PrayerPartnerListScreen> {
       onTap: (){
         print("next screen");
         //AppNavigation.navigateTo(context, FinishPrayingScreen());
+        AppNavigation.navigateTo(context, ChatScreen());
       },
       child: Container(
         width: MediaQuery.of(context).size.width*0.85,

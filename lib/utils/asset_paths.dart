@@ -11,12 +11,13 @@ class AssetPaths
   static const String ADD_PRAYER_IMAGE  = "assets/images/add_prayer_image.png";
   static const String BIBLE_IMAGE  = "assets/images/bible_image.png";
   static const String ADD_PRAISE_IMAGE  = "assets/images/add_praise_image.png";
-  static const String PRAYER_PARTNER_SUBSCRIPTION_IMAGE  = "assets/images/prayer_partners_subs_image.png";
+  static const String PRAYER_PARTNER_WITHOUT_SUBSCRIPTION_IMAGE  = "assets/images/prayer_partners_without_subs_image.png";
+  static const String PRAYER_PARTNER_SUBSCRIPTION_IMAGE  = "assets/images/prayer_partners_subscription_image.png";
   static const String REMINDER_IMAGE  = "assets/images/reminder_image.png";
   static const String PRAY_NOW_SECOND_IMAGE  = "assets/images/pray_now_second_image.png";
   static const String STOP_WATCH_IMAGE  = "assets/images/stop_watch_image.png";
   static const String SEND_CHAT_IMAGE  = "assets/images/send_chat_image.png";
-
+  static const String SUBSCRIPTION_TEXT_IMAGE  = "assets/images/subscribe_text_image.png";
 
 
   //Icons
