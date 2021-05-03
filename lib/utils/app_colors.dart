@@ -12,6 +12,7 @@ class AppColors
   static const Color BLACK_COLOR = Colors.black;
   static const Color MENU_TEXT_COLOR = Color(0XFF02BECA);
   static const Color SETTINGS_OPTIONS_COLOR = Color(0XFF007B83);
+  static const Color MOST_DARK_GREY_COLOR = Color(0XFF959595);
 
 
 }

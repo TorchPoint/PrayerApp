@@ -77,6 +77,16 @@ class AppStrings
   static const String ADD_NEW_PRAYER_PARTNER_TEXT = "Add New Prayer Partner";
   static const String ADD_MEMBER_TEXT = "Add Member";
   static const String CHAT_USER_NAME = "Ben";
+  static const String CARD_NUMBER_TEXT ="**** **** **** 1234";
+  static const String CARD_NUMBER_TEXT2 ="**** **** **** 6598";
+  static const String CARD_NUMBER_TEXT3 ="**** **** **** 0069";
+  static const String PAYMENT_CARD_TEXT ="Payment Card";
+  static const String ADD_CARD_TEXT ="Add Card";
+  static const String DONE_TEXT ="Done";
+  static const String CANCEL_TEXT = "Cancel";
+  static const String CARD_DATE_TEXT ="12/20";
+  static const String EXPIRATION_DATE_GREATER_ERROR = 'Expiration date can\'t be smaller than current date.';
+
 
 
 
@@ -95,6 +105,10 @@ class AppStrings
   static const String ADD_MOBILE_NO_HINT_TEXT = "Add Mobile No";
   static const String GROUP_MEMBER_HINT_TEXT = "Enter Name";
   static const String CHAT_MESSAGE_HINT_TEXT = "Write a message..";
+  static const String CARD_NUMBER_HINT_TEXT = "Card Number";
+  static const String EXP_MONTH_HINT_TEXT = "Exp. Month";
+  static const String EXP_YEAR_HINT_TEXT = "Exp. Year";
+  static const String CARD_CVV_HINT_TEXT = "CVV";
 
 
 
@@ -112,6 +126,24 @@ class AppStrings
   static const String PRAISE_TITLE_EMPTY_ERROR = 'Praise title can\'t be empty.';
   static const String GROUP_TITLE_EMPTY_ERROR = 'Group title can\'t be empty.';
   static const String MOBILE_NO_EMPTY_ERROR = 'Mobile No can\'t be empty.';
+  static const String CARD_NUMBER_EMPTY_ERROR = 'Card Number can\'t be empty.';
+  static const String CARD_NUMBER_ERROR = 'Card Number is not valid.';
+  static const String EXPIRATION_MONTH_ERROR = 'Expiration Month can\'t be empty.';
+  static const String EXPIRATION_YEAR_ERROR = 'Expiration Year can\'t be empty.';
+  static const String CVV_EMPTY_ERROR = 'CVV can\'t be empty.';
+  static const String CVV_ERROR = 'CVV is not valid.';
+
+
+  // ------------------ Formatter Strings ------------------ //
+
+
+  static const String MONTH_NAME_FORMAT_MMMM = "MMMM";
+  static const String MONTH_NUMBER_FORMAT_MM = "MM";
+  static const String YEAR_FORMAT_YYYY = "yyyy";
+
+
+
+
 
   // ------------------ Prayer And Praise Dropdown Strings -----------------//
   static const String HOME_DROPDOWN_TEXT = 'Home';

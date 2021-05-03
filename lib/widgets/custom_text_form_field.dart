@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 
 class CustomTextFormField extends StatelessWidget {
   double containerWidth,borderRadius,contentPaddingTop,contentPaddingBottom,contentPaddingLeft,contentPaddingRight,prefixIconWidth,suffixIconWidth;
   String hintText,prefixIcon,suffixIcon;
-  bool obscureText,isCollapsed;
+  bool obscureText,isCollapsed,textFieldReadOnly;
   TextEditingController textController;
   Function(String) onValidate;
   int errorMaxLines,maxLines;
   double hintSize,textSize;
-  Color borderColor,filledColor,hintColor,textColor,cursorColor;
+  Color borderColor,filledColor,hintColor,textColor,cursorColor,prefixIconColor;
   TextInputType keyBoardType;
+  List<TextInputFormatter> textInputFormatter;
+  Function onTextFieldTap;
 
 
-  CustomTextFormField({this.textController,this.containerWidth,this.hintText,this.borderRadius,this.contentPaddingTop,this.contentPaddingBottom,this.contentPaddingLeft,this.contentPaddingRight,this.prefixIcon,this.prefixIconWidth,this.suffixIcon,this.suffixIconWidth,this.obscureText,this.errorMaxLines,this.onValidate,this.maxLines,this.hintSize,this.textSize,this.isCollapsed,this.borderColor,this.filledColor,this.hintColor,this.textColor,this.cursorColor,this.keyBoardType});
+  CustomTextFormField({this.textController,this.containerWidth,this.hintText,this.borderRadius,this.contentPaddingTop,this.contentPaddingBottom,this.contentPaddingLeft,this.contentPaddingRight,this.prefixIcon,this.prefixIconWidth,this.suffixIcon,this.suffixIconWidth,this.obscureText,this.errorMaxLines,this.onValidate,this.maxLines,this.hintSize,this.textSize,this.isCollapsed,this.borderColor,this.filledColor,this.hintColor,this.textColor,this.cursorColor,this.keyBoardType,this.textInputFormatter,this.textFieldReadOnly,this.onTextFieldTap,this.prefixIconColor});
 
 
 
@@ -25,6 +28,8 @@ class CustomTextFormField extends StatelessWidget {
       child: TextFormField(
         controller: textController,
         validator: onValidate,
+        onTap: onTextFieldTap,
+        readOnly: textFieldReadOnly ?? false,
         decoration: InputDecoration(
           isCollapsed: isCollapsed ?? false,
           enabledBorder: OutlineInputBorder(
@@ -66,7 +71,7 @@ class CustomTextFormField extends StatelessWidget {
           prefixIcon: prefixIcon != null ?
           Padding(
             padding: EdgeInsets.only(left: 16.0,right: 14.0),
-              child: Image.asset(prefixIcon,width: prefixIconWidth)
+              child: Image.asset(prefixIcon,width: prefixIconWidth,color: prefixIconColor,)
           )
           :
            null,
@@ -93,6 +98,7 @@ class CustomTextFormField extends StatelessWidget {
         obscureText: obscureText ?? false,
         cursorColor: cursorColor ?? Colors.white,
         maxLines: maxLines ?? 1,
+        inputFormatters: textInputFormatter ?? [],
       ),
     );
   }

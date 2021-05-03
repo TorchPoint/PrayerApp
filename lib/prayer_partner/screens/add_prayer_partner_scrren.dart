@@ -12,12 +12,12 @@ import 'package:prayer_hybrid_app/widgets/custom_raised_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
 import 'package:prayer_hybrid_app/prayer_partner/screens/prayer_partner_list_screen.dart';
 
-class AddPrayerPartner extends StatefulWidget {
+class AddPrayerPartnerScreen extends StatefulWidget {
   @override
-  _AddPrayerPartnerState createState() => _AddPrayerPartnerState();
+  _AddPrayerPartnerScreenState createState() => _AddPrayerPartnerScreenState();
 }
 
-class _AddPrayerPartnerState extends State<AddPrayerPartner> {
+class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
   TextEditingController _addNameController = TextEditingController();
   TextEditingController _addMobileNoController = TextEditingController();
   bool errorBoolName = true,errorBoolMobile = true;

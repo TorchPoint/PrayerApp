@@ -1,3 +1,5 @@
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+
 class Constants
 {
 
@@ -6,6 +8,9 @@ class Constants
 
   static const Pattern PASSWORD_VALIDATE_REGEX =
       r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+
+  //MaskTextInputFormatter for Card Number Field
+  static MaskTextInputFormatter cardNumberMaskFormatter =  MaskTextInputFormatter(mask: '#### #### #### ####', filter: { "#": RegExp(r'[0-9]') });
 
 
 }

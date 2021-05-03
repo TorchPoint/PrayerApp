@@ -18,6 +18,9 @@ class AssetPaths
   static const String STOP_WATCH_IMAGE  = "assets/images/stop_watch_image.png";
   static const String SEND_CHAT_IMAGE  = "assets/images/send_chat_image.png";
   static const String SUBSCRIPTION_TEXT_IMAGE  = "assets/images/subscribe_text_image.png";
+  static const String VISA_CARD_IMAGE = "assets/images/visa_card.png";
+  static const String MASTER_CARD_IMAGE = "assets/images/master_card.png";
+  static const String UCB_CARD_IMAGE = "assets/images/ucb_card.png";
 
 
   //Icons
@@ -55,6 +58,9 @@ class AssetPaths
   static const String EDIT_ICON_2 = "assets/icons/edit_icon2.png";
   static const String VIDEO_ICON = "assets/icons/video_icon.png";
   static const String AUDIO_ICON = "assets/icons/audio_icon.png";
+  static const String CARD_NUMBER_ICON = "assets/icons/card_number_icon.png";
+  static const String CARD_CVV_ICON = "assets/icons/card_cvv_icon.png";
+  static const String CALENDAR_ICON = "assets/icons/calendar_icon.png";
 
 
 

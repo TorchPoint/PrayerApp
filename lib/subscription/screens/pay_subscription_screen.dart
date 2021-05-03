@@ -6,6 +6,7 @@ import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/widgets/custom_raised_button.dart';
+import 'package:prayer_hybrid_app/subscription/screens/payment_cards_screen.dart';
 
 class PaySubscription extends StatefulWidget {
   @override
@@ -165,7 +166,7 @@ class _PaySubscriptionState extends State<PaySubscription> {
       fontWeight: FontWeight.w700,
       fontSize: 0.9,
       onPressed: (){
-        print("login");
+        AppNavigation.navigateTo(context, PaymentCardsScreen());
       },
     );
   }
