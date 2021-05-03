@@ -25,7 +25,8 @@ class CustomTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: containerWidth,
-      child: TextFormField(
+      child:
+      TextFormField(
         controller: textController,
         validator: onValidate,
         onTap: onTextFieldTap,

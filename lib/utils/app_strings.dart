@@ -66,7 +66,8 @@ class AppStrings
   static const String LOREM_IPSUM_TEXT2 = "Lorem ipsum dolor";
   static const String PAY_DOLLAR_TEXT = "PAY \$9.99";
   static const String GROUP_TITLE_TEXT = "Enter Group Title";
-  static const String GROUP_MEMBERS_TEXT = "Enter Group Members";
+  static const String SEARCH_GROUP_MEMBERS_TEXT = "Search Group Members";
+  static const String GROUP_MEMBERS_LIST_TEXT = "Group Members List";
   static const String CREATE_GROUP_TEXT = "Create Group";
   static const String ADD_NEW_GROUP_TEXT = "Add New Group";
   static const String PRAYER_PARTNER_TEXT = "Prayer Partner";
@@ -108,6 +109,7 @@ class AppStrings
   static const String EXP_MONTH_HINT_TEXT = "Exp. Month";
   static const String EXP_YEAR_HINT_TEXT = "Exp. Year";
   static const String CARD_CVV_HINT_TEXT = "CVV";
+  static const String SEARCH_MEMBERS_HINT_TEXT = "Search Members";
 
 
 
@@ -124,6 +126,7 @@ class AppStrings
   static const String DESCRIPTION_EMPTY_ERROR = 'Description can\'t be empty.';
   static const String PRAISE_TITLE_EMPTY_ERROR = 'Praise title can\'t be empty.';
   static const String GROUP_TITLE_EMPTY_ERROR = 'Group title can\'t be empty.';
+  static const String SEARCH_MEMBER_EMPTY_ERROR = 'Search member can\'t be empty.';
   static const String MOBILE_NO_EMPTY_ERROR = 'Mobile No can\'t be empty.';
   static const String CARD_NUMBER_EMPTY_ERROR = 'Card Number can\'t be empty.';
   static const String CARD_NUMBER_ERROR = 'Card Number is not valid.';
