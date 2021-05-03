@@ -15,6 +15,8 @@ class AssetPaths
   static const String REMINDER_IMAGE  = "assets/images/reminder_image.png";
   static const String PRAY_NOW_SECOND_IMAGE  = "assets/images/pray_now_second_image.png";
   static const String STOP_WATCH_IMAGE  = "assets/images/stop_watch_image.png";
+  static const String SEND_CHAT_IMAGE  = "assets/images/send_chat_image.png";
+
 
 
   //Icons
@@ -50,6 +52,8 @@ class AssetPaths
   static const String SETTING_ICON = "assets/icons/setting_icon.png";
   static const String TICK_ICON = "assets/icons/tick_icon.png";
   static const String EDIT_ICON_2 = "assets/icons/edit_icon2.png";
+  static const String VIDEO_ICON = "assets/icons/video_icon.png";
+  static const String AUDIO_ICON = "assets/icons/audio_icon.png";
 
 
 
