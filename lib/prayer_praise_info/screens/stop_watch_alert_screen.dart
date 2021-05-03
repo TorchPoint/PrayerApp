@@ -13,7 +13,7 @@ class StopWatchAlertScreen
   );
   int value;
   String displayTime;
-  void StopWatchAlert(BuildContext context)
+  void stopWatchAlert(BuildContext context)
     {
       showDialog(
           context: context,

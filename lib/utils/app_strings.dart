@@ -89,7 +89,6 @@ class AppStrings
 
 
 
-
   // ------------- Hint Text ---------------- //
   static const String FIRST_NAME_HINT_TEXT = "First Name";
   static const String LAST_NAME_HINT_TEXT = "Last Name";

@@ -120,7 +120,7 @@ class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
     return GestureDetector(
       onTap: (){
         print("Stop Watch Image Widget");
-        stopWatchAlertScreen.StopWatchAlert(context);
+        stopWatchAlertScreen.stopWatchAlert(context);
       },
       child: Container(
         width: MediaQuery.of(context).size.width*0.3,
