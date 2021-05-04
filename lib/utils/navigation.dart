@@ -28,9 +28,9 @@ class AppNavigation
     );
   }
 
-  static Future<String> navigateToUpdate(BuildContext context, Widget widget) async  {
-    String value = await Navigator.of(context)
-        .push(MaterialPageRoute<String>(builder: (context) => widget));
+  static Future<dynamic> navigateToUpdate(BuildContext context, Widget widget) async  {
+    dynamic value = await Navigator.of(context)
+        .push(MaterialPageRoute<dynamic>(builder: (context) => widget));
     //     .then((String value) {
     //   print("Value is"+value.toString());
     //   return value;
@@ -53,7 +53,7 @@ class AppNavigation
     Navigator.of(context).pop(true);
   }
 
-  static void navigatorPopData(BuildContext context, String data) {
+  static void navigatorPopData(BuildContext context, dynamic data) {
     Navigator.of(context).pop(data);
   }
 

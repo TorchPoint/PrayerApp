@@ -87,6 +87,8 @@ class AppStrings
   static const String CANCEL_TEXT = "Cancel";
   static const String CARD_DATE_TEXT ="12/20";
   static const String EXPIRATION_DATE_GREATER_ERROR = 'Expiration date can\'t be smaller than current date.';
+  static const String CONTACT_LIST_TEXT = "Contact List";
+  static const String NO_CONTACT_AVAILABLE = 'There are no contacts available on this device.';
 
 
 
@@ -134,6 +136,8 @@ class AppStrings
   static const String EXPIRATION_YEAR_ERROR = 'Expiration Year can\'t be empty.';
   static const String CVV_EMPTY_ERROR = 'CVV can\'t be empty.';
   static const String CVV_ERROR = 'CVV is not valid.';
+  static const String CONTACT_DENIED_ERROR = 'Access to contact data denied';
+  static const String CONTACT_PERMANENTLY_DENIED_ERROR = 'Access to contact data permanently denied';
 
 
   // ------------------ Formatter Strings ------------------ //

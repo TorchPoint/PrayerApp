@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_cupertino_date_picker_fork/flutter_cupertino_date_picker_fork.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:prayer_hybrid_app/prayer_partner/screens/add_prayer_partner_scrren.dart';
+import 'package:prayer_hybrid_app/prayer_partner/screens/add_prayer_partner_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';

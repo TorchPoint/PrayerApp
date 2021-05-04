@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_contact/contacts.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:prayer_hybrid_app/prayer_partner/screens/contact_list_screen.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
@@ -11,6 +11,7 @@ import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_raised_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
 import 'package:prayer_hybrid_app/prayer_partner/screens/prayer_partner_list_screen.dart';
+import 'package:prayer_hybrid_app/utils/app_dialogs.dart';
 
 class AddPrayerPartnerScreen extends StatefulWidget {
   @override
@@ -22,7 +23,7 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
   TextEditingController _addMobileNoController = TextEditingController();
   bool errorBoolName = true,errorBoolMobile = true;
   String errorName = "",errorMobile ="";
-  bool _hasPermission;
+  Map<String,dynamic> contactInfo = Map<String,dynamic>();
   @override
   Widget build(BuildContext context) {
     return CustomBackgroundContainer(
@@ -211,19 +212,7 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
       fontWeight: FontWeight.w700,
       fontSize: 1.2,
       onPressed: (){
-        //   if(_groupTitleController.text.trim().isEmpty)
-        //   {
-        //     setState(() {
-        //       groupTitleBool = false;
-        //     });
-        //   }
-        //   else{
-        //     setState(() {
-        //       groupTitleBool = true;
-        //     });
-        //     AppNavigation.navigateTo(context,PrayerGroupListScreen());
-        //   }
-        //_askPermissions();
+        _askPermissions();
       },
     );
   }
@@ -269,81 +258,45 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
     }
 
 
-//     void contactList() async{
-//       // Get all contacts without thumbnail(faster)
-//
-//       final contacts = Contacts.listContacts();
-//       final total = await contacts.length;
-//       print(total.toString());
-//
-// // This will fetch the page this contact belongs to, and return the contact
-//       final contact = await contacts.get(total - 1);
-//
-//       while(await contacts.moveNext()) {
-//         final contact = await contacts.current;
-//         print(contact.displayName);
-//         print(contact.phones.toString());
-//       }
-//     }
-//
-//
-//   Future<void> _askPermissions() async {
-//     PermissionStatus permissionStatus;
-//     while (permissionStatus != PermissionStatus.granted) {
-//       try {
-//         permissionStatus = await _getContactPermission();
-//         if (permissionStatus != PermissionStatus.granted) {
-//           _hasPermission = false;
-//           _handleInvalidPermissions(permissionStatus);
-//         } else {
-//           _hasPermission = true;
-//         }
-//       } catch (e) {
-//         if (await showDialog(
-//             context: context,
-//             builder: (context) {
-//               return AlertDialog(
-//                 title: Text('Contact Permissions'),
-//                 content: Text(
-//                     'We are having problems retrieving permissions.  Would you like to '
-//                         'open the app settings to fix?'),
-//                 actions: [
-//                   Text('Close')
-//                 ],
-//               );
-//             }) ==
-//             true) {
-//           await openAppSettings();
-//         }
-//       }
-//     }
-//
-//     contactList();
-//   }
-//
-//   Future<PermissionStatus> _getContactPermission() async {
-//     final status = await Permission.contacts.status;
-//     if (!status.isGranted) {
-//       final result = await Permission.contacts.request();
-//       return result;
-//     } else {
-//       return status;
-//     }
-//   }
-//
-//   void _handleInvalidPermissions(PermissionStatus permissionStatus) {
-//     if (permissionStatus == PermissionStatus.denied) {
-//       throw PlatformException(
-//           code: 'PERMISSION_DENIED',
-//           message: 'Access to location data denied',
-//           details: null);
-//     } else if (permissionStatus == PermissionStatus.restricted) {
-//       throw PlatformException(
-//           code: 'PERMISSION_DISABLED',
-//           message: 'Location data is not available on device',
-//           details: null);
-//     }
-//   }
+  Future<void> _askPermissions() async {
+    PermissionStatus permissionStatus = await _getContactPermission();
+    if (permissionStatus == PermissionStatus.granted) {
+      getContactInfo();
+    } else {
+      _handleInvalidPermissions(permissionStatus);
+    }
+  }
+
+  Future<PermissionStatus> _getContactPermission() async {
+    PermissionStatus permission = await Permission.contacts.status;
+    print("PErmission"+permission.toString());
+    if (permission != PermissionStatus.granted &&
+        permission != PermissionStatus.permanentlyDenied) {
+      PermissionStatus permissionStatus = await Permission.contacts.request();
+      return permissionStatus;
+    } else {
+      return permission;
+    }
+  }
+
+  void _handleInvalidPermissions(PermissionStatus permissionStatus) {
+    if (permissionStatus == PermissionStatus.denied) {
+      AppDialogs.showToast(message:AppStrings.CONTACT_DENIED_ERROR);
+    } else if (permissionStatus == PermissionStatus.permanentlyDenied) {
+      AppDialogs.showToast(message:AppStrings.CONTACT_PERMANENTLY_DENIED_ERROR);
+      //ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+  }
+
+  void getContactInfo() async
+  {
+    contactInfo = await AppNavigation.navigateToUpdate(context, ContactListScreen());
+    _addNameController.text = contactInfo["name"].toString();
+    _addMobileNoController.text = contactInfo["phone no"].toString();
+    //print(contactInfo.toString());
+  }
+
+
 
 
 }
