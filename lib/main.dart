@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Quicksand',
       ),
-      home: ReminderScreen(),
+      home: SplashScreen(),
     );
   }
 }

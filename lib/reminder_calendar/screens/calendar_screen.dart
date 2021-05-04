@@ -173,80 +173,75 @@ class _CalendarScreenState extends State<CalendarScreen> {
           ),
         ],
       ),
-      child: FormField<String>(
-        builder: (FormFieldState<String> state) {
-          return DropdownButtonHideUnderline(
-            child: DropdownButtonFormField<String>(
-              iconEnabledColor: AppColors.WHITE_COLOR,
-              dropdownColor: AppColors.WHITE_COLOR,
-              decoration: InputDecoration(
+      child:DropdownButtonHideUnderline(
+    child: DropdownButtonFormField<String>(
+    iconEnabledColor: AppColors.WHITE_COLOR,
+      dropdownColor: AppColors.WHITE_COLOR,
+      decoration: InputDecoration(
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30.0),
+              borderSide: BorderSide(color: errorBoolFrequency == true ? AppColors.TRANSPARENT_COLOR : AppColors.ERROR_COLOR)
+          ),
 
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      borderSide: BorderSide(color: errorBoolFrequency == true ? AppColors.TRANSPARENT_COLOR : AppColors.ERROR_COLOR)
-                  ),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30.0),
+              borderSide: BorderSide(color: errorBoolFrequency == true ? AppColors.TRANSPARENT_COLOR : AppColors.ERROR_COLOR)
+          ),
 
-                  focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      borderSide: BorderSide(color: errorBoolFrequency == true ? AppColors.TRANSPARENT_COLOR : AppColors.ERROR_COLOR)
-                  ),
+          border: InputBorder.none,
+          hintText: AppStrings.SET_FREQUENCY_HINT_TEXT,
+          hintStyle: TextStyle(
+            fontSize: 17.0,
+            color: AppColors.WHITE_COLOR,
+            fontWeight: FontWeight.w400,
+          ),
+          contentPadding: EdgeInsets.only(top: 13.0,bottom: 13.0,left: 20.0,right: 20.0),
+          fillColor: AppColors.BUTTON_COLOR,
+          filled: true
+      ),
+      isDense: true,
+      value: currentFrequencyValue,
+      onChanged: (String frequencyValue) {
+        print("current categoryValue:${frequencyValue}");
+        setState(() {
+          currentFrequencyValue = frequencyValue;
+        });
+      },
 
-                  border: InputBorder.none,
-                  hintText: AppStrings.SET_FREQUENCY_HINT_TEXT,
-                  hintStyle: TextStyle(
-                    fontSize: 17.0,
-                    color: AppColors.WHITE_COLOR,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  contentPadding: EdgeInsets.only(top: 13.0,bottom: 13.0,left: 20.0,right: 20.0),
-                  fillColor: AppColors.BUTTON_COLOR,
-                  filled: true
+      selectedItemBuilder: (BuildContext context) {
+        return frequencies.map((value) {
+          return Container(
+            width: MediaQuery.of(context).size.width*0.62,
+            child: Text(
+              value.toString(),
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                  color: AppColors.WHITE_COLOR,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600
               ),
-              isDense: true,
-              value: currentFrequencyValue,
-              onChanged: (String frequencyValue) {
-                print("current categoryValue:${frequencyValue}");
-                setState(() {
-                  currentFrequencyValue = frequencyValue;
-                });
-              },
-
-              selectedItemBuilder: (BuildContext context) {
-                return frequencies.map((value) {
-                  return Container(
-                    width: MediaQuery.of(context).size.width*0.62,
-                    child: Text(
-                      value.toString(),
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          color: AppColors.WHITE_COLOR,
-                          fontSize: 17,
-                          fontWeight: FontWeight.w600
-                      ),
-                    ),
-                  );
-                }).toList();
-              },
-
-              items: frequencies.map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Container(
-                    //width: MediaQuery.of(context).size.width*0.6,
-                    child: Text(value,style: TextStyle(
-                      fontSize: 17.0,
-                      color: value == currentFrequencyValue ? AppColors.SETTINGS_OPTIONS_COLOR :AppColors.MENU_TEXT_COLOR,
-                      fontWeight: value == currentFrequencyValue ? FontWeight.w800 : FontWeight.w600,
-                    ),
-
-                    ),
-                  ),
-                );
-              }).toList(),
             ),
           );
-        },
-      ),
+        }).toList();
+      },
+
+      items: frequencies.map((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Container(
+            //width: MediaQuery.of(context).size.width*0.6,
+            child: Text(value,style: TextStyle(
+              fontSize: 17.0,
+              color: value == currentFrequencyValue ? AppColors.SETTINGS_OPTIONS_COLOR :AppColors.MENU_TEXT_COLOR,
+              fontWeight: value == currentFrequencyValue ? FontWeight.w800 : FontWeight.w600,
+            ),
+
+            ),
+          ),
+        );
+      }).toList(),
+    ),
+    )
     );
   }
 
