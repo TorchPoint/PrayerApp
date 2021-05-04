@@ -18,6 +18,7 @@ import 'package:prayer_hybrid_app/splash/splash_screen.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:prayer_hybrid_app/prayer_partner/screens/add_prayer_partner_screen.dart';
 import 'package:prayer_hybrid_app/reminder_calendar/screens/time_alert_screen.dart';
+import 'package:prayer_hybrid_app/reminder_calendar/screens/calendar_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Quicksand',
       ),
-      home: SplashScreen(),
+      home: CalendarScreen(),
     );
   }
 }

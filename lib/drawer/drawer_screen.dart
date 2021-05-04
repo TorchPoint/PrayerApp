@@ -10,7 +10,6 @@ import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
-import 'package:prayer_hybrid_app/reminder_calendar/screens/time_alert_screen.dart';
 
 
 class DrawerScreen extends StatefulWidget{
@@ -22,7 +21,6 @@ class _DrawerScreenState extends State<DrawerScreen> with SingleTickerProviderSt
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   bool settingsOn = false;
   AnimationController _animationController;
-  TimeAlertScreen timeAlertScreen =  TimeAlertScreen();
 
   @override
   void initState() {
@@ -325,7 +323,6 @@ class _DrawerScreenState extends State<DrawerScreen> with SingleTickerProviderSt
     else if(navigateIndex == 5)
     {
       AppNavigation.navigatorPop(context);
-      timeAlertScreen.timeAlert(context);
     }
     //For Settings
     else if(navigateIndex == 6)

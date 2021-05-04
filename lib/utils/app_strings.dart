@@ -88,8 +88,10 @@ class AppStrings
   static const String CARD_DATE_TEXT ="12/20";
   static const String EXPIRATION_DATE_GREATER_ERROR = 'Expiration date can\'t be smaller than current date.';
   static const String CONTACT_LIST_TEXT = "Contact List";
-  static const String NO_CONTACT_AVAILABLE = 'There are no contacts available on this device.';
-
+  static const String NO_CONTACT_AVAILABLE = "There are no contacts available on this device.";
+  static const String SET_REMINDER = "Set Reminder for your prayer";
+  static const String ADD_REMINDER_TITLE = "Add Reminder Title";
+  static const String REMIND_ME_ON = "Remind me on";
 
 
   // ------------- Hint Text ---------------- //
@@ -112,32 +114,35 @@ class AppStrings
   static const String EXP_YEAR_HINT_TEXT = "Exp. Year";
   static const String CARD_CVV_HINT_TEXT = "CVV";
   static const String SEARCH_MEMBERS_HINT_TEXT = "Search Members";
+  static const String ADD_REMINDER_TITLE_HINT_TEXT = "Add Reminder Title";
 
 
 
   // ------------- Error Text ---------------- //
-  static const String FIRST_NAME_EMPTY_ERROR = 'First Name can\'t be empty.';
-  static const String LAST_NAME_EMPTY_ERROR = 'Last Name can\'t be empty.';
-  static const String EMAIL_EMPTY_ERROR = 'Email can\'t be empty.';
-  static const String EMAIL_INVALID_ERROR = 'Email is not valid.';
-  static const String PASSWORD_EMPTY_ERROR = 'Password can\'t be empty.';
-  static const String PASSWORD_INVALID_ERROR = 'Password must be 8 characters long and contains at least 1 upper case, 1 lower case, 1 digit & 1 special character.';
-  static const String PRAYER_TITLE_EMPTY_ERROR = 'Prayer title can\'t be empty.';
-  static const String ADD_NAME_EMPTY_ERROR = 'Add name can\'t be empty.';
-  static const String CATEGORY_EMPTY_ERROR = 'Category can\'t be empty.';
-  static const String DESCRIPTION_EMPTY_ERROR = 'Description can\'t be empty.';
-  static const String PRAISE_TITLE_EMPTY_ERROR = 'Praise title can\'t be empty.';
-  static const String GROUP_TITLE_EMPTY_ERROR = 'Group title can\'t be empty.';
-  static const String SEARCH_MEMBER_EMPTY_ERROR = 'Search member can\'t be empty.';
-  static const String MOBILE_NO_EMPTY_ERROR = 'Mobile No can\'t be empty.';
-  static const String CARD_NUMBER_EMPTY_ERROR = 'Card Number can\'t be empty.';
-  static const String CARD_NUMBER_ERROR = 'Card Number is not valid.';
-  static const String EXPIRATION_MONTH_ERROR = 'Expiration Month can\'t be empty.';
-  static const String EXPIRATION_YEAR_ERROR = 'Expiration Year can\'t be empty.';
-  static const String CVV_EMPTY_ERROR = 'CVV can\'t be empty.';
-  static const String CVV_ERROR = 'CVV is not valid.';
-  static const String CONTACT_DENIED_ERROR = 'Access to contact data denied';
-  static const String CONTACT_PERMANENTLY_DENIED_ERROR = 'Access to contact data permanently denied';
+  static const String FIRST_NAME_EMPTY_ERROR = "First Name can\'t be empty.";
+  static const String LAST_NAME_EMPTY_ERROR = "Last Name can\'t be empty.";
+  static const String EMAIL_EMPTY_ERROR = "Email can\'t be empty.";
+  static const String EMAIL_INVALID_ERROR = "Email is not valid.";
+  static const String PASSWORD_EMPTY_ERROR = "Password can\'t be empty.";
+  static const String PASSWORD_INVALID_ERROR = "Password must be 8 characters long and contains at least 1 upper case, 1 lower case, 1 digit & 1 special character.";
+  static const String PRAYER_TITLE_EMPTY_ERROR = "Prayer title can\'t be empty.";
+  static const String ADD_NAME_EMPTY_ERROR = "Add name can\'t be empty.";
+  static const String CATEGORY_EMPTY_ERROR = "Category can\'t be empty.";
+  static const String DESCRIPTION_EMPTY_ERROR = "Description can\'t be empty.";
+  static const String PRAISE_TITLE_EMPTY_ERROR = "Praise title can\'t be empty.";
+  static const String GROUP_TITLE_EMPTY_ERROR = "Group title can\'t be empty.";
+  static const String SEARCH_MEMBER_EMPTY_ERROR = "Search member can\'t be empty.";
+  static const String MOBILE_NO_EMPTY_ERROR = "Mobile No can\'t be empty.";
+  static const String CARD_NUMBER_EMPTY_ERROR = "Card Number can\'t be empty.";
+  static const String CARD_NUMBER_ERROR = "Card Number is not valid.";
+  static const String EXPIRATION_MONTH_ERROR = "Expiration Month can\'t be empty.";
+  static const String EXPIRATION_YEAR_ERROR = "Expiration Year can\'t be empty.";
+  static const String CVV_EMPTY_ERROR = "CVV can\'t be empty.";
+  static const String CVV_ERROR = "CVV is not valid.";
+  static const String CONTACT_DENIED_ERROR = "Access to contact data denied";
+  static const String CONTACT_PERMANENTLY_DENIED_ERROR = "Access to contact data permanently denied";
+  static const String ADD_REMINDER_TITLE_ERROR_TEXT = "Add reminder title can't be empty.";
+  static const String ADD_FREQUENCY_ERROR_TEXT = "Add frequency can't be empty.";
 
 
   // ------------------ Formatter Strings ------------------ //
@@ -152,52 +157,52 @@ class AppStrings
 
 
   // ------------------ Prayer And Praise Dropdown Strings -----------------//
-  static const String HOME_DROPDOWN_TEXT = 'Home';
-  static const String EDUCATION_DROPDOWN_TEXT = 'Education';
-  static const String MARRIAGE_DROPDOWN_TEXT = 'Marriage';
-  static const String FINANCE_DROPDOWN_TEXT = 'Finance';
-  static const String WISDOM_DROPDOWN_TEXT = 'Wisdom';
-  static const String MINISTRY_DROPDOWN_TEXT = 'Ministry';
-  static const String FORGIVENESS_DROPDOWN_TEXT = 'Forgiveness';
-  static const String FAITH_DROPDOWN_TEXT = 'Faith';
-  static const String HEALING_DROPDOWN_TEXT = 'Healing';
-  static const String ADDICTION_DROPDOWN_TEXT = 'Addiction';
-  static const String CONVERSION_DROPDOWN_TEXT = 'Conversion';
-  static const String SAFETY_DROPDOWN_TEXT = 'Safety';
-  static const String LOVE_DROPDOWN_TEXT = 'Love';
-  static const String DECISION_DROPDOWN_TEXT = 'Decision';
-  static const String WORK_DROPDOWN_TEXT = 'Work';
-  static const String BUSINESS_DROPDOWN_TEXT = 'Business';
-  static const String VICTORY_DROPDOWN_TEXT = 'Victory';
-  static const String COUNTRY_DROPDOWN_TEXT = 'Country';
-  static const String FRIENDSHIP_DROPDOWN_TEXT = 'Friendship';
-  static const String HEALTH_DROPDOWN_TEXT = 'Health';
-  static const String GUIDANCE_DROPDOWN_TEXT = 'Guidance';
-  static const String TRIAL_DROPDOWN_TEXT = 'Trial';
-  static const String COMFORT_DROPDOWN_TEXT = 'Comfort';
-  static const String SALVATION_DROPDOWN_TEXT = 'Salvation';
-  static const String PROTECTION_DROPDOWN_TEXT = 'Protection';
-  static const String FOOD_DROPDOWN_TEXT = 'Food';
-  static const String CHILDREN_DROPDOWN_TEXT = 'Children';
-  static const String PEACE_DROPDOWN_TEXT = 'Peace';
-  static const String FAMILY_DROPDOWN_TEXT = 'Family';
-  static const String EVENT_DROPDOWN_TEXT = 'Event';
-  static const String COURAGE_DROPDOWN_TEXT = 'Courage';
-  static const String FELLOWSHIP_DROPDOWN_TEXT = 'Fellowship';
-  static const String RECONCILIATION_DROPDOWN_TEXT = 'Reconciliation';
-  static const String LEADERSHIP_DROPDOWN_TEXT = 'Leadership';
-  static const String CRISIS_DROPDOWN_TEXT = 'Crisis';
-  static const String SPIRITUALITY_DROPDOWN_TEXT = 'Spirituality';
-  static const String HOLY_SPIRIT_DROPDOWN_TEXT = 'Holy Spirit';
-  static const String BLESSING_DROPDOWN_TEXT = 'Blessing';
-  static const String MIRACLE_DROPDOWN_TEXT = 'Miracle';
-  static const String DELIVERANCE_DROPDOWN_TEXT = 'Deliverance';
-  static const String REVIVAL_DROPDOWN_TEXT = 'Revival';
-  static const String SUCCESS_DROPDOWN_TEXT = 'Success';
-  static const String REST_DROPDOWN_TEXT = 'Rest';
-  static const String JUSTICE_DROPDOWN_TEXT = 'Justice';
-  static const String CONFLICT_DROPDOWN_TEXT = 'Conflict';
-  static const String OTHER_DROPDOWN_TEXT = 'Other';
+  static const String HOME_DROPDOWN_TEXT = "Home";
+  static const String EDUCATION_DROPDOWN_TEXT = "Education";
+  static const String MARRIAGE_DROPDOWN_TEXT = "Marriage";
+  static const String FINANCE_DROPDOWN_TEXT = "Finance";
+  static const String WISDOM_DROPDOWN_TEXT = "Wisdom";
+  static const String MINISTRY_DROPDOWN_TEXT = "Ministry";
+  static const String FORGIVENESS_DROPDOWN_TEXT = "Forgiveness";
+  static const String FAITH_DROPDOWN_TEXT = "Faith";
+  static const String HEALING_DROPDOWN_TEXT = "Healing";
+  static const String ADDICTION_DROPDOWN_TEXT = "Addiction";
+  static const String CONVERSION_DROPDOWN_TEXT = "Conversion";
+  static const String SAFETY_DROPDOWN_TEXT = "Safety";
+  static const String LOVE_DROPDOWN_TEXT = "Love";
+  static const String DECISION_DROPDOWN_TEXT = "Decision";
+  static const String WORK_DROPDOWN_TEXT = "Work";
+  static const String BUSINESS_DROPDOWN_TEXT = "Business";
+  static const String VICTORY_DROPDOWN_TEXT = "Victory";
+  static const String COUNTRY_DROPDOWN_TEXT = "Country";
+  static const String FRIENDSHIP_DROPDOWN_TEXT = "Friendship";
+  static const String HEALTH_DROPDOWN_TEXT = "Health";
+  static const String GUIDANCE_DROPDOWN_TEXT = "Guidance";
+  static const String TRIAL_DROPDOWN_TEXT = "Trial";
+  static const String COMFORT_DROPDOWN_TEXT = "Comfort";
+  static const String SALVATION_DROPDOWN_TEXT = "Salvation";
+  static const String PROTECTION_DROPDOWN_TEXT = "Protection";
+  static const String FOOD_DROPDOWN_TEXT = "Food";
+  static const String CHILDREN_DROPDOWN_TEXT = "Children";
+  static const String PEACE_DROPDOWN_TEXT = "Peace";
+  static const String FAMILY_DROPDOWN_TEXT = "Family";
+  static const String EVENT_DROPDOWN_TEXT = "Event";
+  static const String COURAGE_DROPDOWN_TEXT = "Courage";
+  static const String FELLOWSHIP_DROPDOWN_TEXT = "Fellowship";
+  static const String RECONCILIATION_DROPDOWN_TEXT = "Reconciliation";
+  static const String LEADERSHIP_DROPDOWN_TEXT = "Leadership";
+  static const String CRISIS_DROPDOWN_TEXT = "Crisis";
+  static const String SPIRITUALITY_DROPDOWN_TEXT = "Spirituality";
+  static const String HOLY_SPIRIT_DROPDOWN_TEXT = "Holy Spirit";
+  static const String BLESSING_DROPDOWN_TEXT = "Blessing";
+  static const String MIRACLE_DROPDOWN_TEXT = "Miracle";
+  static const String DELIVERANCE_DROPDOWN_TEXT = "Deliverance";
+  static const String REVIVAL_DROPDOWN_TEXT = "Revival";
+  static const String SUCCESS_DROPDOWN_TEXT = "Success";
+  static const String REST_DROPDOWN_TEXT = "Rest";
+  static const String JUSTICE_DROPDOWN_TEXT = "Justice";
+  static const String CONFLICT_DROPDOWN_TEXT = "Conflict";
+  static const String OTHER_DROPDOWN_TEXT = "Other";
 
   // -------------- PRAYER AND PRAISE DROPDOWN LIST -------------------- //
   static const List<String> categories = [
