@@ -9,6 +9,7 @@ import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_raised_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_social_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
+import 'dart:io' show Platform;
 
 class AuthLoginScreen extends StatefulWidget {
   PageController pageController;
@@ -64,9 +65,16 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
 
               SizedBox(height: 25.0,),
 
-              _signInAppleButtonWidget(),
+              Platform.isIOS ?
+              _signInAppleButtonWidget()
+              :
+              Container(),
 
-              SizedBox(height: 15.0,),
+
+              Platform.isIOS ?
+              SizedBox(height: 15.0,)
+              :
+              SizedBox(height: 0.0,),
 
               _signInFacebookButtonWidget(),
 
