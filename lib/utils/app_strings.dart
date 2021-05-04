@@ -115,6 +115,7 @@ class AppStrings
   static const String CARD_CVV_HINT_TEXT = "CVV";
   static const String SEARCH_MEMBERS_HINT_TEXT = "Search Members";
   static const String ADD_REMINDER_TITLE_HINT_TEXT = "Add Reminder Title";
+  static const String SET_FREQUENCY_HINT_TEXT = "Set Frequency";
 
 
 

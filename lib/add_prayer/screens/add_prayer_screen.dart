@@ -203,7 +203,7 @@ class _AddPrayerScreenState extends State<AddPrayerScreen> {
               selectedItemBuilder: (BuildContext context) {
                 return AppStrings.categories.map((value) {
                   return Container(
-                    width: MediaQuery.of(context).size.width*0.68,
+                    width: MediaQuery.of(context).size.width*0.65,
                     child: Text(
                       value.toString(),
                       overflow: TextOverflow.ellipsis,

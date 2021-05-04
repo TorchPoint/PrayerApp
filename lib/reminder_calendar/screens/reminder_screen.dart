@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_hybrid_app/reminder_calendar/screens/calendar_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
@@ -49,7 +50,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
       },
       trailingIconPath: AssetPaths.ADD_ICON,
       trailingTap: (){
-        print("Add Icon");
+        AppNavigation.navigateTo(context, CalendarScreen());
       },
     );
   }

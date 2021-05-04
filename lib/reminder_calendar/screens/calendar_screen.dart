@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
@@ -8,6 +10,7 @@ import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_raised_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
 import 'package:prayer_hybrid_app/reminder_calendar/screens/time_alert_screen.dart';
+import 'package:table_calendar/table_calendar.dart';
 class CalendarScreen extends StatefulWidget {
   @override
   _CalendarScreenState createState() => _CalendarScreenState();
@@ -20,6 +23,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   String currentFrequencyValue;
   static List<String> frequencies = ["Once","Daily","Weekly","Monthly"];
   TimeAlertScreen timeAlertScreen =  TimeAlertScreen();
+  CalendarController _calendarController = CalendarController();
   @override
   Widget build(BuildContext context) {
     return CustomBackgroundContainer(
@@ -76,6 +80,12 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       ),
                     ),
 
+                    SizedBox(height: 18.0,),
+
+                    Container(
+                      margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.02,right: MediaQuery.of(context).size.width*0.02),
+                      child:_calendarWidget()
+                    ),
 
                   ],
                 ),
@@ -92,7 +102,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   Widget _customAppBar()
   {
     return CustomAppBar(
-      title: AppStrings.REMINDERS_TEXT,
+      title: AppStrings.PRAYER_GROUPS_TEXT,
       trailingIconPath: AssetPaths.TICK_ICON2,
       trailingTap: () {
         addReminderMethod();
@@ -173,16 +183,16 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0),
-                      borderSide: BorderSide(color: AppColors.TRANSPARENT_COLOR)
+                      borderSide: BorderSide(color: errorBoolFrequency == true ? AppColors.TRANSPARENT_COLOR : AppColors.ERROR_COLOR)
                   ),
 
                   focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0),
-                      borderSide: BorderSide(color: AppColors.TRANSPARENT_COLOR)
+                      borderSide: BorderSide(color: errorBoolFrequency == true ? AppColors.TRANSPARENT_COLOR : AppColors.ERROR_COLOR)
                   ),
 
                   border: InputBorder.none,
-                  hintText: AppStrings.CATEGORY_HINT_TEXT,
+                  hintText: AppStrings.SET_FREQUENCY_HINT_TEXT,
                   hintStyle: TextStyle(
                     fontSize: 17.0,
                     color: AppColors.WHITE_COLOR,
@@ -204,7 +214,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
               selectedItemBuilder: (BuildContext context) {
                 return frequencies.map((value) {
                   return Container(
-                    width: MediaQuery.of(context).size.width*0.68,
+                    width: MediaQuery.of(context).size.width*0.62,
                     child: Text(
                       value.toString(),
                       overflow: TextOverflow.ellipsis,
@@ -240,6 +250,122 @@ class _CalendarScreenState extends State<CalendarScreen> {
     );
   }
 
+
+  //Calendar Widget
+  Widget _calendarWidget()
+  {
+    return TableCalendar(
+      calendarController:_calendarController ,
+      startDay: DateTime.now().subtract(Duration(days: 200)),
+      endDay: DateTime.now().add(Duration(days: 365)),
+      initialSelectedDay: DateTime.now(),
+      weekendDays: [],
+      initialCalendarFormat: CalendarFormat.month,
+      availableCalendarFormats: {CalendarFormat.month:''},
+      headerStyle: HeaderStyle(
+          centerHeaderTitle: true,formatButtonVisible: false,
+           titleTextStyle: TextStyle(color: AppColors.WHITE_COLOR,fontSize: 20.0,fontWeight: FontWeight.w700),
+           leftChevronIcon: Icon(Icons.chevron_left,color: AppColors.WHITE_COLOR,size: 28.0,),
+           leftChevronPadding: EdgeInsets.zero,
+           leftChevronMargin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.2),
+           rightChevronIcon: Icon(Icons.chevron_right,color: AppColors.WHITE_COLOR,size: 28.0,),
+           rightChevronPadding: EdgeInsets.zero,
+           rightChevronMargin: EdgeInsets.only(right: MediaQuery.of(context).size.width*0.2),
+
+      ),
+
+      calendarStyle: CalendarStyle(outsideDaysVisible: false),
+      formatAnimation: FormatAnimation.slide,
+     // simpleSwipeConfig: SimpleSwipeConfig(),
+      availableGestures:AvailableGestures.horizontalSwipe,
+      rowHeight: 60.0,
+      builders: CalendarBuilders(
+        dayBuilder: (context,dateTime,lists)
+        {
+          return Container(
+           margin: EdgeInsets.only(right: 6.0,top: 4.0,bottom: 4.0),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.LIGHT_BLACK_COLOR.withOpacity(0.4),
+                  blurRadius: 6,
+                  offset: Offset(0, 3), // Shadow position
+                ),
+              ],
+            ),
+            child: Center(
+              child: Text(
+                DateFormat('dd').format(dateTime),
+                style: TextStyle(color: AppColors.BLACK_COLOR,fontSize: 12.0,fontWeight: FontWeight.w600),
+              ),
+            ),
+          );
+
+        },
+        selectedDayBuilder: (context,dateTime,lists)
+        {
+          return Container(
+            margin: EdgeInsets.only(right: 6.0,top: 4.0,bottom: 4.0),
+            decoration: BoxDecoration(
+                color: AppColors.BUTTON_COLOR,
+                shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.LIGHT_BLACK_COLOR.withOpacity(0.4),
+                  blurRadius: 6,
+                  offset: Offset(0, 3), // Shadow position
+                ),
+              ],
+
+            ),
+            child: Center(
+              child: Text(
+                DateFormat('dd').format(dateTime),
+                style: TextStyle(color: AppColors.WHITE_COLOR,fontSize: 12.0,fontWeight: FontWeight.w600),
+              ),
+            ),
+          );
+        },
+
+        dowWeekdayBuilder:(context,day)
+        {
+          return Container(
+            //margin: EdgeInsets.only(top: 10.0,bottom: 10.0,left: 1.0,right: 1.0),
+            height: 60.0,
+            padding: EdgeInsets.only(left:2.0,right:2.0,top: 0.0,bottom: 0.0),
+            decoration: BoxDecoration(
+                color: AppColors.TRANSPARENT_COLOR,
+                shape: BoxShape.circle,
+                border: Border.all(color: AppColors.WHITE_COLOR)
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                  color: AppColors.WHITE_COLOR,
+                  shape: BoxShape.circle
+              ),
+              child: Center(
+                child: Text(
+                  day.substring(0,2),
+                  style: TextStyle(color: AppColors.BLACK_COLOR,fontSize: 12.0,fontWeight: FontWeight.w600),
+                ),
+              ),
+            ),
+          );
+        },
+
+
+      ),
+
+    );
+  }
+
+
+
+
+
+
 void addReminderMethod()
     {
       if(_addReminderController.text.trim().isEmpty)
@@ -264,10 +390,18 @@ void addReminderMethod()
         errorMessageFrequency = "";
       }
 
+      setState(() {
+
+      });
+
+
       if(errorBoolReminder && errorBoolFrequency)
         {
-          print("ok ha");
+          AppNavigation.navigatorPop(context);
         }
 
+
     }
+
+
 }
