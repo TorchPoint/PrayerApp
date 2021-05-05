@@ -24,7 +24,7 @@ class CustomRaisedButton extends StatelessWidget {
         elevation: elevation ?? 0.0,
         highlightElevation: 0.0,
         onPressed: onPressed,
-        child: Text(buttonText,style: TextStyle(color: textColor,fontWeight: fontWeight ?? FontWeight.w500,letterSpacing: 1.0),textScaleFactor: fontSize),
+        child: Text(buttonText,style: TextStyle(color: textColor,fontWeight: fontWeight ?? FontWeight.w500,letterSpacing: 1.0),textScaleFactor: fontSize,textAlign: TextAlign.center,),
       ),
     );
   }
