@@ -163,7 +163,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   {
     return Container(
       width: MediaQuery.of(context).size.width*0.85,
-      padding: EdgeInsets.only(left: 13.0,right: 13.0,top: 11.0,bottom: 11.0),
+      padding: EdgeInsets.only(left: 13.0,right: 13.0,top: 10.5,bottom: 10.5),
       decoration: BoxDecoration(
         color: AppColors.BUTTON_COLOR,
         borderRadius: BorderRadius.circular(28.0),
@@ -336,88 +336,112 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
       calendarStyle: CalendarStyle(outsideDaysVisible: false),
       formatAnimation: FormatAnimation.slide,
-     // simpleSwipeConfig: SimpleSwipeConfig(),
       availableGestures:AvailableGestures.horizontalSwipe,
-      rowHeight: 60.0,
+      rowHeight: 65.0,
       builders: CalendarBuilders(
         dayBuilder: (context,dateTime,lists)
         {
-          return Container(
-           margin: EdgeInsets.only(right: 6.0,top: 4.0,bottom: 4.0),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.LIGHT_BLACK_COLOR.withOpacity(0.4),
-                  blurRadius: 6,
-                  offset: Offset(0, 3), // Shadow position
-                ),
-              ],
-            ),
-            child: Center(
-              child: Text(
-                DateFormat('dd').format(dateTime),
-                style: TextStyle(color: AppColors.BLACK_COLOR,fontSize: 12.0,fontWeight: FontWeight.w600),
-              ),
-            ),
-          );
+         return calendarDaysWidget(dateTime);
 
         },
         selectedDayBuilder: (context,dateTime,lists)
         {
-          return Container(
-            margin: EdgeInsets.only(right: 6.0,top: 4.0,bottom: 4.0),
-            decoration: BoxDecoration(
-                color: AppColors.BUTTON_COLOR,
-                shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.LIGHT_BLACK_COLOR.withOpacity(0.4),
-                  blurRadius: 6,
-                  offset: Offset(0, 3), // Shadow position
-                ),
-              ],
-
-            ),
-            child: Center(
-              child: Text(
-                DateFormat('dd').format(dateTime),
-                style: TextStyle(color: AppColors.WHITE_COLOR,fontSize: 12.0,fontWeight: FontWeight.w600),
-              ),
-            ),
-          );
+          return selectDayWidget(dateTime);
         },
 
         dowWeekdayBuilder:(context,day)
         {
-          return Container(
-            //margin: EdgeInsets.only(top: 10.0,bottom: 10.0,left: 1.0,right: 1.0),
-            height: 60.0,
-            padding: EdgeInsets.only(left:2.0,right:2.0,top: 0.0,bottom: 0.0),
-            decoration: BoxDecoration(
-                color: AppColors.TRANSPARENT_COLOR,
-                shape: BoxShape.circle,
-                border: Border.all(color: AppColors.WHITE_COLOR)
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                  color: AppColors.WHITE_COLOR,
-                  shape: BoxShape.circle
-              ),
-              child: Center(
-                child: Text(
-                  day.substring(0,2).toUpperCase(),
-                  style: TextStyle(color: AppColors.BLACK_COLOR,fontSize: 12.0,fontWeight: FontWeight.w600),
-                ),
-              ),
-            ),
-          );
+          return weekDaysWidget(day);
         },
 
 
       ),
 
+    );
+  }
+
+
+  //Calendar Days Widget
+  Widget calendarDaysWidget(DateTime dateTime)
+  {
+    return Container(
+      margin: EdgeInsets.only(right: 6.0,top: 5.0,bottom: 5.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.LIGHT_BLACK_COLOR.withOpacity(0.4),
+            blurRadius: 6,
+            offset: Offset(0, 3), // Shadow position
+          ),
+        ],
+      ),
+      child: Center(
+        child: Text(
+          DateFormat(AppStrings.DAY_FORMAT_DD).format(dateTime),
+          style: TextStyle(color: AppColors.BLACK_COLOR,fontSize: 12.0,fontWeight: FontWeight.w600),
+        ),
+      ),
+    );
+  }
+
+
+  //Select Day Widget
+  Widget selectDayWidget(DateTime dateTime)
+  {
+    return Container(
+      margin: EdgeInsets.only(right: 6.0,top: 5.0,bottom: 5.0),
+      decoration: BoxDecoration(
+        color: AppColors.BUTTON_COLOR,
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.LIGHT_BLACK_COLOR.withOpacity(0.4),
+            blurRadius: 6,
+            offset: Offset(0, 3), // Shadow position
+          ),
+        ],
+
+      ),
+      child: Center(
+        child: Text(
+          DateFormat(AppStrings.DAY_FORMAT_DD).format(dateTime),
+          style: TextStyle(color: AppColors.WHITE_COLOR,fontSize: 12.0,fontWeight: FontWeight.w600),
+        ),
+      ),
+    );
+  }
+
+
+
+
+
+
+  //Week Days Widget
+  Widget weekDaysWidget(String weekDay)
+  {
+    return Container(
+      height: MediaQuery.of(context).size.height*0.11,
+      padding: EdgeInsets.only(left:1.5,right:1.5,top: 1.5,bottom: 1.5),
+      margin: EdgeInsets.only(left: 0.5,right: 0.5),
+      decoration: BoxDecoration(
+          color: AppColors.TRANSPARENT_COLOR,
+          shape: BoxShape.circle,
+          border: Border.all(color: AppColors.WHITE_COLOR)
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+            color: AppColors.WHITE_COLOR,
+            shape: BoxShape.circle
+        ),
+        child: Center(
+          child: Text(
+            weekDay.substring(0,2).toUpperCase(),
+            style: TextStyle(color: AppColors.BLACK_COLOR,fontSize: 12.0,fontWeight: FontWeight.w600),
+          ),
+        ),
+      ),
     );
   }
 

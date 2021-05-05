@@ -153,6 +153,7 @@ class AppStrings
   static const String MONTH_NAME_FORMAT_MMMM = "MMMM";
   static const String MONTH_NUMBER_FORMAT_MM = "MM";
   static const String YEAR_FORMAT_YYYY = "yyyy";
+  static const String DAY_FORMAT_DD = "dd";
 
 
 
