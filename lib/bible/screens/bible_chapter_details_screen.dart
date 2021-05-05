@@ -25,7 +25,7 @@ class _BibleChapterDetailsScreenState extends State<BibleChapterDetailsScreen> {
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: EdgeInsets.only(left: 12.0,right: 12.0,bottom: 10.0),
+                  padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.06,right: MediaQuery.of(context).size.width*0.04,bottom: 10.0),
                   child: Text(AppStrings.LOREM_EPSUM_STRING,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600,height: 1.5),textScaleFactor: 1.1),
                 ),
               ),
