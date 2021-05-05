@@ -24,6 +24,7 @@ class _PrayerPraiseTabScreenState extends State<PrayerPraiseTabScreen> with Sing
   @override
   void initState() {
     super.initState();
+    titleIndex = widget.tabInitialIndex;
     _tabController = new TabController(vsync: this, length: 2,initialIndex:widget.tabInitialIndex);
     _tabController.addListener((){
       print("Tab Controller Index:${_tabController.index}");
