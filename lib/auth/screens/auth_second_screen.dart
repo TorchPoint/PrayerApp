@@ -5,7 +5,7 @@ import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'package:prayer_hybrid_app/widgets/custom_raised_button.dart';
 
 class AuthSecondScreen extends StatefulWidget {
-  PageController pageController;
+  final PageController pageController;
 
   AuthSecondScreen({this.pageController});
 

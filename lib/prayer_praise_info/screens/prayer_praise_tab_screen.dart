@@ -11,7 +11,7 @@ import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 
 class PrayerPraiseTabScreen extends StatefulWidget {
-  int tabInitialIndex;
+  final int tabInitialIndex;
   PrayerPraiseTabScreen({this.tabInitialIndex = 0});
   @override
   _PrayerPraiseTabScreenState createState() => _PrayerPraiseTabScreenState();
@@ -23,7 +23,6 @@ class _PrayerPraiseTabScreenState extends State<PrayerPraiseTabScreen> with Sing
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _tabController = new TabController(vsync: this, length: 2,initialIndex:widget.tabInitialIndex);
     _tabController.addListener((){
@@ -126,7 +125,6 @@ Widget _tabBarWidget()
 
 @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _tabController.dispose();
   }

@@ -18,7 +18,6 @@ class CreatePrayerGroupScreen extends StatefulWidget {
 
 class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
   TextEditingController _groupTitleController = TextEditingController();
-  TextEditingController _addMemberController = TextEditingController();
   TextEditingController _searchMemberController = TextEditingController();
   final membersList = [
     'John',
@@ -445,7 +444,6 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _groupTitleController.dispose();
     _searchMemberController.dispose();

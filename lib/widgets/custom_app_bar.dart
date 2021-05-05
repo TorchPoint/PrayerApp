@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
-import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 
 
 class CustomAppBar extends StatelessWidget {
 
-  Function leadingTap,trailingTap;
-  String title,leadingIconPath,trailingIconPath;
+  final Function leadingTap,trailingTap;
+  final String title,leadingIconPath,trailingIconPath;
 
   CustomAppBar({this.title,this.leadingIconPath,this.leadingTap,this.trailingIconPath,this.trailingTap});
 

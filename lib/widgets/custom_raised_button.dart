@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 
 class CustomRaisedButton extends StatelessWidget {
-  double containerWidth,containerHeight,elevation,fontSize;
-  Color buttonColor,textColor,borderColor;
-  Function onPressed;
-  String buttonText;
-  FontWeight fontWeight;
+  final double containerWidth,containerHeight,elevation,fontSize;
+  final Color buttonColor,textColor,borderColor;
+  final Function onPressed;
+  final String buttonText;
+  final FontWeight fontWeight;
 
   CustomRaisedButton({this.containerWidth,this.containerHeight,this.buttonColor,this.borderColor,this.elevation,this.buttonText,this.textColor,this.fontWeight,this.fontSize,this.onPressed});
 

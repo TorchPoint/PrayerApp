@@ -6,7 +6,7 @@ import 'package:prayer_hybrid_app/widgets/custom_raised_button.dart';
 
 
 class AuthFirstScreen extends StatefulWidget {
-  PageController pageController;
+  final PageController pageController;
   AuthFirstScreen({this.pageController});
 
   @override

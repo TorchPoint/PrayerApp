@@ -12,7 +12,7 @@ import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
 import 'dart:io' show Platform;
 
 class AuthLoginScreen extends StatefulWidget {
-  PageController pageController;
+  final PageController pageController;
 
   AuthLoginScreen({this.pageController});
 
@@ -295,7 +295,6 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();

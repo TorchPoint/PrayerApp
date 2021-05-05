@@ -4,7 +4,6 @@ import 'package:prayer_hybrid_app/auth/screens/auth_login_screen.dart';
 import 'package:prayer_hybrid_app/auth/screens/auth_second_screen.dart';
 import 'package:prayer_hybrid_app/auth/screens/auth_sign_up_screen.dart';
 import 'package:prayer_hybrid_app/auth/screens/auth_third_screen.dart';
-import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -20,7 +19,6 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     authWidgetList = [AuthFirstScreen(pageController:_authPageController),AuthSecondScreen(pageController:_authPageController),AuthThirdScreen(pageController:_authPageController),AuthSignUpScreen(pageController:_authPageController),AuthLoginScreen(pageController:_authPageController)];
   }
@@ -72,7 +70,6 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _authPageController.dispose();
   }

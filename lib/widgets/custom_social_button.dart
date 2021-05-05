@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_hybrid_app/utils/app_colors.dart';
-import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 
 
 
 class CustomSocialButton extends StatelessWidget {
-  double containerWidth,containerHeight,iconWidth;
-  Color buttonColor,labelTextColor,iconColor;
-  Function onPressed;
-  String labelText,iconPath;
+  final double containerWidth,containerHeight,iconWidth;
+  final Color buttonColor,labelTextColor,iconColor;
+  final Function onPressed;
+  final String labelText,iconPath;
 
   CustomSocialButton({this.containerWidth,this.containerHeight,this.buttonColor,this.labelText,this.labelTextColor,this.iconPath,this.iconWidth,this.iconColor,this.onPressed});
 

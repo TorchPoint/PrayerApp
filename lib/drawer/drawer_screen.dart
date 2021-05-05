@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_hybrid_app/add_prayer/screens/add_prayer_screen.dart';
 import 'package:prayer_hybrid_app/auth/screens/auth_main_screen.dart';
 import 'package:prayer_hybrid_app/home/home_screen.dart';
 import 'package:prayer_hybrid_app/prayer_group/screens/create_prayer_group_screen.dart';
@@ -24,7 +23,6 @@ class _DrawerScreenState extends State<DrawerScreen> with SingleTickerProviderSt
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _animationController = AnimationController(vsync: this,duration: Duration(milliseconds: 200));
   }
@@ -362,7 +360,6 @@ class _DrawerScreenState extends State<DrawerScreen> with SingleTickerProviderSt
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _animationController.dispose();
   }

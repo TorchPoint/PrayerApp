@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
-import 'package:prayer_hybrid_app/utils/asset_paths.dart';
+
 
 class CustomGestureDetectorContainer extends StatelessWidget {
-  Color buttonColor;
-  String title;
-  double containerVertical,containerHorizontal,borderRadius,textSize;
-  String suffixImagePath;
-  Function() onTap;
+  final Color buttonColor;
+  final String title;
+  final double containerVertical,containerHorizontal,borderRadius,textSize;
+  final String suffixImagePath;
+  final Function() onTap;
 
 
   CustomGestureDetectorContainer({this.buttonColor,this.title,this.containerVertical,this.containerHorizontal,this.borderRadius,this.suffixImagePath,this.textSize,this.onTap});

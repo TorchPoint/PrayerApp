@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
-import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  double containerWidth,borderRadius,contentPaddingTop,contentPaddingBottom,contentPaddingLeft,contentPaddingRight,prefixIconWidth,suffixIconWidth;
-  String hintText,prefixIcon,suffixIcon;
-  bool obscureText,isCollapsed,textFieldReadOnly;
-  TextEditingController textController;
-  Function(String) onValidate;
-  int errorMaxLines,maxLines;
-  double hintSize,textSize;
-  Color borderColor,filledColor,hintColor,textColor,cursorColor,prefixIconColor;
-  TextInputType keyBoardType;
-  List<TextInputFormatter> textInputFormatter;
-  Function onTextFieldTap,onSuffixIconTap;
+  final double containerWidth,borderRadius,contentPaddingTop,contentPaddingBottom,contentPaddingLeft,contentPaddingRight,prefixIconWidth,suffixIconWidth;
+  final String hintText,prefixIcon,suffixIcon;
+  final bool obscureText,isCollapsed,textFieldReadOnly;
+  final TextEditingController textController;
+  final Function(String) onValidate;
+  final int errorMaxLines,maxLines;
+  final double hintSize,textSize;
+  final Color borderColor,filledColor,hintColor,textColor,cursorColor,prefixIconColor;
+  final TextInputType keyBoardType;
+  final List<TextInputFormatter> textInputFormatter;
+  final Function onTextFieldTap,onSuffixIconTap;
 
 
   CustomTextFormField({this.textController,this.containerWidth,this.hintText,this.borderRadius,this.contentPaddingTop,this.contentPaddingBottom,this.contentPaddingLeft,this.contentPaddingRight,this.prefixIcon,this.prefixIconWidth,this.suffixIcon,this.suffixIconWidth,this.obscureText,this.errorMaxLines,this.onValidate,this.maxLines,this.hintSize,this.textSize,this.isCollapsed,this.borderColor,this.filledColor,this.hintColor,this.textColor,this.cursorColor,this.keyBoardType,this.textInputFormatter,this.textFieldReadOnly,this.onTextFieldTap,this.prefixIconColor,this.onSuffixIconTap});

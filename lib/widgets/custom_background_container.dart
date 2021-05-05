@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 
 class CustomBackgroundContainer extends StatelessWidget {
-  Widget child;
+  final Widget child;
   CustomBackgroundContainer({this.child});
   @override
   Widget build(BuildContext context) {

@@ -194,7 +194,7 @@ class _AddPraiseScreenState extends State<AddPraiseScreen> {
                 return null;
               },
               onChanged: (String categoryValue) {
-                print("current categoryValue:${categoryValue}");
+                //print("current categoryValue:${categoryValue}");
                 setState(() {
                   currentCategoryValue = categoryValue;
                 });
@@ -286,7 +286,6 @@ class _AddPraiseScreenState extends State<AddPraiseScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _praiseTitleController.dispose();
     _addNameController.dispose();

@@ -194,7 +194,7 @@ class _AddPrayerScreenState extends State<AddPrayerScreen> {
                 return null;
               },
               onChanged: (String categoryValue) {
-                print("current categoryValue:${categoryValue}");
+                //print("current categoryValue:${categoryValue}");
                 setState(() {
                   currentCategoryValue = categoryValue;
                 });
@@ -286,7 +286,6 @@ class _AddPrayerScreenState extends State<AddPrayerScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _prayerTitleController.dispose();
     _addNameController.dispose();

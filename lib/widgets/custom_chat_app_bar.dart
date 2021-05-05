@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
-import 'package:prayer_hybrid_app/utils/asset_paths.dart';
+
 
 
 class CustomChatAppBar extends StatelessWidget {
-
-  Function leadingTap,trailingVideoTap,trailingAudioTap;
-  String title,leadingIconPath,trailingVideoIconPath,trailingAudioIconPath;
+  final Function leadingTap,trailingVideoTap,trailingAudioTap;
+  final String title,leadingIconPath,trailingVideoIconPath,trailingAudioIconPath;
 
   CustomChatAppBar({this.title,this.leadingIconPath,this.leadingTap,this.trailingVideoIconPath,this.trailingVideoTap,this.trailingAudioIconPath,this.trailingAudioTap});
 

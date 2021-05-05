@@ -19,7 +19,6 @@ class _BibleTabScreenState extends State<BibleTabScreen> with SingleTickerProvid
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _bibleTabController = new TabController(vsync: this, length: 3);
   }
