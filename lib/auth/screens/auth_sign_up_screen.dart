@@ -7,8 +7,9 @@ import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'package:prayer_hybrid_app/utils/constants.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_raised_button.dart';
+import 'package:prayer_hybrid_app/widgets/custom_social_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
-
+import 'dart:io' show Platform;
 class AuthSignUpScreen extends StatefulWidget {
   final PageController pageController;
 
@@ -67,6 +68,25 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
               SizedBox(height: 18.0,),
 
               _alreadyAccountRichTextWidget(),
+
+              SizedBox(height: 25.0,),
+
+              Platform.isIOS ?
+              _signInAppleButtonWidget()
+                  :
+              Container(),
+
+
+              Platform.isIOS ?
+              SizedBox(height: 15.0,)
+                  :
+              SizedBox(height: 0.0,),
+
+              _signInFacebookButtonWidget(),
+
+              SizedBox(height: 15.0,),
+
+              _signInGoogleButtonWidget(),
 
               SizedBox(height: 5.0,),
 
@@ -254,6 +274,69 @@ Widget _alreadyAccountRichTextWidget()
    );
 
  }
+
+
+
+  //Sign in With Apple
+  Widget _signInAppleButtonWidget()
+  {
+    return CustomSocialButton(
+      containerWidth: MediaQuery.of(context).size.width*0.85,
+      containerHeight: MediaQuery.of(context).size.height*0.072,
+      buttonColor: AppColors.WHITE_COLOR,
+      labelText: AppStrings.SIGN_IN_APPLE_TEXT,
+      labelTextColor: AppColors.BLACK_COLOR,
+      iconPath: AssetPaths.APPLE_ICON,
+      iconWidth: 20.0,
+      iconColor: AppColors.BLACK_COLOR,
+      onPressed: (){
+        print("Sign in with Apple");
+        AppNavigation.navigateTo(context, DrawerScreen());
+      },
+    );
+  }
+
+  //Sign in With Facebook
+  Widget _signInFacebookButtonWidget()
+  {
+    return CustomSocialButton(
+      containerWidth: MediaQuery.of(context).size.width*0.85,
+      containerHeight: MediaQuery.of(context).size.height*0.072,
+      buttonColor: AppColors.FACEBOOK_BUTTON_COLOR,
+      labelText: AppStrings.SIGN_IN_FACEBOOK_TEXT,
+      labelTextColor: AppColors.WHITE_COLOR,
+      iconPath: AssetPaths.FACEBOOK_ICON,
+      iconWidth: 14.0,
+      iconColor: AppColors.WHITE_COLOR,
+      onPressed: (){
+        print("Sign in with Facebook");
+        AppNavigation.navigateTo(context, DrawerScreen());
+      },
+    );
+  }
+
+
+
+  //Sign in With Google
+  Widget _signInGoogleButtonWidget()
+  {
+    return CustomSocialButton(
+      containerWidth: MediaQuery.of(context).size.width*0.85,
+      containerHeight: MediaQuery.of(context).size.height*0.072,
+      buttonColor: AppColors.GOOGLE_BUTTON_COLOR,
+      labelText: AppStrings.SIGN_IN_GOOGLE_TEXT,
+      labelTextColor: AppColors.WHITE_COLOR,
+      iconPath: AssetPaths.GOOGLE_ICON,
+      iconWidth: 22.0,
+      iconColor: AppColors.WHITE_COLOR,
+      onPressed: (){
+        print("Sign in with Google");
+        AppNavigation.navigateTo(context, DrawerScreen());
+      },
+    );
+  }
+
+
 
 
  @override

@@ -24,6 +24,7 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
   bool errorBoolName = true,errorBoolMobile = true;
   String errorName = "",errorMobile ="";
   Map<String,dynamic> contactInfo = Map<String,dynamic>();
+  final GlobalKey<FormState> _addPrayerPartnerKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return CustomBackgroundContainer(
@@ -34,55 +35,56 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
             _customAppBar(),
             Expanded(
               child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 18.0,),
-                    Padding(
-                        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.075,right: MediaQuery.of(context).size.width*0.075),
-                        child: Text(AppStrings.ADD_NAME_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600),textScaleFactor: 1.18,)
-                    ),
-                    SizedBox(height: 10.0,),
-                    Align(
+                child: Form(
+                  key: _addPrayerPartnerKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 18.0,),
+                      Padding(
+                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.075,right: MediaQuery.of(context).size.width*0.075),
+                          child: Text(AppStrings.ADD_NAME_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600),textScaleFactor: 1.18,)
+                      ),
+                      SizedBox(height: 10.0,),
+                      Align(
+                          alignment: Alignment.center,
+                          child: _addNameTextFormField()
+                      ),
+
+
+                      SizedBox(height: 18.0,),
+
+                      Padding(
+                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.075,right: MediaQuery.of(context).size.width*0.075),
+                          child: Text(AppStrings.ADD_MOBILE_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600),textScaleFactor: 1.18,)
+                      ),
+                      SizedBox(height: 10.0,),
+
+                      Align(
+                          alignment: Alignment.center,
+                          child: _addMobileNoTextFormField()
+                      ),
+
+
+                      SizedBox(height: MediaQuery.of(context).size.height*0.06,),
+
+                      Align(
                         alignment: Alignment.center,
-                        child: _addNameTextFormField()
-                    ),
+                          child: _addPrayerPartnerWidget()
+                      ),
 
-                    _errorWidget(errorBoolName,errorName),
+                      SizedBox(height: 22.0,),
 
-                    SizedBox(height: 18.0,),
+                      Align(
+                          alignment: Alignment.center,
+                          child: _searchContactButtonWidget()
+                      ),
 
-                    Padding(
-                        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.075,right: MediaQuery.of(context).size.width*0.075),
-                        child: Text(AppStrings.ADD_MOBILE_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600),textScaleFactor: 1.18,)
-                    ),
-                    SizedBox(height: 10.0,),
-
-                    Align(
-                        alignment: Alignment.center,
-                        child: _addMobileNoTextFormField()
-                    ),
-
-                    _errorWidget(errorBoolMobile,errorMobile),
-
-                    SizedBox(height: MediaQuery.of(context).size.height*0.06,),
-
-                    Align(
-                      alignment: Alignment.center,
-                        child: _addPrayerPartnerWidget()
-                    ),
-
-                    SizedBox(height: 22.0,),
-
-                    Align(
-                        alignment: Alignment.center,
-                        child: _searchContactButtonWidget()
-                    ),
-
-                    SizedBox(height: 15.0,),
+                      SizedBox(height: 15.0,),
 
 
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -107,34 +109,29 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
   //Group Title Text Form Field
   Widget _addNameTextFormField()
   {
-    return Container(
-      width: MediaQuery.of(context).size.width*0.85,
-      decoration: BoxDecoration(
-        color: AppColors.BUTTON_COLOR,
-        borderRadius: BorderRadius.circular(28.0),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.LIGHT_BLACK_COLOR.withOpacity(0.2),
-            blurRadius: 6,
-            offset: Offset(0, 5), // Shadow position
-          ),
-        ],
-      ),
-      child: CustomTextFormField(
-        textController: _addNameController,
-        containerWidth: MediaQuery.of(context).size.width*0.85,
-        hintText: AppStrings.ADD_NAME_TEXT,
-        borderRadius: 28.0,
-        contentPaddingTop: 13.0,
-        contentPaddingBottom: 13.0,
-        contentPaddingRight: 20.0,
-        contentPaddingLeft: 20.0,
-        hintSize: 15.0,
-        textSize: 15.0,
-        isCollapsed: true,
-        borderColor: errorBoolName == true ? AppColors.TRANSPARENT_COLOR : AppColors.ERROR_COLOR,
-        filledColor: AppColors.BUTTON_COLOR,
-      ),
+    return CustomTextFormField(
+      textController: _addNameController,
+      containerWidth: MediaQuery.of(context).size.width*0.85,
+      hintText: AppStrings.ADD_NAME_TEXT,
+      borderRadius: 28.0,
+      contentPaddingTop: 13.0,
+      contentPaddingBottom: 13.0,
+      contentPaddingRight: 20.0,
+      contentPaddingLeft: 20.0,
+      hintSize: 15.0,
+      textSize: 15.0,
+      isCollapsed: true,
+      filledColor: AppColors.WHITE_COLOR,
+      hintColor: AppColors.BLACK_COLOR,
+      textColor: AppColors.BLACK_COLOR,
+      cursorColor: AppColors.BLACK_COLOR,
+      onValidate: (value){
+        if(value.trim().isEmpty)
+        {
+          return AppStrings.ADD_NAME_EMPTY_ERROR;;
+        }
+        return null;
+      },
     );
   }
 
@@ -154,28 +151,21 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
       hintSize: 15.0,
       textSize: 15.0,
       isCollapsed: true,
-      borderColor: errorBoolMobile == true ? AppColors.TRANSPARENT_COLOR : AppColors.ERROR_COLOR,
+      //borderColor: errorBoolMobile == true ? AppColors.TRANSPARENT_COLOR : AppColors.ERROR_COLOR,
       filledColor: AppColors.WHITE_COLOR,
       hintColor: AppColors.BLACK_COLOR,
       textColor: AppColors.BLACK_COLOR,
       cursorColor: AppColors.BLACK_COLOR,
       keyBoardType: TextInputType.phone,
+      onValidate: (value){
+        if(value.trim().isEmpty)
+          {
+            return AppStrings.MOBILE_NO_EMPTY_ERROR;
+          }
+        return null;
+      },
     );
   }
-
-
-  //Error Widget
-  Widget _errorWidget(bool errorBool,String errorMessage)
-  {
-    return errorBool == true ?
-    Container()
-        :
-    Padding(
-        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.1,right: MediaQuery.of(context).size.width*0.075,top: 10.0),
-        child: Text(errorMessage.toString(),style: TextStyle(fontSize: 13.0, color:  AppColors.ERROR_COLOR, fontWeight: FontWeight.w600,),)
-    );
-  }
-
 
 
   //Create Group Button Widget
@@ -220,40 +210,10 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
 
   void _addPrayerPartnerMethod()
     {
-      if(_addNameController.text.trim().isEmpty)
+      if(_addPrayerPartnerKey.currentState.validate())
         {
-          errorName = AppStrings.ADD_NAME_EMPTY_ERROR;
-          errorBoolName = false;
-        }
-
-      else
-        {
-          errorName = "";
-          errorBoolName = true;
-        }
-
-      if(_addMobileNoController.text.trim().isEmpty)
-        {
-          errorMobile = AppStrings.MOBILE_NO_EMPTY_ERROR;
-          errorBoolMobile = false;
-        }
-      else
-        {
-          errorMobile = "";
-          errorBoolMobile = true;
-        }
-
-      if(errorBoolName && errorBoolMobile)
-        {
-          print("next");
           AppNavigation.navigateTo(context, PrayerPartnerListScreen());
-          // _addNameController.text = "";
-          // _addMobileNoController.text = "";
         }
-
-      setState(() {
-
-      });
 
     }
 

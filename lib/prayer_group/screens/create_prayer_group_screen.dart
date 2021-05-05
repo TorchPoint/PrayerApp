@@ -138,34 +138,23 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
   //Group Title Text Form Field
   Widget _groupTitleTextFormField()
   {
-    return Container(
-      width: MediaQuery.of(context).size.width*0.85,
-      decoration: BoxDecoration(
-        color: AppColors.BUTTON_COLOR,
-        borderRadius: BorderRadius.circular(28.0),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.LIGHT_BLACK_COLOR.withOpacity(0.2),
-            blurRadius: 6,
-            offset: Offset(0, 5), // Shadow position
-          ),
-        ],
-      ),
-      child: CustomTextFormField(
-        textController: _groupTitleController,
-        containerWidth: MediaQuery.of(context).size.width*0.85,
-        hintText: AppStrings.GROUP_TITLE_HINT_TEXT,
-        borderRadius: 28.0,
-        contentPaddingTop: 13.0,
-        contentPaddingBottom: 13.0,
-        contentPaddingRight: 20.0,
-        contentPaddingLeft: 20.0,
-        hintSize: 15.0,
-        textSize: 15.0,
-        isCollapsed: true,
-        borderColor: groupTitleBool == true ? AppColors.TRANSPARENT_COLOR : AppColors.ERROR_COLOR,
-        filledColor: AppColors.BUTTON_COLOR,
-      ),
+    return CustomTextFormField(
+      textController: _groupTitleController,
+      containerWidth: MediaQuery.of(context).size.width*0.85,
+      hintText: AppStrings.GROUP_TITLE_HINT_TEXT,
+      borderRadius: 28.0,
+      contentPaddingTop: 13.0,
+      contentPaddingBottom: 13.0,
+      contentPaddingRight: 20.0,
+      contentPaddingLeft: 20.0,
+      hintSize: 15.0,
+      textSize: 15.0,
+      isCollapsed: true,
+      borderColor: groupTitleBool == true ? AppColors.TRANSPARENT_COLOR : AppColors.ERROR_COLOR,
+      filledColor: AppColors.WHITE_COLOR,
+      hintColor: AppColors.BLACK_COLOR,
+      textColor: AppColors.BLACK_COLOR,
+      cursorColor: AppColors.BLACK_COLOR,
     );
   }
 
