@@ -11,6 +11,7 @@ import 'package:prayer_hybrid_app/widgets/custom_raised_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
 import 'package:prayer_hybrid_app/reminder_calendar/screens/time_alert_screen.dart';
 import 'package:table_calendar/table_calendar.dart';
+
 class CalendarScreen extends StatefulWidget {
   @override
   _CalendarScreenState createState() => _CalendarScreenState();
@@ -20,7 +21,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   TextEditingController _addReminderController = TextEditingController();
   bool errorBoolReminder = true,errorBoolFrequency=true;
   String errorMessageReminder="",errorMessageFrequency="";
-  String currentFrequencyValue;
+  String currentFrequencyValue = AppStrings.SET_FREQUENCY_TEXT;
   static List<String> frequencies = ["Once","Daily","Weekly","Monthly"];
   TimeAlertScreen timeAlertScreen =  TimeAlertScreen();
   CalendarController _calendarController = CalendarController();
@@ -162,9 +163,11 @@ class _CalendarScreenState extends State<CalendarScreen> {
   {
     return Container(
       width: MediaQuery.of(context).size.width*0.85,
+      padding: EdgeInsets.only(left: 13.0,right: 13.0,top: 11.0,bottom: 11.0),
       decoration: BoxDecoration(
         color: AppColors.BUTTON_COLOR,
         borderRadius: BorderRadius.circular(28.0),
+        border: Border.all(color: errorBoolFrequency == true ? AppColors.TRANSPARENT_COLOR : AppColors.ERROR_COLOR),
         boxShadow: [
           BoxShadow(
             color: AppColors.LIGHT_BLACK_COLOR.withOpacity(0.2),
@@ -173,76 +176,138 @@ class _CalendarScreenState extends State<CalendarScreen> {
           ),
         ],
       ),
-      child:DropdownButtonHideUnderline(
-    child: DropdownButtonFormField<String>(
-    iconEnabledColor: AppColors.WHITE_COLOR,
-      dropdownColor: AppColors.WHITE_COLOR,
-      decoration: InputDecoration(
-          enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30.0),
-              borderSide: BorderSide(color: errorBoolFrequency == true ? AppColors.TRANSPARENT_COLOR : AppColors.ERROR_COLOR)
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          PopupMenuButton<String>(
+            padding: EdgeInsets.zero,
+            itemBuilder: (context) {
+              return frequencies.map((value) {
+                return PopupMenuItem(
+                  value: value,
+                  child: Text(
+                    value,style: TextStyle(
+                    fontSize: 16.0,
+                    color: value == currentFrequencyValue ? AppColors.SETTINGS_OPTIONS_COLOR :AppColors.MENU_TEXT_COLOR,
+                    fontWeight: value == currentFrequencyValue ? FontWeight.w800 : FontWeight.w600,
+                ),
+                    textAlign: TextAlign.center,
+                ));
+              }).toList();
+            },
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text(
+                  currentFrequencyValue.toString(),
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      color: AppColors.WHITE_COLOR,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w600
+                  ),
+                ),
+                Icon(Icons.arrow_drop_down,color: AppColors.WHITE_COLOR,),
+              ],
+            ),
+            onSelected: (selectValue) {
+              setState(() {
+                print('!!!===== $selectValue');
+                currentFrequencyValue = selectValue;
+              });
+            },
           ),
-
-          focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30.0),
-              borderSide: BorderSide(color: errorBoolFrequency == true ? AppColors.TRANSPARENT_COLOR : AppColors.ERROR_COLOR)
-          ),
-
-          border: InputBorder.none,
-          hintText: AppStrings.SET_FREQUENCY_HINT_TEXT,
-          hintStyle: TextStyle(
-            fontSize: 17.0,
-            color: AppColors.WHITE_COLOR,
-            fontWeight: FontWeight.w400,
-          ),
-          contentPadding: EdgeInsets.only(top: 13.0,bottom: 13.0,left: 20.0,right: 20.0),
-          fillColor: AppColors.BUTTON_COLOR,
-          filled: true
+        ],
       ),
-      isDense: true,
-      value: currentFrequencyValue,
-      onChanged: (String frequencyValue) {
-        print("current categoryValue:${frequencyValue}");
-        setState(() {
-          currentFrequencyValue = frequencyValue;
-        });
-      },
-
-      selectedItemBuilder: (BuildContext context) {
-        return frequencies.map((value) {
-          return Container(
-            width: MediaQuery.of(context).size.width*0.62,
-            child: Text(
-              value.toString(),
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                  color: AppColors.WHITE_COLOR,
-                  fontSize: 17,
-                  fontWeight: FontWeight.w600
-              ),
-            ),
-          );
-        }).toList();
-      },
-
-      items: frequencies.map((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Container(
-            //width: MediaQuery.of(context).size.width*0.6,
-            child: Text(value,style: TextStyle(
-              fontSize: 17.0,
-              color: value == currentFrequencyValue ? AppColors.SETTINGS_OPTIONS_COLOR :AppColors.MENU_TEXT_COLOR,
-              fontWeight: value == currentFrequencyValue ? FontWeight.w800 : FontWeight.w600,
-            ),
-
-            ),
-          ),
-        );
-      }).toList(),
-    ),
-    )
     );
+
+
+
+    //   Container(
+    //   width: MediaQuery.of(context).size.width*0.85,
+    //   decoration: BoxDecoration(
+    //     color: AppColors.BUTTON_COLOR,
+    //     borderRadius: BorderRadius.circular(28.0),
+    //     boxShadow: [
+    //       BoxShadow(
+    //         color: AppColors.LIGHT_BLACK_COLOR.withOpacity(0.2),
+    //         blurRadius: 6,
+    //         offset: Offset(0, 2), // Shadow position
+    //       ),
+    //     ],
+    //   ),
+    //   child:DropdownButtonHideUnderline(
+    // child: DropdownButtonFormField<String>(
+    // iconEnabledColor: AppColors.WHITE_COLOR,
+    //   dropdownColor: AppColors.WHITE_COLOR,
+    //   decoration: InputDecoration(
+    //     isCollapsed: true,
+    //       enabledBorder: OutlineInputBorder(
+    //           borderRadius: BorderRadius.circular(30.0),
+    //           borderSide: BorderSide(color: errorBoolFrequency == true ? AppColors.TRANSPARENT_COLOR : AppColors.ERROR_COLOR)
+    //       ),
+    //
+    //       focusedBorder: OutlineInputBorder(
+    //           borderRadius: BorderRadius.circular(30.0),
+    //           borderSide: BorderSide(color: errorBoolFrequency == true ? AppColors.TRANSPARENT_COLOR : AppColors.ERROR_COLOR)
+    //       ),
+    //
+    //       border: InputBorder.none,
+    //       hintText: AppStrings.SET_FREQUENCY_HINT_TEXT,
+    //       hintStyle: TextStyle(
+    //         fontSize: 17.0,
+    //         color: AppColors.WHITE_COLOR,
+    //         fontWeight: FontWeight.w400,
+    //       ),
+    //       contentPadding: EdgeInsets.only(top: 12.0,bottom: 12.0,right: MediaQuery.of(context).size.width*0.35),
+    //       fillColor: AppColors.BUTTON_COLOR,
+    //       filled: true
+    //   ),
+    //   isDense: true,
+    //   value: currentFrequencyValue,
+    //   onChanged: (String frequencyValue) {
+    //     print("current categoryValue:${frequencyValue}");
+    //     setState(() {
+    //       currentFrequencyValue = frequencyValue;
+    //     });
+    //   },
+    //
+    //   selectedItemBuilder: (BuildContext context) {
+    //     return frequencies.map((value) {
+    //       return Container(
+    //        width: MediaQuery.of(context).size.width*0.4,
+    //         child: Text(
+    //           value.toString(),
+    //           overflow: TextOverflow.ellipsis,
+    //           style: TextStyle(
+    //               color: AppColors.WHITE_COLOR,
+    //               fontSize: 17,
+    //               fontWeight: FontWeight.w600
+    //           ),
+    //           textAlign: TextAlign.center,
+    //         ),
+    //       );
+    //     }).toList();
+    //   },
+    //
+    //   items: frequencies.map((String value) {
+    //     return DropdownMenuItem<String>(
+    //       value: value,
+    //       child: Container(
+    //         width: MediaQuery.of(context).size.width*0.6,
+    //         child: Text(value,style: TextStyle(
+    //           fontSize: 17.0,
+    //           color: value == currentFrequencyValue ? AppColors.SETTINGS_OPTIONS_COLOR :AppColors.MENU_TEXT_COLOR,
+    //           fontWeight: value == currentFrequencyValue ? FontWeight.w800 : FontWeight.w600,
+    //         ),
+    //
+    //         ),
+    //       ),
+    //     );
+    //   }).toList(),
+    // ),
+    // )
+    // );
   }
 
 
@@ -342,7 +407,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
               ),
               child: Center(
                 child: Text(
-                  day.substring(0,2),
+                  day.substring(0,2).toUpperCase(),
                   style: TextStyle(color: AppColors.BLACK_COLOR,fontSize: 12.0,fontWeight: FontWeight.w600),
                 ),
               ),
@@ -374,7 +439,7 @@ void addReminderMethod()
         errorMessageReminder = "";
       }
 
-      if(currentFrequencyValue == null)
+      if(currentFrequencyValue == AppStrings.SET_FREQUENCY_TEXT)
       {
         errorBoolFrequency = false;
         errorMessageFrequency = AppStrings.ADD_FREQUENCY_ERROR_TEXT;

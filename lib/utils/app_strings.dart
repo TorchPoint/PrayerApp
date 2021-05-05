@@ -92,6 +92,7 @@ class AppStrings
   static const String SET_REMINDER = "Set Reminder for your prayer";
   static const String ADD_REMINDER_TITLE = "Add Reminder Title";
   static const String REMIND_ME_ON = "Remind me on";
+  static const String SET_FREQUENCY_TEXT = "Set Frequency";
 
 
   // ------------- Hint Text ---------------- //

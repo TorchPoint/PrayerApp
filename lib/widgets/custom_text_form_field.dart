@@ -14,10 +14,10 @@ class CustomTextFormField extends StatelessWidget {
   Color borderColor,filledColor,hintColor,textColor,cursorColor,prefixIconColor;
   TextInputType keyBoardType;
   List<TextInputFormatter> textInputFormatter;
-  Function onTextFieldTap;
+  Function onTextFieldTap,onSuffixIconTap;
 
 
-  CustomTextFormField({this.textController,this.containerWidth,this.hintText,this.borderRadius,this.contentPaddingTop,this.contentPaddingBottom,this.contentPaddingLeft,this.contentPaddingRight,this.prefixIcon,this.prefixIconWidth,this.suffixIcon,this.suffixIconWidth,this.obscureText,this.errorMaxLines,this.onValidate,this.maxLines,this.hintSize,this.textSize,this.isCollapsed,this.borderColor,this.filledColor,this.hintColor,this.textColor,this.cursorColor,this.keyBoardType,this.textInputFormatter,this.textFieldReadOnly,this.onTextFieldTap,this.prefixIconColor});
+  CustomTextFormField({this.textController,this.containerWidth,this.hintText,this.borderRadius,this.contentPaddingTop,this.contentPaddingBottom,this.contentPaddingLeft,this.contentPaddingRight,this.prefixIcon,this.prefixIconWidth,this.suffixIcon,this.suffixIconWidth,this.obscureText,this.errorMaxLines,this.onValidate,this.maxLines,this.hintSize,this.textSize,this.isCollapsed,this.borderColor,this.filledColor,this.hintColor,this.textColor,this.cursorColor,this.keyBoardType,this.textInputFormatter,this.textFieldReadOnly,this.onTextFieldTap,this.prefixIconColor,this.onSuffixIconTap});
 
 
 
@@ -79,9 +79,12 @@ class CustomTextFormField extends StatelessWidget {
           prefixIconConstraints: BoxConstraints(),
 
           suffixIcon: suffixIcon != null ?
-          Padding(
-            padding: EdgeInsets.only(right: 14.0),
-              child: Image.asset(suffixIcon,width: suffixIconWidth)
+          InkWell(
+            onTap: onSuffixIconTap,
+            child: Padding(
+              padding: EdgeInsets.only(right: 14.0),
+                child: Image.asset(suffixIcon,width: suffixIconWidth)
+            ),
           )
           :
              null,

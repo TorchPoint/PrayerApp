@@ -62,6 +62,8 @@ class AssetPaths
   static const String CARD_CVV_ICON = "assets/icons/card_cvv_icon.png";
   static const String CALENDAR_ICON = "assets/icons/calendar_icon.png";
   static const String TICK_ICON2 = "assets/icons/tick_icon2.png";
+  static const String VISIBLE_OFF_ICON = "assets/icons/visible_off_icon.png";
+  static const String VISIBLE_ON_ICON = "assets/icons/visible_on_icon.png";
 
 
 
