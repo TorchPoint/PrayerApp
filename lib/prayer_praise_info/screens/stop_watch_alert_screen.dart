@@ -30,34 +30,35 @@ class StopWatchAlertScreen
                   value = snap.data;
                   displayTime = StopWatchTimer.getDisplayTime(value,milliSecond: false);
                   // print("Display Time"+displayTime.toString());
-                  return Container(
-                    height: MediaQuery.of(context).size.height*0.5,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(height: MediaQuery.of(context).size.height*0.08,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            _hoursContainer(context,displayTime.substring(0,2).toString()),
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: MediaQuery.of(context).size.height*0.08,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _hoursContainer(context,displayTime.substring(0,2).toString()),
 
-                            SizedBox(width: 15.0),
+                          SizedBox(width: 15.0),
 
-                            _minutesContainer(context,displayTime.substring(3,5).toString()),
+                          _minutesContainer(context,displayTime.substring(3,5).toString()),
 
-                            SizedBox(width: 15.0),
+                          SizedBox(width: 15.0),
 
-                            _secondsContainer(context,displayTime.substring(6,8).toString())
-                          ],
-                        ),
-                        SizedBox(height: MediaQuery.of(context).size.height*0.1,),
+                          _secondsContainer(context,displayTime.substring(6,8).toString())
+                        ],
+                      ),
+                      SizedBox(height: MediaQuery.of(context).size.height*0.05,),
 
-                        _prayNowContainer(context),
+                      _prayNowContainer(context),
+
+                      SizedBox(height: MediaQuery.of(context).size.height*0.08,),
 
 
 
-                      ],
-                    ),
+                    ],
                   );
                 },
               ),
@@ -72,7 +73,7 @@ class StopWatchAlertScreen
  Widget _hoursContainer(BuildContext context,String hours)
  {
    return Container(
-     width: MediaQuery.of(context).size.width*0.18,
+     width: MediaQuery.of(context).size.width*0.19,
      height: MediaQuery.of(context).size.height*0.11,
      decoration: BoxDecoration(
        color: AppColors.BUTTON_COLOR,
@@ -96,7 +97,7 @@ class StopWatchAlertScreen
   Widget _minutesContainer(BuildContext context,String minutes)
   {
     return Container(
-      width: MediaQuery.of(context).size.width*0.18,
+      width: MediaQuery.of(context).size.width*0.19,
       height: MediaQuery.of(context).size.height*0.11,
       decoration: BoxDecoration(
         color: AppColors.BUTTON_COLOR,
@@ -120,7 +121,7 @@ class StopWatchAlertScreen
   Widget _secondsContainer(BuildContext context,String seconds)
   {
     return Container(
-      width: MediaQuery.of(context).size.width*0.18,
+      width: MediaQuery.of(context).size.width*0.19,
       height: MediaQuery.of(context).size.height*0.11,
       decoration: BoxDecoration(
         color: AppColors.BUTTON_COLOR,

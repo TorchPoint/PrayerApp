@@ -66,10 +66,10 @@ class _BibleTabScreenState extends State<BibleTabScreen> with SingleTickerProvid
       leadingTap: (){
         AppNavigation.navigatorPop(context);
       },
-      trailingIconPath: AssetPaths.SETTING_ICON,
-      trailingTap: (){
-        print("Setting Icon");
-      },
+      // trailingIconPath: AssetPaths.SETTING_ICON,
+      // trailingTap: (){
+      //   print("Setting Icon");
+      // },
     );
   }
 

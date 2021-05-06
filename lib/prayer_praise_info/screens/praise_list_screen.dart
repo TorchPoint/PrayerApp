@@ -16,7 +16,7 @@ class PraiseListScreen extends StatefulWidget {
 class _PraiseListScreenState extends State<PraiseListScreen> {
   TextEditingController _searchController = TextEditingController();
   int selectIndex = 0;
-  List<String> prayerList = ["Test","Marriage","Car","Medical Emergency","Loan","Mom","Test","Marriage","Car","Medical Emergency","Loan","Mom"];
+  List<String> prayerList = ["Test","Marriage","Car","Medical Emergency","Loan"];
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -158,8 +158,8 @@ class _PraiseListScreenState extends State<PraiseListScreen> {
   Widget _addNewPrayerButtonWidget()
   {
     return CustomRaisedButton(
-      containerWidth: MediaQuery.of(context).size.width*0.75,
-      containerHeight: MediaQuery.of(context).size.height*0.072,
+      containerWidth: MediaQuery.of(context).size.width*0.65,
+      containerHeight: MediaQuery.of(context).size.height*0.065,
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
       elevation: 7.0,

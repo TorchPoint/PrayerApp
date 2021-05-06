@@ -58,7 +58,7 @@ class _BuyNowSubscriptionState extends State<BuyNowSubscription> {
       },
       trailingIconPath: AssetPaths.CANCEL_ICON,
       trailingTap: (){
-        print("Cancel Icon");
+        AppNavigation.navigatorPop(context);
       },
     );
   }

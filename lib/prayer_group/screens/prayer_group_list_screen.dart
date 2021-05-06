@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/chat/screens/chat_screen.dart';
+import 'package:prayer_hybrid_app/prayer_group/screens/create_prayer_group_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
@@ -60,6 +61,7 @@ class _PrayerGroupListScreenState extends State<PrayerGroupListScreen> {
       trailingIconPath: AssetPaths.EDIT_ICON_2,
       trailingTap: (){
         print("Edit Icon 2");
+        AppNavigation.navigateTo(context, CreatePrayerGroupScreen());
       },
     );
   }
@@ -119,17 +121,17 @@ class _PrayerGroupListScreenState extends State<PrayerGroupListScreen> {
   Widget _createGroupWidget()
   {
     return CustomRaisedButton(
-      containerWidth: MediaQuery.of(context).size.width*0.75,
-      containerHeight: MediaQuery.of(context).size.height*0.072,
+      containerWidth: MediaQuery.of(context).size.width*0.73,
+      containerHeight: MediaQuery.of(context).size.height*0.070,
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
       elevation: 7.0,
       buttonText: AppStrings.ADD_NEW_GROUP_TEXT.toUpperCase(),
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,
-      fontSize: 1.25,
+      fontSize: 1.3,
       onPressed: (){
-        AppNavigation.navigatorPop(context);
+        AppNavigation.navigateTo(context, CreatePrayerGroupScreen());
       },
     );
   }

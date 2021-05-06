@@ -30,9 +30,9 @@ class AppStrings
   static const String LOGOUT_TEXT = "Logout";
   static const String DESCRIPTION_TEXT = "Description";
   static const String ADD_PRAYER_TEXT = "Add Prayer";
-  static const String EDIT_PRAYER_TEXT = "Edit Prayer";
+  static const String UPDATE_PRAYER_TEXT = "Update Prayer";
   static const String ADD_PRAISE_TEXT = "Add Praise";
-  static const String EDIT_PRAISE_TEXT = "Edit Praise";
+  static const String UPDATE_PRAISE_TEXT = "Update Praise";
   static const String PRAY_NOW_TEXT = "Pray Now";
   static const String BIBLE_TEXT = "The Bible";
   static const String PRAYER_PARTNERS_TEXT = "Prayer Partners";

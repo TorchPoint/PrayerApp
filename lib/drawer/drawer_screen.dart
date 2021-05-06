@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/auth/screens/auth_main_screen.dart';
 import 'package:prayer_hybrid_app/home/home_screen.dart';
 import 'package:prayer_hybrid_app/prayer_group/screens/create_prayer_group_screen.dart';
+import 'package:prayer_hybrid_app/prayer_group/screens/prayer_group_list_screen.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/prayer_praise_tab_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
@@ -316,7 +317,8 @@ class _DrawerScreenState extends State<DrawerScreen> with SingleTickerProviderSt
     else if(navigateIndex == 4)
     {
       AppNavigation.navigatorPop(context);
-      AppNavigation.navigateTo(context, CreatePrayerGroupScreen());
+      // AppNavigation.navigateTo(context, CreatePrayerGroupScreen());
+      AppNavigation.navigateTo(context, PrayerGroupListScreen());
     }
     //For Report
     else if(navigateIndex == 5)

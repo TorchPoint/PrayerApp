@@ -18,7 +18,7 @@ class FinishPraiseScreen extends StatefulWidget {
 
 class _FinishPraiseScreenState extends State<FinishPraiseScreen> {
 
-  bool answerTick = false;
+  bool answerTick = true;
   StopWatchAlertScreen stopWatchAlertScreen = StopWatchAlertScreen();
 
   @override
@@ -112,7 +112,7 @@ class _FinishPraiseScreenState extends State<FinishPraiseScreen> {
       },
       trailingIconPath: AssetPaths.CANCEL_ICON,
       trailingTap: (){
-        print("Cancel Icon");
+        AppNavigation.navigatorPop(context);
       },
     );
   }
@@ -168,10 +168,10 @@ class _FinishPraiseScreenState extends State<FinishPraiseScreen> {
       suffixImagePath: answerTick == true ? AssetPaths.ANSWERED_ICON : null,
       onTap: (){
         print("Answered");
-        setState(() {
-          answerTick = !answerTick;
-        });
-        AppNavigation.navigatorPop(context);
+        // setState(() {
+        //   answerTick = !answerTick;
+        // });
+        //AppNavigation.navigatorPop(context);
       },
     );
   }
@@ -198,7 +198,7 @@ class _FinishPraiseScreenState extends State<FinishPraiseScreen> {
   {
     return GestureDetector(
       onTap: (){
-        AppNavigation.navigateTo(context, AddPraiseScreen(praiseButtonText: AppStrings.EDIT_PRAISE_TEXT.toUpperCase(),));
+        AppNavigation.navigateTo(context, AddPraiseScreen(praiseButtonText: AppStrings.UPDATE_PRAISE_TEXT.toUpperCase(),));
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -207,7 +207,7 @@ class _FinishPraiseScreenState extends State<FinishPraiseScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(AppStrings.EDIT_PRAISE_TEXT.toUpperCase(),style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w700),textScaleFactor: 0.95,),
+            Text(AppStrings.UPDATE_PRAISE_TEXT.toUpperCase(),style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w700),textScaleFactor: 0.95,),
             SizedBox(width: 6.0,),
             Image.asset(AssetPaths.EDIT_ICON,width: 18.0,)
           ],

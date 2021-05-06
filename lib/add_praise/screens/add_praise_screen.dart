@@ -270,15 +270,15 @@ class _AddPraiseScreenState extends State<AddPraiseScreen> {
   Widget _addPraiseButtonWidget()
   {
     return CustomRaisedButton(
-      containerWidth: MediaQuery.of(context).size.width*0.85,
-      containerHeight: MediaQuery.of(context).size.height*0.075,
+      containerWidth: MediaQuery.of(context).size.width*0.65,
+      containerHeight: MediaQuery.of(context).size.height*0.07,
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
       elevation: 7.0,
       buttonText: widget.praiseButtonText,
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,
-      fontSize: 1.25,
+      fontSize: 1.3,
       onPressed: (){
         if(_addPraiseKey.currentState.validate())
         {

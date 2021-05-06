@@ -128,10 +128,10 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
       leadingTap: (){
         AppNavigation.navigatorPop(context);
       },
-      trailingIconPath: AssetPaths.SETTING_ICON,
-      trailingTap: (){
-        print("Prayer Group Icon");
-      },
+      // trailingIconPath: AssetPaths.SETTING_ICON,
+      // trailingTap: (){
+      //   print("Prayer Group Icon");
+      // },
     );
   }
 
@@ -238,12 +238,12 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
   Widget _addMemberWidget()
   {
     return CustomRaisedButton(
-      containerWidth: MediaQuery.of(context).size.width*0.52,
-      containerHeight: MediaQuery.of(context).size.height*0.06,
+      containerWidth: MediaQuery.of(context).size.width*0.60,
+      containerHeight: MediaQuery.of(context).size.height*0.065,
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
       elevation: 7.0,
-      buttonText: AppStrings.ADD_MEMBER_TEXT,
+      buttonText: AppStrings.ADD_MEMBER_TEXT.toUpperCase(),
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,
       fontSize: 1.25,
@@ -310,8 +310,8 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
   Widget _createGroupWidget()
   {
     return CustomRaisedButton(
-      containerWidth: MediaQuery.of(context).size.width*0.75,
-      containerHeight: MediaQuery.of(context).size.height*0.072,
+      containerWidth: MediaQuery.of(context).size.width*0.64,
+      containerHeight: MediaQuery.of(context).size.height*0.065,
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
       elevation: 7.0,
@@ -330,7 +330,8 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
           setState(() {
             groupTitleBool = true;
           });
-          AppNavigation.navigateTo(context,PrayerGroupListScreen());
+          //AppNavigation.navigateTo(context,PrayerGroupListScreen());
+          AppNavigation.navigatorPop(context);
         }
       },
     );

@@ -55,6 +55,7 @@ class _PaySubscriptionState extends State<PaySubscription> {
       trailingIconPath: AssetPaths.CANCEL_ICON,
       trailingTap: (){
         print("Cancel Icon");
+        AppNavigation.navigatorPop(context);
       },
     );
   }

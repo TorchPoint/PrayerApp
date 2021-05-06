@@ -112,7 +112,7 @@ class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
       },
       trailingIconPath: AssetPaths.CANCEL_ICON,
       trailingTap: (){
-        print("Cancel Icon");
+        AppNavigation.navigatorPop(context);
       },
     );
   }
@@ -172,7 +172,7 @@ class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
           answerTick = !answerTick;
         });
 
-        AppNavigation.navigatorPop(context);
+        //AppNavigation.navigatorPop(context);
       },
     );
   }
@@ -198,7 +198,7 @@ class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
   {
     return GestureDetector(
       onTap: (){
-        AppNavigation.navigateTo(context, AddPrayerScreen(prayerButtonText: AppStrings.EDIT_PRAYER_TEXT.toUpperCase()));
+        AppNavigation.navigateTo(context, AddPrayerScreen(prayerButtonText: AppStrings.UPDATE_PRAYER_TEXT.toUpperCase()));
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -207,7 +207,7 @@ class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(AppStrings.EDIT_PRAYER_TEXT.toUpperCase(),style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w700),textScaleFactor: 0.95,),
+            Text(AppStrings.UPDATE_PRAYER_TEXT.toUpperCase(),style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w700),textScaleFactor: 0.95,),
             SizedBox(width: 6.0,),
             Image.asset(AssetPaths.EDIT_ICON,width: 18.0,)
           ],
