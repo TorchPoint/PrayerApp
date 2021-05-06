@@ -161,15 +161,17 @@ class _AddPraiseScreenState extends State<AddPraiseScreen> {
 
                   errorBorder:OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0),
-                      borderSide: BorderSide(color: AppColors.ERROR_COLOR)
+                      borderSide: BorderSide(color: AppColors.ERROR_COLOR,width: 1.3)
                   ),
 
                   focusedErrorBorder:OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0),
-                      borderSide: BorderSide(color: AppColors.ERROR_COLOR)
+                      borderSide: BorderSide(color: AppColors.ERROR_COLOR,width: 1.3)
                   ),
 
-                  border: InputBorder.none,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
                   errorStyle: TextStyle(
                     fontSize: 13.0,
                     color:  AppColors.ERROR_COLOR,

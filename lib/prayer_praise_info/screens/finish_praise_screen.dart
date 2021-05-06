@@ -9,12 +9,12 @@ import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/widgets/custom_gesture_detector_container.dart';
 import 'package:prayer_hybrid_app/bible/screens/bible_tab_screen.dart';
 
-class FinishPrayingScreen extends StatefulWidget {
+class FinishPraiseScreen extends StatefulWidget {
   @override
-  _FinishPrayingScreenState createState() => _FinishPrayingScreenState();
+  _FinishPraiseScreenState createState() => _FinishPraiseScreenState();
 }
 
-class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
+class _FinishPraiseScreenState extends State<FinishPraiseScreen> {
 
   bool answerTick = false;
   StopWatchAlertScreen stopWatchAlertScreen = StopWatchAlertScreen();
@@ -23,77 +23,77 @@ class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
   Widget build(BuildContext context) {
     return CustomBackgroundContainer(
       child: Scaffold(
-        backgroundColor: AppColors.TRANSPARENT_COLOR,
-        body: Column(
-          children: [
-            _customAppBar(),
-            Expanded(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 4.0,vertical: 0.0),
-                    child: Text(AppStrings.PRAYER_TITLE_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w700,letterSpacing: 1.0),textScaleFactor: 1.4,maxLines: 1,overflow: TextOverflow.ellipsis,),
-                  ),
+          backgroundColor: AppColors.TRANSPARENT_COLOR,
+          body: Column(
+            children: [
+              _customAppBar(),
+              Expanded(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 4.0,vertical: 0.0),
+                      child: Text(AppStrings.PRAISE_TITLE_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w700,letterSpacing: 1.0),textScaleFactor: 1.4,maxLines: 1,overflow: TextOverflow.ellipsis,),
+                    ),
 
-                  SizedBox(
-                    height: 7.0,
-                  ),
+                    SizedBox(
+                      height: 7.0,
+                    ),
 
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 4.0,vertical: 0.0),
-                    child: Text(AppStrings.PRAYER_USER_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600,letterSpacing: 1.0),textScaleFactor: 1.0,maxLines: 1,overflow: TextOverflow.ellipsis,),
-                  ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 4.0,vertical: 0.0),
+                      child: Text(AppStrings.PRAYER_USER_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600,letterSpacing: 1.0),textScaleFactor: 1.0,maxLines: 1,overflow: TextOverflow.ellipsis,),
+                    ),
 
-                  SizedBox(
-                    height: 8.0,
-                  ),
+                    SizedBox(
+                      height: 8.0,
+                    ),
 
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 10.0,right: 10.0),
-                        child: Text(AppStrings.LOREM_EPSUM_STRING,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600,height: 1.4),textScaleFactor: 1.0),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 10.0,right: 10.0),
+                          child: Text(AppStrings.LOREM_EPSUM_STRING,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600,height: 1.4),textScaleFactor: 1.0),
+                        ),
                       ),
                     ),
-                  ),
 
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height*0.025,
-                  ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height*0.025,
+                    ),
 
-                  _stopWatchImageWidget(),
+                    _stopWatchImageWidget(),
 
-                  SizedBox(height: MediaQuery.of(context).size.height*0.025,),
+                    SizedBox(height: MediaQuery.of(context).size.height*0.025,),
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _biblePromisesWidget(),
-                    ],
-                  ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _biblePromisesWidget(),
+                      ],
+                    ),
 
-                  SizedBox(height: MediaQuery.of(context).size.height*0.025,),
+                    SizedBox(height: MediaQuery.of(context).size.height*0.025,),
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      _answeredPromisesWidget(),
-                      _sharePromisesWidget(),
-                    ],
-                  ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        _answeredPromisesWidget(),
+                        _sharePromisesWidget(),
+                      ],
+                    ),
 
-                  SizedBox(height: MediaQuery.of(context).size.height*0.05,),
+                    SizedBox(height: MediaQuery.of(context).size.height*0.05,),
 
-                  _editPrayerWidget(),
+                    _editPraiseWidget(),
 
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
-        )
+            ],
+          )
       ),
     );
   }
@@ -103,7 +103,7 @@ class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
   Widget _customAppBar()
   {
     return CustomAppBar(
-      title: AppStrings.FINISH_PRAYING_TEXT,
+      title: AppStrings.FINISH_PRAISE_TEXT,
       leadingIconPath: AssetPaths.BACK_ICON,
       leadingTap: (){
         AppNavigation.navigatorPop(context);
@@ -128,8 +128,8 @@ class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
         height: MediaQuery.of(context).size.height*0.11,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(AssetPaths.STOP_WATCH_IMAGE),
-            fit: BoxFit.contain
+              image: AssetImage(AssetPaths.STOP_WATCH_IMAGE),
+              fit: BoxFit.contain
           ),
         ),
       ),
@@ -169,7 +169,6 @@ class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
         setState(() {
           answerTick = !answerTick;
         });
-
         AppNavigation.navigatorPop(context);
       },
     );
@@ -192,7 +191,7 @@ class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
     );
   }
 
-  Widget _editPrayerWidget()
+  Widget _editPraiseWidget()
   {
     return GestureDetector(
       onTap: (){

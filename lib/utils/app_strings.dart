@@ -43,7 +43,9 @@ class AppStrings
   static const String ADD_NEW_PRAISE_TEXT = "Add New Praise";
   static const String ADD_NEW_PRAYER_TEXT = "Add New Prayer";
   static const String FINISH_PRAYING_TEXT = "Finish Praying";
+  static const String FINISH_PRAISE_TEXT = "Finish Praise";
   static const String PRAYER_TITLE_TEXT = "Prayer Title";
+  static const String PRAISE_TITLE_TEXT = "Praise Title";
   static const String PRAYER_USER_TEXT = "(John Doe)";
   static const String LOREM_EPSUM_STRING = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Contrary to popular belief, Lorem Ipsum is not simply random text.";
   static const String BIBLE_PROMISES_TEXT = "BIBLE PROMISES";

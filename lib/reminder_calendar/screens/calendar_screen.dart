@@ -24,6 +24,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   static List<String> frequencies = ["Once","Daily","Weekly","Monthly"];
   TimeAlertScreen timeAlertScreen =  TimeAlertScreen();
   CalendarController _calendarController = CalendarController();
+  final GlobalKey<FormState> _addReminderKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return CustomBackgroundContainer(
@@ -35,59 +36,53 @@ class _CalendarScreenState extends State<CalendarScreen> {
             SizedBox(height: 10.0,),
             Expanded(
               child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 5.0,right: 5.0),
-                      child: Text(AppStrings.SET_REMINDER,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w700),textScaleFactor: 1.3,textAlign: TextAlign.center,),
-                    ),
-
-                    SizedBox(height: 18.0,),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.075,right: MediaQuery.of(context).size.width*0.075),
-                          child: Text(AppStrings.ADD_REMINDER_TITLE,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600),textScaleFactor: 1.18,),
-                        )
-                    ),
-                    SizedBox(height: 10.0,),
-
-                    _addReminderTextFormField(),
-
-                    Align(
-                      alignment: Alignment.centerLeft,
-                        child: _errorWidget(errorBoolReminder,errorMessageReminder)
-                    ),
-
-                    SizedBox(height: 15.0,),
-
-                    _frequencyWidget(),
-
-                    Align(
-                        alignment: Alignment.centerLeft,
-                        child: _errorWidget(errorBoolFrequency,errorMessageFrequency)
-                    ),
-
-                    SizedBox(height: 18.0,),
-
-                    Padding(
-                      padding: EdgeInsets.only(left: 5.0,right: 5.0),
-                      child: InkWell(
-                        onTap: (){
-                          timeAlertScreen.timeAlert(context);
-                        },
-                          child: Text(AppStrings.REMIND_ME_ON,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600),textScaleFactor: 1.3,textAlign: TextAlign.center,)
+                child: Form(
+                  key: _addReminderKey,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 5.0,right: 5.0),
+                        child: Text(AppStrings.SET_REMINDER,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w700),textScaleFactor: 1.3,textAlign: TextAlign.center,),
                       ),
-                    ),
 
-                    SizedBox(height: 18.0,),
+                      SizedBox(height: 18.0,),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.075,right: MediaQuery.of(context).size.width*0.075),
+                            child: Text(AppStrings.ADD_REMINDER_TITLE,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600),textScaleFactor: 1.18,),
+                          )
+                      ),
 
-                    Container(
-                      margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.02,right: MediaQuery.of(context).size.width*0.02),
-                      child:_calendarWidget()
-                    ),
+                      SizedBox(height: 10.0,),
 
-                  ],
+                      _addReminderTextFormField(),
+
+                      SizedBox(height: 15.0,),
+
+                      _frequencyWidget(),
+
+                      SizedBox(height: 18.0,),
+
+                      Padding(
+                        padding: EdgeInsets.only(left: 5.0,right: 5.0),
+                        child: InkWell(
+                          onTap: (){
+                            timeAlertScreen.timeAlert(context);
+                          },
+                            child: Text(AppStrings.REMIND_ME_ON,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600),textScaleFactor: 1.3,textAlign: TextAlign.center,)
+                        ),
+                      ),
+
+                      SizedBox(height: 18.0,),
+
+                      Container(
+                        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.02,right: MediaQuery.of(context).size.width*0.02),
+                        child:_calendarWidget()
+                      ),
+
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -130,20 +125,16 @@ class _CalendarScreenState extends State<CalendarScreen> {
       hintColor: AppColors.BLACK_COLOR,
       textColor: AppColors.BLACK_COLOR,
       cursorColor: AppColors.BLACK_COLOR,
+      onValidate: (value){
+        if(value.trim().isEmpty)
+          {
+           return AppStrings.ADD_REMINDER_TITLE_ERROR_TEXT;
+          }
+        return null;
+      },
     );
   }
 
-  //Error Widget
-  Widget _errorWidget(bool errorBool,String errorMessage)
-  {
-    return errorBool == true ?
-    Container()
-        :
-    Padding(
-        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.1,right: MediaQuery.of(context).size.width*0.075,top: 10.0),
-        child: Text(errorMessage.toString(),style: TextStyle(fontSize: 13.0, color:  AppColors.ERROR_COLOR, fontWeight: FontWeight.w600,),)
-    );
-  }
 
 
   //Frequency Widget
@@ -151,17 +142,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
   {
     return Container(
       width: MediaQuery.of(context).size.width*0.85,
-      decoration: BoxDecoration(
-        color: AppColors.WHITE_COLOR,
-        borderRadius: BorderRadius.circular(28.0),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.LIGHT_BLACK_COLOR.withOpacity(0.2),
-            blurRadius: 6,
-            offset: Offset(0, 2), // Shadow position
-          ),
-        ],
-      ),
       child:DropdownButtonHideUnderline(
     child: DropdownButtonFormField<String>(
     iconEnabledColor: AppColors.BLACK_COLOR,
@@ -170,27 +150,56 @@ class _CalendarScreenState extends State<CalendarScreen> {
         isCollapsed: true,
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30.0),
-              borderSide: BorderSide(color: errorBoolFrequency == true ? AppColors.TRANSPARENT_COLOR : AppColors.ERROR_COLOR)
+              borderSide: BorderSide(color: AppColors.TRANSPARENT_COLOR)
           ),
 
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30.0),
-              borderSide: BorderSide(color: errorBoolFrequency == true ? AppColors.TRANSPARENT_COLOR : AppColors.ERROR_COLOR)
+              borderSide: BorderSide(color: AppColors.TRANSPARENT_COLOR)
           ),
 
-          border: InputBorder.none,
+
+          errorBorder:OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30.0),
+              borderSide: BorderSide(color: AppColors.ERROR_COLOR,width: 1.3)
+          ),
+
+          focusedErrorBorder:OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30.0),
+              borderSide: BorderSide(color: AppColors.ERROR_COLOR,width: 1.3)
+          ),
+
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+
           hintText: AppStrings.SET_FREQUENCY_HINT_TEXT,
           hintStyle: TextStyle(
-            fontSize: 17.0,
-            color: AppColors.WHITE_COLOR,
+            fontSize: 15.0,
+            color: AppColors.BLACK_COLOR,
             fontWeight: FontWeight.w400,
           ),
-          contentPadding: EdgeInsets.only(top: 12.0,bottom: 12.0,left: 20.0,right: 20.0),
+          errorStyle: TextStyle(
+            fontSize: 13.0,
+            color:  AppColors.ERROR_COLOR,
+            fontWeight: FontWeight.w600,
+          ),
+          contentPadding: EdgeInsets.only(top: 13.0,bottom: 13.0,left: 20.0,right: 20.0),
           fillColor: AppColors.WHITE_COLOR,
           filled: true
       ),
       isDense: true,
       value: currentFrequencyValue,
+
+      validator: (value){
+        if(value == null)
+        {
+          return AppStrings.ADD_FREQUENCY_ERROR_TEXT;;
+        }
+        return null;
+      },
+
+
       onChanged: (String frequencyValue) {
         print("current categoryValue:${frequencyValue}");
         setState(() {
@@ -207,7 +216,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                   color: AppColors.BLACK_COLOR,
-                  fontSize: 17,
+                  fontSize: 15,
                   fontWeight: FontWeight.w600
               ),
             ),
@@ -221,7 +230,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
           child: Container(
             width: MediaQuery.of(context).size.width*0.6,
             child: Text(value,style: TextStyle(
-              fontSize: 17.0,
+              fontSize: 15.0,
               color: value == currentFrequencyValue ? AppColors.SETTINGS_OPTIONS_COLOR :AppColors.MENU_TEXT_COLOR,
               fontWeight: value == currentFrequencyValue ? FontWeight.w800 : FontWeight.w600,
             ),
@@ -377,38 +386,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
 void addReminderMethod()
     {
-      if(_addReminderController.text.trim().isEmpty)
-      {
-        errorBoolReminder = false;
-        errorMessageReminder = AppStrings.ADD_REMINDER_TITLE_ERROR_TEXT;
-      }
-      else
-      {
-        errorBoolReminder = true;
-        errorMessageReminder = "";
-      }
-
-      if(currentFrequencyValue == null)
-      {
-        errorBoolFrequency = false;
-        errorMessageFrequency = AppStrings.ADD_FREQUENCY_ERROR_TEXT;
-      }
-      else
-      {
-        errorBoolFrequency = true;
-        errorMessageFrequency = "";
-      }
-
-      setState(() {
-
-      });
-
-
-      if(errorBoolReminder && errorBoolFrequency)
+      if(_addReminderKey.currentState.validate())
         {
-          AppNavigation.navigatorPop(context);
+           AppNavigation.navigatorPop(context);
         }
-
 
     }
 
