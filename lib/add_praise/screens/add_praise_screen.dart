@@ -10,6 +10,9 @@ import 'package:prayer_hybrid_app/widgets/custom_raised_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
 
 class AddPraiseScreen extends StatefulWidget {
+  String praiseButtonText;
+
+  AddPraiseScreen({this.praiseButtonText});
   @override
   _AddPraiseScreenState createState() => _AddPraiseScreenState();
 }
@@ -272,14 +275,22 @@ class _AddPraiseScreenState extends State<AddPraiseScreen> {
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
       elevation: 7.0,
-      buttonText: AppStrings.ADD_PRAISE_TEXT.toUpperCase(),
+      buttonText: widget.praiseButtonText,
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,
       fontSize: 1.25,
       onPressed: (){
         if(_addPraiseKey.currentState.validate())
         {
-          AppNavigation.navigateReplacement(context, PrayerPraiseTabScreen(tabInitialIndex: 1));
+          if(widget.praiseButtonText == AppStrings.ADD_PRAISE_TEXT.toUpperCase())
+          {
+            AppNavigation.navigateReplacement(context, PrayerPraiseTabScreen(tabInitialIndex: 1));
+          }
+          else
+          {
+            AppNavigation.navigatorPop(context);
+          }
+
         }
       },
     );

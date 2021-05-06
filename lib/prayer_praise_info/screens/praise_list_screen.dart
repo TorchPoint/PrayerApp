@@ -168,7 +168,7 @@ class _PraiseListScreenState extends State<PraiseListScreen> {
       fontWeight: FontWeight.w700,
       fontSize: 1.15,
       onPressed: (){
-        AppNavigation.navigateReplacement(context, AddPrayerScreen());
+        AppNavigation.navigateReplacement(context, AddPrayerScreen(prayerButtonText: AppStrings.ADD_PRAYER_TEXT.toUpperCase()));
       },
     );
   }

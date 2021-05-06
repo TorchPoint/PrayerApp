@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_hybrid_app/add_praise/screens/add_praise_screen.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/stop_watch_alert_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
@@ -8,6 +9,7 @@ import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/widgets/custom_gesture_detector_container.dart';
 import 'package:prayer_hybrid_app/bible/screens/bible_tab_screen.dart';
+import 'package:share_extend/share_extend.dart';
 
 class FinishPraiseScreen extends StatefulWidget {
   @override
@@ -187,6 +189,7 @@ class _FinishPraiseScreenState extends State<FinishPraiseScreen> {
       suffixImagePath: AssetPaths.SHARE_ICON,
       onTap: (){
         print("Share");
+        _shareMethod();
       },
     );
   }
@@ -195,7 +198,7 @@ class _FinishPraiseScreenState extends State<FinishPraiseScreen> {
   {
     return GestureDetector(
       onTap: (){
-        print("Edit Prayer");
+        AppNavigation.navigateTo(context, AddPraiseScreen(praiseButtonText: AppStrings.EDIT_PRAISE_TEXT.toUpperCase(),));
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -204,13 +207,21 @@ class _FinishPraiseScreenState extends State<FinishPraiseScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(AppStrings.EDIT_PRAYER_TEXT.toUpperCase(),style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w700),textScaleFactor: 0.95,),
+            Text(AppStrings.EDIT_PRAISE_TEXT.toUpperCase(),style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w700),textScaleFactor: 0.95,),
             SizedBox(width: 6.0,),
             Image.asset(AssetPaths.EDIT_ICON,width: 18.0,)
           ],
         ),
       ),
     );
+  }
+
+
+  void _shareMethod()
+  {
+    ShareExtend.share(AppStrings.SHARE_MESSAGE_TEXT, "text",
+        sharePanelTitle: AppStrings.SHARE_TITLE_TEXT,
+        subject: AppStrings.SHARE_SUBJECT_TEXT);
   }
 
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_hybrid_app/add_prayer/screens/add_prayer_screen.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/stop_watch_alert_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
@@ -8,6 +9,7 @@ import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/widgets/custom_gesture_detector_container.dart';
 import 'package:prayer_hybrid_app/bible/screens/bible_tab_screen.dart';
+import 'package:share_extend/share_extend.dart';
 
 class FinishPrayingScreen extends StatefulWidget {
   @override
@@ -187,7 +189,7 @@ class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
       textSize: 0.95,
       suffixImagePath: AssetPaths.SHARE_ICON,
       onTap: (){
-        print("Share");
+        _shareMethod();
       },
     );
   }
@@ -196,7 +198,7 @@ class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
   {
     return GestureDetector(
       onTap: (){
-        print("Edit Prayer");
+        AppNavigation.navigateTo(context, AddPrayerScreen(prayerButtonText: AppStrings.EDIT_PRAYER_TEXT.toUpperCase()));
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -214,5 +216,12 @@ class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
     );
   }
 
+
+  void _shareMethod()
+  {
+    ShareExtend.share(AppStrings.SHARE_MESSAGE_TEXT, "text",
+        sharePanelTitle: AppStrings.SHARE_TITLE_TEXT,
+        subject: AppStrings.SHARE_SUBJECT_TEXT);
+  }
 
 }

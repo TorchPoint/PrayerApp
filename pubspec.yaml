@@ -45,6 +45,7 @@ dependencies:
   textfield_search: ^0.8.0
   fluttertoast: ^7.1.8
   table_calendar: ^2.3.3
+  share_extend: ^1.1.9
 
 dev_dependencies:
   flutter_test:

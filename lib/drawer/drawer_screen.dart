@@ -9,6 +9,7 @@ import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
+import 'package:prayer_hybrid_app/prayer_praise_info/screens/prayer_praise_tab_screen.dart';
 
 
 class DrawerScreen extends StatefulWidget{
@@ -309,7 +310,7 @@ class _DrawerScreenState extends State<DrawerScreen> with SingleTickerProviderSt
     else if(navigateIndex == 3)
     {
       AppNavigation.navigatorPop(context);
-      //AppNavigation.navigateTo(context, AddPrayerScreen());
+      AppNavigation.navigateTo(context, PrayerPraiseTabScreen());
     }
     //For Prayer Groups List
     else if(navigateIndex == 4)

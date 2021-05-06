@@ -77,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
   {
     return GestureDetector(
       onTap: (){
-        AppNavigation.navigateTo(context, AddPrayerScreen());
+        AppNavigation.navigateTo(context, AddPrayerScreen(prayerButtonText: AppStrings.ADD_PRAYER_TEXT.toUpperCase()));
       },
       child: _categoryContainerWidget(AppStrings.ADD_PRAYER_TEXT,AssetPaths.ADD_PRAYER_IMAGE,7.5,0.13),
     );
@@ -101,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
   {
     return GestureDetector(
       onTap: (){
-        AppNavigation.navigateTo(context, AddPraiseScreen());
+        AppNavigation.navigateTo(context, AddPraiseScreen(praiseButtonText: AppStrings.ADD_PRAISE_TEXT.toUpperCase()));
       },
       child: _categoryContainerWidget(AppStrings.ADD_PRAISE_TEXT,AssetPaths.ADD_PRAISE_IMAGE,6.0,0.16),
     );

@@ -30,7 +30,9 @@ class AppStrings
   static const String LOGOUT_TEXT = "Logout";
   static const String DESCRIPTION_TEXT = "Description";
   static const String ADD_PRAYER_TEXT = "Add Prayer";
+  static const String EDIT_PRAYER_TEXT = "Edit Prayer";
   static const String ADD_PRAISE_TEXT = "Add Praise";
+  static const String EDIT_PRAISE_TEXT = "Edit Praise";
   static const String PRAY_NOW_TEXT = "Pray Now";
   static const String BIBLE_TEXT = "The Bible";
   static const String PRAYER_PARTNERS_TEXT = "Prayer Partners";
@@ -51,7 +53,6 @@ class AppStrings
   static const String BIBLE_PROMISES_TEXT = "BIBLE PROMISES";
   static const String ANSWERED_TEXT = "ANSWERED";
   static const String SHARE_TEXT = "SHARE";
-  static const String EDIT_PRAYER_TEXT = "Edit Prayer";
   static const String BIBLE_SECOND_TEXT = "Bible";
   static const String HIGHLIGHTS_TEXT = "Highlights";
   static const String NOTES_TEXT = "Notes";
@@ -95,7 +96,9 @@ class AppStrings
   static const String ADD_REMINDER_TITLE = "Add Reminder Title";
   static const String REMIND_ME_ON = "Remind me on";
   static const String SET_FREQUENCY_TEXT = "Set Frequency";
-
+  static const String SHARE_MESSAGE_TEXT = "Prayer is very important so do pray";
+  static const String SHARE_TITLE_TEXT = "Prayer";
+  static const String SHARE_SUBJECT_TEXT = "Prayer Importance";
 
   // ------------- Hint Text ---------------- //
   static const String FIRST_NAME_HINT_TEXT = "First Name";
