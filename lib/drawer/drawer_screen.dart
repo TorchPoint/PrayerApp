@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/auth/screens/auth_main_screen.dart';
 import 'package:prayer_hybrid_app/home/home_screen.dart';
-import 'package:prayer_hybrid_app/prayer_group/screens/create_prayer_group_screen.dart';
 import 'package:prayer_hybrid_app/prayer_group/screens/prayer_group_list_screen.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/prayer_praise_tab_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
@@ -10,7 +9,7 @@ import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
-import 'package:prayer_hybrid_app/prayer_praise_info/screens/prayer_praise_tab_screen.dart';
+import 'package:prayer_hybrid_app/complete_profile/screens/complete_profile_screen.dart';
 
 
 class DrawerScreen extends StatefulWidget{
@@ -150,6 +149,7 @@ class _DrawerScreenState extends State<DrawerScreen> with SingleTickerProviderSt
                 child: GestureDetector(
                     onTap: (){
                       AppNavigation.navigatorPop(context);
+                      AppNavigation.navigateTo(context, CompleteProfileScreen());
                     },
                     child: Image.asset(AssetPaths.EDIT_MENU_ICON,width: 42.0,)
                 ),
@@ -170,6 +170,7 @@ class _DrawerScreenState extends State<DrawerScreen> with SingleTickerProviderSt
     return GestureDetector(
       onTap: (){
         AppNavigation.navigatorPop(context);
+        AppNavigation.navigateTo(context, CompleteProfileScreen());
       },
       child: Column(
         children: [

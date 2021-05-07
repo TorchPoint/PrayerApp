@@ -4,6 +4,7 @@ import 'package:prayer_hybrid_app/complete_profile/screens/complete_profile_scre
 import 'package:prayer_hybrid_app/password/screens/continue_email_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/splash/splash_screen.dart';
+import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
 void main() {
   runApp(MyApp());
 }
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Quicksand',
       ),
-      home: CompleteProfileScreen(),
+      home: SplashScreen(),
     );
   }
 }
