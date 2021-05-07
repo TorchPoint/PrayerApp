@@ -100,6 +100,7 @@ class AppStrings
   static const String SHARE_TITLE_TEXT = "Prayer";
   static const String SHARE_SUBJECT_TEXT = "Prayer Importance";
   static const String CONTINUE_TEXT = "CONTINUE";
+  static const String RESET_PASSWORD_TEXT = "RESET PASSWORD";
 
   // ------------- Hint Text ---------------- //
   static const String FIRST_NAME_HINT_TEXT = "First Name";
@@ -124,6 +125,7 @@ class AppStrings
   static const String SEARCH_MEMBERS_HINT_TEXT = "Search Members";
   static const String ADD_REMINDER_TITLE_HINT_TEXT = "Add Reminder Title";
   static const String SET_FREQUENCY_HINT_TEXT = "Set Frequency";
+  static const String NEW_PASSWORD_HINT_TEXT = "New Password";
 
 
 
@@ -155,7 +157,8 @@ class AppStrings
   static const String CONTACT_PERMANENTLY_DENIED_ERROR = "Access to contact data permanently denied";
   static const String ADD_REMINDER_TITLE_ERROR_TEXT = "Add reminder title can't be empty.";
   static const String ADD_FREQUENCY_ERROR_TEXT = "Add frequency can't be empty.";
-
+  static const String NEW_PASSWORD_EMPTY_ERROR = "New Password can\'t be empty.";
+  static const String NEW_PASSWORD_INVALID_ERROR = "New Password must be 8 characters long and contains at least 1 upper case, 1 lower case, 1 digit & 1 special character.";
 
   // ------------------ Formatter Strings ------------------ //
 

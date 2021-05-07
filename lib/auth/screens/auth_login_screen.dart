@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
+import 'package:prayer_hybrid_app/password/screens/continue_email_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
@@ -182,7 +183,7 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
   {
     return GestureDetector(
       onTap: (){
-        print("Forget Password");
+        AppNavigation.navigateTo(context, ContinueEmailScreen());
       },
       child: Container(
         width: MediaQuery.of(context).size.width*0.85,

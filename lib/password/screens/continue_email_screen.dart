@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_hybrid_app/password/screens/reset_password_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
@@ -35,10 +36,11 @@ class _ContinueEmailScreenState extends State<ContinueEmailScreen> {
                   key: _continueKey,
                   child: Column(
                     children: [
-                      SizedBox(height: MediaQuery.of(context).size.height*0.1,),
+                      SizedBox(height: MediaQuery.of(context).size.height*0.2,),
                       _emailWidget(),
                       SizedBox(height: 25.0),
                       _continueButtonWidget(),
+                      SizedBox(height: 10.0),
                     ],
                   ),
                 ),
@@ -103,7 +105,7 @@ class _ContinueEmailScreenState extends State<ContinueEmailScreen> {
       onPressed: (){
         if(_continueKey.currentState.validate())
           {
-            print("go to reset password");
+            AppNavigation.navigateReplacement(context, ResetPasswordScreen());
           }
       },
     );
