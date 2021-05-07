@@ -21,6 +21,7 @@ class AssetPaths
   static const String VISA_CARD_IMAGE = "assets/images/visa_card.png";
   static const String MASTER_CARD_IMAGE = "assets/images/master_card.png";
   static const String UCB_CARD_IMAGE = "assets/images/ucb_card.png";
+  static const String COMPLETE_PROFILE_IMAGE = "assets/images/complete_profile_image.png";
 
 
   //Icons

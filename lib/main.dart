@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:prayer_hybrid_app/complete_profile/screens/complete_profile_screen.dart';
 import 'package:prayer_hybrid_app/password/screens/continue_email_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/splash/splash_screen.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Quicksand',
       ),
-      home: SplashScreen(),
+      home: CompleteProfileScreen(),
     );
   }
 }

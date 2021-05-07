@@ -110,4 +110,13 @@ class _ContinueEmailScreenState extends State<ContinueEmailScreen> {
       },
     );
   }
+
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _emailController.dispose();
+  }
+
 }

@@ -101,6 +101,9 @@ class AppStrings
   static const String SHARE_SUBJECT_TEXT = "Prayer Importance";
   static const String CONTINUE_TEXT = "CONTINUE";
   static const String RESET_PASSWORD_TEXT = "RESET PASSWORD";
+  static const String EDIT_PROFILE_TEXT = "Edit Profile";
+  static const String CAMERA_TEXT = "CAMERA";
+  static const String GALLERY_TEXT = "GALLERY";
 
   // ------------- Hint Text ---------------- //
   static const String FIRST_NAME_HINT_TEXT = "First Name";
