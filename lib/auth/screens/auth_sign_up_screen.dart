@@ -25,11 +25,12 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
   TextEditingController _lastNameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  TextEditingController _confirmPasswordController = TextEditingController();
   String emailPattern = Constants.EMAIL_VALIDATION_REGEX;
   RegExp emailRegExp;
   String passwordPattern = Constants.PASSWORD_VALIDATE_REGEX;
   RegExp passwordRegExp;
-  bool passwordInvisible = true;
+  bool passwordInvisible = true,confirmPasswordInvisible=true;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -60,6 +61,10 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
               SizedBox(height: 14.0,),
 
               _passwordWidget(),
+
+              SizedBox(height: 14.0,),
+
+              _confirmPasswordWidget(),
 
               SizedBox(height: 14.0,),
 
@@ -223,6 +228,51 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
     );
   }
 
+
+
+  //Confirm Password Widget
+  Widget _confirmPasswordWidget()
+  {
+    return CustomTextFormField(
+      textController: _confirmPasswordController,
+      containerWidth: MediaQuery.of(context).size.width*0.85,
+      hintText: AppStrings.CONFIRM_PASSWORD_HINT_TEXT,
+      borderRadius: 30.0,
+      contentPaddingLeft: 0.0,
+      prefixIcon: AssetPaths.PASSWORD_ICON,
+      prefixIconWidth: 15.0,
+      obscureText: confirmPasswordInvisible == true ? true : false,
+      errorMaxLines: 4,
+      suffixIcon: confirmPasswordInvisible == true ? AssetPaths.VISIBLE_OFF_ICON : AssetPaths.VISIBLE_ON_ICON,
+      suffixIconWidth: 22.0,
+      onSuffixIconTap: (){
+        setState(() {
+          confirmPasswordInvisible = !confirmPasswordInvisible;
+        });
+      },
+
+      onValidate: (value){
+        passwordRegExp = RegExp(passwordPattern);
+        if(value.trim().isEmpty)
+        {
+          return AppStrings.CONFIRM_PASSWORD_EMPTY_ERROR;
+        }
+        else if(!passwordRegExp.hasMatch(value))
+        {
+          return AppStrings.CONFIRM_PASSWORD_INVALID_ERROR;
+        }
+        else if(value != _passwordController.text)
+          {
+          return AppStrings.PASSWORD_DIFFERENT_ERROR;
+          }
+        return null;
+      },
+
+    );
+  }
+
+
+
   //Sign Up Widget
   Widget _signUpButtonWidget()
   {
@@ -346,6 +396,7 @@ Widget _alreadyAccountRichTextWidget()
     _lastNameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
   }
 
 
