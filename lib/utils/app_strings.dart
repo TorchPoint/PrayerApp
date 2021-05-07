@@ -99,6 +99,7 @@ class AppStrings
   static const String SHARE_MESSAGE_TEXT = "Prayer is very important so do pray";
   static const String SHARE_TITLE_TEXT = "Prayer";
   static const String SHARE_SUBJECT_TEXT = "Prayer Importance";
+  static const String CONTINUE_TEXT = "CONTINUE";
 
   // ------------- Hint Text ---------------- //
   static const String FIRST_NAME_HINT_TEXT = "First Name";

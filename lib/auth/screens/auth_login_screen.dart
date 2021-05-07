@@ -217,61 +217,6 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
 
   }
 
-  //Sign in With Apple
-  Widget _signInAppleButtonWidget()
-  {
-    return CustomSocialButton(
-      containerWidth: MediaQuery.of(context).size.width*0.85,
-      containerHeight: MediaQuery.of(context).size.height*0.072,
-      buttonColor: AppColors.WHITE_COLOR,
-      labelText: AppStrings.SIGN_IN_APPLE_TEXT,
-      labelTextColor: AppColors.BLACK_COLOR,
-      iconPath: AssetPaths.APPLE_ICON,
-      iconWidth: 20.0,
-      iconColor: AppColors.BLACK_COLOR,
-      onPressed: (){
-        print("Sign in with Apple");
-      },
-    );
-  }
-
-  //Sign in With Facebook
-  Widget _signInFacebookButtonWidget()
-  {
-    return CustomSocialButton(
-      containerWidth: MediaQuery.of(context).size.width*0.85,
-      containerHeight: MediaQuery.of(context).size.height*0.072,
-      buttonColor: AppColors.FACEBOOK_BUTTON_COLOR,
-      labelText: AppStrings.SIGN_IN_FACEBOOK_TEXT,
-      labelTextColor: AppColors.WHITE_COLOR,
-      iconPath: AssetPaths.FACEBOOK_ICON,
-      iconWidth: 14.0,
-      iconColor: AppColors.WHITE_COLOR,
-      onPressed: (){
-        print("Sign in with Facebook");
-      },
-    );
-  }
-
-
-
-  //Sign in With Google
-  Widget _signInGoogleButtonWidget()
-  {
-    return CustomSocialButton(
-      containerWidth: MediaQuery.of(context).size.width*0.85,
-      containerHeight: MediaQuery.of(context).size.height*0.072,
-      buttonColor: AppColors.GOOGLE_BUTTON_COLOR,
-      labelText: AppStrings.SIGN_IN_GOOGLE_TEXT,
-      labelTextColor: AppColors.WHITE_COLOR,
-      iconPath: AssetPaths.GOOGLE_ICON,
-      iconWidth: 22.0,
-      iconColor: AppColors.WHITE_COLOR,
-      onPressed: (){
-        print("Sign in with Google");
-      },
-    );
-  }
 
   @override
   void dispose() {
