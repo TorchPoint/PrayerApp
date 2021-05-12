@@ -194,14 +194,14 @@ class _CalendarScreenState extends State<CalendarScreen> {
       validator: (value){
         if(value == null)
         {
-          return AppStrings.ADD_FREQUENCY_ERROR_TEXT;;
+          return AppStrings.ADD_FREQUENCY_ERROR_TEXT;
         }
         return null;
       },
 
 
       onChanged: (String frequencyValue) {
-        print("current categoryValue:${frequencyValue}");
+        print("current categoryValue:"+frequencyValue.toString());
         setState(() {
           currentFrequencyValue = frequencyValue;
         });

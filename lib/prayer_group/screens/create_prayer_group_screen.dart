@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_hybrid_app/prayer_group/screens/prayer_group_list_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';

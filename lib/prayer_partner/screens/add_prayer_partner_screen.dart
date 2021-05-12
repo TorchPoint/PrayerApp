@@ -128,7 +128,7 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
       onValidate: (value){
         if(value.trim().isEmpty)
         {
-          return AppStrings.ADD_NAME_EMPTY_ERROR;;
+          return AppStrings.ADD_NAME_EMPTY_ERROR;
         }
         return null;
       },
@@ -251,8 +251,11 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
   void getContactInfo() async
   {
     contactInfo = await AppNavigation.navigateToUpdate(context, ContactListScreen());
+    if(contactInfo != null)
+    {
     _addNameController.text = contactInfo["name"].toString();
     _addMobileNoController.text = contactInfo["phone no"].toString();
+    }
     //print(contactInfo.toString());
   }
 

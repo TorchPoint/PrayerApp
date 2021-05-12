@@ -10,7 +10,7 @@ import 'package:prayer_hybrid_app/widgets/custom_raised_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
 
 class AddPraiseScreen extends StatefulWidget {
-  String praiseButtonText;
+  final String praiseButtonText;
 
   AddPraiseScreen({this.praiseButtonText});
   @override
