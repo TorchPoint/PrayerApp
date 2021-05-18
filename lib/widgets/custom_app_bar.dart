@@ -7,7 +7,7 @@ class CustomAppBar extends StatelessWidget {
   final Function leadingTap,trailingTap;
   final String title,leadingIconPath,trailingIconPath;
 
-  CustomAppBar({this.title,this.leadingIconPath,this.leadingTap,this.trailingIconPath,this.trailingTap});
+   CustomAppBar({this.title,this.leadingIconPath,this.leadingTap,this.trailingIconPath,this.trailingTap});
 
 
   @override
