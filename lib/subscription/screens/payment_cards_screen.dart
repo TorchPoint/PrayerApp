@@ -380,7 +380,7 @@ class _PaymentCardsScreenState extends State<PaymentCardsScreen> {
       color: AppColors.WHITE_COLOR,
     ),
     margin: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-    borderRadius: 8,
+    borderRadius: BorderRadius.circular(8.0),
     messageText: Text(
       AppStrings.EXPIRATION_DATE_GREATER_ERROR,
       style: TextStyle(color: Colors.white),

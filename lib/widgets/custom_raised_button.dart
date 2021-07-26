@@ -15,17 +15,33 @@ class CustomRaisedButton extends StatelessWidget {
     return  Container(
       width: containerWidth,
       height: containerHeight,
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-          side: BorderSide(color: borderColor ?? AppColors.TRANSPARENT_COLOR)
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            primary: buttonColor,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0),
+                side: BorderSide(color: borderColor ?? AppColors.TRANSPARENT_COLOR)
+            ),
+            elevation: elevation ?? 0.0,
+            shadowColor: elevation == null ? AppColors.TRANSPARENT_COLOR : null
         ),
-        color: buttonColor,
-        elevation: elevation ?? 0.0,
-        highlightElevation: 0.0,
         onPressed: onPressed,
         child: Text(buttonText,style: TextStyle(color: textColor,fontWeight: fontWeight ?? FontWeight.w500,letterSpacing: 1.0),textScaleFactor: fontSize,textAlign: TextAlign.center,),
+
       ),
+
+      // RaisedButton(
+      //   shape: RoundedRectangleBorder(
+      //     borderRadius: BorderRadius.circular(30.0),
+      //     side: BorderSide(color: borderColor ?? AppColors.TRANSPARENT_COLOR)
+      //   ),
+      //   color: buttonColor,
+      //   elevation: elevation ?? 0.0,
+      //   highlightElevation: 0.0,
+      //   onPressed: onPressed,
+      //   child: Text(buttonText,style: TextStyle(color: textColor,fontWeight: fontWeight ?? FontWeight.w500,letterSpacing: 1.0),textScaleFactor: fontSize,textAlign: TextAlign.center,),
+      // ),
+
     );
   }
 }
