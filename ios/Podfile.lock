@@ -1,15 +1,13 @@
 PODS:
-  - another_flushbar (0.0.1):
-    - Flutter
   - contacts_service (0.2.2):
     - Flutter
   - Flutter (1.0.0)
   - fluttertoast (0.0.2):
     - Flutter
     - Toast
-  - image_cropper (0.0.3):
+  - image_cropper (0.0.4):
     - Flutter
-    - TOCropViewController (~> 2.5.4)
+    - TOCropViewController (~> 2.6.0)
   - image_picker (0.0.1):
     - Flutter
   - path_provider (0.0.1):
@@ -21,10 +19,9 @@ PODS:
   - shared_preferences (0.0.1):
     - Flutter
   - Toast (4.0.0)
-  - TOCropViewController (2.5.5)
+  - TOCropViewController (2.6.0)
 
 DEPENDENCIES:
-  - another_flushbar (from `.symlinks/plugins/another_flushbar/ios`)
   - contacts_service (from `.symlinks/plugins/contacts_service/ios`)
   - Flutter (from `Flutter`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
@@ -41,8 +38,6 @@ SPEC REPOS:
     - TOCropViewController
 
 EXTERNAL SOURCES:
-  another_flushbar:
-    :path: ".symlinks/plugins/another_flushbar/ios"
   contacts_service:
     :path: ".symlinks/plugins/contacts_service/ios"
   Flutter:
@@ -63,18 +58,17 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences/ios"
 
 SPEC CHECKSUMS:
-  another_flushbar: 3bb0a50768cc547ba9dd82cbb92129bf5ca7440c
   contacts_service: 849e1f84281804c8bfbec1b4c3eedcb23c5d3eca
-  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   fluttertoast: 6122fa75143e992b1d3470f61000f591a798cc58
-  image_cropper: c8f9b4157933c7bb965a66d1c5e6c8fd408c6eb4
-  image_picker: 9c3312491f862b28d21ecd8fdf0ee14e601b3f09
+  image_cropper: f1668dd8d2cad2d357955caad15a40547856edcb
+  image_picker: e06f7a68f000bd36f552c1847e33cda96ed31f1f
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
   share_extend: b6748dc53695587891126a89533b862b92548c7b
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
-  TOCropViewController: da59f531f8ac8a94ef6d6c0fc34009350f9e8bfe
+  TOCropViewController: 3105367e808b7d3d886a74ff59bf4804e7d3ab38
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
 
