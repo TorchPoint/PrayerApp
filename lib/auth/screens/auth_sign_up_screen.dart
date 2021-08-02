@@ -285,8 +285,8 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,
       fontSize: 1.25,
-      paddingTop: 13.5,
-      paddingBottom: 13.5,
+      paddingTop: 13.0,
+      paddingBottom: 13.0,
       onTap: (){
         if(_signUpKey.currentState.validate())
           {
@@ -335,12 +335,13 @@ Widget _alreadyAccountRichTextWidget()
       containerWidth: MediaQuery.of(context).size.width*0.85,
       containerHeight: MediaQuery.of(context).size.height*0.072,
       buttonColor: AppColors.WHITE_COLOR,
-      labelText: AppStrings.SIGN_IN_APPLE_TEXT,
-      labelTextColor: AppColors.BLACK_COLOR,
+      buttonText: AppStrings.SIGN_IN_APPLE_TEXT,
+      buttonTextColor: AppColors.BLACK_COLOR,
       iconPath: AssetPaths.APPLE_ICON,
       iconWidth: 20.0,
       iconColor: AppColors.BLACK_COLOR,
-      onPressed: (){
+      differenceWidth: 10.0,
+      onTap: (){
         print("Sign in with Apple");
         AppNavigation.navigateTo(context, DrawerScreen());
       },
@@ -354,12 +355,13 @@ Widget _alreadyAccountRichTextWidget()
       containerWidth: MediaQuery.of(context).size.width*0.85,
       containerHeight: MediaQuery.of(context).size.height*0.072,
       buttonColor: AppColors.FACEBOOK_BUTTON_COLOR,
-      labelText: AppStrings.SIGN_IN_FACEBOOK_TEXT,
-      labelTextColor: AppColors.WHITE_COLOR,
+      buttonText: AppStrings.SIGN_IN_FACEBOOK_TEXT,
+      buttonTextColor: AppColors.WHITE_COLOR,
       iconPath: AssetPaths.FACEBOOK_ICON,
       iconWidth: 14.0,
       iconColor: AppColors.WHITE_COLOR,
-      onPressed: (){
+      differenceWidth: 16.0,
+      onTap: (){
         print("Sign in with Facebook");
         AppNavigation.navigateTo(context, DrawerScreen());
       },
@@ -375,12 +377,13 @@ Widget _alreadyAccountRichTextWidget()
       containerWidth: MediaQuery.of(context).size.width*0.85,
       containerHeight: MediaQuery.of(context).size.height*0.072,
       buttonColor: AppColors.GOOGLE_BUTTON_COLOR,
-      labelText: AppStrings.SIGN_IN_GOOGLE_TEXT,
-      labelTextColor: AppColors.WHITE_COLOR,
+      buttonText: AppStrings.SIGN_IN_GOOGLE_TEXT,
+      buttonTextColor: AppColors.WHITE_COLOR,
       iconPath: AssetPaths.GOOGLE_ICON,
       iconWidth: 22.0,
       iconColor: AppColors.WHITE_COLOR,
-      onPressed: (){
+      differenceWidth: 10.0,
+      onTap: (){
         print("Sign in with Google");
         AppNavigation.navigateTo(context, DrawerScreen());
       },

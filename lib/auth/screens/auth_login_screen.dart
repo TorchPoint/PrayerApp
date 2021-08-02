@@ -167,8 +167,8 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,
       fontSize: 1.25,
-      paddingTop: 13.5,
-      paddingBottom: 13.5,
+      paddingTop: 13.0,
+      paddingBottom: 13.0,
       onTap: (){
         if(_loginKey.currentState.validate())
         {

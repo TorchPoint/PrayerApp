@@ -234,8 +234,8 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,
       fontSize: 1.25,
-      paddingTop: 13.5,
-      paddingBottom: 13.5,
+      paddingTop: 13.0,
+      paddingBottom: 13.0,
       onTap: (){
         if(_completeProfileKey.currentState.validate())
         {
