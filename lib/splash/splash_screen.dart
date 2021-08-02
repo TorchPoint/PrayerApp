@@ -14,7 +14,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    splashTimer();
+    //_splashTimer();
   }
 
   @override
@@ -22,11 +22,11 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body:CustomBackgroundContainer(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: MediaQuery.of(context).size.width*0.58,
+              width: MediaQuery.of(context).size.width*0.62,
               height: MediaQuery.of(context).size.height*0.15,
-              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.13),
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(AssetPaths.FOREGROUND_IMAGE),
@@ -40,11 +40,11 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
-  Future<Timer> splashTimer() async {
-    return Timer(Duration(seconds: 3), onComplete);
+  Future<Timer> _splashTimer() async {
+    return Timer(Duration(seconds: 3), _onComplete);
   }
 
-  void onComplete(){
+  void _onComplete(){
     AppNavigation.navigateTo(context,  AuthMainScreen());
   }
 

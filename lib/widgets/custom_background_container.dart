@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 
 class CustomBackgroundContainer extends StatelessWidget {
@@ -10,10 +11,17 @@ class CustomBackgroundContainer extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage(AssetPaths.BACKGROUND_IMAGE),
-            fit: BoxFit.fill
-        ),
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomLeft,
+            colors: [
+              AppColors.BACKGROUND1_COLOR,
+              AppColors.BACKGROUND2_COLOR,
+              AppColors.BACKGROUND2_COLOR,
+            ],
+            stops: [0.1,0.5,1.0]
+
+          )
       ),
       child: child,
     );
