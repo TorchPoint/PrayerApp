@@ -7,7 +7,7 @@ import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'package:prayer_hybrid_app/utils/constants.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
-import 'package:prayer_hybrid_app/widgets/custom_raised_button.dart';
+import 'package:prayer_hybrid_app/widgets/custom_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
 
 class AuthLoginScreen extends StatefulWidget {
@@ -158,17 +158,18 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
   //Login Button Widget
   Widget _loginButtonWidget()
   {
-    return CustomRaisedButton(
+    return CustomButton(
       containerWidth: MediaQuery.of(context).size.width*0.85,
-      containerHeight: MediaQuery.of(context).size.height*0.072,
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
-      elevation: 7.0,
+      elevation: true,
       buttonText: AppStrings.LOGIN_TEXT,
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,
       fontSize: 1.25,
-      onPressed: (){
+      paddingTop: 13.5,
+      paddingBottom: 13.5,
+      onTap: (){
         if(_loginKey.currentState.validate())
         {
        print("Login");

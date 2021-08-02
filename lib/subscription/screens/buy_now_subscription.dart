@@ -6,7 +6,7 @@ import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
-import 'package:prayer_hybrid_app/widgets/custom_raised_button.dart';
+import 'package:prayer_hybrid_app/widgets/custom_button.dart';
 
 class BuyNowSubscription extends StatefulWidget {
   @override
@@ -142,17 +142,18 @@ class _BuyNowSubscriptionState extends State<BuyNowSubscription> {
 
   Widget _buyNowWidget()
   {
-    return CustomRaisedButton(
+    return CustomButton(
       containerWidth: MediaQuery.of(context).size.width*0.35,
-      containerHeight: MediaQuery.of(context).size.height*0.058,
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
-      elevation: 7.0,
+      elevation: true,
       buttonText: AppStrings.BUY_NOW_TEXT,
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,
       fontSize: 0.9,
-      onPressed: (){
+      paddingTop: 11.5,
+      paddingBottom: 11.5,
+      onTap: (){
         AppNavigation.navigateTo(context, PaySubscription());
       },
     );

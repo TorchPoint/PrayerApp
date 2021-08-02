@@ -5,7 +5,7 @@ import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
-import 'package:prayer_hybrid_app/widgets/custom_raised_button.dart';
+import 'package:prayer_hybrid_app/widgets/custom_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
 import 'package:textfield_search/textfield_search.dart';
 
@@ -236,17 +236,18 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
 
   Widget _addMemberWidget()
   {
-    return CustomRaisedButton(
+    return CustomButton(
       containerWidth: MediaQuery.of(context).size.width*0.60,
-      containerHeight: MediaQuery.of(context).size.height*0.065,
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
-      elevation: 7.0,
+      elevation: true,
       buttonText: AppStrings.ADD_MEMBER_TEXT.toUpperCase(),
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,
       fontSize: 1.25,
-      onPressed: (){
+      paddingTop: 11.5,
+      paddingBottom: 11.5,
+      onTap: (){
         if(_searchMemberController.text.trim().isEmpty)
         {
           setState(() {
@@ -308,17 +309,18 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
   //Create Group Button Widget
   Widget _createGroupWidget()
   {
-    return CustomRaisedButton(
+    return CustomButton(
       containerWidth: MediaQuery.of(context).size.width*0.64,
-      containerHeight: MediaQuery.of(context).size.height*0.065,
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
-      elevation: 7.0,
+      elevation: true,
       buttonText: AppStrings.CREATE_GROUP_TEXT.toUpperCase(),
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,
       fontSize: 1.25,
-      onPressed: (){
+      paddingTop: 11.5,
+      paddingBottom: 11.5,
+      onTap: (){
         if(_groupTitleController.text.trim().isEmpty)
           {
             setState(() {
@@ -335,99 +337,6 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
       },
     );
   }
-
-
-
-  // //Add group member alert Work Start
-  // void _addGroupMemberAlert()
-  // {
-  //   showDialog(
-  //       context: context,
-  //       builder: (BuildContext context) {
-  //         return Dialog(
-  //           insetPadding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.09,right: MediaQuery.of(context).size.width*0.09),
-  //           shape: RoundedRectangleBorder(
-  //               borderRadius: BorderRadius.circular(10.0)
-  //           ),
-  //           child:Column(
-  //             mainAxisSize: MainAxisSize.min,
-  //             children: [
-  //               SizedBox(height: MediaQuery.of(context).size.height*0.05,),
-  //               Padding(
-  //                 padding: EdgeInsets.only(left: 15.0,right: 15.0),
-  //                   child: _addMembersTextFormField()
-  //               ),
-  //
-  //               SizedBox(height: MediaQuery.of(context).size.height*0.05,),
-  //               _addMemberButtonWidget(),
-  //               SizedBox(height: MediaQuery.of(context).size.height*0.05,),
-  //
-  //             ],
-  //           )
-  //
-  //
-  //         );
-  //       }
-  //   );
-  // }
-  //
-  //
-  // //Add Group Memebers Text Form Field End
-  // Widget _addMembersTextFormField()
-  // {
-  //   return Container(
-  //     width: MediaQuery.of(context).size.width*0.85,
-  //     decoration: BoxDecoration(
-  //       color: AppColors.BUTTON_COLOR,
-  //       borderRadius: BorderRadius.circular(28.0),
-  //       boxShadow: [
-  //         BoxShadow(
-  //           color: AppColors.LIGHT_BLACK_COLOR.withOpacity(0.2),
-  //           blurRadius: 6,
-  //           offset: Offset(0, 5), // Shadow position
-  //         ),
-  //       ],
-  //     ),
-  //     child: CustomTextFormField(
-  //       textController: _addMemberController,
-  //       containerWidth: MediaQuery.of(context).size.width*0.6,
-  //       hintText: AppStrings.GROUP_MEMBER_HINT_TEXT,
-  //       borderRadius: 10.0,
-  //       contentPaddingTop: 13.0,
-  //       contentPaddingBottom: 13.0,
-  //       contentPaddingRight: 20.0,
-  //       contentPaddingLeft: 20.0,
-  //       hintSize: 15.0,
-  //       textSize: 15.0,
-  //       isCollapsed: true,
-  //       borderColor: AppColors.TRANSPARENT_COLOR,
-  //       filledColor: AppColors.BUTTON_COLOR,
-  //     ),
-  //   );
-  // }
-  //
-  //
-  // //Add Group Member Button Widget
-  // Widget _addMemberButtonWidget()
-  // {
-  //   return CustomRaisedButton(
-  //     containerWidth: MediaQuery.of(context).size.width*0.5,
-  //     containerHeight: MediaQuery.of(context).size.height*0.065,
-  //     buttonColor: AppColors.WHITE_COLOR,
-  //     borderColor: AppColors.BUTTON_COLOR,
-  //     elevation: 0.0,
-  //     buttonText: AppStrings.ADD_MEMBER_TEXT,
-  //     textColor: AppColors.BUTTON_COLOR,
-  //     fontWeight: FontWeight.w700,
-  //     fontSize: 1.25,
-  //     onPressed: (){
-  //       AppNavigation.navigatorPop(context);
-  //     },
-  //   );
-  // }
-
-
-
 
 
 

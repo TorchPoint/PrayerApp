@@ -6,7 +6,7 @@ import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
-import 'package:prayer_hybrid_app/widgets/custom_raised_button.dart';
+import 'package:prayer_hybrid_app/widgets/custom_button.dart';
 
 
 
@@ -98,17 +98,18 @@ class _PrayerPartnerListScreenState extends State<PrayerPartnerListScreen> {
   //Add new prayer button widget
   Widget _addNewPrayerButtonWidget()
   {
-    return CustomRaisedButton(
+    return CustomButton(
       containerWidth: MediaQuery.of(context).size.width*0.75,
-      containerHeight: MediaQuery.of(context).size.height*0.072,
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
-      elevation: 7.0,
+      elevation: true,
       buttonText: AppStrings.ADD_NEW_PRAYER_PARTNER_TEXT.toUpperCase(),
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,
       fontSize: 1.10,
-      onPressed: (){
+      paddingTop: 10.0,
+      paddingBottom: 10.0,
+      onTap: (){
         AppNavigation.navigatorPop(context);
       },
     );

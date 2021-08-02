@@ -8,7 +8,7 @@ import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
-import 'package:prayer_hybrid_app/widgets/custom_raised_button.dart';
+import 'package:prayer_hybrid_app/widgets/custom_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
 import 'package:prayer_hybrid_app/prayer_partner/screens/prayer_partner_list_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_dialogs.dart';
@@ -171,17 +171,18 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
   //Create Group Button Widget
   Widget _addPrayerPartnerWidget()
   {
-    return CustomRaisedButton(
+    return CustomButton(
       containerWidth: MediaQuery.of(context).size.width*0.75,
-      containerHeight: MediaQuery.of(context).size.height*0.072,
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
-      elevation: 7.0,
+      elevation: true,
       buttonText: AppStrings.ADD_PRAYER_PARTNER_TEXT.toUpperCase(),
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,
+      paddingTop: 12.5,
+      paddingBottom: 12.5,
       fontSize: 1.2,
-      onPressed: () {
+      onTap: () {
         _addPrayerPartnerMethod();
       }
     );
@@ -191,17 +192,18 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
   //Create Search Contact Button Widget
   Widget _searchContactButtonWidget()
   {
-    return CustomRaisedButton(
+    return CustomButton(
       containerWidth: MediaQuery.of(context).size.width*0.75,
-      containerHeight: MediaQuery.of(context).size.height*0.072,
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
-      elevation: 7.0,
+      elevation: true,
       buttonText: AppStrings.SEARCH_CONTACT_LIST_TEXT.toUpperCase(),
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,
       fontSize: 1.2,
-      onPressed: (){
+      paddingTop: 12.5,
+      paddingBottom: 12.5,
+      onTap: (){
         _askPermissions();
       },
     );

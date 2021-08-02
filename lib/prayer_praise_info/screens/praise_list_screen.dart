@@ -4,7 +4,7 @@ import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
-import 'package:prayer_hybrid_app/widgets/custom_raised_button.dart';
+import 'package:prayer_hybrid_app/widgets/custom_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/finish_praise_screen.dart';
 
@@ -157,17 +157,18 @@ class _PraiseListScreenState extends State<PraiseListScreen> {
   //Add New Prayer Button Widget
   Widget _addNewPrayerButtonWidget()
   {
-    return CustomRaisedButton(
+    return CustomButton(
       containerWidth: MediaQuery.of(context).size.width*0.65,
-      containerHeight: MediaQuery.of(context).size.height*0.065,
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
-      elevation: 7.0,
+      elevation: true,
       buttonText: AppStrings.ADD_NEW_PRAYER_TEXT.toUpperCase(),
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,
       fontSize: 1.15,
-      onPressed: (){
+      paddingTop: 13.0,
+      paddingBottom: 13.0,
+      onTap: (){
         AppNavigation.navigateReplacement(context, AddPrayerScreen(prayerButtonText: AppStrings.ADD_PRAYER_TEXT.toUpperCase()));
       },
     );

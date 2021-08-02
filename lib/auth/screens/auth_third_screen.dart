@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
-import 'package:prayer_hybrid_app/widgets/custom_raised_button.dart';
+import 'package:prayer_hybrid_app/widgets/custom_button.dart';
 
 class AuthThirdScreen extends StatefulWidget {
   final PageController pageController;
@@ -93,17 +93,16 @@ class _AuthThirdScreenState extends State<AuthThirdScreen> {
 
   Widget _loginButtonWidget()
   {
-    return CustomRaisedButton(
+    return CustomButton(
       containerWidth: MediaQuery.of(context).size.width*0.35,
-      containerHeight: MediaQuery.of(context).size.height*0.060,
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
-      elevation: 7.0,
+      elevation: true,
       buttonText: AppStrings.LOGIN_TEXT,
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,
       fontSize: 1.25,
-      onPressed: (){
+      onTap: (){
         print("login");
         widget.pageController.jumpToPage(4);
       },
@@ -113,16 +112,17 @@ class _AuthThirdScreenState extends State<AuthThirdScreen> {
 
   Widget _signUpButtonWidget()
   {
-    return CustomRaisedButton(
+    return CustomButton(
       containerWidth: MediaQuery.of(context).size.width*0.35,
-      containerHeight: MediaQuery.of(context).size.height*0.060,
       buttonColor: AppColors.TRANSPARENT_COLOR,
       borderColor: AppColors.WHITE_COLOR,
       buttonText: AppStrings.SIGN_UP_TEXT,
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,
       fontSize: 1.25,
-      onPressed: (){
+      paddingTop: 10.0,
+      paddingBottom: 10.0,
+      onTap: (){
         print("SignUp");
         widget.pageController.jumpToPage(3);
       },

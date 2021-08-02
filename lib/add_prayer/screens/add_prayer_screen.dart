@@ -6,7 +6,7 @@ import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
-import 'package:prayer_hybrid_app/widgets/custom_raised_button.dart';
+import 'package:prayer_hybrid_app/widgets/custom_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
 
 class AddPrayerScreen extends StatefulWidget {
@@ -271,17 +271,18 @@ class _AddPrayerScreenState extends State<AddPrayerScreen> {
   //Add Prayer Button Widget
   Widget _addPrayerButtonWidget()
   {
-    return CustomRaisedButton(
+    return CustomButton(
       containerWidth: MediaQuery.of(context).size.width*0.65,
-      containerHeight: MediaQuery.of(context).size.height*0.07,
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
-      elevation: 7.0,
+      elevation: true,
       buttonText: widget.prayerButtonText,
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,
       fontSize: 1.3,
-      onPressed: (){
+      paddingTop: 12.0,
+      paddingBottom: 12.0,
+      onTap: (){
         if(_addPrayerKey.currentState.validate())
         {
           if(widget.prayerButtonText == AppStrings.ADD_PRAYER_TEXT.toUpperCase())

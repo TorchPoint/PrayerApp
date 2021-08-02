@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/widgets/custom_time_picker_spinner.dart';
-import 'package:prayer_hybrid_app/widgets/custom_raised_button.dart';
+import 'package:prayer_hybrid_app/widgets/custom_button.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
 class TimeAlertScreen
@@ -143,32 +143,31 @@ class TimeAlertScreen
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        CustomRaisedButton(
+        CustomButton(
           containerWidth: MediaQuery.of(context).size.width*0.33,
-          containerHeight: MediaQuery.of(context).size.height*0.058,
           buttonColor: AppColors.WHITE_COLOR,
           borderColor: AppColors.BUTTON_COLOR,
-          elevation: 0.0,
           buttonText: AppStrings.CANCEL_TEXT,
           textColor: AppColors.BUTTON_COLOR,
           fontWeight: FontWeight.w700,
           fontSize: 1.2,
-          onPressed: (){
+          paddingTop: 10.0,
+          paddingBottom: 10.0,
+          onTap: (){
             AppNavigation.navigatorPop(context);
           },
         ),
 
-        CustomRaisedButton(
+        CustomButton(
           containerWidth: MediaQuery.of(context).size.width*0.33,
-          containerHeight: MediaQuery.of(context).size.height*0.058,
           buttonColor: AppColors.BUTTON_COLOR,
           borderColor: AppColors.BUTTON_COLOR,
-          elevation: 7.0,
+          elevation: true,
           buttonText: AppStrings.DONE_TEXT,
           textColor: AppColors.WHITE_COLOR,
           fontWeight: FontWeight.w700,
           fontSize: 1.2,
-          onPressed: (){
+          onTap: (){
             AppNavigation.navigatorPop(context);
           },
         )

@@ -10,7 +10,7 @@ import 'package:prayer_hybrid_app/utils/constants.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
-import 'package:prayer_hybrid_app/widgets/custom_raised_button.dart';
+import 'package:prayer_hybrid_app/widgets/custom_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
 
 class CompleteProfileScreen extends StatefulWidget {
@@ -225,17 +225,18 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   //Edit Profile Widget
   Widget _completeProfileWidget()
   {
-    return CustomRaisedButton(
+    return CustomButton(
       containerWidth: MediaQuery.of(context).size.width*0.85,
-      containerHeight: MediaQuery.of(context).size.height*0.072,
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
-      elevation: 7.0,
+      elevation: true,
       buttonText: AppStrings.EDIT_PROFILE_TEXT.toUpperCase(),
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,
       fontSize: 1.25,
-      onPressed: (){
+      paddingTop: 13.5,
+      paddingBottom: 13.5,
+      onTap: (){
         if(_completeProfileKey.currentState.validate())
         {
           print("complete profile");

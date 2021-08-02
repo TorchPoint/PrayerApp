@@ -6,7 +6,7 @@ import 'package:prayer_hybrid_app/utils/constants.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
-import 'package:prayer_hybrid_app/widgets/custom_raised_button.dart';
+import 'package:prayer_hybrid_app/widgets/custom_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
@@ -148,17 +148,18 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   //Reset Password Button Widget
   Widget _resetPasswordButtonWidget()
   {
-    return CustomRaisedButton(
+    return CustomButton(
       containerWidth: MediaQuery.of(context).size.width*0.83,
-      containerHeight: MediaQuery.of(context).size.height*0.072,
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
-      elevation: 7.0,
+      elevation: true,
       buttonText: AppStrings.RESET_PASSWORD_TEXT,
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,
       fontSize: 1.25,
-      onPressed: (){
+      paddingTop: 13.5,
+      paddingBottom: 13.5,
+      onTap: (){
         if(_resetPasswordKey.currentState.validate())
         {
           AppNavigation.navigatorPop(context);
