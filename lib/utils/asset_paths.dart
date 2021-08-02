@@ -1,10 +1,8 @@
 class AssetPaths
 {
   //Images
-  static const String BACKGROUND_IMAGE = "assets/images/background_image.png";
   static const String FOREGROUND_IMAGE = "assets/images/foreground_image.png";
   static const String AUTH_SECOND_SCREEN_IMAGE = "assets/images/auth_second_screen_image.png";
-  static const String AUTH_THIRD_SCREEN_IMAGE  = "assets/images/auth_third_screen_image.png";
   static const String PROFILE_IMAGE  = "assets/images/profile_image.jpg";
   static const String DRAWER_BACKGROUND_IMAGE  = "assets/images/drawer_background_image.png";
   static const String PRAY_NOW_IMAGE  = "assets/images/pray_now_image.png";

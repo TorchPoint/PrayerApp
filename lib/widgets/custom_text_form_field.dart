@@ -30,16 +30,17 @@ class CustomTextFormField extends StatelessWidget {
         validator: onValidate,
         onTap: onTextFieldTap,
         readOnly: textFieldReadOnly ?? false,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: InputDecoration(
           isCollapsed: isCollapsed ?? false,
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(borderRadius),
-              borderSide: BorderSide(color: borderColor ?? AppColors.WHITE_COLOR)
+              borderSide: BorderSide(color: borderColor ?? AppColors.WHITE_COLOR,width: 1.3)
           ),
 
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(borderRadius),
-              borderSide: BorderSide(color: borderColor ?? AppColors.WHITE_COLOR)
+              borderSide: BorderSide(color: borderColor ?? AppColors.WHITE_COLOR,width: 1.3)
           ),
           errorBorder:OutlineInputBorder(
               borderRadius: BorderRadius.circular(borderRadius),
@@ -60,7 +61,7 @@ class CustomTextFormField extends StatelessWidget {
           hintStyle: TextStyle(
             fontSize: hintSize ?? 17.0,
             color: hintColor ?? AppColors.WHITE_COLOR,
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w500,
           ),
           errorStyle: TextStyle(
             fontSize: 13.0,
@@ -70,7 +71,7 @@ class CustomTextFormField extends StatelessWidget {
           contentPadding: EdgeInsets.only(top: contentPaddingTop ?? 15.0,bottom: contentPaddingBottom ?? 15.0,left: contentPaddingLeft ?? 14.0,right: contentPaddingRight ?? 14.0),
           prefixIcon: prefixIcon != null ?
           Padding(
-            padding: EdgeInsets.only(left: 16.0,right: 14.0),
+            padding: EdgeInsets.only(left: 22.0,right: 16.0),
               child: Image.asset(prefixIcon,width: prefixIconWidth,color: prefixIconColor,)
           )
           :
@@ -95,7 +96,7 @@ class CustomTextFormField extends StatelessWidget {
         style: TextStyle(
           fontSize: textSize ?? 17.0,
           color: textColor ?? AppColors.WHITE_COLOR,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w700,
         ),
         keyboardType: keyBoardType ?? TextInputType.emailAddress,
         obscureText: obscureText ?? false,

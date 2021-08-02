@@ -29,11 +29,11 @@ class _AuthFirstScreenState extends State<AuthFirstScreen> {
           Container(
             width: MediaQuery.of(context).size.width*0.75,
             margin: EdgeInsets.only(top: 10.0),
-            child: Text(AppStrings.GET_STARTED_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600,letterSpacing: 1.0),textScaleFactor: 1.1,textAlign: TextAlign.center,),
+            child: Text(AppStrings.GET_STARTED_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w700,letterSpacing: 1.0),textScaleFactor: 1.1,textAlign: TextAlign.center,),
           ),
 
           Container(
-            width: MediaQuery.of(context).size.width*0.75,
+            width: MediaQuery.of(context).size.width*0.81,
             margin: EdgeInsets.only(top: 35.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -70,19 +70,19 @@ class _AuthFirstScreenState extends State<AuthFirstScreen> {
   Widget _loginButtonWidget()
   {
     return CustomButton(
-      containerWidth: MediaQuery.of(context).size.width*0.35,
-      buttonColor: AppColors.BUTTON_COLOR,
-      borderColor: AppColors.BUTTON_COLOR,
+      containerWidth: MediaQuery.of(context).size.width*0.38,
+      buttonColor: AppColors.WHITE_COLOR,
+      borderColor: AppColors.WHITE_COLOR,
       elevation: true,
       buttonText: AppStrings.LOGIN_TEXT,
-      textColor: AppColors.WHITE_COLOR,
+      textColor: AppColors.BLACK_COLOR,
       fontWeight: FontWeight.w700,
-      fontSize: 1.25,
-      paddingTop: 10.0,
-      paddingBottom: 10.0,
+      fontSize: 1.27,
+      paddingTop: 11.0,
+      paddingBottom: 11.0,
       onTap: (){
       print("login");
-      widget.pageController.jumpToPage(4);
+     widget.pageController.jumpToPage(4);
       },
     );
   }
@@ -91,15 +91,15 @@ class _AuthFirstScreenState extends State<AuthFirstScreen> {
   Widget _signUpButtonWidget()
   {
     return CustomButton(
-      containerWidth: MediaQuery.of(context).size.width*0.35,
+      containerWidth: MediaQuery.of(context).size.width*0.38,
       buttonColor: AppColors.TRANSPARENT_COLOR,
       borderColor: AppColors.WHITE_COLOR,
       buttonText: AppStrings.SIGN_UP_TEXT,
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,
-      fontSize: 1.25,
-      paddingTop: 10.0,
-      paddingBottom: 10.0,
+      fontSize: 1.27,
+      paddingTop: 11.0,
+      paddingBottom: 11.0,
       onTap: (){
         print("SignUp");
         widget.pageController.jumpToPage(3);

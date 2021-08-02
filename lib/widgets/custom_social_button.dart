@@ -4,12 +4,12 @@ import 'package:prayer_hybrid_app/utils/app_colors.dart';
 
 
 class CustomSocialButton extends StatelessWidget {
-  final double containerWidth,containerHeight,iconWidth,differenceWidth;
+  final double containerWidth,iconWidth,differenceWidth;
   final Color buttonColor,buttonTextColor,iconColor;
   final Function onTap;
   final String buttonText,iconPath;
 
-  CustomSocialButton({this.containerWidth,this.containerHeight,this.buttonColor,this.buttonText,this.buttonTextColor,this.iconPath,this.iconWidth,this.iconColor,this.differenceWidth,this.onTap});
+  CustomSocialButton({this.containerWidth,this.buttonColor,this.buttonText,this.buttonTextColor,this.iconPath,this.iconWidth,this.iconColor,this.differenceWidth,this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class CustomSocialButton extends StatelessWidget {
                 SizedBox(width: MediaQuery.of(context).size.width*0.07,),
                 Image.asset(iconPath,color: iconColor,width: iconWidth),
                SizedBox(width: differenceWidth),
-                Expanded(child: Text(buttonText.toString(), style: TextStyle(color: buttonTextColor,fontWeight: FontWeight.w700,letterSpacing: 1.0),textScaleFactor: 1.09,maxLines: 1,overflow: TextOverflow.ellipsis,)),
+                Expanded(child: Text(buttonText.toString(), style: TextStyle(color: buttonTextColor,fontWeight: FontWeight.w700,letterSpacing: 1.0),textScaleFactor: 1.10,maxLines: 1,overflow: TextOverflow.ellipsis,)),
               ],
             ),
           ),

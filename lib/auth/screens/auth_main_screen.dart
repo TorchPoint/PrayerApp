@@ -63,7 +63,7 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
         dotHeight: 10.0,
         spacing: 6.0,
         dotColor: AppColors.WHITE_COLOR,
-        activeDotColor: AppColors.BUTTON_COLOR
+        activeDotColor: AppColors.BACKGROUND1_COLOR
       ),
     );
   }

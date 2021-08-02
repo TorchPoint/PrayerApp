@@ -97,12 +97,14 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
   {
     return CustomTextFormField(
       textController: _emailController,
-      containerWidth: MediaQuery.of(context).size.width*0.85,
+      containerWidth: MediaQuery.of(context).size.width*0.82,
       hintText: AppStrings.EMAIL_HINT_TEXT,
       borderRadius: 30.0,
       contentPaddingLeft: 0.0,
       prefixIcon: AssetPaths.EMAIL_ICON,
-      prefixIconWidth: 15.0,
+      prefixIconWidth: 16.0,
+      contentPaddingTop: 17.0,
+      contentPaddingBottom: 17.0,
       onValidate: (value){
         emailRegExp = RegExp(emailPattern);
         if(value.trim().isEmpty)
@@ -124,7 +126,7 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
   {
     return CustomTextFormField(
       textController: _passwordController,
-      containerWidth: MediaQuery.of(context).size.width*0.85,
+      containerWidth: MediaQuery.of(context).size.width*0.82,
       hintText: AppStrings.PASSWORD_HINT_TEXT,
       borderRadius: 30.0,
       contentPaddingLeft: 0.0,
@@ -134,6 +136,8 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
       errorMaxLines: 4,
       suffixIcon: passwordInvisible == true ? AssetPaths.VISIBLE_OFF_ICON : AssetPaths.VISIBLE_ON_ICON,
       suffixIconWidth: 22.0,
+      contentPaddingTop: 17.0,
+      contentPaddingBottom: 17.0,
       onSuffixIconTap: (){
         setState(() {
           passwordInvisible = !passwordInvisible;
@@ -159,12 +163,12 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
   Widget _loginButtonWidget()
   {
     return CustomButton(
-      containerWidth: MediaQuery.of(context).size.width*0.85,
-      buttonColor: AppColors.BUTTON_COLOR,
-      borderColor: AppColors.BUTTON_COLOR,
+      containerWidth: MediaQuery.of(context).size.width*0.82,
+      buttonColor: AppColors.WHITE_COLOR,
+      borderColor: AppColors.WHITE_COLOR,
       elevation: true,
       buttonText: AppStrings.LOGIN_TEXT,
-      textColor: AppColors.WHITE_COLOR,
+      textColor: AppColors.BLACK_COLOR,
       fontWeight: FontWeight.w700,
       fontSize: 1.25,
       paddingTop: 13.0,

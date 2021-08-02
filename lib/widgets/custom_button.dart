@@ -18,12 +18,12 @@ class CustomButton extends StatelessWidget {
       decoration: BoxDecoration(
           color: buttonColor,
           borderRadius: BorderRadius.circular(30.0),
-          border: Border.all(color: borderColor ?? AppColors.TRANSPARENT_COLOR),
+          border: Border.all(color: borderColor ?? AppColors.TRANSPARENT_COLOR,width: 1.5),
         boxShadow: elevation == true ? [
           BoxShadow(
-            color: AppColors.BLACK_COLOR.withOpacity(0.2),
+            color: AppColors.BLACK_COLOR.withOpacity(0.1),
             spreadRadius: 1,
-            blurRadius: 7,
+            blurRadius: 6,
             offset: Offset(0, 4), // changes position of shadow
           ),
         ]
@@ -34,6 +34,7 @@ class CustomButton extends StatelessWidget {
         color: AppColors.TRANSPARENT_COLOR,
         child: InkWell(
           borderRadius: BorderRadius.circular(30.0),
+
           onTap: onTap,
           child: Padding(
             padding: EdgeInsets.only(top: paddingTop ?? 10.0,bottom: paddingBottom ?? 10.0),

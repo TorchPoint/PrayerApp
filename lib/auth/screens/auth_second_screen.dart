@@ -29,13 +29,13 @@ class _AuthSecondScreenState extends State<AuthSecondScreen> {
           _authHomeImageWidget(),
 
           Container(
-            width: MediaQuery.of(context).size.width*0.75,
-            margin: EdgeInsets.only(top: 20.0),
-            child: Text(AppStrings.SHARE_PRAYER_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600,letterSpacing: 1.0),textScaleFactor: 1.1,textAlign: TextAlign.center,),
+            width: MediaQuery.of(context).size.width*0.78,
+            margin: EdgeInsets.only(top: 25.0),
+            child: Text(AppStrings.SHARE_PRAYER_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w700),textScaleFactor: 1.15,textAlign: TextAlign.center,),
           ),
 
           Container(
-            width: MediaQuery.of(context).size.width*0.75,
+            width: MediaQuery.of(context).size.width*0.81,
             margin: EdgeInsets.only(top: 25.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -71,9 +71,9 @@ class _AuthSecondScreenState extends State<AuthSecondScreen> {
   Widget _authHomeImageWidget()
   {
     return Container(
-      width: MediaQuery.of(context).size.width*0.26,
+      width: MediaQuery.of(context).size.width*0.30,
       height: MediaQuery.of(context).size.height*0.32,
-      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.03),
+      margin: EdgeInsets.only(top: 25),
       decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage(AssetPaths.AUTH_SECOND_SCREEN_IMAGE),
@@ -95,16 +95,16 @@ class _AuthSecondScreenState extends State<AuthSecondScreen> {
   Widget _loginButtonWidget()
   {
     return CustomButton(
-      containerWidth: MediaQuery.of(context).size.width*0.35,
-      buttonColor: AppColors.BUTTON_COLOR,
-      borderColor: AppColors.BUTTON_COLOR,
+      containerWidth: MediaQuery.of(context).size.width*0.38,
+      buttonColor: AppColors.WHITE_COLOR,
+      borderColor: AppColors.WHITE_COLOR,
       elevation: true,
       buttonText: AppStrings.LOGIN_TEXT,
-      textColor: AppColors.WHITE_COLOR,
+      textColor: AppColors.BLACK_COLOR,
       fontWeight: FontWeight.w700,
-      fontSize: 1.25,
-      paddingTop: 10.0,
-      paddingBottom: 10.0,
+      fontSize: 1.27,
+      paddingTop: 11.0,
+      paddingBottom: 11.0,
       onTap: (){
         print("login");
         widget.pageController.jumpToPage(4);
@@ -116,15 +116,15 @@ class _AuthSecondScreenState extends State<AuthSecondScreen> {
   Widget _signUpButtonWidget()
   {
     return CustomButton(
-      containerWidth: MediaQuery.of(context).size.width*0.35,
+      containerWidth: MediaQuery.of(context).size.width*0.38,
       buttonColor: AppColors.TRANSPARENT_COLOR,
       borderColor: AppColors.WHITE_COLOR,
       buttonText: AppStrings.SIGN_UP_TEXT,
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,
-      fontSize: 1.25,
-      paddingTop: 10.0,
-      paddingBottom: 10.0,
+      fontSize: 1.27,
+      paddingTop: 11.0,
+      paddingBottom: 11.0,
       onTap: (){
         print("SignUp");
         widget.pageController.jumpToPage(3);
