@@ -86,7 +86,7 @@ class AppStrings
   static const String CARD_NUMBER_TEXT ="**** **** **** 1234";
   static const String CARD_NUMBER_TEXT2 ="**** **** **** 6598";
   static const String CARD_NUMBER_TEXT3 ="**** **** **** 0069";
-  static const String PAYMENT_CARD_TEXT ="Payment Card";
+  static const String PAYMENT_CARD_TEXT ="Payment";
   static const String ADD_CARD_TEXT ="Add Card";
   static const String DONE_TEXT ="Done";
   static const String CANCEL_TEXT = "Cancel";

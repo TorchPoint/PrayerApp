@@ -32,8 +32,8 @@ class _PaymentCardsScreenState extends State<PaymentCardsScreen> {
   String errorCardNumber="",errorExpirationMonth="",errorExpirationYear="",errorCVV="";
   bool boolCardNumber=true,boolExpirationMonth=true,boolExpirationYear=true,boolCVV=true,boolExpirationGreater = true;
 
-  List cardTypes = [AssetPaths.VISA_CARD_IMAGE,AssetPaths.MASTER_CARD_IMAGE,AssetPaths.UCB_CARD_IMAGE];
-  List cardNumbers = [AppStrings.CARD_NUMBER_TEXT,AppStrings.CARD_NUMBER_TEXT2,AppStrings.CARD_NUMBER_TEXT3];
+  List cardTypes = [AssetPaths.VISA_CARD_IMAGE,AssetPaths.MASTER_CARD_IMAGE,AssetPaths.UCB_CARD_IMAGE,AssetPaths.VISA_CARD_IMAGE,AssetPaths.MASTER_CARD_IMAGE,AssetPaths.UCB_CARD_IMAGE];
+  List cardNumbers = [AppStrings.CARD_NUMBER_TEXT,AppStrings.CARD_NUMBER_TEXT2,AppStrings.CARD_NUMBER_TEXT3,AppStrings.CARD_NUMBER_TEXT,AppStrings.CARD_NUMBER_TEXT2,AppStrings.CARD_NUMBER_TEXT3];
 
   DateTime datePicked;
   DateTime cardDate;
@@ -44,69 +44,59 @@ class _PaymentCardsScreenState extends State<PaymentCardsScreen> {
     return CustomBackgroundContainer(
       child: Scaffold(
         backgroundColor:AppColors.TRANSPARENT_COLOR,
-        body: Column(
-          children: [
-            _customAppBar(),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Form(
-                  key:  _paymentCardKey,
-                  child: Column(
-                    children: [
-                      SizedBox(height: 16.0,),
-                      cardNumber(),
-                      SizedBox(height: 14.0,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width*0.44,
-                            child: Column(
-                              children: [
-                                expirationMonth(),
-                              ],
-                            ),
-                          ),
-                          SizedBox(width: MediaQuery.of(context).size.width*0.02,),
-                          Container(
-                            width: MediaQuery.of(context).size.width*0.44,
-                            child: Column(
-                              children: [
-                                expirationYear(),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(height: 14.0,),
-                      cardCVV(),
-                      SizedBox(height: 14.0,),
-                      addCard(),
-                      SizedBox(height: MediaQuery.of(context).size.height*0.06,),
+        resizeToAvoidBottomInset: false,
+        body: Form(
+          key:  _paymentCardKey,
+          child: Column(
+            children: [
+              _customAppBar(),
+              SizedBox(height: 16.0,),
+              cardNumber(),
+              SizedBox(height: 14.0,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width*0.44,
+                    child: Column(
+                      children: [
+                        expirationMonth(),
+                      ],
+                    ),
+                  ),
+                  SizedBox(width: MediaQuery.of(context).size.width*0.02,),
+                  Container(
+                    width: MediaQuery.of(context).size.width*0.44,
+                    child: Column(
+                      children: [
+                        expirationYear(),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(height: 14.0,),
+              cardCVV(),
+              SizedBox(height: 14.0,),
+              addCard(),
+              SizedBox(height: MediaQuery.of(context).size.height*0.06,),
 
-                      Container(
-                        color: AppColors.SETTINGS_OPTIONS_COLOR.withOpacity(0.3),
-                        //padding: EdgeInsets.only(top:10.0),
-                        child:ListView.builder(
-                          itemCount: cardTypes.length,
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          padding: EdgeInsets.zero,
-                          itemBuilder: (context, index) {
-                            return cardList(index);
-                          },
-                        ),
-                      ),
-
-                      SizedBox(height: 10.0,),
-
-                    ],
+              Expanded(
+                child: Container(
+                  color: AppColors.SETTINGS_OPTIONS_COLOR.withOpacity(0.3),
+                  //padding: EdgeInsets.only(top:10.0),
+                  child:ListView.builder(
+                    itemCount: cardTypes.length,
+                    padding: EdgeInsets.zero,
+                    itemBuilder: (context, index) {
+                      return cardList(index);
+                    },
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -133,7 +123,7 @@ class _PaymentCardsScreenState extends State<PaymentCardsScreen> {
       containerWidth: MediaQuery.of(context).size.width*0.85,
       hintText: AppStrings.CARD_NUMBER_HINT_TEXT,
       borderRadius: 30.0,
-      contentPaddingLeft: 0.0,
+      contentPaddingRight: 0.0,
       prefixIcon: AssetPaths.CARD_NUMBER_ICON,
       prefixIconWidth: 15.0,
       keyBoardType: TextInputType.number,
@@ -160,7 +150,7 @@ class _PaymentCardsScreenState extends State<PaymentCardsScreen> {
         containerWidth: MediaQuery.of(context).size.width*0.4,
         hintText: AppStrings.EXP_MONTH_HINT_TEXT,
         borderRadius: 30.0,
-        contentPaddingLeft: 0.0,
+        contentPaddingRight: 0.0,
         prefixIcon: AssetPaths.CALENDAR_ICON,
         prefixIconWidth: 15.0,
         textFieldReadOnly: true,
@@ -188,7 +178,7 @@ class _PaymentCardsScreenState extends State<PaymentCardsScreen> {
         containerWidth: MediaQuery.of(context).size.width*0.4,
         hintText: AppStrings.EXP_YEAR_HINT_TEXT,
         borderRadius: 30.0,
-        contentPaddingLeft: 0.0,
+        contentPaddingRight: 0.0,
         prefixIcon: AssetPaths.CALENDAR_ICON,
         prefixIconWidth: 15.0,
         textFieldReadOnly: true,
@@ -215,7 +205,7 @@ class _PaymentCardsScreenState extends State<PaymentCardsScreen> {
       containerWidth: MediaQuery.of(context).size.width*0.85,
       hintText: AppStrings.CARD_CVV_HINT_TEXT,
       borderRadius: 30.0,
-      contentPaddingLeft: 0.0,
+      contentPaddingRight: 0.0,
       prefixIcon: AssetPaths.CARD_CVV_ICON,
       prefixIconWidth: 15.0,
       keyBoardType: TextInputType.number,

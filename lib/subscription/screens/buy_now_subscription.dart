@@ -50,14 +50,10 @@ class _BuyNowSubscriptionState extends State<BuyNowSubscription> {
   Widget _customAppBar()
   {
     return CustomAppBar(
-      title: AppStrings.SUBSCRIBE_TEXT,
       leadingIconPath: AssetPaths.BACK_ICON,
+      paddingTop: 20.0,
       leadingTap: (){
         print("Leading tap");
-        AppNavigation.navigatorPop(context);
-      },
-      trailingIconPath: AssetPaths.CANCEL_ICON,
-      trailingTap: (){
         AppNavigation.navigatorPop(context);
       },
     );

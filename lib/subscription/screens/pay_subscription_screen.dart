@@ -46,15 +46,9 @@ class _PaySubscriptionState extends State<PaySubscription> {
   Widget _customAppBar()
   {
     return CustomAppBar(
-      title: AppStrings.SUBSCRIBE_TEXT,
       leadingIconPath: AssetPaths.BACK_ICON,
       leadingTap: (){
         print("Leading tap");
-        AppNavigation.navigatorPop(context);
-      },
-      trailingIconPath: AssetPaths.CANCEL_ICON,
-      trailingTap: (){
-        print("Cancel Icon");
         AppNavigation.navigatorPop(context);
       },
     );
