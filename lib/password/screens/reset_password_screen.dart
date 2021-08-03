@@ -35,11 +35,13 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   key: _resetPasswordKey,
                   child: Column(
                     children: [
-                      SizedBox(height: MediaQuery.of(context).size.height*0.08,),
+                      SizedBox(height: MediaQuery.of(context).size.height*0.06),
+                      Image.asset(AssetPaths.FOREGROUND_IMAGE,width: 180.0),
+                      SizedBox(height: MediaQuery.of(context).size.height*0.06),
                       _newPasswordWidget(),
                       SizedBox(height: 18.0,),
                       _confirmPasswordWidget(),
-                      SizedBox(height: 25.0,),
+                      SizedBox(height: 18.0,),
                       _resetPasswordButtonWidget(),
                       SizedBox(height: 10.0,),
                     ],
@@ -58,6 +60,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   {
     return CustomAppBar(
       leadingIconPath: AssetPaths.BACK_ICON,
+      isBarImage: false,
+      title: AppStrings.WELCOME_TO_TEXT,
+      titleTextSize: 1.7,
+      paddingTop: 20.0,
       leadingTap: (){
         AppNavigation.navigatorPop(context);
       },
@@ -69,12 +75,14 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   {
     return CustomTextFormField(
       textController: _newPasswordController,
-      containerWidth: MediaQuery.of(context).size.width*0.85,
+      containerWidth: MediaQuery.of(context).size.width*0.82,
       hintText: AppStrings.NEW_PASSWORD_HINT_TEXT,
       borderRadius: 30.0,
-      contentPaddingLeft: 0.0,
+      contentPaddingRight: 0.0,
       prefixIcon: AssetPaths.PASSWORD_ICON,
       prefixIconWidth: 15.0,
+      contentPaddingTop: 17.0,
+      contentPaddingBottom: 17.0,
       obscureText: passwordInvisible == true ? true : false,
       errorMaxLines: 4,
       suffixIcon: passwordInvisible == true ? AssetPaths.VISIBLE_OFF_ICON : AssetPaths.VISIBLE_ON_ICON,
@@ -108,12 +116,14 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   {
     return CustomTextFormField(
       textController: _confirmPasswordController,
-      containerWidth: MediaQuery.of(context).size.width*0.85,
+      containerWidth: MediaQuery.of(context).size.width*0.82,
       hintText: AppStrings.CONFIRM_PASSWORD_HINT_TEXT,
       borderRadius: 30.0,
-      contentPaddingLeft: 0.0,
+      contentPaddingRight: 0.0,
       prefixIcon: AssetPaths.PASSWORD_ICON,
       prefixIconWidth: 15.0,
+      contentPaddingTop: 17.0,
+      contentPaddingBottom: 17.0,
       obscureText: confirmPasswordInvisible == true ? true : false,
       errorMaxLines: 4,
       suffixIcon: confirmPasswordInvisible == true ? AssetPaths.VISIBLE_OFF_ICON : AssetPaths.VISIBLE_ON_ICON,
@@ -149,16 +159,16 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   Widget _resetPasswordButtonWidget()
   {
     return CustomButton(
-      containerWidth: MediaQuery.of(context).size.width*0.83,
-      buttonColor: AppColors.BUTTON_COLOR,
-      borderColor: AppColors.BUTTON_COLOR,
+      containerWidth: MediaQuery.of(context).size.width*0.82,
+      buttonColor: AppColors.WHITE_COLOR,
+      borderColor: AppColors.WHITE_COLOR,
       elevation: true,
       buttonText: AppStrings.RESET_PASSWORD_TEXT,
-      textColor: AppColors.WHITE_COLOR,
+      textColor: AppColors.BLACK_COLOR,
       fontWeight: FontWeight.w700,
       fontSize: 1.25,
-      paddingTop: 13.5,
-      paddingBottom: 13.5,
+      paddingTop: 13.0,
+      paddingBottom: 13.0,
       onTap: (){
         if(_resetPasswordKey.currentState.validate())
         {

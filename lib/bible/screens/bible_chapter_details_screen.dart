@@ -21,7 +21,7 @@ class _BibleChapterDetailsScreenState extends State<BibleChapterDetailsScreen> {
         body: Column(
           children: [
             _customAppBar(),
-            SizedBox(height: 12.0,),
+            SizedBox(height: 15.0,),
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
@@ -43,6 +43,7 @@ class _BibleChapterDetailsScreenState extends State<BibleChapterDetailsScreen> {
     return CustomAppBar(
       title: AppStrings.GENESIS_ONE_TEXT,
       leadingIconPath: AssetPaths.BACK_ICON,
+      paddingTop: 20.0,
       leadingTap: (){
         AppNavigation.navigatorPop(context);
       },

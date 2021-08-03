@@ -20,7 +20,7 @@ class AssetPaths
   static const String MASTER_CARD_IMAGE = "assets/images/master_card.png";
   static const String UCB_CARD_IMAGE = "assets/images/ucb_card.png";
   static const String COMPLETE_PROFILE_IMAGE = "assets/images/complete_profile_image.png";
-
+  static const String PARTNER_IMAGE = "assets/images/partner_image.png";
 
   //Icons
   static const String NAME_ICON = "assets/icons/name_icon.png";
@@ -63,7 +63,7 @@ class AssetPaths
   static const String TICK_ICON2 = "assets/icons/tick_icon2.png";
   static const String VISIBLE_OFF_ICON = "assets/icons/visible_off_icon.png";
   static const String VISIBLE_ON_ICON = "assets/icons/visible_on_icon.png";
-
+  static const String ATTACHMENT_ICON = "assets/icons/attachment_icon.png";
 
 
 }

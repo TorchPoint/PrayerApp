@@ -27,7 +27,7 @@ class _PrayerGroupListScreenState extends State<PrayerGroupListScreen> {
         body: Column(
           children: [
             _customAppBar(),
-            SizedBox(height: 10.0,),
+            SizedBox(height: 20.0,),
             Expanded(
               child:ListView.builder
                 (
@@ -55,10 +55,11 @@ class _PrayerGroupListScreenState extends State<PrayerGroupListScreen> {
     return CustomAppBar(
       title: AppStrings.PRAYER_GROUPS_TEXT,
       leadingIconPath: AssetPaths.BACK_ICON,
+      paddingTop: 20.0,
       leadingTap: (){
         AppNavigation.navigatorPop(context);
       },
-      trailingIconPath: AssetPaths.EDIT_ICON_2,
+      trailingIconPath: AssetPaths.EDIT_ICON,
       trailingTap: (){
         print("Edit Icon 2");
         AppNavigation.navigateTo(context, CreatePrayerGroupScreen());
@@ -128,9 +129,9 @@ class _PrayerGroupListScreenState extends State<PrayerGroupListScreen> {
       buttonText: AppStrings.ADD_NEW_GROUP_TEXT.toUpperCase(),
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,
-      fontSize: 1.3,
-      paddingTop: 12.0,
-      paddingBottom: 12.0,
+      fontSize: 1.2,
+      paddingTop: 13.5,
+      paddingBottom: 13.5,
       onTap: (){
         AppNavigation.navigateTo(context, CreatePrayerGroupScreen());
       },

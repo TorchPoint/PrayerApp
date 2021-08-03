@@ -38,10 +38,7 @@ class _PraiseListScreenState extends State<PraiseListScreen> {
                       return _praiseList(index);
                     }
                 ),
-                SizedBox(height: 20.0,),
 
-                _addNewPrayerButtonWidget(),
-                SizedBox(height: 15.0,),
               ],
             ),
           ),
@@ -154,25 +151,7 @@ class _PraiseListScreenState extends State<PraiseListScreen> {
   }
 
 
-  //Add New Prayer Button Widget
-  Widget _addNewPrayerButtonWidget()
-  {
-    return CustomButton(
-      containerWidth: MediaQuery.of(context).size.width*0.65,
-      buttonColor: AppColors.BUTTON_COLOR,
-      borderColor: AppColors.BUTTON_COLOR,
-      elevation: true,
-      buttonText: AppStrings.ADD_NEW_PRAYER_TEXT.toUpperCase(),
-      textColor: AppColors.WHITE_COLOR,
-      fontWeight: FontWeight.w700,
-      fontSize: 1.15,
-      paddingTop: 13.0,
-      paddingBottom: 13.0,
-      onTap: (){
-        AppNavigation.navigateReplacement(context, AddPrayerScreen(prayerButtonText: AppStrings.ADD_PRAYER_TEXT.toUpperCase()));
-      },
-    );
-  }
+
 
 
 }

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
+import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 
 
 class CustomAppBar extends StatelessWidget {
 
   final Function leadingTap,trailingTap;
   final String title,leadingIconPath,trailingIconPath;
+  final bool isBarImage;
+  final double titleTextSize,paddingTop,trailingIconSize,leadingIconSize;
 
-   CustomAppBar({this.title,this.leadingIconPath,this.leadingTap,this.trailingIconPath,this.trailingTap});
+   CustomAppBar({this.title,this.leadingIconPath,this.leadingTap,this.trailingIconPath,this.trailingIconSize,this.leadingIconSize,this.isBarImage = true,this.titleTextSize,this.paddingTop,this.trailingTap});
 
 
   @override
@@ -15,60 +18,72 @@ class CustomAppBar extends StatelessWidget {
     return SafeArea(
       child: Container(
         width: MediaQuery.of(context).size.width*0.9,
-        height: MediaQuery.of(context).size.height*0.1,
         margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.05,right: MediaQuery.of(context).size.width*0.05),
-        padding: EdgeInsets.only(top: 4.0,bottom: 4.0),
+        padding: EdgeInsets.only(top: paddingTop ?? 10.0,bottom: 4.0),
         color: AppColors.TRANSPARENT_COLOR,
-        child: Row(
+        child: Column(
           children: [
-            leadingIconPath != null ?
-            InkWell(
-              onTap: leadingTap,
-              child: Container(
-                width: 43.0,
-                height: 43.0,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
+            Visibility(
+              visible: isBarImage,
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: 15.0),
+                    child: Image.asset(AssetPaths.FOREGROUND_IMAGE,width: 110.0,)
+                )
+            ),
+            Row(
+              children: [
+                leadingIconPath != null ?
+                GestureDetector(
+                  onTap: leadingTap,
+                  child: Container(
+                    width: 22.0,
+                    height: 22.0,
+                    margin: EdgeInsets.only(top: 2.0),
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
                         image: AssetImage(leadingIconPath),
                         fit: BoxFit.contain
-                    )
+                      )
+                    ),
+                  )
+                )
+                :
+                 Container(
+                   width: 22.0,
+                   height: 22.0,
+                   color: AppColors.TRANSPARENT_COLOR,
+                 ),
+
+                Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.only(top: 2.5),
+                      child: Text(title ?? "",textAlign: TextAlign.center,textScaleFactor: titleTextSize ?? 1.5,style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700),maxLines: 1,overflow: TextOverflow.ellipsis,)
+                  ),
                 ),
-              ),
-            )
-            :
-             Container(
-               width: 43.0,
-               height: 43.0,
-               color: AppColors.TRANSPARENT_COLOR,
-             ),
-
-            Expanded(
-              child: Padding(
-                  padding: EdgeInsets.only(top: 2.0),
-                  child: Text(title ?? "",textAlign: TextAlign.center,textScaleFactor: 1.5,style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700),maxLines: 1,overflow: TextOverflow.ellipsis,)
-              ),
-            ),
 
 
-            trailingIconPath != null ?
-            InkWell(
-              onTap: trailingTap,
-              child: Container(
-                width: 43.0,
-                height: 43.0,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(trailingIconPath),
-                        fit: BoxFit.contain
+                trailingIconPath != null ?
+                GestureDetector(
+                    onTap: trailingTap,
+                    child: Container(
+                      width: 22.0,
+                      height: 22.0,
+                      margin: EdgeInsets.only(top: 2.5),
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage(trailingIconPath),
+                              fit: BoxFit.contain
+                          )
+                      ),
                     )
+                )
+                :
+                Container(
+                  width: 22.0,
+                  height: 22.0,
+                  color: AppColors.TRANSPARENT_COLOR,
                 ),
-              ),
-            )
-            :
-            Container(
-              width: 43.0,
-              height: 43.0,
-              color: AppColors.TRANSPARENT_COLOR,
+              ],
             ),
           ],
         ),

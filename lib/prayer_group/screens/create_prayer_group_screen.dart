@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_hybrid_app/common_classes/share_class.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
@@ -34,6 +35,7 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
     return CustomBackgroundContainer(
       child: Scaffold(
         backgroundColor: AppColors.TRANSPARENT_COLOR,
+        resizeToAvoidBottomInset: false,
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,7 +61,7 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
 
                    Padding(
                        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.075,right: MediaQuery.of(context).size.width*0.075),
-                       child: Text(AppStrings.SEARCH_GROUP_MEMBERS_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600),textScaleFactor: 1.18,)
+                       child: Text(AppStrings.GROUP_MEMBERS_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600),textScaleFactor: 1.18,)
                    ),
                    SizedBox(height: 10.0,),
 
@@ -94,18 +96,25 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
                                  return _groupMembersListWidget(index);
                                }
                            ),
-
+                           SizedBox(height: 10.0,),
                            Align(
                                alignment: Alignment.center,
                                child: _createGroupWidget()
                            ),
 
-                           SizedBox(height: 10.0,)
+                           SizedBox(height: 10.0,),
 
+                           Align(
+                               alignment: Alignment.center,
+                               child: _inviteToPrayerAppWidget()
+                           ),
+
+                           SizedBox(height: 10.0,)
                          ],
                        ),
                      ),
                    ),
+
 
 
                ],
@@ -124,6 +133,7 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
     return CustomAppBar(
       title: AppStrings.PRAYER_GROUPS_TEXT,
       leadingIconPath: AssetPaths.BACK_ICON,
+      paddingTop: 20.0,
       leadingTap: (){
         AppNavigation.navigatorPop(context);
       },
@@ -237,7 +247,7 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
   Widget _addMemberWidget()
   {
     return CustomButton(
-      containerWidth: MediaQuery.of(context).size.width*0.60,
+      containerWidth: MediaQuery.of(context).size.width*0.75,
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
       elevation: true,
@@ -310,11 +320,11 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
   Widget _createGroupWidget()
   {
     return CustomButton(
-      containerWidth: MediaQuery.of(context).size.width*0.64,
+      containerWidth: MediaQuery.of(context).size.width*0.75,
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
       elevation: true,
-      buttonText: AppStrings.CREATE_GROUP_TEXT.toUpperCase(),
+      buttonText: AppStrings.ADD_TO_PRAYER_GROUP_TEXT.toUpperCase(),
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,
       fontSize: 1.25,
@@ -336,6 +346,32 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
         }
       },
     );
+  }
+
+
+  //Add new prayer button widget
+  Widget _inviteToPrayerAppWidget()
+  {
+    return CustomButton(
+      containerWidth: MediaQuery.of(context).size.width*0.75,
+      buttonColor: AppColors.BUTTON_COLOR,
+      borderColor: AppColors.BUTTON_COLOR,
+      elevation: true,
+      buttonText: AppStrings.INVITE_TO_PRAYER_APP.toUpperCase(),
+      textColor: AppColors.WHITE_COLOR,
+      fontWeight: FontWeight.w700,
+      fontSize: 1.25,
+      paddingTop: 11.5,
+      paddingBottom: 11.5,
+      onTap: (){
+        _inviteFriend();
+      },
+    );
+  }
+
+  void _inviteFriend()
+  {
+    ShareClass.shareMethod(message: AppStrings.SHARE_MESSAGE_TEXT);
   }
 
 

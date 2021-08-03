@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:prayer_hybrid_app/common_classes/image_gallery_class.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
@@ -30,8 +31,8 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   RegExp passwordRegExp;
   bool passwordInvisible = true;
   File profileFileImage;
-  ImagePicker picker = ImagePicker();
-  PickedFile pickedFile;
+  String profileImagePath;
+  ImageGalleryClass imageGalleryClass = ImageGalleryClass();
   @override
   Widget build(BuildContext context) {
     return CustomBackgroundContainer(
@@ -48,7 +49,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                     children: [
                   GestureDetector(
                     onTap: (){
-                      imageGalleryOption();
+                      _imageGalleryOption();
                     },
                     child: Container(
                     margin: EdgeInsets.only(top: 15.0),
@@ -248,130 +249,55 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
 
 
   //Select Image Start
-  void imageGalleryOption() {
-    showModalBottomSheet(
+  void _imageGalleryOption() {
+    imageGalleryClass.imageGalleryBottomSheet(
         context: context,
-        builder: (_) {
-          return Container(
-            color: AppColors.MENU_TEXT_COLOR,
-            child: SafeArea(
-              child: Wrap(
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: (){
-                      getCameraImage();
-                    },
-                    child: Container(
-                      color: AppColors.TRANSPARENT_COLOR,
-                      margin: EdgeInsets.only(top: 15.0,bottom: 8.0),
-                      child: Row(
-                        children: [
-                          SizedBox(width: 15.0,),
-                          Icon(
-                            Icons.camera_enhance,
-                            color: Colors.white,
-                          ),
-                          SizedBox(width: 15.0,),
-                          Text(
-                            AppStrings.CAMERA_TEXT,
-                            style:
-                            TextStyle(
-                                fontWeight: FontWeight.bold, color: Colors.white),
-                            textScaleFactor: 1.3,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Divider(
-                    color: Colors.white,
-                  ),
-                  GestureDetector(
-                    onTap: (){
-                      getGalleryImage();
-                    },
-                    child: Container(
-                      color: AppColors.TRANSPARENT_COLOR,
-                      margin: EdgeInsets.only(top: 9.0,bottom: 15.0),
-                      child: Row(
-                        children: [
-                          SizedBox(width: 15.0,),
-                          Icon(
-                            Icons.image,
-                            color: Colors.white,
-                          ),
-                          SizedBox(width: 15.0,),
-                          Text(
-                            AppStrings.GALLERY_TEXT,
-                            style:
-                            TextStyle(
-                                fontWeight: FontWeight.bold, color: Colors.white),
-                            textScaleFactor: 1.3,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
+        onCameraTap: (){
+          _getImage(imageText:AppStrings.CAMERA_TEXT);
+        },
+        onGalleryTap: (){
+          _getImage(imageText:AppStrings.GALLERY_TEXT);
         }
     );
   }
 
-  void getCameraImage() async
+
+  void _getImage({String imageText}) async
   {
-    pickedFile = await picker.getImage(source: ImageSource.camera,imageQuality: 70);
-    if(pickedFile != null)
+    if(imageText == AppStrings.CAMERA_TEXT)
     {
-      cropImage(pickedFile.path);
+      profileImagePath = await imageGalleryClass.getCameraImage();
+      _cropImage(imagePath:profileImagePath);
     }
+    else if(imageText == AppStrings.GALLERY_TEXT)
+    {
+      profileImagePath = await imageGalleryClass.getGalleryImage();
+      _cropImage(imagePath:profileImagePath);
+    }
+  }
+
+  void _cropImage({String imagePath}) async
+  {
+    //Ya use hoa modal bottom sheet ko remove krna ka liya
     AppNavigation.navigatorPop(context);
-  }
 
-  void getGalleryImage() async
-  {
-    pickedFile = await picker.getImage(source: ImageSource.gallery,imageQuality: 80);
-    if(pickedFile != null)
+    if(imagePath != null)
     {
-      cropImage(pickedFile.path);
+      profileFileImage = await imageGalleryClass.cropImage(imageFilePath: imagePath);
+
+
+      if(profileFileImage != null)
+      {
+
+      }
+
+      setState(() {
+
+      });
     }
-    AppNavigation.navigatorPop(context);
   }
 
 
-  void cropImage(String pickedImageFile) async
-  {
-    profileFileImage = await ImageCropper.cropImage(
-        sourcePath: pickedImageFile,
-        aspectRatioPresets: [
-          CropAspectRatioPreset.square,
-          CropAspectRatioPreset.ratio3x2,
-          CropAspectRatioPreset.original,
-          CropAspectRatioPreset.ratio4x3,
-          CropAspectRatioPreset.ratio16x9
-        ],
-        androidUiSettings: AndroidUiSettings(
-            toolbarTitle: AppStrings.APP_TITLE_TEXT,
-            toolbarColor: AppColors.MENU_TEXT_COLOR,
-            toolbarWidgetColor: Colors.white,
-            initAspectRatio: CropAspectRatioPreset.original,
-            lockAspectRatio: false),
-        iosUiSettings: IOSUiSettings(
-          minimumAspectRatio: 1.0,
-        )
-    );
 
-    if(profileFileImage != null)
-    {
-
-    }
-
-    setState(() {
-
-    });
-
-  }
 
 }

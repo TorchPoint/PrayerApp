@@ -82,6 +82,7 @@ class _ContactListScreenState extends State<ContactListScreen> {
     return CustomAppBar(
       title: AppStrings.CONTACT_LIST_TEXT,
       leadingIconPath: AssetPaths.BACK_ICON,
+      paddingTop: 20.0,
       leadingTap: (){
         AppNavigation.navigatorPop(context);
       },

@@ -33,6 +33,7 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
         body: Column(
           children: [
             _customAppBar(),
+            SizedBox(height: 6.0,),
             Expanded(
               child: SingleChildScrollView(
                 child: Form(
@@ -40,25 +41,15 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 18.0,),
-                      Padding(
-                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.075,right: MediaQuery.of(context).size.width*0.075),
-                          child: Text(AppStrings.ADD_NAME_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600),textScaleFactor: 1.18,)
-                      ),
-                      SizedBox(height: 10.0,),
+                      SizedBox(height: 23.0,),
                       Align(
                           alignment: Alignment.center,
                           child: _addNameTextFormField()
                       ),
 
 
-                      SizedBox(height: 18.0,),
+                      SizedBox(height: 23.0,),
 
-                      Padding(
-                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.075,right: MediaQuery.of(context).size.width*0.075),
-                          child: Text(AppStrings.ADD_MOBILE_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600),textScaleFactor: 1.18,)
-                      ),
-                      SizedBox(height: 10.0,),
 
                       Align(
                           alignment: Alignment.center,
@@ -66,14 +57,14 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
                       ),
 
 
-                      SizedBox(height: MediaQuery.of(context).size.height*0.06,),
+                      SizedBox(height: 23.0),
 
                       Align(
                         alignment: Alignment.center,
                           child: _addPrayerPartnerWidget()
                       ),
 
-                      SizedBox(height: 22.0,),
+                      SizedBox(height: 20.0,),
 
                       Align(
                           alignment: Alignment.center,
@@ -100,6 +91,7 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
     return CustomAppBar(
       title: AppStrings.PRAYER_PARTNER_TEXT,
       leadingIconPath: AssetPaths.BACK_ICON,
+      paddingTop: 20.0,
       leadingTap: (){
         AppNavigation.navigatorPop(context);
       },
@@ -114,17 +106,16 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
       containerWidth: MediaQuery.of(context).size.width*0.85,
       hintText: AppStrings.ADD_NAME_TEXT,
       borderRadius: 28.0,
-      contentPaddingTop: 13.0,
-      contentPaddingBottom: 13.0,
+      contentPaddingTop: 17.5,
+      contentPaddingBottom: 17.5,
       contentPaddingRight: 20.0,
       contentPaddingLeft: 20.0,
       hintSize: 15.0,
       textSize: 15.0,
       isCollapsed: true,
-      filledColor: AppColors.WHITE_COLOR,
-      hintColor: AppColors.BLACK_COLOR,
-      textColor: AppColors.BLACK_COLOR,
-      cursorColor: AppColors.BLACK_COLOR,
+      hintColor: AppColors.WHITE_COLOR,
+      textColor: AppColors.WHITE_COLOR,
+      cursorColor: AppColors.WHITE_COLOR,
       onValidate: (value){
         if(value.trim().isEmpty)
         {
@@ -144,18 +135,18 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
       containerWidth: MediaQuery.of(context).size.width*0.85,
       hintText: AppStrings.ADD_MOBILE_NO_HINT_TEXT,
       borderRadius: 28.0,
-      contentPaddingTop: 13.0,
-      contentPaddingBottom: 13.0,
+      contentPaddingTop: 17.5,
+      contentPaddingBottom: 17.5,
       contentPaddingRight: 20.0,
       contentPaddingLeft: 20.0,
       hintSize: 15.0,
       textSize: 15.0,
       isCollapsed: true,
       //borderColor: errorBoolMobile == true ? AppColors.TRANSPARENT_COLOR : AppColors.ERROR_COLOR,
-      filledColor: AppColors.WHITE_COLOR,
-      hintColor: AppColors.BLACK_COLOR,
-      textColor: AppColors.BLACK_COLOR,
-      cursorColor: AppColors.BLACK_COLOR,
+      filledColor: AppColors.TRANSPARENT_COLOR,
+      hintColor: AppColors.WHITE_COLOR,
+      textColor: AppColors.WHITE_COLOR,
+      cursorColor: AppColors.WHITE_COLOR,
       keyBoardType: TextInputType.phone,
       onValidate: (value){
         if(value.trim().isEmpty)
@@ -179,8 +170,8 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
       buttonText: AppStrings.ADD_PRAYER_PARTNER_TEXT.toUpperCase(),
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,
-      paddingTop: 12.5,
-      paddingBottom: 12.5,
+      paddingTop: 13.5,
+      paddingBottom: 13.5,
       fontSize: 1.2,
       onTap: () {
         _addPrayerPartnerMethod();
@@ -201,8 +192,8 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,
       fontSize: 1.2,
-      paddingTop: 12.5,
-      paddingBottom: 12.5,
+      paddingTop: 13.5,
+      paddingBottom: 13.5,
       onTap: (){
         _askPermissions();
       },

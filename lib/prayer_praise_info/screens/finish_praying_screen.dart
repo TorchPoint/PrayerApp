@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/add_prayer/screens/add_prayer_screen.dart';
+import 'package:prayer_hybrid_app/common_classes/share_class.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/stop_watch_alert_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
@@ -9,7 +10,6 @@ import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/widgets/custom_gesture_detector_container.dart';
 import 'package:prayer_hybrid_app/bible/screens/bible_tab_screen.dart';
-import 'package:share_extend/share_extend.dart';
 
 class FinishPrayingScreen extends StatefulWidget {
   @override
@@ -37,7 +37,7 @@ class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 4.0,vertical: 0.0),
-                    child: Text(AppStrings.PRAYER_TITLE_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w700,letterSpacing: 1.0),textScaleFactor: 1.4,maxLines: 1,overflow: TextOverflow.ellipsis,),
+                    child: Text(AppStrings.PRAYER_TITLE_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w700,letterSpacing: 1.0),textScaleFactor: 1.8,maxLines: 1,overflow: TextOverflow.ellipsis,),
                   ),
 
                   SizedBox(
@@ -46,7 +46,7 @@ class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
 
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 4.0,vertical: 0.0),
-                    child: Text(AppStrings.PRAYER_USER_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600,letterSpacing: 1.0),textScaleFactor: 1.0,maxLines: 1,overflow: TextOverflow.ellipsis,),
+                    child: Text(AppStrings.PRAYER_USER_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600,letterSpacing: 1.0),textScaleFactor: 1.1,maxLines: 1,overflow: TextOverflow.ellipsis,),
                   ),
 
                   SizedBox(
@@ -56,8 +56,8 @@ class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
                   Expanded(
                     child: SingleChildScrollView(
                       child: Padding(
-                        padding: EdgeInsets.only(left: 10.0,right: 10.0),
-                        child: Text(AppStrings.LOREM_EPSUM_STRING,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600,height: 1.4),textScaleFactor: 1.0),
+                        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.06,right: MediaQuery.of(context).size.width*0.06),
+                        child: Text(AppStrings.LOREM_EPSUM_STRING,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w700,height: 1.4),textScaleFactor: 1.05),
                       ),
                     ),
                   ),
@@ -105,15 +105,12 @@ class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
   Widget _customAppBar()
   {
     return CustomAppBar(
-      title: AppStrings.FINISH_PRAYING_TEXT,
       leadingIconPath: AssetPaths.BACK_ICON,
+      paddingTop: 20.0,
       leadingTap: (){
         AppNavigation.navigatorPop(context);
       },
-      trailingIconPath: AssetPaths.CANCEL_ICON,
-      trailingTap: (){
-        AppNavigation.navigatorPop(context);
-      },
+
     );
   }
 
@@ -207,7 +204,7 @@ class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(AppStrings.UPDATE_PRAYER_TEXT.toUpperCase(),style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w700),textScaleFactor: 0.95,),
+            Text(AppStrings.EDIT_TEXT.toUpperCase(),style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w700),textScaleFactor: 0.95,),
             SizedBox(width: 6.0,),
             Image.asset(AssetPaths.EDIT_ICON,width: 18.0,)
           ],
@@ -219,9 +216,7 @@ class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
 
   void _shareMethod()
   {
-    ShareExtend.share(AppStrings.SHARE_MESSAGE_TEXT, "text",
-        sharePanelTitle: AppStrings.SHARE_TITLE_TEXT,
-        subject: AppStrings.SHARE_SUBJECT_TEXT);
+    ShareClass.shareMethod(message: AppStrings.SHARE_MESSAGE_TEXT);
   }
 
 }

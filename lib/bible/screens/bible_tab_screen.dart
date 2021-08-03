@@ -34,7 +34,7 @@ class _BibleTabScreenState extends State<BibleTabScreen> with SingleTickerProvid
             Expanded(
               child: Column(
                 children: [
-                  SizedBox(height: 8.0,),
+                  SizedBox(height: 23.0),
                   _tabBarWidget(),
                   SizedBox(height: 10.0,),
                   Expanded(
@@ -66,10 +66,11 @@ class _BibleTabScreenState extends State<BibleTabScreen> with SingleTickerProvid
       leadingTap: (){
         AppNavigation.navigatorPop(context);
       },
-      // trailingIconPath: AssetPaths.SETTING_ICON,
-      // trailingTap: (){
-      //   print("Setting Icon");
-      // },
+      trailingIconPath: AssetPaths.SETTING_ICON,
+      paddingTop: 20.0,
+      trailingTap: (){
+        print("A to Z icon");
+      },
     );
   }
 

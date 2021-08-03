@@ -36,9 +36,11 @@ class _ContinueEmailScreenState extends State<ContinueEmailScreen> {
                   key: _continueKey,
                   child: Column(
                     children: [
-                      SizedBox(height: MediaQuery.of(context).size.height*0.2,),
+                      SizedBox(height: MediaQuery.of(context).size.height*0.06),
+                      Image.asset(AssetPaths.FOREGROUND_IMAGE,width: 180.0),
+                      SizedBox(height: MediaQuery.of(context).size.height*0.06),
                       _emailWidget(),
-                      SizedBox(height: 25.0),
+                      SizedBox(height: 20.0),
                       _continueButtonWidget(),
                       SizedBox(height: 10.0),
                     ],
@@ -57,6 +59,10 @@ class _ContinueEmailScreenState extends State<ContinueEmailScreen> {
   {
     return CustomAppBar(
       leadingIconPath: AssetPaths.BACK_ICON,
+      isBarImage: false,
+      title: AppStrings.WELCOME_TO_TEXT,
+      titleTextSize: 1.7,
+      paddingTop: 20.0,
       leadingTap: (){
         AppNavigation.navigatorPop(context);
       },
@@ -68,12 +74,14 @@ class _ContinueEmailScreenState extends State<ContinueEmailScreen> {
   {
     return CustomTextFormField(
       textController: _emailController,
-      containerWidth: MediaQuery.of(context).size.width*0.85,
+      containerWidth: MediaQuery.of(context).size.width*0.82,
       hintText: AppStrings.EMAIL_HINT_TEXT,
       borderRadius: 30.0,
-      contentPaddingLeft: 0.0,
+      contentPaddingRight: 0.0,
       prefixIcon: AssetPaths.EMAIL_ICON,
-      prefixIconWidth: 15.0,
+      prefixIconWidth: 16.0,
+      contentPaddingTop: 17.0,
+      contentPaddingBottom: 17.0,
       onValidate: (value){
         emailRegExp = RegExp(emailPattern);
         if(value.trim().isEmpty)
@@ -94,15 +102,15 @@ class _ContinueEmailScreenState extends State<ContinueEmailScreen> {
   {
     return CustomButton(
       containerWidth: MediaQuery.of(context).size.width*0.45,
-      buttonColor: AppColors.BUTTON_COLOR,
-      borderColor: AppColors.BUTTON_COLOR,
+      buttonColor: AppColors.WHITE_COLOR,
+      borderColor: AppColors.WHITE_COLOR,
       elevation: true,
       buttonText: AppStrings.CONTINUE_TEXT,
-      textColor: AppColors.WHITE_COLOR,
+      textColor: AppColors.BLACK_COLOR,
       fontWeight: FontWeight.w700,
-      fontSize: 1.28,
-      paddingTop: 10.0,
-      paddingBottom: 10.0,
+      fontSize: 1.25,
+      paddingTop: 13.0,
+      paddingBottom: 13.0,
       onTap: (){
         if(_continueKey.currentState.validate())
           {

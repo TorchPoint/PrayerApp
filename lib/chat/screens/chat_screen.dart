@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:prayer_hybrid_app/common_classes/image_gallery_class.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
@@ -15,6 +18,9 @@ class _ChatScreenState extends State<ChatScreen> {
 
   List<String> userMessage= ["Please pray for Matt","Will do.Can you pray at 1pm","Sure,Thankyou!"];
   TextEditingController _sendMessageController = TextEditingController();
+  File profileFileImage;
+  String profileImagePath;
+  ImageGalleryClass imageGalleryClass = ImageGalleryClass();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +30,7 @@ class _ChatScreenState extends State<ChatScreen> {
         body: Column(
           children: [
             _customChatAppBar(),
-            SizedBox(height: 5.0,),
+            SizedBox(height: 15.0,),
             Expanded(
               child:ListView.builder
                 (
@@ -163,7 +169,7 @@ class _ChatScreenState extends State<ChatScreen> {
     return ConstrainedBox(
       constraints: BoxConstraints(
           minHeight: 0.0,
-          maxHeight: MediaQuery.of(context).size.height*0.22
+          maxHeight: MediaQuery.of(context).size.height*0.15
       ),
       child: Container(
         margin: EdgeInsets.only(left:MediaQuery.of(context).size.width*0.05,right:MediaQuery.of(context).size.width*0.05),
@@ -179,6 +185,16 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
 
             Padding(
+              padding: EdgeInsets.only(right: 10.0,top: 2.0,bottom: 2.0),
+              child: GestureDetector(
+                onTap: (){
+                  _imageGalleryOption();
+                },
+                child: Image.asset(AssetPaths.ATTACHMENT_ICON,width: 23.0,height: 23.0,),
+              ),
+            ),
+
+            Padding(
               padding: EdgeInsets.only(right: 12.0,top: 2.0,bottom: 2.0),
               child: GestureDetector(
                 onTap: (){
@@ -186,7 +202,9 @@ class _ChatScreenState extends State<ChatScreen> {
                 },
                 child: Image.asset(AssetPaths.SEND_CHAT_IMAGE,width: 30.0,height: 30.0,),
               ),
-            )
+            ),
+
+
 
 
 
@@ -236,6 +254,56 @@ class _ChatScreenState extends State<ChatScreen> {
       maxLines: null,
 
     );
+  }
+
+
+  //Select Image Start
+  void _imageGalleryOption() {
+    imageGalleryClass.imageGalleryBottomSheet(
+        context: context,
+        onCameraTap: (){
+          _getImage(imageText:AppStrings.CAMERA_TEXT);
+        },
+        onGalleryTap: (){
+          _getImage(imageText:AppStrings.GALLERY_TEXT);
+        }
+    );
+  }
+
+
+  void _getImage({String imageText}) async
+  {
+    if(imageText == AppStrings.CAMERA_TEXT)
+    {
+      profileImagePath = await imageGalleryClass.getCameraImage();
+      _cropImage(imagePath:profileImagePath);
+    }
+    else if(imageText == AppStrings.GALLERY_TEXT)
+    {
+      profileImagePath = await imageGalleryClass.getGalleryImage();
+      _cropImage(imagePath:profileImagePath);
+    }
+  }
+
+  void _cropImage({String imagePath}) async
+  {
+    //Ya use hoa modal bottom sheet ko remove krna ka liya
+    AppNavigation.navigatorPop(context);
+
+    if(imagePath != null)
+    {
+      profileFileImage = await imageGalleryClass.cropImage(imageFilePath: imagePath);
+
+
+      if(profileFileImage != null)
+      {
+
+      }
+
+      setState(() {
+
+      });
+    }
   }
 
 

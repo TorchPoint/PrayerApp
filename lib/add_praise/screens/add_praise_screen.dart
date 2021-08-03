@@ -32,6 +32,7 @@ class _AddPraiseScreenState extends State<AddPraiseScreen> {
         body: Column(
           children: [
             _customAppBar(),
+            SizedBox(height: 6.0,),
             Expanded(
               child: SingleChildScrollView(
                 padding: EdgeInsets.zero,
@@ -87,6 +88,7 @@ class _AddPraiseScreenState extends State<AddPraiseScreen> {
   {
     return CustomAppBar(
       leadingIconPath: AssetPaths.BACK_ICON,
+      paddingTop: 20.0,
       leadingTap: (){
         print("Leading tap");
         AppNavigation.navigatorPop(context);
@@ -185,7 +187,7 @@ class _AddPraiseScreenState extends State<AddPraiseScreen> {
                   hintStyle: TextStyle(
                     fontSize: 17.0,
                     color: AppColors.WHITE_COLOR,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.w500,
                   ),
                   contentPadding: EdgeInsets.only(top: 14.0,bottom: 14.0,left: 16.0,right: 14.0)
               ),
@@ -215,7 +217,7 @@ class _AddPraiseScreenState extends State<AddPraiseScreen> {
                       style: TextStyle(
                           color: AppColors.WHITE_COLOR,
                           fontSize: 17,
-                          fontWeight: FontWeight.w600
+                          fontWeight: FontWeight.w700
                       ),
                     ),
                   );
@@ -230,7 +232,7 @@ class _AddPraiseScreenState extends State<AddPraiseScreen> {
                     child: Text(value,style: TextStyle(
                       fontSize: 17.0,
                       color: value == currentCategoryValue ? AppColors.SETTINGS_OPTIONS_COLOR :AppColors.MENU_TEXT_COLOR,
-                      fontWeight: value == currentCategoryValue ? FontWeight.w800 : FontWeight.w600,
+                      fontWeight: value == currentCategoryValue ? FontWeight.w700 : FontWeight.w600,
                     ),
 
                     ),

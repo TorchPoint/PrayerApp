@@ -83,6 +83,9 @@ class _DrawerScreenState extends State<DrawerScreen> with SingleTickerProviderSt
     return CustomAppBar(
      title: AppStrings.HOME_TEXT,
      leadingIconPath: AssetPaths.MENU_ICON,
+      paddingTop: 20.0,
+      isBarImage: false,
+      leadingIconSize: 25.0,
      leadingTap: (){
        _scaffoldKey.currentState.openDrawer();
      },

@@ -46,7 +46,7 @@ class _PrayerPraiseTabScreenState extends State<PrayerPraiseTabScreen> with Sing
             Expanded(
               child: Column(
                 children: [
-                  SizedBox(height: 8.0,),
+                  SizedBox(height: 23.0),
                  _tabBarWidget(),
 
                   SizedBox(height: 10.0,),
@@ -74,12 +74,12 @@ class _PrayerPraiseTabScreenState extends State<PrayerPraiseTabScreen> with Sing
   Widget _customAppBar()
   {
     return CustomAppBar(
-      title: titleIndex == 0 ? AppStrings.PRAYERS_TEXT : AppStrings.PRAISES_TEXT,
       leadingIconPath: AssetPaths.BACK_ICON,
       leadingTap: (){
         AppNavigation.navigatorPop(context);
       },
       trailingIconPath: AssetPaths.A_TO_Z_ICON,
+      paddingTop: 20.0,
       trailingTap: (){
         print("A to Z icon");
       },

@@ -24,7 +24,7 @@ class _BibleChapterListScreenState extends State<BibleChapterListScreen> {
             Expanded(
               child: Column(
                 children: [
-                  SizedBox(height: 10.0,),
+                  SizedBox(height: 15.0,),
                   Text(AppStrings.GENESIS_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600,letterSpacing: 1.0),textScaleFactor: 1.5,),
                   SizedBox(height: 12.0,),
                   Expanded(
@@ -52,6 +52,7 @@ class _BibleChapterListScreenState extends State<BibleChapterListScreen> {
     return CustomAppBar(
       title: AppStrings.BIBLE_SECOND_TEXT,
       leadingIconPath: AssetPaths.BACK_ICON,
+      paddingTop: 20.0,
       leadingTap: (){
         AppNavigation.navigatorPop(context);
       },
