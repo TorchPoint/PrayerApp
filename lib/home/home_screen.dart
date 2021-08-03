@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/add_praise/screens/add_praise_screen.dart';
 import 'package:prayer_hybrid_app/add_prayer/screens/add_prayer_screen.dart';
 import 'package:prayer_hybrid_app/bible/screens/bible_tab_screen.dart';
-import 'package:prayer_hybrid_app/prayer_praise_info/screens/pray_now_screen.dart';
+import 'package:prayer_hybrid_app/prayer_praise_info/screens/prayer_praise_tab_screen.dart';
 import 'package:prayer_hybrid_app/reminder_calendar/screens/reminder_screen.dart';
 import 'package:prayer_hybrid_app/subscription/screens/buy_now_subscription.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
   {
     return GestureDetector(
       onTap: (){
-        AppNavigation.navigateTo(context, PrayNowScreen());
+        AppNavigation.navigateTo(context, PrayerPraiseTabScreen(tabInitialIndex: 0));
       },
         child: _categoryContainerWidget(AppStrings.PRAY_NOW_TEXT,AssetPaths.PRAY_NOW_IMAGE,6.0,0.13),
     );

@@ -32,8 +32,8 @@ class _PaymentCardsScreenState extends State<PaymentCardsScreen> {
   String errorCardNumber="",errorExpirationMonth="",errorExpirationYear="",errorCVV="";
   bool boolCardNumber=true,boolExpirationMonth=true,boolExpirationYear=true,boolCVV=true,boolExpirationGreater = true;
 
-  List cardTypes = [AssetPaths.VISA_CARD_IMAGE,AssetPaths.MASTER_CARD_IMAGE,AssetPaths.UCB_CARD_IMAGE,AssetPaths.VISA_CARD_IMAGE,AssetPaths.MASTER_CARD_IMAGE,AssetPaths.UCB_CARD_IMAGE];
-  List cardNumbers = [AppStrings.CARD_NUMBER_TEXT,AppStrings.CARD_NUMBER_TEXT2,AppStrings.CARD_NUMBER_TEXT3,AppStrings.CARD_NUMBER_TEXT,AppStrings.CARD_NUMBER_TEXT2,AppStrings.CARD_NUMBER_TEXT3];
+  List cardTypes = [AssetPaths.VISA_CARD_IMAGE,AssetPaths.MASTER_CARD_IMAGE,AssetPaths.UCB_CARD_IMAGE];
+  List cardNumbers = [AppStrings.CARD_NUMBER_TEXT,AppStrings.CARD_NUMBER_TEXT2,AppStrings.CARD_NUMBER_TEXT3];
 
   DateTime datePicked;
   DateTime cardDate;
@@ -50,7 +50,7 @@ class _PaymentCardsScreenState extends State<PaymentCardsScreen> {
           child: Column(
             children: [
               _customAppBar(),
-              SizedBox(height: 16.0,),
+              SizedBox(height: 20.0,),
               cardNumber(),
               SizedBox(height: 14.0,),
               Row(

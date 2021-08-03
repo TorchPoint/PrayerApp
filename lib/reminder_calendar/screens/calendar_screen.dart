@@ -49,15 +49,17 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
                       _frequencyWidget(),
 
-                      // Padding(
-                      //   padding: EdgeInsets.only(left: 5.0,right: 5.0),
-                      //   child: InkWell(
-                      //     onTap: (){
-                      //       timeAlertScreen.timeAlert(context);
-                      //     },
-                      //       child: Text(AppStrings.REMIND_ME_ON,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600),textScaleFactor: 1.3,textAlign: TextAlign.center,)
-                      //   ),
-                      // ),
+                      SizedBox(height: 15.0,),
+
+                      Padding(
+                        padding: EdgeInsets.only(left: 5.0,right: 5.0),
+                        child: InkWell(
+                          onTap: (){
+                            timeAlertScreen.timeAlert(context);
+                          },
+                            child: Text(AppStrings.REMIND_ME_ON,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600),textScaleFactor: 1.3,textAlign: TextAlign.center,)
+                        ),
+                      ),
 
                       SizedBox(height: 18.0,),
 
