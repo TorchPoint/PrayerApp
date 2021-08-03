@@ -46,6 +46,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
     return CustomAppBar(
       title: AppStrings.REMINDERS_TEXT,
       leadingIconPath: AssetPaths.BACK_ICON,
+      paddingTop: 20.0,
       leadingTap: (){
         AppNavigation.navigatorPop(context);
       },

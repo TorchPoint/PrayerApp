@@ -40,21 +40,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   key: _addReminderKey,
                   child: Column(
                     children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 5.0,right: 5.0),
-                        child: Text(AppStrings.SET_REMINDER,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w700),textScaleFactor: 1.3,textAlign: TextAlign.center,),
-                      ),
 
                       SizedBox(height: 18.0,),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.075,right: MediaQuery.of(context).size.width*0.075),
-                            child: Text(AppStrings.ADD_REMINDER_TITLE,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600),textScaleFactor: 1.18,),
-                          )
-                      ),
-
-                      SizedBox(height: 10.0,),
 
                       _addReminderTextFormField(),
 
@@ -62,17 +49,15 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
                       _frequencyWidget(),
 
-                      SizedBox(height: 18.0,),
-
-                      Padding(
-                        padding: EdgeInsets.only(left: 5.0,right: 5.0),
-                        child: InkWell(
-                          onTap: (){
-                            timeAlertScreen.timeAlert(context);
-                          },
-                            child: Text(AppStrings.REMIND_ME_ON,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600),textScaleFactor: 1.3,textAlign: TextAlign.center,)
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: EdgeInsets.only(left: 5.0,right: 5.0),
+                      //   child: InkWell(
+                      //     onTap: (){
+                      //       timeAlertScreen.timeAlert(context);
+                      //     },
+                      //       child: Text(AppStrings.REMIND_ME_ON,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600),textScaleFactor: 1.3,textAlign: TextAlign.center,)
+                      //   ),
+                      // ),
 
                       SizedBox(height: 18.0,),
 
@@ -97,8 +82,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
   Widget _customAppBar()
   {
     return CustomAppBar(
-      title: AppStrings.PRAYER_GROUPS_TEXT,
+      title: AppStrings.REMINDER_TEXT,
       trailingIconPath: AssetPaths.TICK_ICON2,
+      paddingTop: 20.0,
       trailingTap: () {
         addReminderMethod();
       }
@@ -113,18 +99,18 @@ class _CalendarScreenState extends State<CalendarScreen> {
       containerWidth: MediaQuery.of(context).size.width*0.85,
       hintText: AppStrings.ADD_REMINDER_TITLE_HINT_TEXT,
       borderRadius: 28.0,
-      contentPaddingTop: 13.0,
-      contentPaddingBottom: 13.0,
+      contentPaddingTop: 14.0,
+      contentPaddingBottom: 14.0,
       contentPaddingRight: 20.0,
       contentPaddingLeft: 20.0,
       hintSize: 15.0,
       textSize: 15.0,
       isCollapsed: true,
-      borderColor: errorBoolReminder == true ? AppColors.TRANSPARENT_COLOR : AppColors.ERROR_COLOR,
-      filledColor: AppColors.WHITE_COLOR,
-      hintColor: AppColors.BLACK_COLOR,
-      textColor: AppColors.BLACK_COLOR,
-      cursorColor: AppColors.BLACK_COLOR,
+      borderColor: errorBoolReminder == true ? AppColors.WHITE_COLOR : AppColors.ERROR_COLOR,
+      filledColor: AppColors.TRANSPARENT_COLOR,
+      hintColor: AppColors.WHITE_COLOR,
+      textColor: AppColors.WHITE_COLOR,
+      cursorColor: AppColors.WHITE_COLOR,
       onValidate: (value){
         if(value.trim().isEmpty)
           {
@@ -177,7 +163,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
           hintStyle: TextStyle(
             fontSize: 15.0,
             color: AppColors.BLACK_COLOR,
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w500,
           ),
           errorStyle: TextStyle(
             fontSize: 13.0,
@@ -232,7 +218,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
             child: Text(value,style: TextStyle(
               fontSize: 15.0,
               color: value == currentFrequencyValue ? AppColors.SETTINGS_OPTIONS_COLOR :AppColors.MENU_TEXT_COLOR,
-              fontWeight: value == currentFrequencyValue ? FontWeight.w800 : FontWeight.w600,
+              fontWeight: value == currentFrequencyValue ? FontWeight.w700 : FontWeight.w600,
             ),
 
             ),
