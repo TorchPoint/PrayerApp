@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 
-class CommonAudioIconsContainer extends StatelessWidget {
+class CommonAudioVideoIconsContainer extends StatelessWidget {
   final String image;
   final Color containerColor;
   final VoidCallback onTap;
   final double imageWidth;
-  CommonAudioIconsContainer({this.image,this.containerColor,this.imageWidth,this.onTap});
+  final bool shadow;
+  CommonAudioVideoIconsContainer({this.image,this.containerColor,this.imageWidth,this.shadow = false,this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class CommonAudioIconsContainer extends StatelessWidget {
         decoration: BoxDecoration(
             color: containerColor ?? AppColors.WHITE_COLOR,
             shape: BoxShape.circle,
-            boxShadow: containerColor == AppColors.RED_COLOR ? [
+            boxShadow: shadow ? [
             BoxShadow(
               color: AppColors.BLACK_COLOR.withOpacity(0.2),
               spreadRadius: 1,

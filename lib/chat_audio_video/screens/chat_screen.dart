@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:prayer_hybrid_app/chat_audio_video/screens/audio_screen.dart';
+import 'package:prayer_hybrid_app/chat_audio_video/screens/video_screen.dart';
 import 'package:prayer_hybrid_app/common_classes/image_gallery_class.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
@@ -67,12 +69,12 @@ class _ChatScreenState extends State<ChatScreen> {
       },
       trailingVideoIconPath: AssetPaths.VIDEO_ICON,
       trailingVideoTap: (){
-        print("Video Icon");
+        AppNavigation.navigateTo(context, VideoScreen());
       },
 
       trailingAudioIconPath: AssetPaths.AUDIO_ICON,
       trailingAudioTap: (){
-        print("Audio Icon");
+        AppNavigation.navigateTo(context, AudioScreen());
       },
     );
   }

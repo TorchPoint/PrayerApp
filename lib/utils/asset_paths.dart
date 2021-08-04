@@ -21,6 +21,8 @@ class AssetPaths
   static const String UCB_CARD_IMAGE = "assets/images/ucb_card.png";
   static const String COMPLETE_PROFILE_IMAGE = "assets/images/complete_profile_image.png";
   static const String PARTNER_IMAGE = "assets/images/partner_image.png";
+  static const String VIDEO_USER1_IMAGE = "assets/images/video_user1_image.png";
+  static const String VIDEO_USER2_IMAGE = "assets/images/video_user2_image.png";
 
   //Icons
   static const String NAME_ICON = "assets/icons/name_icon.png";
@@ -70,4 +72,5 @@ class AssetPaths
   static const String LOUDSPEAKER_ICON = "assets/icons/loudspeaker_icon.png";
   static const String MICROPHONE_ICON = "assets/icons/microphone_icon.png";
   static const String END_CALL_ICON = "assets/icons/end_call_icon.png";
+  static const String CAMERA_ICON = "assets/icons/camera_icon.png";
 }

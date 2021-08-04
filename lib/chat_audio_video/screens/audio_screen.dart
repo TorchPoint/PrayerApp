@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/chat_audio_video/screens/chat_screen.dart';
-import 'package:prayer_hybrid_app/chat_audio_video/widgets/common_audio_icons_container.dart';
+import 'package:prayer_hybrid_app/chat_audio_video/widgets/common_audio_video_icons_container.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
@@ -24,7 +24,7 @@ class _AudioScreenState extends State<AudioScreen> {
             Spacer(flex: 1,),
             _userImageWidget(),
             Spacer(flex: 3,),
-            _audioIconWidget(),
+            _audioIconsWidget(),
             Spacer(flex: 1,),
           ],
         ),
@@ -78,23 +78,23 @@ class _AudioScreenState extends State<AudioScreen> {
     );
   }
 
-  Widget _audioIconWidget()
+  Widget _audioIconsWidget()
   {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        _microphoneContainer(),
-        _chatEndCallContainer(),
-        _loudSpeakerContainer(),
+        _microphoneContainerWidget(),
+        _chatEndCallContainerWidget(),
+        _loudSpeakerContainerWidget(),
       ],
     );
   }
   
 
-  Widget _microphoneContainer()
+  Widget _microphoneContainerWidget()
   {
-    return CommonAudioIconsContainer(
+    return CommonAudioVideoIconsContainer(
       image: AssetPaths.MICROPHONE_ICON,
       imageWidth: 28.0,
       onTap: (){
@@ -104,11 +104,11 @@ class _AudioScreenState extends State<AudioScreen> {
   }
 
 
-  Widget _chatEndCallContainer()
+  Widget _chatEndCallContainerWidget()
   {
     return Column(
       children: [
-        CommonAudioIconsContainer(
+        CommonAudioVideoIconsContainer(
         image: AssetPaths.CHAT_ICON,
         imageWidth: 29.0,
         onTap: (){
@@ -118,10 +118,11 @@ class _AudioScreenState extends State<AudioScreen> {
       ),
         SizedBox(height: MediaQuery.of(context).size.height*0.06),
 
-        CommonAudioIconsContainer(
+        CommonAudioVideoIconsContainer(
             image: AssetPaths.END_CALL_ICON,
             containerColor: AppColors.RED_COLOR,
             imageWidth: 28.0,
+            shadow: true,
             onTap: (){
               log("end call");
               AppNavigation.navigatorPop(context);
@@ -132,9 +133,9 @@ class _AudioScreenState extends State<AudioScreen> {
   }
 
 
-  Widget _loudSpeakerContainer()
+  Widget _loudSpeakerContainerWidget()
   {
-    return CommonAudioIconsContainer(
+    return CommonAudioVideoIconsContainer(
         image: AssetPaths.LOUDSPEAKER_ICON,
         imageWidth: 30.0,
         onTap: (){
