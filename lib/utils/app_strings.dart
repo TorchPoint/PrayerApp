@@ -25,6 +25,7 @@ class AppStrings
   static const String REPORT_TEXT = "Report";
   static const String SETTINGS_TEXT = "Settings";
   static const String NOTIFICATION_TEXT = "Notification";
+  static const String NOTIFICATIONS_TEXT = "Notifications";
   static const String TIMER_TEXT = "Timer";
   static const String TERMS_CONDITIONS_TEXT = "Terms & Conditions";
   static const String PRIVACY_POLICY_TEXT = "Privacy Policy";
@@ -108,6 +109,8 @@ class AppStrings
   static const String EDIT_PROFILE_TEXT = "Edit Profile";
   static const String CAMERA_TEXT = "CAMERA";
   static const String GALLERY_TEXT = "GALLERY";
+  static const String NOTIFICATION_DATE_TEXT = "14 July";
+  static const String NOTIFICATION_DESCRIPTION_TEXT = "Lorem ipsum dolor sit amet sdds sdd sdsd";
 
   // ------------- Hint Text ---------------- //
   static const String FIRST_NAME_HINT_TEXT = "First Name";
