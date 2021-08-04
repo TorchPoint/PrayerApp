@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
+import 'package:prayer_hybrid_app/utils/navigation.dart';
 
 
 class BiblePromisesDialogScreen
@@ -83,6 +84,7 @@ class BiblePromisesDialogScreen
     return GestureDetector(
       onTap: (){
         log("Bible category"+AppStrings.BIBLECATEGORIES[indexNo]);
+        AppNavigation.navigatorPop(context);
       },
       child: Container(
         width: MediaQuery.of(context).size.width*0.38,
