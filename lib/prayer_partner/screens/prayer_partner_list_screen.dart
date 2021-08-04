@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_hybrid_app/chat/screens/chat_screen.dart';
+import 'package:prayer_hybrid_app/chat_audio_video/screens/chat_screen.dart';
 import 'package:prayer_hybrid_app/common_classes/share_class.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';

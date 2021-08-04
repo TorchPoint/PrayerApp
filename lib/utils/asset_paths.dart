@@ -66,5 +66,8 @@ class AssetPaths
   static const String ATTACHMENT_ICON = "assets/icons/attachment_icon.png";
   static const String TERMS_CONDITION_MENU_ICON = "assets/icons/terms_condition_icon.png";
   static const String PRIVACY_POLICY_MENU_ICON = "assets/icons/privacy_policy_icon.png";
-
+  static const String CHAT_ICON = "assets/icons/chat_icon.png";
+  static const String LOUDSPEAKER_ICON = "assets/icons/loudspeaker_icon.png";
+  static const String MICROPHONE_ICON = "assets/icons/microphone_icon.png";
+  static const String END_CALL_ICON = "assets/icons/end_call_icon.png";
 }
