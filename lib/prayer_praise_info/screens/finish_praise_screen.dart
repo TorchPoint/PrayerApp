@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/add_praise/screens/add_praise_screen.dart';
 import 'package:prayer_hybrid_app/common_classes/share_class.dart';
+import 'package:prayer_hybrid_app/prayer_praise_info/screens/bible_promises_dialog_screen.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/stop_watch_alert_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
@@ -21,6 +22,7 @@ class _FinishPraiseScreenState extends State<FinishPraiseScreen> {
 
   bool answerTick = true;
   StopWatchAlertScreen stopWatchAlertScreen = StopWatchAlertScreen();
+  BiblePromisesDialogScreen _biblePromisesDialogScreen = BiblePromisesDialogScreen();
 
   @override
   Widget build(BuildContext context) {
@@ -147,7 +149,7 @@ class _FinishPraiseScreenState extends State<FinishPraiseScreen> {
       textSize: 0.95,
       onTap: (){
         print("Bible Promises");
-        AppNavigation.navigateTo(context, BibleTabScreen());
+        _biblePromisesDialogScreen.showDialogMethod(context: context);
       },
     );
   }
