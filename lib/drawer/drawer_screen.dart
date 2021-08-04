@@ -194,22 +194,22 @@ class _DrawerScreenState extends State<DrawerScreen> with SingleTickerProviderSt
       children: [
 
         //For My Prayer List
-        menuListTile(imagePath: AssetPaths.PRAYER_LIST_MENU_ICON,title: AppStrings.MY_PRAYER_LIST_TEXT,index:1,topMargin:13.0,bottomMargin:13.0,imageWidth: 20,sizedBoxWidth:22,leftPadding:20.0),
+        menuListTile(imagePath: AssetPaths.PRAYER_LIST_MENU_ICON,title: AppStrings.MY_PRAYER_LIST_TEXT,index:1,topMargin:14.0,bottomMargin:14.0,imageWidth: 20,sizedBoxWidth:22,leftPadding:20.0),
 
         //For My Praise List
-        menuListTile(imagePath: AssetPaths.PRAISE_LIST_MENU_ICON,title: AppStrings.MY_PRAISE_LIST_TEXT,index:2,topMargin:13.0,bottomMargin:13.0,imageWidth: 30,sizedBoxWidth:14,leftPadding:18.0),
+        menuListTile(imagePath: AssetPaths.PRAISE_LIST_MENU_ICON,title: AppStrings.MY_PRAISE_LIST_TEXT,index:2,topMargin:14.0,bottomMargin:14.0,imageWidth: 30,sizedBoxWidth:14,leftPadding:18.0),
 
         //For Shared Prayers
-        menuListTile(imagePath: AssetPaths.SHARED_PRAYERS_MENU_ICON,title: AppStrings.SHARED_PRAYERS_TEXT,index:3,topMargin:13.0,bottomMargin:13.0,imageWidth: 23,sizedBoxWidth:21,leftPadding:18.0),
+        menuListTile(imagePath: AssetPaths.SHARED_PRAYERS_MENU_ICON,title: AppStrings.SHARED_PRAYERS_TEXT,index:3,topMargin:14.0,bottomMargin:14.0,imageWidth: 23,sizedBoxWidth:21,leftPadding:18.0),
 
         //For Prayer Groups List
-        menuListTile(imagePath: AssetPaths.PRAYER_GROUPS_MENU_ICON,title: AppStrings.PRAYER_GROUPS_TEXT,index:4,topMargin:13.0,bottomMargin:13.0,imageWidth: 23,sizedBoxWidth:21,leftPadding:18.0),
+        menuListTile(imagePath: AssetPaths.PRAYER_GROUPS_MENU_ICON,title: AppStrings.PRAYER_GROUPS_TEXT,index:4,topMargin:14.0,bottomMargin:14.0,imageWidth: 23,sizedBoxWidth:21,leftPadding:18.0),
 
         //For Report
-        menuListTile(imagePath: AssetPaths.REPORT_MENU_ICON,title: AppStrings.REPORT_TEXT,index:5,topMargin:13.0,bottomMargin:13.0,imageWidth: 22,sizedBoxWidth:20,leftPadding:20.0),
+        menuListTile(imagePath: AssetPaths.REPORT_MENU_ICON,title: AppStrings.REPORT_TEXT,index:5,topMargin:14.0,bottomMargin:14.0,imageWidth: 22,sizedBoxWidth:20,leftPadding:20.0),
 
         //For Settings
-        menuListTile(imagePath: AssetPaths.SETTINGS_MENU_ICON,title: AppStrings.SETTINGS_TEXT,index:6,topMargin:13.0,bottomMargin:13.0,imageWidth: 22,sizedBoxWidth:20,leftPadding:20.0,backgroundContainerColor: settingsOn == true ? AppColors.SETTINGS_OPTIONS_COLOR.withOpacity(0.9) : AppColors.TRANSPARENT_COLOR,settingIcon: settingsOn == true ? Icons.keyboard_arrow_down : null,dividerContainer: settingsOn == true ? false : true),
+        menuListTile(imagePath: AssetPaths.SETTINGS_MENU_ICON,title: AppStrings.SETTINGS_TEXT,index:6,topMargin:14.0,bottomMargin:14.0,imageWidth: 22,sizedBoxWidth:20,leftPadding:20.0,backgroundContainerColor: settingsOn == true ? AppColors.SETTINGS_OPTIONS_COLOR.withOpacity(0.9) : AppColors.TRANSPARENT_COLOR,settingIcon: settingsOn == true ? Icons.keyboard_arrow_down : null,dividerContainer: settingsOn == true ? false : true),
 
         //For Settings Option
         SizeTransition(
@@ -236,7 +236,7 @@ class _DrawerScreenState extends State<DrawerScreen> with SingleTickerProviderSt
      ),
 
         //For Logout
-        menuListTile(imagePath: AssetPaths.LOGOUT_MENU_ICON,title: AppStrings.LOGOUT_TEXT,index:10,topMargin:9.0,bottomMargin:9.0,imageWidth: 18,sizedBoxWidth:26,leftPadding:20.0,imageColor: AppColors.WHITE_COLOR.withOpacity(0.8)),
+        menuListTile(imagePath: AssetPaths.LOGOUT_MENU_ICON,title: AppStrings.LOGOUT_TEXT,index:10,topMargin:14.0,bottomMargin:9.0,imageWidth: 18,sizedBoxWidth:26,leftPadding:20.0,imageColor: AppColors.WHITE_COLOR.withOpacity(0.8),dividerContainer: false),
 
         SizedBox(height: 5.0,),
 
