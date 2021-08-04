@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/prayer_partner/screens/add_prayer_partner_screen.dart';
+import 'package:prayer_hybrid_app/prayer_partner/screens/prayer_partner_list_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
@@ -163,7 +164,7 @@ class _PaySubscriptionState extends State<PaySubscription> {
       paddingTop: 11.5,
       paddingBottom: 11.5,
       onTap: (){
-        AppNavigation.navigateTo(context, AddPrayerPartnerScreen());
+        AppNavigation.navigateTo(context, PrayerPartnerListScreen());
       },
     );
   }

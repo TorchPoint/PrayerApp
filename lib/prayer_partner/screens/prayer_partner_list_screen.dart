@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/chat_audio_video/screens/chat_screen.dart';
 import 'package:prayer_hybrid_app/common_classes/share_class.dart';
+import 'package:prayer_hybrid_app/prayer_partner/screens/add_prayer_partner_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
@@ -131,7 +132,7 @@ class _PrayerPartnerListScreenState extends State<PrayerPartnerListScreen> {
       paddingTop: 13.5,
       paddingBottom: 13.5,
       onTap: (){
-        AppNavigation.navigatorPop(context);
+        AppNavigation.navigateTo(context, AddPrayerPartnerScreen());
       },
     );
   }
