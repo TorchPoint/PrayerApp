@@ -5,6 +5,7 @@ import 'package:prayer_hybrid_app/auth/screens/auth_main_screen.dart';
 import 'package:prayer_hybrid_app/home/home_screen.dart';
 import 'package:prayer_hybrid_app/prayer_group/screens/prayer_group_list_screen.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/prayer_praise_tab_screen.dart';
+import 'package:prayer_hybrid_app/reminder_calendar/screens/reminder_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
@@ -92,7 +93,7 @@ class _DrawerScreenState extends State<DrawerScreen> with SingleTickerProviderSt
      },
      trailingIconPath: AssetPaths.NOTIFICATION_ICON,
      trailingTap: (){
-       print("Notification Icon");
+       AppNavigation.navigateTo(context, ReminderScreen());
      },
     );
   }
