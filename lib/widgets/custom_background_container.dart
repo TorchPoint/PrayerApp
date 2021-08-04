@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
-import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 
 class CustomBackgroundContainer extends StatelessWidget {
   final Widget child;

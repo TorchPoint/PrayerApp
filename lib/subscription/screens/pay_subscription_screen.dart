@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_hybrid_app/prayer_partner/screens/add_prayer_partner_screen.dart';
 import 'package:prayer_hybrid_app/prayer_partner/screens/prayer_partner_list_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
@@ -8,7 +7,6 @@ import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/widgets/custom_button.dart';
-import 'package:prayer_hybrid_app/subscription/screens/payment_cards_screen.dart';
 
 class PaySubscription extends StatefulWidget {
   @override

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 
 class CustomPrayOptionContainer extends StatelessWidget {
-  String title,imagePath;
-  double imageWidth,imageHeight;
+  final String title,imagePath;
+  final double imageWidth,imageHeight;
   CustomPrayOptionContainer({this.title,this.imagePath,this.imageWidth,this.imageHeight});
 
   @override

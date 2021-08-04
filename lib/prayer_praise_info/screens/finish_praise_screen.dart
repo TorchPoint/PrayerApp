@@ -10,7 +10,6 @@ import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/widgets/custom_gesture_detector_container.dart';
-import 'package:prayer_hybrid_app/bible/screens/bible_tab_screen.dart';
 
 
 class FinishPraiseScreen extends StatefulWidget {

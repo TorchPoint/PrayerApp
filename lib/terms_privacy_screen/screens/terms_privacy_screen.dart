@@ -10,7 +10,8 @@ import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 
 
 class TermsPrivacyScreen extends StatefulWidget {
-  String title;
+  final String title;
+  
   TermsPrivacyScreen({this.title});
 
   @override
