@@ -83,7 +83,7 @@ class BiblePromisesDialogScreen
   {
     return GestureDetector(
       onTap: (){
-        log("Bible category"+AppStrings.BIBLECATEGORIES[indexNo]);
+       // log("Bible category"+AppStrings.BIBLECATEGORIES[indexNo]);
         AppNavigation.navigatorPop(context);
       },
       child: Container(
