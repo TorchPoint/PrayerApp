@@ -1,8 +1,5 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:prayer_hybrid_app/chat_audio_video/screens/audio_screen.dart';
-import 'package:prayer_hybrid_app/chat_audio_video/screens/video_screen.dart';
 import 'package:prayer_hybrid_app/splash/splash_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 
