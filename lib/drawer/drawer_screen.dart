@@ -224,10 +224,10 @@ class _DrawerScreenState extends State<DrawerScreen> with SingleTickerProviderSt
                 menuListTile(imagePath: AssetPaths.NOTIFICATION_ICON,title: AppStrings.NOTIFICATION_TEXT,index:7,topMargin:10.0,bottomMargin:10.0,imageWidth: 21,sizedBoxWidth:35,leftPadding:20.0,dividerContainer: false),
 
                 //For Timer
-                menuListTile(imagePath: AssetPaths.TIMER_MENU_ICON,title: AppStrings.TERMS_CONDITIONS_TEXT,index:8,topMargin:10.0,bottomMargin:10.0,imageWidth: 22,sizedBoxWidth:34,leftPadding:20.0,dividerContainer: false),
+                menuListTile(imagePath: AssetPaths.TERMS_CONDITION_MENU_ICON,title: AppStrings.TERMS_CONDITIONS_TEXT,index:8,topMargin:10.0,bottomMargin:10.0,imageWidth: 18,sizedBoxWidth:38,leftPadding:20.0,dividerContainer: false),
 
                 //For Security
-                menuListTile(imagePath: AssetPaths.SECURITY_MENU_ICON,title: AppStrings.PRIVACY_POLICY_TEXT,index:9,topMargin:10.0,bottomMargin:10.0,imageWidth: 20,sizedBoxWidth:37,leftPadding:20.0),
+                menuListTile(imagePath: AssetPaths.PRIVACY_POLICY_MENU_ICON,title: AppStrings.PRIVACY_POLICY_TEXT,index:9,topMargin:10.0,bottomMargin:10.0,imageWidth: 20,sizedBoxWidth:37,leftPadding:20.0),
               ],
             ),
           )

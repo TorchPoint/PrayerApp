@@ -125,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
       onTap: (){
       AppNavigation.navigateTo(context, ReminderScreen());
       },
-      child: _categoryContainerWidget(AppStrings.REMINDER_TEXT,AssetPaths.REMINDER_IMAGE,6.0,0.09),
+      child: _categoryContainerWidget(AppStrings.PRAYER_GROUPS_TEXT,AssetPaths.PRAYER_GROUP_IMAGE,6.0,0.09),
     );
   }
 
@@ -137,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
       width: MediaQuery.of(context).size.width*0.39,
       height: MediaQuery.of(context).size.height*0.2,
       decoration: BoxDecoration(
-          color: AppColors.WHITE_COLOR,
+          color: AppColors.BACKGROUND1_COLOR,
           borderRadius: BorderRadius.circular(8.0)
       ),
       child: Column(
@@ -176,73 +176,73 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
 
-  //Prayer Partners Subscription Category Widget
-  Widget _prayerPartnersSubscriptionCategoryWidget()
-  {
-    return GestureDetector(
-        onTap: (){
-          AppNavigation.navigateTo(context, BuyNowSubscription());
-        },
-        child: Container(
-          width: MediaQuery.of(context).size.width*0.39,
-          height: MediaQuery.of(context).size.height*0.2,
-          decoration: BoxDecoration(
-              color: AppColors.WHITE_COLOR,
-              borderRadius: BorderRadius.circular(10.0)
-          ),
-          child: Stack(
-            children: [
-              Align(
-                alignment: Alignment.topLeft,
-                child: Container(
-                  width: MediaQuery.of(context).size.width*0.19,
-                  height: MediaQuery.of(context).size.height*0.09,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(8.0)),
-                    image: DecorationImage(
-                        image: AssetImage(AssetPaths.SUBSCRIPTION_TEXT_IMAGE),
-                        fit: BoxFit.fill
-                    ),
-                  ),
-                ),
-              ),
-
-              Column(
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width*0.39,
-                    height: MediaQuery.of(context).size.height*0.113,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width*0.12,
-                          height: MediaQuery.of(context).size.height*0.065,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(AssetPaths.PRAYER_PARTNER_SUBSCRIPTION_IMAGE),
-                                  fit: BoxFit.contain
-                              )
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 6.0,),
-                  Expanded(
-                    child: Padding(
-                        padding: EdgeInsets.only(left: 2.0,right: 2.0),
-                        child: Text(AppStrings.PRAYER_PARTNERS_TEXT,style:TextStyle(color: AppColors.BLACK_COLOR,fontWeight: FontWeight.w700),textScaleFactor:1.1,overflow: TextOverflow.ellipsis,maxLines: 2,textAlign: TextAlign.center,)
-                    ),
-                  )
-
-                ],
-              ),
-            ],
-          ),
-        )
-    );
-  }
+  // //Prayer Partners Subscription Category Widget
+  // Widget _prayerPartnersSubscriptionCategoryWidget()
+  // {
+  //   return GestureDetector(
+  //       onTap: (){
+  //         AppNavigation.navigateTo(context, BuyNowSubscription());
+  //       },
+  //       child: Container(
+  //         width: MediaQuery.of(context).size.width*0.39,
+  //         height: MediaQuery.of(context).size.height*0.2,
+  //         decoration: BoxDecoration(
+  //             color: AppColors.WHITE_COLOR,
+  //             borderRadius: BorderRadius.circular(10.0)
+  //         ),
+  //         child: Stack(
+  //           children: [
+  //             Align(
+  //               alignment: Alignment.topLeft,
+  //               child: Container(
+  //                 width: MediaQuery.of(context).size.width*0.19,
+  //                 height: MediaQuery.of(context).size.height*0.09,
+  //                 decoration: BoxDecoration(
+  //                   borderRadius: BorderRadius.only(topLeft: Radius.circular(8.0)),
+  //                   image: DecorationImage(
+  //                       image: AssetImage(AssetPaths.SUBSCRIPTION_TEXT_IMAGE),
+  //                       fit: BoxFit.fill
+  //                   ),
+  //                 ),
+  //               ),
+  //             ),
+  //
+  //             Column(
+  //               children: [
+  //                 Container(
+  //                   width: MediaQuery.of(context).size.width*0.39,
+  //                   height: MediaQuery.of(context).size.height*0.113,
+  //                   child: Row(
+  //                     crossAxisAlignment: CrossAxisAlignment.end,
+  //                     mainAxisAlignment: MainAxisAlignment.center,
+  //                     children: [
+  //                       Container(
+  //                         width: MediaQuery.of(context).size.width*0.12,
+  //                         height: MediaQuery.of(context).size.height*0.065,
+  //                         decoration: BoxDecoration(
+  //                             image: DecorationImage(
+  //                                 image: AssetImage(AssetPaths.PRAYER_PARTNER_SUBSCRIPTION_IMAGE),
+  //                                 fit: BoxFit.contain
+  //                             )
+  //                         ),
+  //                       ),
+  //                     ],
+  //                   ),
+  //                 ),
+  //                 SizedBox(height: 6.0,),
+  //                 Expanded(
+  //                   child: Padding(
+  //                       padding: EdgeInsets.only(left: 2.0,right: 2.0),
+  //                       child: Text(AppStrings.PRAYER_PARTNERS_TEXT,style:TextStyle(color: AppColors.BLACK_COLOR,fontWeight: FontWeight.w700),textScaleFactor:1.1,overflow: TextOverflow.ellipsis,maxLines: 2,textAlign: TextAlign.center,)
+  //                   ),
+  //                 )
+  //
+  //               ],
+  //             ),
+  //           ],
+  //         ),
+  //       )
+  //   );
+  // }
 
 }
