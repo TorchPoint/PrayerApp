@@ -150,7 +150,7 @@ class _BuyNowSubscriptionState extends State<BuyNowSubscription> {
       paddingTop: 11.5,
       paddingBottom: 11.5,
       onTap: (){
-        AppNavigation.navigateTo(context, PaySubscription());
+        AppNavigation.navigateReplacement(context, PaySubscription());
       },
     );
   }

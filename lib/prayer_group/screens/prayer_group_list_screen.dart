@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/chat_audio_video/screens/chat_screen.dart';
 import 'package:prayer_hybrid_app/prayer_group/screens/create_prayer_group_screen.dart';
+import 'package:prayer_hybrid_app/subscription/screens/buy_now_subscription.dart';
+import 'package:prayer_hybrid_app/subscription/screens/pay_subscription_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
@@ -62,7 +64,7 @@ class _PrayerGroupListScreenState extends State<PrayerGroupListScreen> {
       trailingIconPath: AssetPaths.EDIT_ICON,
       trailingTap: (){
         print("Edit Icon 2");
-        AppNavigation.navigateTo(context, CreatePrayerGroupScreen());
+        AppNavigation.navigateTo(context, BuyNowSubscription());
       },
     );
   }
@@ -133,7 +135,7 @@ class _PrayerGroupListScreenState extends State<PrayerGroupListScreen> {
       paddingTop: 13.5,
       paddingBottom: 13.5,
       onTap: (){
-        AppNavigation.navigateTo(context, CreatePrayerGroupScreen());
+        AppNavigation.navigateTo(context, BuyNowSubscription());
       },
     );
   }

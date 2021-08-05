@@ -4,6 +4,7 @@ import 'package:prayer_hybrid_app/add_prayer/screens/add_prayer_screen.dart';
 import 'package:prayer_hybrid_app/bible/screens/bible_tab_screen.dart';
 import 'package:prayer_hybrid_app/home/widgets/custom_pray_option_container.dart';
 import 'package:prayer_hybrid_app/prayer_group/screens/prayer_group_list_screen.dart';
+import 'package:prayer_hybrid_app/prayer_partner/screens/prayer_partner_list_screen.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/prayer_praise_tab_screen.dart';
 import 'package:prayer_hybrid_app/subscription/screens/buy_now_subscription.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
@@ -113,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
   {
     return GestureDetector(
       onTap: (){
-        AppNavigation.navigateTo(context, BuyNowSubscription());
+        AppNavigation.navigateTo(context, PrayerPartnerListScreen());
       },
       child: CustomPrayOptionContainer(title:AppStrings.PRAYER_PARTNERS_TEXT,imagePath:AssetPaths.PRAYER_PARTNER_WITHOUT_SUBSCRIPTION_IMAGE),
     );
