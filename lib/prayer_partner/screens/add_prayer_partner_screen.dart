@@ -221,6 +221,7 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
   }
 
   Future<PermissionStatus> _getContactPermission() async {
+  
     PermissionStatus permission = await Permission.contacts.status;
     print("PErmission"+permission.toString());
     if (permission != PermissionStatus.granted &&

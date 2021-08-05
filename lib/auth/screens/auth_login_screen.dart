@@ -27,7 +27,7 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
   RegExp emailRegExp;
   String passwordPattern = Constants.PASSWORD_VALIDATE_REGEX;
   RegExp passwordRegExp;
-  bool passwordInvisible = true;
+  bool passwordInVisible = true;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -132,15 +132,15 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
       contentPaddingRight: 0.0,
       prefixIcon: AssetPaths.PASSWORD_ICON,
       prefixIconWidth: 15.0,
-      obscureText: passwordInvisible == true ? true : false,
+      obscureText: passwordInVisible,
       errorMaxLines: 4,
-      suffixIcon: passwordInvisible == true ? AssetPaths.VISIBLE_OFF_ICON : AssetPaths.VISIBLE_ON_ICON,
+      suffixIcon: passwordInVisible == true ? AssetPaths.VISIBLE_OFF_ICON : AssetPaths.VISIBLE_ON_ICON,
       suffixIconWidth: 22.0,
       contentPaddingTop: 17.0,
       contentPaddingBottom: 17.0,
       onSuffixIconTap: (){
         setState(() {
-          passwordInvisible = !passwordInvisible;
+          passwordInVisible = !passwordInVisible;
         });
       },
       onValidate: (value){

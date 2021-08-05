@@ -91,6 +91,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       SizedBox(height: 14.0,),
 
                       _completeProfileWidget(),
+                      SizedBox(height: 10.0,),
 
                     ],
                   ),
@@ -232,7 +233,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
       contentPaddingRight: 0.0,
       prefixIcon: AssetPaths.PASSWORD_ICON,
       prefixIconWidth: 15.0,
-      obscureText: passwordInvisible == true ? true : false,
+      obscureText: passwordInvisible,
       errorMaxLines: 4,
       suffixIcon: passwordInvisible == true ? AssetPaths.VISIBLE_OFF_ICON : AssetPaths.VISIBLE_ON_ICON,
       suffixIconWidth: 22.0,

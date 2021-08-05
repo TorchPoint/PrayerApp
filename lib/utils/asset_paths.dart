@@ -63,8 +63,8 @@ class AssetPaths
   static const String CARD_CVV_ICON = "assets/icons/card_cvv_icon.png";
   static const String CALENDAR_ICON = "assets/icons/calendar_icon.png";
   static const String TICK_ICON2 = "assets/icons/tick_icon2.png";
-  static const String VISIBLE_OFF_ICON = "assets/icons/visible_off_icon.png";
   static const String VISIBLE_ON_ICON = "assets/icons/visible_on_icon.png";
+  static const String VISIBLE_OFF_ICON = "assets/icons/visible_off_icon.png";
   static const String ATTACHMENT_ICON = "assets/icons/attachment_icon.png";
   static const String TERMS_CONDITION_MENU_ICON = "assets/icons/terms_condition_icon.png";
   static const String PRIVACY_POLICY_MENU_ICON = "assets/icons/privacy_policy_icon.png";
