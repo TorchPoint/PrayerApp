@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/auth/screens/auth_main_screen.dart';
+import 'package:prayer_hybrid_app/complete_profile/screens/complete_profile_screen.dart';
 import 'package:prayer_hybrid_app/home/home_screen.dart';
 import 'package:prayer_hybrid_app/notification/screens/notification_screen.dart';
 import 'package:prayer_hybrid_app/prayer_group/screens/prayer_group_list_screen.dart';
@@ -127,8 +128,7 @@ class _DrawerScreenState extends State<DrawerScreen> with SingleTickerProviderSt
 
         GestureDetector(
           onTap: (){
-            log("ok ha");
-           // AppNavigation.navigateTo(context,CompleteProfileScreen());
+           AppNavigation.navigateTo(context,CompleteProfileScreen());
           },
           child: Container(
             margin: EdgeInsets.only(left: 18.0,right: 15.0,top: MediaQuery.of(context).size.height*0.04,bottom: MediaQuery.of(context).size.height*0.07),

@@ -26,6 +26,7 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _confirmPasswordController = TextEditingController();
+  TextEditingController _mobileNoController = TextEditingController();
   String emailPattern = Constants.EMAIL_VALIDATION_REGEX;
   RegExp emailRegExp;
   String passwordPattern = Constants.PASSWORD_VALIDATE_REGEX;
@@ -57,6 +58,10 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
               SizedBox(height: 14.0,),
 
               _emailWidget(),
+
+              SizedBox(height: 14.0,),
+
+              _mobileNumberWidget(),
 
               SizedBox(height: 14.0,),
 
@@ -190,6 +195,57 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
         else if(!emailRegExp.hasMatch(value))
         {
           return AppStrings.EMAIL_INVALID_ERROR;
+        }
+        return null;
+      },
+
+    );
+  }
+
+
+  //Mobile Number Widget
+  Widget _mobileNumberWidget()
+  {
+    return CustomTextFormField(
+      textController: _mobileNoController,
+      containerWidth: MediaQuery.of(context).size.width*0.82,
+      hintText: AppStrings.MOBILE_NUMBER_HINT_TEXT,
+      borderRadius: 30.0,
+      contentPaddingRight: 0.0,
+      prefixIcon: AssetPaths.MOBILE_ICON,
+      prefixIconWidth: 16.0,
+      contentPaddingTop: 17.0,
+      contentPaddingBottom: 17.0,
+      keyBoardType: TextInputType.phone,
+      onValidate: (value){
+        if(value.trim().isEmpty)
+        {
+          return AppStrings.MOBILE_NUMBER_EMPTY_ERROR;
+        }
+        return null;
+      },
+
+    );
+  }
+
+
+  //First Name Widget
+  Widget _countryCodeWidget()
+  {
+    return CustomTextFormField(
+      textController: _firstNameController,
+      containerWidth: MediaQuery.of(context).size.width*0.82,
+      hintText: AppStrings.FIRST_NAME_HINT_TEXT,
+      borderRadius: 30.0,
+      contentPaddingRight: 0.0,
+      prefixIcon: AssetPaths.NAME_ICON,
+      prefixIconWidth: 16.0,
+      contentPaddingTop: 17.0,
+      contentPaddingBottom: 17.0,
+      onValidate: (value){
+        if(value.trim().isEmpty)
+        {
+          return AppStrings.FIRST_NAME_EMPTY_ERROR;
         }
         return null;
       },
@@ -402,12 +458,13 @@ Widget _alreadyAccountRichTextWidget()
 
  @override
   void dispose() {
+   _firstNameController.dispose();
+   _lastNameController.dispose();
+   _emailController.dispose();
+   _passwordController.dispose();
+   _confirmPasswordController.dispose();
+   _mobileNoController.dispose();
     super.dispose();
-    _firstNameController.dispose();
-    _lastNameController.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-    _confirmPasswordController.dispose();
   }
 
 

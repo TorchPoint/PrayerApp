@@ -22,6 +22,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   TextEditingController _lastNameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  TextEditingController _mobileNoController = TextEditingController();
   String emailPattern = Constants.EMAIL_VALIDATION_REGEX;
   RegExp emailRegExp;
   String passwordPattern = Constants.PASSWORD_VALIDATE_REGEX;
@@ -81,6 +82,10 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
 
                       SizedBox(height: 14.0,),
 
+                      _mobileNumberWidget(),
+
+                      SizedBox(height: 14.0,),
+
                       _passwordWidget(),
 
                       SizedBox(height: 14.0,),
@@ -104,6 +109,8 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
     return CustomAppBar(
       title: AppStrings.EDIT_PROFILE_TEXT,
       leadingIconPath: AssetPaths.BACK_ICON,
+      isBarImage: false,
+      paddingTop: 20.0,
       leadingTap: (){
         print("Leading tap");
         AppNavigation.navigatorPop(context);
@@ -116,12 +123,14 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   {
     return CustomTextFormField(
       textController: _firstNameController,
-      containerWidth: MediaQuery.of(context).size.width*0.85,
+      containerWidth: MediaQuery.of(context).size.width*0.82,
       hintText: AppStrings.FIRST_NAME_HINT_TEXT,
       borderRadius: 30.0,
-      contentPaddingLeft: 0.0,
+      contentPaddingRight: 0.0,
       prefixIcon: AssetPaths.NAME_ICON,
-      prefixIconWidth: 15.0,
+      prefixIconWidth: 16.0,
+      contentPaddingTop: 17.0,
+      contentPaddingBottom: 17.0,
       onValidate: (value){
         if(value.trim().isEmpty)
         {
@@ -138,12 +147,14 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   {
     return CustomTextFormField(
       textController: _lastNameController,
-      containerWidth: MediaQuery.of(context).size.width*0.85,
+      containerWidth: MediaQuery.of(context).size.width*0.82,
       hintText: AppStrings.LAST_NAME_HINT_TEXT,
       borderRadius: 30.0,
-      contentPaddingLeft: 0.0,
+      contentPaddingRight: 0.0,
       prefixIcon: AssetPaths.NAME_ICON,
-      prefixIconWidth: 15.0,
+      prefixIconWidth: 16.0,
+      contentPaddingTop: 17.0,
+      contentPaddingBottom: 17.0,
       onValidate: (value){
         if(value.trim().isEmpty)
         {
@@ -160,12 +171,14 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   {
     return CustomTextFormField(
       textController: _emailController,
-      containerWidth: MediaQuery.of(context).size.width*0.85,
+      containerWidth: MediaQuery.of(context).size.width*0.82,
       hintText: AppStrings.EMAIL_HINT_TEXT,
       borderRadius: 30.0,
-      contentPaddingLeft: 0.0,
+      contentPaddingRight: 0.0,
       prefixIcon: AssetPaths.EMAIL_ICON,
-      prefixIconWidth: 15.0,
+      prefixIconWidth: 16.0,
+      contentPaddingTop: 17.0,
+      contentPaddingBottom: 17.0,
       onValidate: (value){
         emailRegExp = RegExp(emailPattern);
         if(value.trim().isEmpty)
@@ -182,21 +195,49 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
     );
   }
 
+  //Mobile Number Widget
+  Widget _mobileNumberWidget()
+  {
+    return CustomTextFormField(
+      textController: _mobileNoController,
+      containerWidth: MediaQuery.of(context).size.width*0.82,
+      hintText: AppStrings.MOBILE_NUMBER_HINT_TEXT,
+      borderRadius: 30.0,
+      contentPaddingRight: 0.0,
+      prefixIcon: AssetPaths.MOBILE_ICON,
+      prefixIconWidth: 16.0,
+      contentPaddingTop: 17.0,
+      contentPaddingBottom: 17.0,
+      keyBoardType: TextInputType.phone,
+      onValidate: (value){
+        if(value.trim().isEmpty)
+        {
+          return AppStrings.MOBILE_NUMBER_EMPTY_ERROR;
+        }
+        return null;
+      },
+
+    );
+  }
+
+
   //Password Widget
   Widget _passwordWidget()
   {
     return CustomTextFormField(
       textController: _passwordController,
-      containerWidth: MediaQuery.of(context).size.width*0.85,
+      containerWidth: MediaQuery.of(context).size.width*0.82,
       hintText: AppStrings.PASSWORD_HINT_TEXT,
       borderRadius: 30.0,
-      contentPaddingLeft: 0.0,
+      contentPaddingRight: 0.0,
       prefixIcon: AssetPaths.PASSWORD_ICON,
       prefixIconWidth: 15.0,
       obscureText: passwordInvisible == true ? true : false,
       errorMaxLines: 4,
       suffixIcon: passwordInvisible == true ? AssetPaths.VISIBLE_OFF_ICON : AssetPaths.VISIBLE_ON_ICON,
       suffixIconWidth: 22.0,
+      contentPaddingTop: 17.0,
+      contentPaddingBottom: 17.0,
       onSuffixIconTap: (){
         setState(() {
           passwordInvisible = !passwordInvisible;
@@ -224,12 +265,12 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   Widget _completeProfileWidget()
   {
     return CustomButton(
-      containerWidth: MediaQuery.of(context).size.width*0.85,
-      buttonColor: AppColors.BUTTON_COLOR,
-      borderColor: AppColors.BUTTON_COLOR,
+      containerWidth: MediaQuery.of(context).size.width*0.82,
+      buttonColor: AppColors.WHITE_COLOR,
+      borderColor: AppColors.WHITE_COLOR,
       elevation: true,
       buttonText: AppStrings.EDIT_PROFILE_TEXT.toUpperCase(),
-      textColor: AppColors.WHITE_COLOR,
+      textColor: AppColors.BLACK_COLOR,
       fontWeight: FontWeight.w700,
       fontSize: 1.25,
       paddingTop: 13.0,
@@ -294,6 +335,15 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
     }
   }
 
+  @override
+  void dispose() {
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _mobileNoController.dispose();
+    super.dispose();
+  }
 
 
 

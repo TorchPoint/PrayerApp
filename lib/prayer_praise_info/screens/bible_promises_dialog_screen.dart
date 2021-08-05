@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_hybrid_app/prayer_praise_info/screens/bible_promises_description_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
@@ -83,6 +84,7 @@ class BiblePromisesDialogScreen
       onTap: (){
        // log("Bible category"+AppStrings.BIBLECATEGORIES[indexNo]);
         AppNavigation.navigatorPop(context);
+        AppNavigation.navigateTo(context, BiblePromisesDescriptionScreen(title: AppStrings.BIBLECATEGORIES[indexNo]));
       },
       child: Container(
         width: MediaQuery.of(context).size.width*0.38,

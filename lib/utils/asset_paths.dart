@@ -73,4 +73,6 @@ class AssetPaths
   static const String MICROPHONE_ICON = "assets/icons/microphone_icon.png";
   static const String END_CALL_ICON = "assets/icons/end_call_icon.png";
   static const String CAMERA_ICON = "assets/icons/camera_icon.png";
+  static const String NEXT_ICON = "assets/icons/next_icon.png";
+  static const String MOBILE_ICON = "assets/icons/mobile_icon.png";
 }

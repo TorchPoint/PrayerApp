@@ -107,17 +107,22 @@ class AppStrings
   static const String CONTINUE_TEXT = "CONTINUE";
   static const String RESET_PASSWORD_TEXT = "RESET PASSWORD";
   static const String EDIT_PROFILE_TEXT = "Edit Profile";
+  static const String UPDATE_NOW_TEXT = "Update Now";
   static const String CAMERA_TEXT = "CAMERA";
   static const String GALLERY_TEXT = "GALLERY";
   static const String NOTIFICATION_DATE_TEXT = "14 July";
   static const String NOTIFICATION_DESCRIPTION_TEXT = "Lorem ipsum dolor sit amet";
   static const String HTML_TEXT = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
+  static const String QUOTE_DESCRIPTION_TEXT = "\"God is my strength and power, And He makes my way perfect.\"";
+  static const String QUOTE_AUTHOR_TEXT = "(|| Samuel 22:33)";
+
 
 
   // ------------- Hint Text ---------------- //
   static const String FIRST_NAME_HINT_TEXT = "First Name";
   static const String LAST_NAME_HINT_TEXT = "Last Name";
   static const String EMAIL_HINT_TEXT = "Email";
+  static const String MOBILE_NUMBER_HINT_TEXT = "Mobile Number";
   static const String PASSWORD_HINT_TEXT = "Password";
   static const String CONFIRM_PASSWORD_HINT_TEXT = "Confirm Password";
   static const String PRAYER_TITLE_HINT_TEXT = "Add Prayer Title";
@@ -145,6 +150,7 @@ class AppStrings
   static const String FIRST_NAME_EMPTY_ERROR = "First Name can\'t be empty.";
   static const String LAST_NAME_EMPTY_ERROR = "Last Name can\'t be empty.";
   static const String EMAIL_EMPTY_ERROR = "Email can\'t be empty.";
+  static const String MOBILE_NUMBER_EMPTY_ERROR = "Mobile Number can\'t be empty.";
   static const String EMAIL_INVALID_ERROR = "Email is not valid.";
   static const String PASSWORD_EMPTY_ERROR = "Password can\'t be empty.";
   static const String CONFIRM_PASSWORD_EMPTY_ERROR = "Confirm Password can\'t be empty.";
