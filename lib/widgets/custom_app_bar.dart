@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
+import 'package:prayer_hybrid_app/utils/navigation.dart';
 
 
 class CustomAppBar extends StatelessWidget {
@@ -27,7 +31,12 @@ class CustomAppBar extends StatelessWidget {
               visible: isBarImage,
                 child: Padding(
                   padding: EdgeInsets.only(bottom: 15.0),
-                    child: Image.asset(AssetPaths.FOREGROUND_IMAGE,width: 110.0,)
+                    child: GestureDetector(
+                      onTap: (){
+                        AppNavigation.navigateToRemovingAll(context, DrawerScreen());
+                      },
+                        child: Image.asset(AssetPaths.FOREGROUND_IMAGE,width: 110.0,)
+                    )
                 )
             ),
             Row(
