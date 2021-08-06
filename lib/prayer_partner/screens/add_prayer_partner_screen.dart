@@ -205,7 +205,7 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
     {
       if(_addPrayerPartnerKey.currentState.validate())
         {
-          AppNavigation.navigateTo(context, PrayerPartnerListScreen());
+          AppNavigation.navigatorPop(context);
         }
 
     }

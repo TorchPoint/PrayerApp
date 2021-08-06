@@ -133,7 +133,7 @@ class _PrayerPartnerListScreenState extends State<PrayerPartnerListScreen> {
       paddingTop: 13.5,
       paddingBottom: 13.5,
       onTap: (){
-        AppNavigation.navigateTo(context, CreatePrayerGroupScreen());
+        AppNavigation.navigateTo(context, AddPrayerPartnerScreen());
       },
     );
   }
