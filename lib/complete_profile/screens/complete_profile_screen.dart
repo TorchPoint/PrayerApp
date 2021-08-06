@@ -21,7 +21,6 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   TextEditingController _firstNameController = TextEditingController();
   TextEditingController _lastNameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
   TextEditingController _mobileNoController = TextEditingController();
   String emailPattern = Constants.EMAIL_VALIDATION_REGEX;
   RegExp emailRegExp;
@@ -83,10 +82,6 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       SizedBox(height: 14.0,),
 
                       _mobileNumberWidget(),
-
-                      SizedBox(height: 14.0,),
-
-                      _passwordWidget(),
 
                       SizedBox(height: 14.0,),
 
@@ -222,45 +217,6 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   }
 
 
-  //Password Widget
-  Widget _passwordWidget()
-  {
-    return CustomTextFormField(
-      textController: _passwordController,
-      containerWidth: MediaQuery.of(context).size.width*0.82,
-      hintText: AppStrings.PASSWORD_HINT_TEXT,
-      borderRadius: 30.0,
-      contentPaddingRight: 0.0,
-      prefixIcon: AssetPaths.PASSWORD_ICON,
-      prefixIconWidth: 15.0,
-      obscureText: passwordInvisible,
-      errorMaxLines: 4,
-      suffixIcon: passwordInvisible == true ? AssetPaths.VISIBLE_OFF_ICON : AssetPaths.VISIBLE_ON_ICON,
-      suffixIconWidth: 22.0,
-      contentPaddingTop: 17.0,
-      contentPaddingBottom: 17.0,
-      onSuffixIconTap: (){
-        setState(() {
-          passwordInvisible = !passwordInvisible;
-        });
-      },
-
-      onValidate: (value){
-        passwordRegExp = RegExp(passwordPattern);
-        if(value.trim().isEmpty)
-        {
-          return AppStrings.PASSWORD_EMPTY_ERROR;
-        }
-        else if(!passwordRegExp.hasMatch(value))
-        {
-          return AppStrings.PASSWORD_INVALID_ERROR;
-        }
-        return null;
-      },
-
-    );
-  }
-
 
   //Edit Profile Widget
   Widget _completeProfileWidget()
@@ -341,7 +297,6 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
     _firstNameController.dispose();
     _lastNameController.dispose();
     _emailController.dispose();
-    _passwordController.dispose();
     _mobileNoController.dispose();
     super.dispose();
   }

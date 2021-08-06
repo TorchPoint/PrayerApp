@@ -115,7 +115,7 @@ class AppStrings
   static const String HTML_TEXT = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
   static const String QUOTE_DESCRIPTION_TEXT = "\"God is my strength and power, And He makes my way perfect.\"";
   static const String QUOTE_AUTHOR_TEXT = "(|| Samuel 22:33)";
-
+  static const String REMINDER_TIME_ERROR_TEXT = "Reminder Time can\'t be empty.";
 
 
   // ------------- Hint Text ---------------- //
@@ -185,6 +185,7 @@ class AppStrings
   static const String MONTH_NUMBER_FORMAT_MM = "MM";
   static const String YEAR_FORMAT_YYYY = "yyyy";
   static const String DAY_FORMAT_DD = "dd";
+  static const String DAY_FORMAT_HH_MM_SS = "hh:mm:ss";
 
 
 

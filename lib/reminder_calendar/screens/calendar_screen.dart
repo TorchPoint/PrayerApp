@@ -1,5 +1,7 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
@@ -25,6 +27,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   TimeAlertScreen timeAlertScreen =  TimeAlertScreen();
   CalendarController _calendarController = CalendarController();
   final GlobalKey<FormState> _addReminderKey = GlobalKey<FormState>();
+  String calendarReminerTime;
   @override
   Widget build(BuildContext context) {
     return CustomBackgroundContainer(
@@ -53,11 +56,11 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
                       Padding(
                         padding: EdgeInsets.only(left: 5.0,right: 5.0),
-                        child: InkWell(
+                        child: GestureDetector(
                           onTap: (){
-                            timeAlertScreen.timeAlert(context);
+                            _remindMeOnMethod();
                           },
-                            child: Text(AppStrings.REMIND_ME_ON,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600),textScaleFactor: 1.3,textAlign: TextAlign.center,)
+                            child: Text(calendarReminerTime != null ? calendarReminerTime : AppStrings.REMIND_ME_ON,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600),textScaleFactor: 1.3,textAlign: TextAlign.center,)
                         ),
                       ),
 
@@ -238,7 +241,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   {
     return TableCalendar(
       calendarController:_calendarController ,
-      startDay: DateTime.now().subtract(Duration(days: 200)),
+      startDay: DateTime.now(),
       endDay: DateTime.now().add(Duration(days: 365)),
       initialSelectedDay: DateTime.now(),
       weekendDays: [],
@@ -275,7 +278,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
         {
           return weekDaysWidget(day);
         },
-
+        unavailableDayBuilder: (context,dateTime,lists)
+        {
+          return unAvailableDayWidget(dateTime);
+        }
 
       ),
 
@@ -289,7 +295,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
     return Container(
       margin: EdgeInsets.only(right: 6.0,top: 5.0,bottom: 5.0),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.WHITE_COLOR,
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
@@ -368,18 +374,77 @@ class _CalendarScreenState extends State<CalendarScreen> {
   }
 
 
+  //UnSelect Day Widget
+  Widget unAvailableDayWidget(DateTime dateTime)
+  {
+    return Container(
+      margin: EdgeInsets.only(right: 6.0,top: 5.0,bottom: 5.0),
+      decoration: BoxDecoration(
+        color: Colors.black12,
+        shape: BoxShape.circle,
+      ),
+      child: Center(
+        child: Text(
+          DateFormat(AppStrings.DAY_FORMAT_DD).format(dateTime),
+          style: TextStyle(color: AppColors.WHITE_COLOR,fontSize: 12.0,fontWeight: FontWeight.w600),
+        ),
+      ),
+    );
+  }
+
+
+  void _remindMeOnMethod()
+  {
+    timeAlertScreen.timeAlert(context,ontimeChanged);
+  }
+
+
+  void ontimeChanged(DateTime reminderTime)
+  {
+    if(reminderTime != null)
+      {
+        setState(() {
+         calendarReminerTime = DateFormat(AppStrings.DAY_FORMAT_HH_MM_SS).format(reminderTime);
+        });
+      }
+  }
 
 
 
-
-void addReminderMethod()
+  void addReminderMethod()
     {
       if(_addReminderKey.currentState.validate())
         {
-           AppNavigation.navigatorPop(context);
+            if(calendarReminerTime != null)
+              {
+                AppNavigation.navigatorPop(context);
+              }
+            else
+              {
+                reminderTimeError();
+              }
         }
 
     }
+
+
+  void reminderTimeError()
+  {
+    Flushbar(
+      icon: Icon(
+        FontAwesomeIcons.exclamationCircle,
+        color: AppColors.WHITE_COLOR,
+      ),
+      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+      borderRadius: BorderRadius.circular(8.0),
+      messageText: Text(
+        AppStrings.REMINDER_TIME_ERROR_TEXT,
+        style: TextStyle(color: Colors.white),
+      ),
+      backgroundColor: AppColors.BUTTON_COLOR,
+      duration: Duration(seconds:  2),
+    ).show(context);
+  }
 
 
 }

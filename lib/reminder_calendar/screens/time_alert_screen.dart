@@ -6,7 +6,9 @@ import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
 class TimeAlertScreen
 {
-  void timeAlert(BuildContext context)
+  DateTime reminderTime;
+
+  void timeAlert(BuildContext context,ValueChanged<DateTime> onTimeChanged)
   {
     showDialog(
         context: context,
@@ -24,7 +26,7 @@ class TimeAlertScreen
                   SizedBox(height: MediaQuery.of(context).size.height*0.06,),
                   _timeContainerWidget(context),
                   //SizedBox(height: MediaQuery.of(context).size.height*0.02,),
-                  _cancelDoneButtonsWidget(context),
+                  _cancelDoneButtonsWidget(context,onTimeChanged),
                   SizedBox(height: MediaQuery.of(context).size.height*0.06,),
 
 
@@ -127,6 +129,8 @@ class TimeAlertScreen
                 isForce2Digits: true,
                 onTimeChange: (time) {
                   print("Time:${time.toString()}");
+                  reminderTime = time;
+
                 },
               ),
 
@@ -138,7 +142,7 @@ class TimeAlertScreen
   }
 
 
-  Widget _cancelDoneButtonsWidget(BuildContext context)
+  Widget _cancelDoneButtonsWidget(BuildContext context,ValueChanged<DateTime> onTimeChanged)
   {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -169,6 +173,7 @@ class TimeAlertScreen
           fontSize: 1.2,
           onTap: (){
             AppNavigation.navigatorPop(context);
+            onTimeChanged(reminderTime);
           },
         )
       ],
