@@ -20,7 +20,13 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
   @override
   void initState() {
     super.initState();
-    authWidgetList = [AuthFirstScreen(pageController:_authPageController),AuthSecondScreen(pageController:_authPageController),AuthThirdScreen(pageController:_authPageController),AuthSignUpScreen(pageController:_authPageController),AuthLoginScreen(pageController:_authPageController)];
+    authWidgetList = [
+      AuthFirstScreen(pageController: _authPageController),
+      AuthSecondScreen(pageController: _authPageController),
+      AuthThirdScreen(pageController: _authPageController),
+      AuthSignUpScreen(pageController: _authPageController),
+      AuthLoginScreen(pageController: _authPageController)
+    ];
   }
 
   @override
@@ -39,32 +45,28 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
                 itemCount: 5, // Can be null
               ),
             ),
-
             SizedBox(height: 10.0),
             Align(
               alignment: Alignment.center,
               child: _pageIndicator(),
             ),
             SizedBox(height: 20.0),
-
           ],
         ),
       ),
     );
   }
 
-  Widget _pageIndicator()
-  {
+  Widget _pageIndicator() {
     return SmoothPageIndicator(
       controller: _authPageController,
       count: 5,
       effect: WormEffect(
-        dotWidth: 10.0,
-        dotHeight: 10.0,
-        spacing: 6.0,
-        dotColor: AppColors.WHITE_COLOR,
-        activeDotColor: AppColors.BACKGROUND1_COLOR
-      ),
+          dotWidth: 10.0,
+          dotHeight: 10.0,
+          spacing: 6.0,
+          dotColor: AppColors.WHITE_COLOR,
+          activeDotColor: AppColors.BACKGROUND1_COLOR),
     );
   }
 

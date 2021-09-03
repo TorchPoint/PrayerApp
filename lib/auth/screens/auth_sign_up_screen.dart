@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
@@ -10,6 +11,7 @@ import 'package:prayer_hybrid_app/widgets/custom_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_social_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
 import 'dart:io' show Platform;
+
 class AuthSignUpScreen extends StatefulWidget {
   final PageController pageController;
 
@@ -31,77 +33,90 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
   RegExp emailRegExp;
   String passwordPattern = Constants.PASSWORD_VALIDATE_REGEX;
   RegExp passwordRegExp;
-  bool passwordInvisible = true,confirmPasswordInvisible=true;
+  bool passwordInvisible = true, confirmPasswordInvisible = true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.05,right: MediaQuery.of(context).size.width*0.05),
+        padding: EdgeInsets.only(
+            left: MediaQuery.of(context).size.width * 0.05,
+            right: MediaQuery.of(context).size.width * 0.05),
         child: Form(
           key: _signUpKey,
           child: Column(
             children: [
               Padding(
-                padding: EdgeInsets.only(top:MediaQuery.of(context).size.height*0.08),
-                child: Text(AppStrings.WELCOME_TO_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600,letterSpacing: 1.5),textScaleFactor: 1.6,),
+                padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.08),
+                child: Text(
+                  AppStrings.WELCOME_TO_TEXT,
+                  style: TextStyle(
+                      color: AppColors.WHITE_COLOR,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 1.5),
+                  textScaleFactor: 1.6,
+                ),
               ),
               _prayerImageWidget(),
-
-              SizedBox(height: 25.0,),
-
+              SizedBox(
+                height: 25.0,
+              ),
               _firstNameWidget(),
-
-              SizedBox(height: 14.0,),
-
+              SizedBox(
+                height: 14.0,
+              ),
               _lastNameWidget(),
-
-              SizedBox(height: 14.0,),
-
+              SizedBox(
+                height: 14.0,
+              ),
               _emailWidget(),
-
-              SizedBox(height: 14.0,),
-
+              SizedBox(
+                height: 14.0,
+              ),
               _mobileNumberWidget(),
-
-              SizedBox(height: 14.0,),
-
+              SizedBox(
+                height: 14.0,
+              ),
               _passwordWidget(),
-
-              SizedBox(height: 14.0,),
-
+              SizedBox(
+                height: 14.0,
+              ),
               _confirmPasswordWidget(),
-
-              SizedBox(height: 14.0,),
-
+              SizedBox(
+                height: 14.0,
+              ),
               _signUpButtonWidget(),
-
-              SizedBox(height: 18.0,),
-
+              SizedBox(
+                height: 18.0,
+              ),
               _alreadyAccountRichTextWidget(),
-
-              SizedBox(height: 25.0,),
-
-              Platform.isIOS ?
-              _signInAppleButtonWidget()
-                  :
-              Container(),
-
-
-              Platform.isIOS ?
-              SizedBox(height: 15.0,)
-                  :
-              SizedBox(height: 0.0,),
-
+              SizedBox(
+                height: 25.0,
+              ),
+              Platform.isIOS ? _signInAppleButtonWidget() : Container(),
+              Platform.isIOS
+                  ? SizedBox(
+                      height: 15.0,
+                    )
+                  : SizedBox(
+                      height: 0.0,
+                    ),
               _signInFacebookButtonWidget(),
-
-              SizedBox(height: 15.0,),
-
+              SizedBox(
+                height: 15.0,
+              ),
               _signInGoogleButtonWidget(),
-
-              SizedBox(height: 5.0,),
-
-
-
+              SizedBox(
+                height: 5.0,
+              ),
             ],
           ),
         ),
@@ -109,28 +124,23 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
     );
   }
 
-  Widget _prayerImageWidget()
-  {
+  Widget _prayerImageWidget() {
     return Container(
-      width: MediaQuery.of(context).size.width*0.42,
-      height: MediaQuery.of(context).size.height*0.07,
-      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.03),
+      width: MediaQuery.of(context).size.width * 0.42,
+      height: MediaQuery.of(context).size.height * 0.07,
+      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.03),
       decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage(AssetPaths.FOREGROUND_IMAGE),
-              fit: BoxFit.contain
-          )
-      ),
+              fit: BoxFit.contain)),
     );
   }
 
-
   //First Name Widget
-  Widget _firstNameWidget()
-  {
+  Widget _firstNameWidget() {
     return CustomTextFormField(
       textController: _firstNameController,
-      containerWidth: MediaQuery.of(context).size.width*0.82,
+      containerWidth: MediaQuery.of(context).size.width * 0.82,
       hintText: AppStrings.FIRST_NAME_HINT_TEXT,
       borderRadius: 30.0,
       contentPaddingRight: 0.0,
@@ -138,23 +148,20 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
       prefixIconWidth: 16.0,
       contentPaddingTop: 17.0,
       contentPaddingBottom: 17.0,
-      onValidate: (value){
-        if(value.trim().isEmpty)
-          {
-            return AppStrings.FIRST_NAME_EMPTY_ERROR;
-          }
+      onValidate: (value) {
+        if (value.trim().isEmpty) {
+          return AppStrings.FIRST_NAME_EMPTY_ERROR;
+        }
         return null;
       },
-
     );
   }
 
   //Last Name Widget
-  Widget _lastNameWidget()
-  {
+  Widget _lastNameWidget() {
     return CustomTextFormField(
       textController: _lastNameController,
-      containerWidth: MediaQuery.of(context).size.width*0.82,
+      containerWidth: MediaQuery.of(context).size.width * 0.82,
       hintText: AppStrings.LAST_NAME_HINT_TEXT,
       borderRadius: 30.0,
       contentPaddingRight: 0.0,
@@ -162,23 +169,20 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
       prefixIconWidth: 16.0,
       contentPaddingTop: 17.0,
       contentPaddingBottom: 17.0,
-      onValidate: (value){
-        if(value.trim().isEmpty)
-        {
+      onValidate: (value) {
+        if (value.trim().isEmpty) {
           return AppStrings.LAST_NAME_EMPTY_ERROR;
         }
         return null;
       },
-
     );
   }
 
   //Email Widget
-  Widget _emailWidget()
-  {
+  Widget _emailWidget() {
     return CustomTextFormField(
       textController: _emailController,
-      containerWidth: MediaQuery.of(context).size.width*0.82,
+      containerWidth: MediaQuery.of(context).size.width * 0.82,
       hintText: AppStrings.EMAIL_HINT_TEXT,
       borderRadius: 30.0,
       contentPaddingRight: 0.0,
@@ -186,29 +190,23 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
       prefixIconWidth: 16.0,
       contentPaddingTop: 17.0,
       contentPaddingBottom: 17.0,
-      onValidate: (value){
+      onValidate: (value) {
         emailRegExp = RegExp(emailPattern);
-        if(value.trim().isEmpty)
-        {
+        if (value.trim().isEmpty) {
           return AppStrings.EMAIL_EMPTY_ERROR;
-        }
-        else if(!emailRegExp.hasMatch(value))
-        {
+        } else if (!emailRegExp.hasMatch(value)) {
           return AppStrings.EMAIL_INVALID_ERROR;
         }
         return null;
       },
-
     );
   }
 
-
   //Mobile Number Widget
-  Widget _mobileNumberWidget()
-  {
+  Widget _mobileNumberWidget() {
     return CustomTextFormField(
       textController: _mobileNoController,
-      containerWidth: MediaQuery.of(context).size.width*0.82,
+      containerWidth: MediaQuery.of(context).size.width * 0.82,
       hintText: AppStrings.MOBILE_NUMBER_HINT_TEXT,
       borderRadius: 30.0,
       contentPaddingRight: 0.0,
@@ -217,24 +215,20 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
       contentPaddingTop: 17.0,
       contentPaddingBottom: 17.0,
       keyBoardType: TextInputType.phone,
-      onValidate: (value){
-        if(value.trim().isEmpty)
-        {
+      onValidate: (value) {
+        if (value.trim().isEmpty) {
           return AppStrings.MOBILE_NUMBER_EMPTY_ERROR;
         }
         return null;
       },
-
     );
   }
 
-
   //First Name Widget
-  Widget _countryCodeWidget()
-  {
+  Widget _countryCodeWidget() {
     return CustomTextFormField(
       textController: _firstNameController,
-      containerWidth: MediaQuery.of(context).size.width*0.82,
+      containerWidth: MediaQuery.of(context).size.width * 0.82,
       hintText: AppStrings.FIRST_NAME_HINT_TEXT,
       borderRadius: 30.0,
       contentPaddingRight: 0.0,
@@ -242,23 +236,20 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
       prefixIconWidth: 16.0,
       contentPaddingTop: 17.0,
       contentPaddingBottom: 17.0,
-      onValidate: (value){
-        if(value.trim().isEmpty)
-        {
+      onValidate: (value) {
+        if (value.trim().isEmpty) {
           return AppStrings.FIRST_NAME_EMPTY_ERROR;
         }
         return null;
       },
-
     );
   }
 
   //Password Widget
-  Widget _passwordWidget()
-  {
+  Widget _passwordWidget() {
     return CustomTextFormField(
       textController: _passwordController,
-      containerWidth: MediaQuery.of(context).size.width*0.82,
+      containerWidth: MediaQuery.of(context).size.width * 0.82,
       hintText: AppStrings.PASSWORD_HINT_TEXT,
       borderRadius: 30.0,
       contentPaddingRight: 0.0,
@@ -266,40 +257,34 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
       prefixIconWidth: 15.0,
       obscureText: passwordInvisible,
       errorMaxLines: 4,
-      suffixIcon: passwordInvisible == true ? AssetPaths.VISIBLE_OFF_ICON : AssetPaths.VISIBLE_ON_ICON,
+      suffixIcon: passwordInvisible == true
+          ? AssetPaths.VISIBLE_OFF_ICON
+          : AssetPaths.VISIBLE_ON_ICON,
       suffixIconWidth: 22.0,
       contentPaddingTop: 17.0,
       contentPaddingBottom: 17.0,
-      onSuffixIconTap: (){
+      onSuffixIconTap: () {
         setState(() {
           passwordInvisible = !passwordInvisible;
         });
       },
-
-      onValidate: (value){
+      onValidate: (value) {
         passwordRegExp = RegExp(passwordPattern);
-        if(value.trim().isEmpty)
-        {
+        if (value.trim().isEmpty) {
           return AppStrings.PASSWORD_EMPTY_ERROR;
-        }
-        else if(!passwordRegExp.hasMatch(value))
-        {
+        } else if (!passwordRegExp.hasMatch(value)) {
           return AppStrings.PASSWORD_INVALID_ERROR;
         }
         return null;
       },
-
     );
   }
 
-
-
   //Confirm Password Widget
-  Widget _confirmPasswordWidget()
-  {
+  Widget _confirmPasswordWidget() {
     return CustomTextFormField(
       textController: _confirmPasswordController,
-      containerWidth: MediaQuery.of(context).size.width*0.82,
+      containerWidth: MediaQuery.of(context).size.width * 0.82,
       hintText: AppStrings.CONFIRM_PASSWORD_HINT_TEXT,
       borderRadius: 30.0,
       contentPaddingRight: 0.0,
@@ -307,43 +292,35 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
       prefixIconWidth: 15.0,
       obscureText: confirmPasswordInvisible,
       errorMaxLines: 4,
-      suffixIcon: confirmPasswordInvisible == true ? AssetPaths.VISIBLE_OFF_ICON : AssetPaths.VISIBLE_ON_ICON,
+      suffixIcon: confirmPasswordInvisible == true
+          ? AssetPaths.VISIBLE_OFF_ICON
+          : AssetPaths.VISIBLE_ON_ICON,
       suffixIconWidth: 22.0,
       contentPaddingTop: 17.0,
       contentPaddingBottom: 17.0,
-      onSuffixIconTap: (){
+      onSuffixIconTap: () {
         setState(() {
           confirmPasswordInvisible = !confirmPasswordInvisible;
         });
       },
-
-      onValidate: (value){
+      onValidate: (value) {
         passwordRegExp = RegExp(passwordPattern);
-        if(value.trim().isEmpty)
-        {
+        if (value.trim().isEmpty) {
           return AppStrings.CONFIRM_PASSWORD_EMPTY_ERROR;
-        }
-        else if(!passwordRegExp.hasMatch(value))
-        {
+        } else if (!passwordRegExp.hasMatch(value)) {
           return AppStrings.CONFIRM_PASSWORD_INVALID_ERROR;
-        }
-        else if(value != _passwordController.text)
-          {
+        } else if (value != _passwordController.text) {
           return AppStrings.PASSWORD_DIFFERENT_ERROR;
-          }
+        }
         return null;
       },
-
     );
   }
 
-
-
   //Sign Up Widget
-  Widget _signUpButtonWidget()
-  {
+  Widget _signUpButtonWidget() {
     return CustomButton(
-      containerWidth: MediaQuery.of(context).size.width*0.82,
+      containerWidth: MediaQuery.of(context).size.width * 0.82,
       buttonColor: AppColors.WHITE_COLOR,
       borderColor: AppColors.WHITE_COLOR,
       elevation: true,
@@ -353,52 +330,50 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
       fontSize: 1.25,
       paddingTop: 13.0,
       paddingBottom: 13.0,
-      onTap: (){
-        if(_signUpKey.currentState.validate())
-          {
-             print("sign up");
-             AppNavigation.navigateTo(context, DrawerScreen());
-          }
+      onTap: () {
+        if (_signUpKey.currentState.validate()) {
+          print("sign up");
+          AppNavigation.navigateTo(context, DrawerScreen());
+        }
       },
     );
   }
 
-
-
-
-
 //Already have account Widget
-Widget _alreadyAccountRichTextWidget()
- {
-   return Container(
-     width: MediaQuery.of(context).size.width*0.82,
-     child: RichText(
-       textAlign: TextAlign.center,
-         text: TextSpan(
-         text: AppStrings.ALREADY_HAVE_ACCOUNT_TEXT,
-         style: TextStyle(color: AppColors.WHITE_COLOR,fontSize: 15.0,letterSpacing: 1.0),
-     children: <TextSpan>[
-     TextSpan(
-         text: AppStrings.SIGN_IN_DASH_TEXT, style: TextStyle(fontWeight: FontWeight.w600,letterSpacing: 1.0,decoration: TextDecoration.underline,decorationColor: AppColors.WHITE_COLOR, decorationThickness: 2.0,),
-         recognizer: TapGestureRecognizer()..onTap = () {
-           widget.pageController.jumpToPage(4);
-         }
-     ),
-
- ],
-     )
-     ),
-   );
-
- }
-
-
+  Widget _alreadyAccountRichTextWidget() {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.82,
+      child: RichText(
+          textAlign: TextAlign.center,
+          text: TextSpan(
+            text: AppStrings.ALREADY_HAVE_ACCOUNT_TEXT,
+            style: TextStyle(
+                color: AppColors.WHITE_COLOR,
+                fontSize: 15.0,
+                letterSpacing: 1.0),
+            children: <TextSpan>[
+              TextSpan(
+                  text: AppStrings.SIGN_IN_DASH_TEXT,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 1.0,
+                    decoration: TextDecoration.underline,
+                    decorationColor: AppColors.WHITE_COLOR,
+                    decorationThickness: 2.0,
+                  ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      widget.pageController.jumpToPage(4);
+                    }),
+            ],
+          )),
+    );
+  }
 
   //Sign in With Apple
-  Widget _signInAppleButtonWidget()
-  {
+  Widget _signInAppleButtonWidget() {
     return CustomSocialButton(
-      containerWidth: MediaQuery.of(context).size.width*0.82,
+      containerWidth: MediaQuery.of(context).size.width * 0.82,
       buttonColor: AppColors.WHITE_COLOR,
       buttonText: AppStrings.SIGN_IN_APPLE_TEXT,
       buttonTextColor: AppColors.BLACK_COLOR,
@@ -406,7 +381,7 @@ Widget _alreadyAccountRichTextWidget()
       iconWidth: 20.0,
       iconColor: AppColors.BLACK_COLOR,
       differenceWidth: 10.0,
-      onTap: (){
+      onTap: () {
         print("Sign in with Apple");
         AppNavigation.navigateTo(context, DrawerScreen());
       },
@@ -414,10 +389,9 @@ Widget _alreadyAccountRichTextWidget()
   }
 
   //Sign in With Facebook
-  Widget _signInFacebookButtonWidget()
-  {
+  Widget _signInFacebookButtonWidget() {
     return CustomSocialButton(
-      containerWidth: MediaQuery.of(context).size.width*0.82,
+      containerWidth: MediaQuery.of(context).size.width * 0.82,
       buttonColor: AppColors.FACEBOOK_BUTTON_COLOR,
       buttonText: AppStrings.SIGN_IN_FACEBOOK_TEXT,
       buttonTextColor: AppColors.WHITE_COLOR,
@@ -425,20 +399,17 @@ Widget _alreadyAccountRichTextWidget()
       iconWidth: 14.0,
       iconColor: AppColors.WHITE_COLOR,
       differenceWidth: 16.0,
-      onTap: (){
+      onTap: () {
         print("Sign in with Facebook");
         AppNavigation.navigateTo(context, DrawerScreen());
       },
     );
   }
 
-
-
   //Sign in With Google
-  Widget _signInGoogleButtonWidget()
-  {
+  Widget _signInGoogleButtonWidget() {
     return CustomSocialButton(
-      containerWidth: MediaQuery.of(context).size.width*0.82,
+      containerWidth: MediaQuery.of(context).size.width * 0.82,
       buttonColor: AppColors.GOOGLE_BUTTON_COLOR,
       buttonText: AppStrings.SIGN_IN_GOOGLE_TEXT,
       buttonTextColor: AppColors.WHITE_COLOR,
@@ -446,28 +417,21 @@ Widget _alreadyAccountRichTextWidget()
       iconWidth: 22.0,
       iconColor: AppColors.WHITE_COLOR,
       differenceWidth: 10.0,
-      onTap: (){
+      onTap: () {
         print("Sign in with Google");
         AppNavigation.navigateTo(context, DrawerScreen());
       },
     );
   }
 
-
-
-
- @override
+  @override
   void dispose() {
-   _firstNameController.dispose();
-   _lastNameController.dispose();
-   _emailController.dispose();
-   _passwordController.dispose();
-   _confirmPasswordController.dispose();
-   _mobileNoController.dispose();
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    _mobileNoController.dispose();
     super.dispose();
   }
-
-
-
-
 }

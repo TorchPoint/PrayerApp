@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
 import 'package:prayer_hybrid_app/password/screens/continue_email_screen.dart';
+import 'package:prayer_hybrid_app/services/API_const.dart';
+import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
@@ -28,48 +32,55 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
   String passwordPattern = Constants.PASSWORD_VALIDATE_REGEX;
   RegExp passwordRegExp;
   bool passwordInVisible = true;
+  BaseService baseService = BaseService();
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.05,right: MediaQuery.of(context).size.width*0.05),
+        padding: EdgeInsets.only(
+            left: MediaQuery.of(context).size.width * 0.05,
+            right: MediaQuery.of(context).size.width * 0.05),
         child: Form(
           key: _loginKey,
           child: Column(
             children: [
               Padding(
-                padding: EdgeInsets.only(top:MediaQuery.of(context).size.height*0.08),
-                child: Text(AppStrings.WELCOME_TO_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600,letterSpacing: 1.5),textScaleFactor: 1.6,),
+                padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.08),
+                child: Text(
+                  AppStrings.WELCOME_TO_TEXT,
+                  style: TextStyle(
+                      color: AppColors.WHITE_COLOR,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 1.5),
+                  textScaleFactor: 1.6,
+                ),
               ),
               _prayerImageWidget(),
-
-              SizedBox(height: 25.0,),
-
+              SizedBox(
+                height: 25.0,
+              ),
               _emailWidget(),
-
-              SizedBox(height: 14.0,),
-
+              SizedBox(
+                height: 14.0,
+              ),
               _passwordWidget(),
-
-              SizedBox(height: 14.0,),
-
+              SizedBox(
+                height: 14.0,
+              ),
               _loginButtonWidget(),
-
-              SizedBox(height: 18.0,),
-
-             _forgetPasswordWidget(),
-
-              SizedBox(height: 25.0,),
-
+              SizedBox(
+                height: 18.0,
+              ),
+              _forgetPasswordWidget(),
+              SizedBox(
+                height: 25.0,
+              ),
               _dontHaveAccountRichTextWidget(),
-
-              SizedBox(height: 5.0,),
-
-
-
-
-
-
+              SizedBox(
+                height: 5.0,
+              ),
             ],
           ),
         ),
@@ -77,27 +88,23 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
     );
   }
 
-  Widget _prayerImageWidget()
-  {
+  Widget _prayerImageWidget() {
     return Container(
-      width: MediaQuery.of(context).size.width*0.42,
-      height: MediaQuery.of(context).size.height*0.07,
-      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.03),
+      width: MediaQuery.of(context).size.width * 0.42,
+      height: MediaQuery.of(context).size.height * 0.07,
+      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.03),
       decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage(AssetPaths.FOREGROUND_IMAGE),
-              fit: BoxFit.contain
-          )
-      ),
+              fit: BoxFit.contain)),
     );
   }
 
-  //Email Widget
-  Widget _emailWidget()
-  {
+//Email Widget
+  Widget _emailWidget() {
     return CustomTextFormField(
       textController: _emailController,
-      containerWidth: MediaQuery.of(context).size.width*0.82,
+      containerWidth: MediaQuery.of(context).size.width * 0.82,
       hintText: AppStrings.EMAIL_HINT_TEXT,
       borderRadius: 30.0,
       contentPaddingRight: 0.0,
@@ -105,28 +112,23 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
       prefixIconWidth: 16.0,
       contentPaddingTop: 17.0,
       contentPaddingBottom: 17.0,
-      onValidate: (value){
+      onValidate: (value) {
         emailRegExp = RegExp(emailPattern);
-        if(value.trim().isEmpty)
-        {
+        if (value.trim().isEmpty) {
           return AppStrings.EMAIL_EMPTY_ERROR;
-        }
-        else if(!emailRegExp.hasMatch(value))
-        {
+        } else if (!emailRegExp.hasMatch(value)) {
           return AppStrings.EMAIL_INVALID_ERROR;
         }
         return null;
       },
-
     );
   }
 
-  //Password Widget
-  Widget _passwordWidget()
-  {
+//Password Widget
+  Widget _passwordWidget() {
     return CustomTextFormField(
       textController: _passwordController,
-      containerWidth: MediaQuery.of(context).size.width*0.82,
+      containerWidth: MediaQuery.of(context).size.width * 0.82,
       hintText: AppStrings.PASSWORD_HINT_TEXT,
       borderRadius: 30.0,
       contentPaddingRight: 0.0,
@@ -134,36 +136,33 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
       prefixIconWidth: 15.0,
       obscureText: passwordInVisible,
       errorMaxLines: 4,
-      suffixIcon: passwordInVisible == true ? AssetPaths.VISIBLE_OFF_ICON : AssetPaths.VISIBLE_ON_ICON,
+      suffixIcon: passwordInVisible == true
+          ? AssetPaths.VISIBLE_OFF_ICON
+          : AssetPaths.VISIBLE_ON_ICON,
       suffixIconWidth: 22.0,
       contentPaddingTop: 17.0,
       contentPaddingBottom: 17.0,
-      onSuffixIconTap: (){
+      onSuffixIconTap: () {
         setState(() {
           passwordInVisible = !passwordInVisible;
         });
       },
-      onValidate: (value){
+      onValidate: (value) {
         passwordRegExp = RegExp(passwordPattern);
-        if(value.trim().isEmpty)
-        {
+        if (value.trim().isEmpty) {
           return AppStrings.PASSWORD_EMPTY_ERROR;
-        }
-        else if(!passwordRegExp.hasMatch(value))
-        {
+        } else if (!passwordRegExp.hasMatch(value)) {
           return AppStrings.PASSWORD_INVALID_ERROR;
         }
         return null;
       },
-
     );
   }
 
-  //Login Button Widget
-  Widget _loginButtonWidget()
-  {
+//Login Button Widget
+  Widget _loginButtonWidget() {
     return CustomButton(
-      containerWidth: MediaQuery.of(context).size.width*0.82,
+      containerWidth: MediaQuery.of(context).size.width * 0.82,
       buttonColor: AppColors.WHITE_COLOR,
       borderColor: AppColors.WHITE_COLOR,
       elevation: true,
@@ -173,55 +172,74 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
       fontSize: 1.25,
       paddingTop: 13.0,
       paddingBottom: 13.0,
-      onTap: (){
-        if(_loginKey.currentState.validate())
-        {
-       print("Login");
-       AppNavigation.navigateTo(context, DrawerScreen());
+      onTap: () {
+        if (_loginKey.currentState.validate()) {
+          print("Login");
+          baseService.login(context,
+              email: _emailController.text.trim(),
+              password: _passwordController.text);
+          // AppNavigation.navigateTo(context, DrawerScreen());
         }
       },
     );
   }
 
-  Widget _forgetPasswordWidget()
-  {
+  Widget _forgetPasswordWidget() {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         AppNavigation.navigateTo(context, ContinueEmailScreen());
       },
       child: Container(
-        width: MediaQuery.of(context).size.width*0.85,
-        margin: EdgeInsets.only(right: MediaQuery.of(context).size.width*0.02),
-        child: Text(AppStrings.FORGET_PASSWORD_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600,letterSpacing: 0.5,decoration: TextDecoration.underline,decorationColor: AppColors.WHITE_COLOR, decorationThickness: 1.0,),textScaleFactor: 1.05,textAlign: TextAlign.right,),
+        width: MediaQuery.of(context).size.width * 0.85,
+        margin:
+            EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.02),
+        child: Text(
+          AppStrings.FORGET_PASSWORD_TEXT,
+          style: TextStyle(
+            color: AppColors.WHITE_COLOR,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 0.5,
+            decoration: TextDecoration.underline,
+            decorationColor: AppColors.WHITE_COLOR,
+            decorationThickness: 1.0,
+          ),
+          textScaleFactor: 1.05,
+          textAlign: TextAlign.right,
+        ),
       ),
     );
   }
 
-  //Don't have account Widget
-  Widget _dontHaveAccountRichTextWidget()
-  {
+//Don't have account Widget
+  Widget _dontHaveAccountRichTextWidget() {
     return Container(
-      width: MediaQuery.of(context).size.width*0.85,
+      width: MediaQuery.of(context).size.width * 0.85,
       child: RichText(
-        textAlign: TextAlign.center,
+          textAlign: TextAlign.center,
           text: TextSpan(
             text: AppStrings.DONT_HAVE_ACCOUNT_TEXT,
-            style: TextStyle(color: AppColors.WHITE_COLOR,fontSize: 15.0,letterSpacing: 1.0),
+            style: TextStyle(
+                color: AppColors.WHITE_COLOR,
+                fontSize: 15.0,
+                letterSpacing: 1.0),
             children: <TextSpan>[
               TextSpan(
-                  text: AppStrings.SIGN_UP_TEXT, style: TextStyle(fontWeight: FontWeight.w600,letterSpacing: 1.0,decoration: TextDecoration.underline,decorationColor: AppColors.WHITE_COLOR, decorationThickness: 2.0,),
-                  recognizer: TapGestureRecognizer()..onTap = () {
-                    widget.pageController.jumpToPage(3);
-                  }
-              ),
-
+                  text: AppStrings.SIGN_UP_TEXT,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 1.0,
+                    decoration: TextDecoration.underline,
+                    decorationColor: AppColors.WHITE_COLOR,
+                    decorationThickness: 2.0,
+                  ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      widget.pageController.jumpToPage(3);
+                    }),
             ],
-          )
-      ),
+          )),
     );
-
   }
-
 
   @override
   void dispose() {
@@ -229,6 +247,4 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
     _emailController.dispose();
     _passwordController.dispose();
   }
-
-
 }

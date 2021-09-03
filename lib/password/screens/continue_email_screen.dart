@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_hybrid_app/auth/screens/auth_verification_screen.dart';
 import 'package:prayer_hybrid_app/password/screens/reset_password_screen.dart';
+import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
@@ -21,7 +23,6 @@ class _ContinueEmailScreenState extends State<ContinueEmailScreen> {
   String emailPattern = Constants.EMAIL_VALIDATION_REGEX;
   RegExp emailRegExp;
 
-
   @override
   Widget build(BuildContext context) {
     return CustomBackgroundContainer(
@@ -36,9 +37,11 @@ class _ContinueEmailScreenState extends State<ContinueEmailScreen> {
                   key: _continueKey,
                   child: Column(
                     children: [
-                      SizedBox(height: MediaQuery.of(context).size.height*0.06),
-                      Image.asset(AssetPaths.FOREGROUND_IMAGE,width: 180.0),
-                      SizedBox(height: MediaQuery.of(context).size.height*0.06),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.06),
+                      Image.asset(AssetPaths.FOREGROUND_IMAGE, width: 180.0),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.06),
                       _emailWidget(),
                       SizedBox(height: 20.0),
                       _continueButtonWidget(),
@@ -55,26 +58,24 @@ class _ContinueEmailScreenState extends State<ContinueEmailScreen> {
   }
 
   //Custom App Bar Widget
-  Widget _customAppBar()
-  {
+  Widget _customAppBar() {
     return CustomAppBar(
       leadingIconPath: AssetPaths.BACK_ICON,
       isBarImage: false,
       title: AppStrings.WELCOME_TO_TEXT,
       titleTextSize: 1.7,
       paddingTop: 20.0,
-      leadingTap: (){
+      leadingTap: () {
         AppNavigation.navigatorPop(context);
       },
     );
   }
 
   //Email Widget
-  Widget _emailWidget()
-  {
+  Widget _emailWidget() {
     return CustomTextFormField(
       textController: _emailController,
-      containerWidth: MediaQuery.of(context).size.width*0.82,
+      containerWidth: MediaQuery.of(context).size.width * 0.82,
       hintText: AppStrings.EMAIL_HINT_TEXT,
       borderRadius: 30.0,
       contentPaddingRight: 0.0,
@@ -82,26 +83,21 @@ class _ContinueEmailScreenState extends State<ContinueEmailScreen> {
       prefixIconWidth: 16.0,
       contentPaddingTop: 17.0,
       contentPaddingBottom: 17.0,
-      onValidate: (value){
+      onValidate: (value) {
         emailRegExp = RegExp(emailPattern);
-        if(value.trim().isEmpty)
-        {
+        if (value.trim().isEmpty) {
           return AppStrings.EMAIL_EMPTY_ERROR;
-        }
-        else if(!emailRegExp.hasMatch(value))
-        {
+        } else if (!emailRegExp.hasMatch(value)) {
           return AppStrings.EMAIL_INVALID_ERROR;
         }
         return null;
       },
-
     );
   }
 
-  Widget _continueButtonWidget()
-  {
+  Widget _continueButtonWidget() {
     return CustomButton(
-      containerWidth: MediaQuery.of(context).size.width*0.45,
+      containerWidth: MediaQuery.of(context).size.width * 0.45,
       buttonColor: AppColors.WHITE_COLOR,
       borderColor: AppColors.WHITE_COLOR,
       elevation: true,
@@ -111,20 +107,17 @@ class _ContinueEmailScreenState extends State<ContinueEmailScreen> {
       fontSize: 1.25,
       paddingTop: 13.0,
       paddingBottom: 13.0,
-      onTap: (){
-        if(_continueKey.currentState.validate())
-          {
-            AppNavigation.navigateReplacement(context, ResetPasswordScreen());
-          }
+      onTap: () {
+        if (_continueKey.currentState.validate()) {
+          AppNavigation.navigateReplacement(context, VerificationScreen());
+        }
       },
     );
   }
-
 
   @override
   void dispose() {
     super.dispose();
     _emailController.dispose();
   }
-
 }

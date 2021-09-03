@@ -1,10 +1,13 @@
-class AppStrings
-{
+class AppStrings {
   static const String APP_TITLE_TEXT = "Prayer";
   static const String WELCOME_TO_TEXT = "Welcome To";
-  static const String GET_STARTED_TEXT = "Sign Up to get started, or Log In to your account.";
+  static const String GET_STARTED_TEXT =
+      "Sign Up to get started, or Log In to your account.";
   static const String LOGIN_TEXT = "LOGIN";
   static const String SIGN_UP_TEXT = "SIGNUP";
+  static const String VERIFY_OTP = "VERIFY";
+  static const String RESEND_OTP = "Didn't get the code? Resend the code";
+  static const String ENTER_OTP = "Enter Verification Code";
   static const String SHARE_PRAYER_TEXT = "You can share prayer with others";
   static const String SIGN_UP_DASH_TEXT = "SIGN-UP";
   static const String ALREADY_HAVE_ACCOUNT_TEXT = "Already have an Account? ";
@@ -53,7 +56,8 @@ class AppStrings
   static const String PRAYER_TITLE_TEXT = "Prayer";
   static const String PRAISE_TITLE_TEXT = "Praise";
   static const String PRAYER_USER_TEXT = "(John Doe)";
-  static const String LOREM_EPSUM_STRING = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Contrary to popular belief, Lorem Ipsum is not simply random text.";
+  static const String LOREM_EPSUM_STRING =
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Contrary to popular belief, Lorem Ipsum is not simply random text.";
   static const String BIBLE_PROMISES_TEXT = "BIBLE PROMISES";
   static const String ANSWERED_TEXT = "ANSWERED";
   static const String SHARE_TEXT = "SHARE";
@@ -86,22 +90,25 @@ class AppStrings
   static const String INVITE_TO_PRAYER_APP = "Invite to Prayer App";
   static const String ADD_MEMBER_TEXT = "Add Member";
   static const String CHAT_USER_NAME = "Ben";
-  static const String CARD_NUMBER_TEXT ="**** **** **** 1234";
-  static const String CARD_NUMBER_TEXT2 ="**** **** **** 6598";
-  static const String CARD_NUMBER_TEXT3 ="**** **** **** 0069";
-  static const String PAYMENT_CARD_TEXT ="Payment";
-  static const String ADD_CARD_TEXT ="Add Card";
-  static const String DONE_TEXT ="Done";
+  static const String CARD_NUMBER_TEXT = "**** **** **** 1234";
+  static const String CARD_NUMBER_TEXT2 = "**** **** **** 6598";
+  static const String CARD_NUMBER_TEXT3 = "**** **** **** 0069";
+  static const String PAYMENT_CARD_TEXT = "Payment";
+  static const String ADD_CARD_TEXT = "Add Card";
+  static const String DONE_TEXT = "Done";
   static const String CANCEL_TEXT = "Cancel";
-  static const String CARD_DATE_TEXT ="12/20";
-  static const String EXPIRATION_DATE_GREATER_ERROR = 'Expiration date can\'t be smaller than current date.';
+  static const String CARD_DATE_TEXT = "12/20";
+  static const String EXPIRATION_DATE_GREATER_ERROR =
+      'Expiration date can\'t be smaller than current date.';
   static const String CONTACT_LIST_TEXT = "Contact List";
-  static const String NO_CONTACT_AVAILABLE = "There are no contacts available on this device.";
+  static const String NO_CONTACT_AVAILABLE =
+      "There are no contacts available on this device.";
   static const String SET_REMINDER = "Set Reminder for your prayer";
   static const String ADD_REMINDER_TITLE = "Add Reminder Title";
   static const String REMIND_ME_ON = "Remind me on";
   static const String SET_FREQUENCY_TEXT = "Set Frequency";
-  static const String SHARE_MESSAGE_TEXT = "Prayer is very important so do pray";
+  static const String SHARE_MESSAGE_TEXT =
+      "Prayer is very important so do pray";
   static const String SHARE_TITLE_TEXT = "Prayer";
   static const String SHARE_SUBJECT_TEXT = "Prayer Importance";
   static const String CONTINUE_TEXT = "CONTINUE";
@@ -111,12 +118,15 @@ class AppStrings
   static const String CAMERA_TEXT = "CAMERA";
   static const String GALLERY_TEXT = "GALLERY";
   static const String NOTIFICATION_DATE_TEXT = "14 July";
-  static const String NOTIFICATION_DESCRIPTION_TEXT = "Lorem ipsum dolor sit amet";
-  static const String HTML_TEXT = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
-  static const String QUOTE_DESCRIPTION_TEXT = "\"God is my strength and power, And He makes my way perfect.\"";
+  static const String NOTIFICATION_DESCRIPTION_TEXT =
+      "Lorem ipsum dolor sit amet";
+  static const String HTML_TEXT =
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
+  static const String QUOTE_DESCRIPTION_TEXT =
+      "\"God is my strength and power, And He makes my way perfect.\"";
   static const String QUOTE_AUTHOR_TEXT = "(|| Samuel 22:33)";
-  static const String REMINDER_TIME_ERROR_TEXT = "Reminder Time can\'t be empty.";
-
+  static const String REMINDER_TIME_ERROR_TEXT =
+      "Reminder Time can\'t be empty.";
 
   // ------------- Hint Text ---------------- //
   static const String FIRST_NAME_HINT_TEXT = "First Name";
@@ -144,52 +154,60 @@ class AppStrings
   static const String SET_FREQUENCY_HINT_TEXT = "Set Frequency";
   static const String NEW_PASSWORD_HINT_TEXT = "New Password";
 
-
-
   // ------------- Error Text ---------------- //
   static const String FIRST_NAME_EMPTY_ERROR = "First Name can\'t be empty.";
   static const String LAST_NAME_EMPTY_ERROR = "Last Name can\'t be empty.";
   static const String EMAIL_EMPTY_ERROR = "Email can\'t be empty.";
-  static const String MOBILE_NUMBER_EMPTY_ERROR = "Mobile Number can\'t be empty.";
+  static const String MOBILE_NUMBER_EMPTY_ERROR =
+      "Mobile Number can\'t be empty.";
   static const String EMAIL_INVALID_ERROR = "Email is not valid.";
   static const String PASSWORD_EMPTY_ERROR = "Password can\'t be empty.";
-  static const String CONFIRM_PASSWORD_EMPTY_ERROR = "Confirm Password can\'t be empty.";
-  static const String PASSWORD_INVALID_ERROR = "Password must be 8 characters long and contains at least 1 upper case, 1 lower case, 1 digit & 1 special character.";
-  static const String CONFIRM_PASSWORD_INVALID_ERROR = "Confirm Password must be 8 characters long and contains at least 1 upper case, 1 lower case, 1 digit & 1 special character.";
-  static const String PASSWORD_DIFFERENT_ERROR = "Password and Confirm Password must be same.";
-  static const String PRAYER_TITLE_EMPTY_ERROR = "Prayer title can\'t be empty.";
+  static const String CONFIRM_PASSWORD_EMPTY_ERROR =
+      "Confirm Password can\'t be empty.";
+  static const String PASSWORD_INVALID_ERROR =
+      "Password must be 8 characters long and contains at least 1 upper case, 1 lower case, 1 digit & 1 special character.";
+  static const String CONFIRM_PASSWORD_INVALID_ERROR =
+      "Confirm Password must be 8 characters long and contains at least 1 upper case, 1 lower case, 1 digit & 1 special character.";
+  static const String PASSWORD_DIFFERENT_ERROR =
+      "Password and Confirm Password must be same.";
+  static const String PRAYER_TITLE_EMPTY_ERROR =
+      "Prayer title can\'t be empty.";
   static const String ADD_NAME_EMPTY_ERROR = "Add name can\'t be empty.";
   static const String CATEGORY_EMPTY_ERROR = "Category can\'t be empty.";
   static const String DESCRIPTION_EMPTY_ERROR = "Description can\'t be empty.";
-  static const String PRAISE_TITLE_EMPTY_ERROR = "Praise title can\'t be empty.";
+  static const String PRAISE_TITLE_EMPTY_ERROR =
+      "Praise title can\'t be empty.";
   static const String GROUP_TITLE_EMPTY_ERROR = "Group title can\'t be empty.";
-  static const String SEARCH_MEMBER_EMPTY_ERROR = "Search member can\'t be empty.";
+  static const String SEARCH_MEMBER_EMPTY_ERROR =
+      "Search member can\'t be empty.";
   static const String MOBILE_NO_EMPTY_ERROR = "Mobile No can\'t be empty.";
   static const String CARD_NUMBER_EMPTY_ERROR = "Card Number can\'t be empty.";
   static const String CARD_NUMBER_ERROR = "Card Number is not valid.";
-  static const String EXPIRATION_MONTH_ERROR = "Expiration Month can\'t be empty.";
-  static const String EXPIRATION_YEAR_ERROR = "Expiration Year can\'t be empty.";
+  static const String EXPIRATION_MONTH_ERROR =
+      "Expiration Month can\'t be empty.";
+  static const String EXPIRATION_YEAR_ERROR =
+      "Expiration Year can\'t be empty.";
   static const String CVV_EMPTY_ERROR = "CVV can\'t be empty.";
   static const String CVV_ERROR = "CVV is not valid.";
   static const String CONTACT_DENIED_ERROR = "Access to contact data denied";
-  static const String CONTACT_PERMANENTLY_DENIED_ERROR = "Access to contact data permanently denied";
-  static const String ADD_REMINDER_TITLE_ERROR_TEXT = "Add reminder title can't be empty.";
-  static const String ADD_FREQUENCY_ERROR_TEXT = "Add frequency can't be empty.";
-  static const String NEW_PASSWORD_EMPTY_ERROR = "New Password can\'t be empty.";
-  static const String NEW_PASSWORD_INVALID_ERROR = "New Password must be 8 characters long and contains at least 1 upper case, 1 lower case, 1 digit & 1 special character.";
+  static const String CONTACT_PERMANENTLY_DENIED_ERROR =
+      "Access to contact data permanently denied";
+  static const String ADD_REMINDER_TITLE_ERROR_TEXT =
+      "Add reminder title can't be empty.";
+  static const String ADD_FREQUENCY_ERROR_TEXT =
+      "Add frequency can't be empty.";
+  static const String NEW_PASSWORD_EMPTY_ERROR =
+      "New Password can\'t be empty.";
+  static const String NEW_PASSWORD_INVALID_ERROR =
+      "New Password must be 8 characters long and contains at least 1 upper case, 1 lower case, 1 digit & 1 special character.";
 
   // ------------------ Formatter Strings ------------------ //
-
 
   static const String MONTH_NAME_FORMAT_MMMM = "MMMM";
   static const String MONTH_NUMBER_FORMAT_MM = "MM";
   static const String YEAR_FORMAT_YYYY = "yyyy";
   static const String DAY_FORMAT_DD = "dd";
   static const String DAY_FORMAT_HH_MM_SS = "hh:mm:ss";
-
-
-
-
 
   // ------------------ Prayer And Praise Dropdown Strings -----------------//
   static const String HOME_DROPDOWN_TEXT = "Home";
@@ -289,8 +307,6 @@ class AppStrings
     OTHER_DROPDOWN_TEXT
   ];
 
-
-
 // ------------------ Bible Promise Category Strings -----------------//
 
   static const String GUIDANCE_CATEGORY_TEXT = "GUIDANCE";
@@ -312,7 +328,6 @@ class AppStrings
   static const String FAITH_CATEGORY_TEXT = "FAITH";
   static const String PROVISION_CATEGORY_TEXT = "PROVISION";
   static const String HOLY_SPIRIT_CATEGORY_TEXT = "HOLY SPIRIT";
-
 
   // -------------- BIBLE CATEGORIES LIST -------------------- //
   static const List<String> BIBLECATEGORIES = [
@@ -336,8 +351,4 @@ class AppStrings
     PROVISION_CATEGORY_TEXT,
     HOLY_SPIRIT_CATEGORY_TEXT
   ];
-
-
-
-
 }
