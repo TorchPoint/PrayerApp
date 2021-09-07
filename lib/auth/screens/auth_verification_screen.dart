@@ -9,13 +9,18 @@ import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/widgets/custom_button.dart';
 
 class VerificationScreen extends StatefulWidget {
+  final bool emailVerificationCheck;
+
+  final String userData;
+
+  VerificationScreen({this.emailVerificationCheck, this.userData});
+
   @override
   _VerificationScreenState createState() => _VerificationScreenState();
 }
 
 class _VerificationScreenState extends State<VerificationScreen> {
   TextEditingController otpController = TextEditingController();
-  final GlobalKey<FormState> _verificationKey = GlobalKey<FormState>();
   BaseService baseService = BaseService();
 
   @override
@@ -108,6 +113,11 @@ class _VerificationScreenState extends State<VerificationScreen> {
           baseService.showToast(
               "Check your email for verification code", AppColors.RED_COLOR);
         } else {
+          baseService
+              .verifyUserUsingOTP(context, widget.userData, otpController.text)
+              .then((value) {
+            debugPrint("Print:" + value.toString());
+          });
           print("verfiy");
         }
       },
@@ -125,11 +135,16 @@ class _VerificationScreenState extends State<VerificationScreen> {
   }
 
   Widget _reSendWidget() {
-    return Text(
-      AppStrings.RESEND_OTP,
-      style: TextStyle(
-        color: AppColors.WHITE_COLOR,
-        fontWeight: FontWeight.w500,
+    return GestureDetector(
+      onTap: () {
+        baseService.reSendVerification(context, widget.userData);
+      },
+      child: Text(
+        AppStrings.RESEND_OTP,
+        style: TextStyle(
+          color: AppColors.WHITE_COLOR,
+          fontWeight: FontWeight.w500,
+        ),
       ),
     );
   }

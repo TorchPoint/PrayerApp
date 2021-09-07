@@ -1,4 +1,4 @@
-class UserModel {
+class AppUser {
   int id;
   String firstName;
   String lastName;
@@ -17,7 +17,7 @@ class UserModel {
   String createdAt;
   String updatedAt;
 
-  UserModel(
+  AppUser(
       {this.id,
       this.firstName,
       this.lastName,
@@ -36,14 +36,14 @@ class UserModel {
       this.createdAt,
       this.updatedAt});
 
-  UserModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    firstName = json['first_name'];
-    lastName = json['last_name'];
-    contactNo = json['contact_no'];
-    email = json['email'];
-    emailVerifiedAt = json['email_verified_at'];
-    otp = json['otp'];
+  AppUser.fromJson(Map<String, dynamic> json) {
+    id = json['id'] ?? 0;
+    firstName = json['first_name'] ?? "";
+    lastName = json['last_name'] ?? "";
+    contactNo = json['contact_no'] ?? "";
+    email = json['email'] ?? "";
+    emailVerifiedAt = json['email_verified_at'] ?? "";
+    otp = json['otp'] ?? "";
     profileImage = json['profile_image'];
     completeProfile = json['complete_profile'];
     accountVerified = json['account_verified'];
@@ -51,9 +51,9 @@ class UserModel {
     userSocialToken = json['user_social_token'];
     userSocialType = json['user_social_type'];
     userDeviceType = json['user_device_type'];
-    userDeviceToken = json['user_device_token'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
+    userDeviceToken = json['user_device_token'] ?? "";
+    createdAt = json['created_at'] ?? "";
+    updatedAt = json['updated_at'] ?? "";
   }
 
   Map<String, dynamic> toJson() {

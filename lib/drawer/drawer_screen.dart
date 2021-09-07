@@ -7,7 +7,9 @@ import 'package:prayer_hybrid_app/home/home_screen.dart';
 import 'package:prayer_hybrid_app/notification/screens/notification_screen.dart';
 import 'package:prayer_hybrid_app/prayer_group/screens/prayer_group_list_screen.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/prayer_praise_tab_screen.dart';
+import 'package:prayer_hybrid_app/providers/user_provider.dart';
 import 'package:prayer_hybrid_app/reminder_calendar/screens/reminder_screen.dart';
+import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/terms_privacy_screen/screens/terms_privacy_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
@@ -15,6 +17,7 @@ import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
+import 'package:provider/provider.dart';
 
 class DrawerScreen extends StatefulWidget {
   @override
@@ -26,6 +29,7 @@ class _DrawerScreenState extends State<DrawerScreen>
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   bool settingsOn = false;
   AnimationController _animationController;
+  BaseService baseService = BaseService();
 
   @override
   void initState() {
@@ -36,6 +40,7 @@ class _DrawerScreenState extends State<DrawerScreen>
 
   @override
   Widget build(BuildContext context) {
+    var userProvider = Provider.of<AppUserProvider>(context, listen: false);
     return CustomBackgroundContainer(
         child: Scaffold(
             key: _scaffoldKey,
@@ -160,6 +165,7 @@ class _DrawerScreenState extends State<DrawerScreen>
 
   //It includes user name , user phone no, user email
   Widget profileSubData() {
+    var userProvider = Provider.of<AppUserProvider>(context, listen: true);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -169,7 +175,10 @@ class _DrawerScreenState extends State<DrawerScreen>
         Padding(
             padding: EdgeInsets.only(left: 5.0, right: 5.0),
             child: Text(
-              AppStrings.USER_NAME_TEXT,
+              (userProvider.appUser.firstName ??
+                      "" + userProvider.appUser.lastName ??
+                      "") ??
+                  AppStrings.USER_NAME_TEXT,
               style: TextStyle(
                   color: AppColors.WHITE_COLOR,
                   fontWeight: FontWeight.w700,
@@ -185,7 +194,7 @@ class _DrawerScreenState extends State<DrawerScreen>
         Padding(
             padding: EdgeInsets.only(left: 5.0, right: 5.0),
             child: Text(
-              AppStrings.USER_PHONE_NO_TEXT,
+              userProvider.appUser.contactNo ?? AppStrings.USER_PHONE_NO_TEXT,
               style: TextStyle(
                   color: AppColors.WHITE_COLOR, fontWeight: FontWeight.w700),
               textScaleFactor: 0.98,
@@ -199,7 +208,7 @@ class _DrawerScreenState extends State<DrawerScreen>
         Padding(
             padding: EdgeInsets.only(left: 5.0, right: 5.0),
             child: Text(
-              AppStrings.USER_EMAIL_TEXT,
+              userProvider.appUser.email ?? AppStrings.USER_EMAIL_TEXT,
               style: TextStyle(
                   color: AppColors.WHITE_COLOR, fontWeight: FontWeight.w700),
               textScaleFactor: 0.98,
@@ -404,8 +413,7 @@ class _DrawerScreenState extends State<DrawerScreen>
     }
     //For Logout
     else if (navigateIndex == 10) {
-      AppNavigation.navigatorPop(context);
-      AppNavigation.navigateToRemovingAll(context, AuthMainScreen());
+      baseService.logoutUser(context);
     }
   }
 

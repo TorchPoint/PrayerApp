@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:prayer_hybrid_app/providers/user_provider.dart';
 import 'package:prayer_hybrid_app/reminder_calendar/screens/calendar_screen.dart';
 import 'package:prayer_hybrid_app/splash/splash_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-
   runApp(MyApp());
   configLoading();
 }
+
 void configLoading() {
   EasyLoading.instance
     ..indicatorType = EasyLoadingIndicatorType.fadingCircle
@@ -24,6 +26,7 @@ void configLoading() {
     ..userInteractions = true
     ..dismissOnTap = false;
 }
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -31,13 +34,18 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return MaterialApp(
-        title: AppStrings.APP_TITLE_TEXT,
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          fontFamily: 'Quicksand',
-        ),
-        builder: EasyLoading.init(),
-        home: SplashScreen());
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AppUserProvider()),
+      ],
+      child: MaterialApp(
+          title: AppStrings.APP_TITLE_TEXT,
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            fontFamily: 'Quicksand',
+          ),
+          builder: EasyLoading.init(),
+          home: SplashScreen()),
+    );
   }
 }

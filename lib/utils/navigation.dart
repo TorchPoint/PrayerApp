@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
-class AppNavigation
-{
+class AppNavigation {
   static void navigateToRemovingAll(context, Widget widget) async {
     Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (BuildContext context) => widget),
-            (Route<dynamic> route) => false);
+        (Route<dynamic> route) => false);
   }
 
   static void navigateTo(BuildContext context, Widget widget) async {
@@ -18,8 +17,7 @@ class AppNavigation
     );
   }
 
-  static void navigateReplacement(
-      BuildContext context, Widget widget) async {
+  static void navigateReplacement(BuildContext context, Widget widget) async {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
@@ -28,7 +26,8 @@ class AppNavigation
     );
   }
 
-  static Future<dynamic> navigateToUpdate(BuildContext context, Widget widget) async  {
+  static Future<dynamic> navigateToUpdate(
+      BuildContext context, Widget widget) async {
     dynamic value = await Navigator.of(context)
         .push(MaterialPageRoute<dynamic>(builder: (context) => widget));
     //     .then((String value) {
@@ -37,9 +36,6 @@ class AppNavigation
     // });
     return value;
   }
-
-
-
 
   static void navigatorPop(BuildContext context) {
     Navigator.pop(context);
@@ -60,5 +56,4 @@ class AppNavigation
   static void navigatorPopFalse(BuildContext context) {
     Navigator.of(context).pop(false);
   }
-
 }

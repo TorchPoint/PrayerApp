@@ -109,7 +109,11 @@ class _ContinueEmailScreenState extends State<ContinueEmailScreen> {
       paddingBottom: 13.0,
       onTap: () {
         if (_continueKey.currentState.validate()) {
-          AppNavigation.navigateReplacement(context, VerificationScreen());
+          AppNavigation.navigateTo(
+              context,
+              VerificationScreen(
+                emailVerificationCheck: true,
+              ));
         }
       },
     );

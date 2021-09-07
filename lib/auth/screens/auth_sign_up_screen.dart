@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
+import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
@@ -11,6 +12,8 @@ import 'package:prayer_hybrid_app/widgets/custom_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_social_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
 import 'dart:io' show Platform;
+
+import 'auth_verification_screen.dart';
 
 class AuthSignUpScreen extends StatefulWidget {
   final PageController pageController;
@@ -34,6 +37,8 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
   String passwordPattern = Constants.PASSWORD_VALIDATE_REGEX;
   RegExp passwordRegExp;
   bool passwordInvisible = true, confirmPasswordInvisible = true;
+
+  BaseService baseService = BaseService();
 
   @override
   void initState() {
@@ -333,7 +338,13 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
       onTap: () {
         if (_signUpKey.currentState.validate()) {
           print("sign up");
-          AppNavigation.navigateTo(context, DrawerScreen());
+          baseService.signUpUser(
+              context,
+              _firstNameController.text,
+              _lastNameController.text,
+              _emailController.text,
+              _mobileNoController.text,
+              _passwordController.text);
         }
       },
     );

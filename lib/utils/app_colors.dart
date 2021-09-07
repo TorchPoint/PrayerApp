@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AppColors
-{
+class AppColors {
   static const Color BUTTON_COLOR = Color(0XFF73C2FB);
   static const Color BACKGROUND1_COLOR = Color(0XFF00939D);
   static const Color BACKGROUND2_COLOR = Color(0XFF00C8D3);
@@ -17,5 +16,5 @@ class AppColors
   static const Color SETTINGS_OPTIONS_COLOR = Color(0XFF007B83);
   static const Color MOST_DARK_GREY_COLOR = Color(0XFF959595);
   static const Color GREY_COLOR = Colors.grey;
-
+  static const Color SUCCESS_COLOR = Colors.green;
 }

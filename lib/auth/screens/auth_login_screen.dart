@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
@@ -175,7 +173,7 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
       onTap: () {
         if (_loginKey.currentState.validate()) {
           print("Login");
-          baseService.login(context,
+          baseService.loginFormUser(context,
               email: _emailController.text.trim(),
               password: _passwordController.text);
           // AppNavigation.navigateTo(context, DrawerScreen());
