@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
 import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
@@ -12,6 +13,7 @@ import 'package:prayer_hybrid_app/widgets/custom_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_social_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
 import 'dart:io' show Platform;
+import 'package:http/http.dart' as http;
 
 import 'auth_verification_screen.dart';
 
@@ -410,9 +412,9 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
       iconWidth: 14.0,
       iconColor: AppColors.WHITE_COLOR,
       differenceWidth: 16.0,
-      onTap: () {
+      onTap: () async {
         print("Sign in with Facebook");
-        baseService.initiateFacebookLogin();
+        baseService.fbLogin();
         //AppNavigation.navigateTo(context, DrawerScreen());
       },
     );

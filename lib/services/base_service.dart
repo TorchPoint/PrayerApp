@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:prayer_hybrid_app/auth/screens/auth_main_screen.dart';
@@ -380,28 +381,40 @@ class BaseService {
 
   ////====== SOCIAL LOGINS========/////
 
-  void initiateFacebookLogin() async {
-    var facebookLogin = FacebookLogin();
-    var facebookLoginResult = await facebookLogin.logIn(["email"]);
-    switch (facebookLoginResult.status) {
-      case FacebookLoginStatus.error:
-        print("Error");
+  // void initiateFacebookLogin() async {
+  //   var facebookLogin = FacebookLogin();
+  //   var facebookLoginResult = await facebookLogin.logIn(["email"]);
+  //   switch (facebookLoginResult.status) {
+  //     case FacebookLoginStatus.error:
+  //       print("Error");
+  //       break;
+  //     case FacebookLoginStatus.cancelledByUser:
+  //       print("CancelledByUser");
+  //
+  //       break;
+  //     case FacebookLoginStatus.loggedIn:
+  //       print("LoggedIn");
+  //       var uri = Uri.parse(
+  //           'https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email&access_token=${facebookLoginResult.accessToken.token}');
+  //       var graphResponse = await http.get(uri);
+  //
+  //       var profile = json.decode(graphResponse.body);
+  //       print(profile.toString());
+  //
+  //       break;
+  //   }
+  // }
 
-        break;
-      case FacebookLoginStatus.cancelledByUser:
-        print("CancelledByUser");
+  Future fbLogin() async {
+    final LoginResult result = await FacebookAuth.instance.login(
+      permissions: ['public_profile', 'email'],
+    );
+    if (result.status == LoginStatus.success) {
+      final AccessToken accessToken = result.accessToken;
 
-        break;
-      case FacebookLoginStatus.loggedIn:
-        print("LoggedIn");
-        var uri = Uri.parse(
-            'https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email&access_token=${facebookLoginResult.accessToken.token}');
-        var graphResponse = await http.get(uri);
-
-        var profile = json.decode(graphResponse.body);
-        print(profile.toString());
-
-        break;
+      final graphResponse = await http.get(Uri.parse(
+          'https://graph.facebook.com/v2.12/me?fields=name,picture.width(800).height(800),first_name,last_name,email&access_token=${accessToken.token}'));
+      print("Graph response" + graphResponse.body.toString());
     }
   }
 
