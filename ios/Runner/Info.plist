@@ -24,6 +24,30 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>fb181480704071788
+</string>
+            </array>
+        </dict>
+    </array>
+    <key>FacebookAppID</key>
+    <string>181480704071788
+</string>
+    <key>FacebookDisplayName</key>
+    <string>Prayers</string>
+
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>fbapi</string>
+        <string>fb-messenger-share-api</string>
+        <string>fbauth2</string>
+        <string>fbshareextension</string>
+    </array>
+
 	<key>NSCameraUsageDescription</key>
 	<string>It's required to capture the profile picture.</string>
 	<key>NSContactsUsageDescription</key>

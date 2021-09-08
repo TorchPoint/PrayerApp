@@ -7,6 +7,7 @@ import 'package:prayer_hybrid_app/complete_profile/screens/complete_profile_scre
 import 'package:prayer_hybrid_app/home/home_screen.dart';
 import 'package:prayer_hybrid_app/models/user_model.dart';
 import 'package:prayer_hybrid_app/notification/screens/notification_screen.dart';
+import 'package:prayer_hybrid_app/password/change_password.dart';
 import 'package:prayer_hybrid_app/prayer_group/screens/prayer_group_list_screen.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/prayer_praise_tab_screen.dart';
 import 'package:prayer_hybrid_app/providers/user_provider.dart';
@@ -267,7 +268,19 @@ class _DrawerScreenState extends State<DrawerScreen>
             leftPadding: 20.0),
         //For Settings
 
-        //For Settings Option
+        //For Change Password
+
+        menuListTile(
+            imagePath: AssetPaths.PASSWORD_ICON,
+            title: AppStrings.CHANGE_PASSWORD,
+            index: 11,
+            topMargin: 14.0,
+            bottomMargin: 20.0,
+            imageWidth: 18,
+            sizedBoxWidth: 39,
+            leftPadding: 20.0,
+            imageColor: AppColors.WHITE_COLOR.withOpacity(0.8),
+            dividerContainer: false),
 
         //For Logout
         menuListTile(
@@ -398,9 +411,7 @@ class _DrawerScreenState extends State<DrawerScreen>
     else if (navigateIndex == 8) {
       AppNavigation.navigatorPop(context);
       AppNavigation.navigateTo(
-          context,
-          TermsPrivacyScreen(
-              title: AppStrings.TERMS_CONDITIONS_TEXT));
+          context, TermsPrivacyScreen(title: AppStrings.TERMS_CONDITIONS_TEXT));
     }
     //For Privacy Policy
     else if (navigateIndex == 9) {
@@ -411,6 +422,9 @@ class _DrawerScreenState extends State<DrawerScreen>
     //For Logout
     else if (navigateIndex == 10) {
       baseService.logoutUser(context);
+    } else if (navigateIndex == 11) {
+      AppNavigation.navigatorPop(context);
+      AppNavigation.navigateTo(context, ChangePasswordScreen());
     }
   }
 

@@ -20,6 +20,7 @@ class ContinueEmailScreen extends StatefulWidget {
 class _ContinueEmailScreenState extends State<ContinueEmailScreen> {
   final GlobalKey<FormState> _continueKey = GlobalKey<FormState>();
   TextEditingController _emailController = TextEditingController();
+  BaseService baseService = BaseService();
   String emailPattern = Constants.EMAIL_VALIDATION_REGEX;
   RegExp emailRegExp;
 
@@ -109,11 +110,7 @@ class _ContinueEmailScreenState extends State<ContinueEmailScreen> {
       paddingBottom: 13.0,
       onTap: () {
         if (_continueKey.currentState.validate()) {
-          AppNavigation.navigateTo(
-              context,
-              VerificationScreen(
-                emailVerificationCheck: true,
-              ));
+         baseService.forgetPassword(context, _emailController.text);
         }
       },
     );

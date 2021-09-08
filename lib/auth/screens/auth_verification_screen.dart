@@ -113,11 +113,15 @@ class _VerificationScreenState extends State<VerificationScreen> {
           baseService.showToast(
               "Check your email for verification code", AppColors.RED_COLOR);
         } else {
-          baseService
-              .verifyUserUsingOTP(context, widget.userData, otpController.text)
-              .then((value) {
-            debugPrint("Print:" + value.toString());
-          });
+          widget.emailVerificationCheck == false
+              ? baseService
+                  .verifyUserUsingOTP(
+                      context, widget.userData, otpController.text)
+                  .then((value) {
+                  debugPrint("Print:" + value.toString());
+                })
+              : baseService.verifyForgetPasswordUsingEmail(
+                  context, widget.userData, otpController.text);
           print("verfiy");
         }
       },
@@ -137,7 +141,11 @@ class _VerificationScreenState extends State<VerificationScreen> {
   Widget _reSendWidget() {
     return GestureDetector(
       onTap: () {
-        baseService.reSendVerification(context, widget.userData);
+        if (widget.emailVerificationCheck == false) {
+          baseService.reSendVerification(context, widget.userData);
+        } else {
+          baseService.forgetPassword(context, widget.userData);
+        }
       },
       child: Text(
         AppStrings.RESEND_OTP,

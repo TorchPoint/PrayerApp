@@ -412,7 +412,8 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
       differenceWidth: 16.0,
       onTap: () {
         print("Sign in with Facebook");
-        AppNavigation.navigateTo(context, DrawerScreen());
+        baseService.initiateFacebookLogin();
+        //AppNavigation.navigateTo(context, DrawerScreen());
       },
     );
   }

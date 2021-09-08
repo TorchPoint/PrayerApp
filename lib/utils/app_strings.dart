@@ -30,6 +30,7 @@ class AppStrings {
   static const String NOTIFICATION_TEXT = "Notification";
   static const String NOTIFICATIONS_TEXT = "Notifications";
   static const String TIMER_TEXT = "Timer";
+  static const String CHANGE_PASSWORD = "Change Password";
   static const String TERMS_CONDITIONS_TEXT = "Terms & Conditions";
   static const String PRIVACY_POLICY_TEXT = "Privacy Policy";
   static const String SECURITY_TEXT = "Security";
@@ -153,6 +154,7 @@ class AppStrings {
   static const String ADD_REMINDER_TITLE_HINT_TEXT = "Add Reminder Title";
   static const String SET_FREQUENCY_HINT_TEXT = "Set Frequency";
   static const String NEW_PASSWORD_HINT_TEXT = "New Password";
+  static const String OLD_PASSWORD_HINT_TEXT = "Previous Password";
 
   // ------------- Error Text ---------------- //
   static const String FIRST_NAME_EMPTY_ERROR = "First Name can\'t be empty.";
@@ -198,6 +200,8 @@ class AppStrings {
       "Add frequency can't be empty.";
   static const String NEW_PASSWORD_EMPTY_ERROR =
       "New Password can\'t be empty.";
+  static const String OLD_PASSWORD_EMPTY_ERROR =
+      "Previous Password can\'t be empty.";
   static const String NEW_PASSWORD_INVALID_ERROR =
       "New Password must be 8 characters long and contains at least 1 upper case, 1 lower case, 1 digit & 1 special character.";
 

@@ -2,12 +2,14 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:prayer_hybrid_app/auth/screens/auth_main_screen.dart';
 import 'package:prayer_hybrid_app/auth/screens/auth_verification_screen.dart';
 import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
 import 'package:prayer_hybrid_app/models/user_model.dart';
+import 'package:prayer_hybrid_app/password/screens/reset_password_screen.dart';
 import 'package:prayer_hybrid_app/providers/user_provider.dart';
 import 'package:prayer_hybrid_app/services/API_const.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
@@ -19,7 +21,6 @@ class BaseService {
   var id;
   String token;
   String user;
-  String content;
 
   void showToast(message, color) {
     Fluttertoast.showToast(
@@ -31,6 +32,7 @@ class BaseService {
     );
   }
 
+  /////===== USER DATA SETTING AND LOADING ======/////
   void localLocalUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -48,11 +50,11 @@ class BaseService {
     String user = prefs.getString("user");
 
     if (user == null) {
-      AppNavigation.navigateTo(context, AuthMainScreen());
+      AppNavigation.navigateReplacement(context, AuthMainScreen());
     } else {
       var data = jsonDecode(user);
       userProvider.setUser(AppUser.fromJson(data));
-      AppNavigation.navigateTo(context, DrawerScreen());
+      AppNavigation.navigateReplacement(context, DrawerScreen());
     }
   }
 
@@ -68,6 +70,10 @@ class BaseService {
     prefs.setString("user", jsonEncode(AppUser.fromJson(value["data"])));
     userProvider.setUser(AppUser.fromJson(value["data"]));
   }
+
+  /////===== USER DATA SETTING AND LOADING END======/////
+
+  /////-----BASE METHODS----//////
 
   Future getBaseMethod(
     url, {
@@ -155,6 +161,10 @@ class BaseService {
       debugPrint('Error: $e');
     }
   }
+
+  /////-----BASE METHODS END----//////
+
+  //---- SIGNUP AND LOGIN FLOW-----////////
 
   Future loginFormUser(BuildContext context, {email, password}) async {
     Map<String, String> requestBody = <String, String>{
@@ -260,6 +270,97 @@ class BaseService {
     });
   }
 
+  Future updateOrChangePassword(
+      BuildContext context, oldPassword, newPassword) async {
+    Map<String, String> requestBody = <String, String>{
+      "old_password": oldPassword,
+      "new_password": newPassword,
+    };
+
+    await formDataBaseMethod(ApiConst.UPDATE_PASSWORD_URL,
+            bodyCheck: true, body: requestBody, tokenCheck: true)
+        .then((value) {
+      if (value["status"] == 1) {
+        showToast(value["message"], AppColors.SUCCESS_COLOR);
+        AppNavigation.navigateTo(context, DrawerScreen());
+      } else {
+        showToast(value["message"], AppColors.ERROR_COLOR);
+      }
+    });
+  }
+
+  //---- SIGNUP AND LOGIN FLOW END-----////////
+
+  ////------ Password Change Flow-------/////
+
+  Future forgetPassword(BuildContext context, email) async {
+    Map<String, String> requestBody = <String, String>{
+      "email": email ?? "",
+    };
+    await formDataBaseMethod(ApiConst.FORGET_PASSWORD_URL,
+            body: requestBody, bodyCheck: true)
+        .then((value) {
+      if (value["status"] == 1) {
+        showToast(value["message"], AppColors.SUCCESS_COLOR);
+        AppNavigation.navigateToRemovingAll(
+            context,
+            VerificationScreen(
+              emailVerificationCheck: true,
+              userData: email,
+            ));
+      } else {
+        showToast(value["errors"], AppColors.ERROR_COLOR);
+      }
+    });
+  }
+
+  Future verifyForgetPasswordUsingEmail(
+      BuildContext context, email, otp) async {
+    Map<String, String> requestBody = <String, String>{
+      "email": email,
+      "otp": otp,
+    };
+
+    await formDataBaseMethod(ApiConst.FORGET_VERIFICATION_URL,
+            bodyCheck: true, body: requestBody)
+        .then((value) {
+      if (value["status"] == 1) {
+        showToast(value["message"], AppColors.SUCCESS_COLOR);
+        AppNavigation.navigateTo(
+            context,
+            ResetPasswordScreen(
+              otp: otp,
+              email: email,
+            ));
+      } else {
+        showToast(value["errors"], AppColors.ERROR_COLOR);
+      }
+    });
+  }
+
+  Future restPassword(BuildContext context, newPassword, email, otp) async {
+    Map<String, String> requestBody = <String, String>{
+      "email": email,
+      "otp": otp,
+      "new_password": newPassword
+    };
+
+    await formDataBaseMethod(ApiConst.RESET_PASSWORD_URL,
+            body: requestBody, bodyCheck: true)
+        .then((value) {
+      if (value["status"] == 1) {
+        showToast(value["message"], AppColors.SUCCESS_COLOR);
+        AppNavigation.navigateToRemovingAll(context, AuthMainScreen());
+      } else {
+        showToast(value["errors"], AppColors.ERROR_COLOR);
+      }
+    });
+  }
+
+  ////------ Password Change Flow END-------/////
+
+  //-----LOGOUT------//
+
   Future logoutUser(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await formDataBaseMethod(ApiConst.LOGOUT_URL,
@@ -272,10 +373,39 @@ class BaseService {
         AppNavigation.navigatorPop(context);
         AppNavigation.navigateToRemovingAll(context, AuthMainScreen());
       } else {
-        print(value.toString());
+        print("error");
       }
     });
   }
+
+  ////====== SOCIAL LOGINS========/////
+
+  void initiateFacebookLogin() async {
+    var facebookLogin = FacebookLogin();
+    var facebookLoginResult = await facebookLogin.logIn(["email"]);
+    switch (facebookLoginResult.status) {
+      case FacebookLoginStatus.error:
+        print("Error");
+
+        break;
+      case FacebookLoginStatus.cancelledByUser:
+        print("CancelledByUser");
+
+        break;
+      case FacebookLoginStatus.loggedIn:
+        print("LoggedIn");
+        var uri = Uri.parse(
+            'https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email&access_token=${facebookLoginResult.accessToken.token}');
+        var graphResponse = await http.get(uri);
+
+        var profile = json.decode(graphResponse.body);
+        print(profile.toString());
+
+        break;
+    }
+  }
+
+  //-----LOGOUT END------//
 
   void login(BuildContext context, {email, password}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

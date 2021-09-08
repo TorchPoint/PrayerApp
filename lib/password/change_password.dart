@@ -10,19 +10,15 @@ import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/widgets/custom_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
 
-class ResetPasswordScreen extends StatefulWidget {
-  final String email, otp;
-
-  ResetPasswordScreen({this.email, this.otp});
-
+class ChangePasswordScreen extends StatefulWidget {
   @override
-  _ResetPasswordScreenState createState() => _ResetPasswordScreenState();
+  _ChangePasswordScreenState createState() => _ChangePasswordScreenState();
 }
 
-class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
+class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   final GlobalKey<FormState> _resetPasswordKey = GlobalKey<FormState>();
+  TextEditingController _previousPasswordController = TextEditingController();
   TextEditingController _newPasswordController = TextEditingController();
-  TextEditingController _confirmPasswordController = TextEditingController();
   BaseService baseService = BaseService();
   String passwordPattern = Constants.PASSWORD_VALIDATE_REGEX;
   RegExp passwordRegExp;
@@ -47,11 +43,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       Image.asset(AssetPaths.FOREGROUND_IMAGE, width: 180.0),
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.06),
-                      _newPasswordWidget(),
+                      _previousPasswordWidget(),
                       SizedBox(
                         height: 18.0,
                       ),
-                      _confirmPasswordWidget(),
+                      _newPasswordWidget(),
                       SizedBox(
                         height: 18.0,
                       ),
@@ -85,11 +81,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   }
 
   //Password Widget
-  Widget _newPasswordWidget() {
+  Widget _previousPasswordWidget() {
     return CustomTextFormField(
-      textController: _newPasswordController,
+      textController: _previousPasswordController,
       containerWidth: MediaQuery.of(context).size.width * 0.82,
-      hintText: AppStrings.NEW_PASSWORD_HINT_TEXT,
+      hintText: AppStrings.OLD_PASSWORD_HINT_TEXT,
       borderRadius: 30.0,
       contentPaddingRight: 0.0,
       prefixIcon: AssetPaths.PASSWORD_ICON,
@@ -110,7 +106,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       onValidate: (value) {
         passwordRegExp = RegExp(passwordPattern);
         if (value.trim().isEmpty) {
-          return AppStrings.NEW_PASSWORD_EMPTY_ERROR;
+          return AppStrings.OLD_PASSWORD_EMPTY_ERROR;
         } else if (!passwordRegExp.hasMatch(value)) {
           return AppStrings.NEW_PASSWORD_INVALID_ERROR;
         }
@@ -120,11 +116,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   }
 
   //Confirm Password Widget
-  Widget _confirmPasswordWidget() {
+  Widget _newPasswordWidget() {
     return CustomTextFormField(
-      textController: _confirmPasswordController,
+      textController: _newPasswordController,
       containerWidth: MediaQuery.of(context).size.width * 0.82,
-      hintText: AppStrings.CONFIRM_PASSWORD_HINT_TEXT,
+      hintText: AppStrings.NEW_PASSWORD_HINT_TEXT,
       borderRadius: 30.0,
       contentPaddingRight: 0.0,
       prefixIcon: AssetPaths.PASSWORD_ICON,
@@ -145,11 +141,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       onValidate: (value) {
         passwordRegExp = RegExp(passwordPattern);
         if (value.trim().isEmpty) {
-          return AppStrings.CONFIRM_PASSWORD_EMPTY_ERROR;
-        } else if (!passwordRegExp.hasMatch(value)) {
-          return AppStrings.CONFIRM_PASSWORD_INVALID_ERROR;
-        } else if (value != _newPasswordController.text) {
-          return AppStrings.PASSWORD_DIFFERENT_ERROR;
+          return AppStrings.NEW_PASSWORD_EMPTY_ERROR;
         }
         return null;
       },
@@ -163,7 +155,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       buttonColor: AppColors.WHITE_COLOR,
       borderColor: AppColors.WHITE_COLOR,
       elevation: true,
-      buttonText: AppStrings.RESET_PASSWORD_TEXT,
+      buttonText: AppStrings.CHANGE_PASSWORD.toUpperCase(),
       textColor: AppColors.BLACK_COLOR,
       fontWeight: FontWeight.w700,
       fontSize: 1.25,
@@ -171,8 +163,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       paddingBottom: 13.0,
       onTap: () {
         if (_resetPasswordKey.currentState.validate()) {
-          baseService.restPassword(
-              context, _newPasswordController.text, widget.email, widget.otp);
+          baseService.updateOrChangePassword(context,
+              _previousPasswordController.text, _newPasswordController.text);
         }
       },
     );
@@ -181,7 +173,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   @override
   void dispose() {
     super.dispose();
+    _previousPasswordController.dispose();
     _newPasswordController.dispose();
-    _confirmPasswordController.dispose();
   }
 }
