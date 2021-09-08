@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/auth/screens/auth_main_screen.dart';
 import 'package:prayer_hybrid_app/complete_profile/screens/complete_profile_screen.dart';
 import 'package:prayer_hybrid_app/home/home_screen.dart';
+import 'package:prayer_hybrid_app/models/user_model.dart';
 import 'package:prayer_hybrid_app/notification/screens/notification_screen.dart';
 import 'package:prayer_hybrid_app/prayer_group/screens/prayer_group_list_screen.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/prayer_praise_tab_screen.dart';
@@ -34,6 +36,8 @@ class _DrawerScreenState extends State<DrawerScreen>
   @override
   void initState() {
     super.initState();
+    baseService.localLocalUser();
+
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 200));
   }
@@ -166,6 +170,7 @@ class _DrawerScreenState extends State<DrawerScreen>
   //It includes user name , user phone no, user email
   Widget profileSubData() {
     var userProvider = Provider.of<AppUserProvider>(context, listen: true);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -175,9 +180,9 @@ class _DrawerScreenState extends State<DrawerScreen>
         Padding(
             padding: EdgeInsets.only(left: 5.0, right: 5.0),
             child: Text(
-              (userProvider.appUser.firstName ??
-                      "" + userProvider.appUser.lastName ??
-                      "") ??
+              (userProvider.appUser.firstName +
+                      " " +
+                      userProvider.appUser.lastName) ??
                   AppStrings.USER_NAME_TEXT,
               style: TextStyle(
                   color: AppColors.WHITE_COLOR,
@@ -227,16 +232,6 @@ class _DrawerScreenState extends State<DrawerScreen>
     return ListView(
       padding: EdgeInsets.zero,
       children: [
-        //For My Prayer List
-
-        //For My Praise List
-
-        //For Shared Prayers
-
-        //For Prayer Groups List
-
-        //For Report
-
         menuListTile(
             imagePath: AssetPaths.NOTIFICATION_ICON,
             title: AppStrings.NOTIFICATION_TEXT,
@@ -403,7 +398,9 @@ class _DrawerScreenState extends State<DrawerScreen>
     else if (navigateIndex == 8) {
       AppNavigation.navigatorPop(context);
       AppNavigation.navigateTo(
-          context, TermsPrivacyScreen(title: AppStrings.TERMS_CONDITIONS_TEXT));
+          context,
+          TermsPrivacyScreen(
+              title: AppStrings.TERMS_CONDITIONS_TEXT));
     }
     //For Privacy Policy
     else if (navigateIndex == 9) {
