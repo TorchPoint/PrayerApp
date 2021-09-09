@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
 import 'package:prayer_hybrid_app/password/screens/continue_email_screen.dart';
+import 'package:prayer_hybrid_app/providers/user_provider.dart';
 import 'package:prayer_hybrid_app/services/API_const.dart';
 import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
@@ -15,6 +16,8 @@ import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_social_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
+import 'package:provider/provider.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AuthLoginScreen extends StatefulWidget {
   final PageController pageController;
@@ -38,6 +41,7 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var userProvider = Provider.of<AppUserProvider>(context, listen: false);
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.only(
@@ -270,9 +274,10 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
       iconWidth: 20.0,
       iconColor: AppColors.BLACK_COLOR,
       differenceWidth: 10.0,
-      onTap: () {
+      onTap: () async {
         print("Sign in with Apple");
-        AppNavigation.navigateTo(context, DrawerScreen());
+        baseService.appleSocialMethod(context);
+        // AppNavigation.navigateTo(context, DrawerScreen());
       },
     );
   }
@@ -308,7 +313,6 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
       differenceWidth: 10.0,
       onTap: () {
         print("Sign in with Google");
-
         baseService.googleSocialMethod(context);
         // AppNavigation.navigateTo(context, DrawerScreen());
       },

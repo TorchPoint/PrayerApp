@@ -18,6 +18,7 @@ import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class BaseService {
   var id;
@@ -77,16 +78,17 @@ class BaseService {
 
   /////-----BASE METHODS----//////
 
-  Future getBaseMethod(
-    url, {
-    loading = true,
-  }) async {
+  Future getBaseMethod(url, {loading = true, tokenCheck = false}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     var uri = Uri.parse(ApiConst.BASE_URL + url);
     print(uri);
     if (loading) {
       EasyLoading.show(dismissOnTap: true, status: "Loading...");
     }
-    final http.Response response = await http.get(uri);
+    final http.Response response = await http.get(uri,
+        headers: tokenCheck == true
+            ? {"Authorization": "Bearer ${prefs.getString("token")}"}
+            : {});
 
     if (response.statusCode == 200) {
       EasyLoading.dismiss();
@@ -403,6 +405,10 @@ class BaseService {
         data["email"],
         data["picture"]["data"]["url"],
       );
+    } else if (result.status == LoginStatus.cancelled) {
+      showToast("${result.message}", AppColors.ERROR_COLOR);
+    } else if (result.status == LoginStatus.failed) {
+      showToast("${result.message}", AppColors.ERROR_COLOR);
     }
   }
 
@@ -411,9 +417,6 @@ class BaseService {
     final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
 
     if (googleSignInAccount != null) {
-      final GoogleSignInAuthentication googleSignInAuthentication =
-          await googleSignInAccount.authentication;
-
       socialLoginGoogle(
           context,
           googleSignIn.currentUser.id,
@@ -421,6 +424,49 @@ class BaseService {
           googleSignIn.currentUser.email,
           googleSignIn.currentUser.photoUrl);
     }
+  }
+
+  Future appleSocialMethod(BuildContext context) async {
+    var userProvider = Provider.of<AppUserProvider>(context, listen: false);
+    final credential = await SignInWithApple.getAppleIDCredential(
+      scopes: [
+        AppleIDAuthorizationScopes.email,
+        AppleIDAuthorizationScopes.fullName,
+      ],
+    );
+    if (userProvider.appUser == null) {
+      socialLoginApple(context, credential.userIdentifier, credential.givenName,
+          credential.email);
+    } else {
+      socialLoginApple(context, userProvider.appUser.userSocialToken,
+          userProvider.appUser.firstName, userProvider.appUser.email);
+    }
+    print(credential);
+  }
+
+  Future socialLoginApple(
+      BuildContext context, accessToken, name, email) async {
+    Map<String, String> requestBody = <String, String>{
+      "access_token": accessToken,
+      "device_token": "testing",
+      "device_type": Platform.operatingSystem ?? "ios",
+      "provider": "apple",
+      "name": name,
+      "email": email,
+      "image": "",
+      "phone": "",
+    };
+    await formDataBaseMethod(ApiConst.SOCIAL_LOGIN,
+            body: requestBody, bodyCheck: true)
+        .then((value) {
+      if (value["status"] == 1) {
+        setUserData(context, value);
+        showToast(value["message"], AppColors.SUCCESS_COLOR);
+        AppNavigation.navigateTo(context, DrawerScreen());
+      } else {
+        showToast(value["message"], AppColors.ERROR_COLOR);
+      }
+    });
   }
 
   Future socialLoginFacebook(
@@ -476,6 +522,8 @@ class BaseService {
   }
 
   ////====== SOCIAL LOGINS END========/////
+
+  /////======== CORE MODULE =========///////
 
   void login(BuildContext context, {email, password}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

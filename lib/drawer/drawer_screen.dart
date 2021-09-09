@@ -201,7 +201,11 @@ class _DrawerScreenState extends State<DrawerScreen>
         Padding(
             padding: EdgeInsets.only(left: 5.0, right: 5.0),
             child: Text(
-              userProvider.appUser.contactNo ?? AppStrings.USER_PHONE_NO_TEXT,
+              // userProvider.appUser.contactNo ?? AppStrings.USER_PHONE_NO_TEXT,
+              (userProvider.appUser.contactNo == null ||
+                      userProvider.appUser.contactNo.isEmpty
+                  ? AppStrings.USER_PHONE_NO_TEXT
+                  : userProvider.appUser.contactNo),
               style: TextStyle(
                   color: AppColors.WHITE_COLOR, fontWeight: FontWeight.w700),
               textScaleFactor: 0.98,

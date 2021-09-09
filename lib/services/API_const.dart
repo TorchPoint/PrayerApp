@@ -17,4 +17,8 @@ class ApiConst {
   static const UPDATE_PASSWORD_URL = "change-password";
   static const HELP_FEEDBACK_URL = "add-feedback";
   static const SOCIAL_LOGIN = "social-login";
+
+//------- Core Module URL--------//
+
+  static const CATEGORIES = "categories";
 }

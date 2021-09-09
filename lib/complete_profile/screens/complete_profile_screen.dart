@@ -36,8 +36,24 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   BaseService baseService = BaseService();
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadDataFromProvider();
+  }
+
+  loadDataFromProvider() {
+    var userProvider = Provider.of<AppUserProvider>(context, listen: false);
+    _firstNameController.text = userProvider.appUser.firstName;
+    _lastNameController.text = userProvider.appUser.lastName;
+    _emailController.text = userProvider.appUser.email;
+    _mobileNoController.text = userProvider.appUser.contactNo;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var userProvider = Provider.of<AppUserProvider>(context, listen: true);
+    var userProvider = Provider.of<AppUserProvider>(context, listen: false);
+
     return CustomBackgroundContainer(
       child: Scaffold(
         backgroundColor: AppColors.TRANSPARENT_COLOR,
@@ -125,12 +141,6 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
 
   //First Name Widget
   Widget _firstNameWidget() {
-    var userProvider = Provider.of<AppUserProvider>(context, listen: true);
-    _firstNameController.text = userProvider.appUser.firstName;
-    _lastNameController.text = userProvider.appUser.lastName;
-    _emailController.text = userProvider.appUser.email;
-    _mobileNoController.text = userProvider.appUser.contactNo;
-
     return CustomTextFormField(
       textController: _firstNameController,
       containerWidth: MediaQuery.of(context).size.width * 0.82,
