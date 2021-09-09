@@ -37,6 +37,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var userProvider = Provider.of<AppUserProvider>(context, listen: true);
     return CustomBackgroundContainer(
       child: Scaffold(
         backgroundColor: AppColors.TRANSPARENT_COLOR,
@@ -66,8 +67,10 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                                     width:
                                         profileFileImage == null ? 0.0 : 3.0),
                                 image: DecorationImage(
-                                    image: profileFileImage != null
-                                        ? FileImage(profileFileImage)
+                                    image: userProvider.appUser.profileImage !=
+                                            null
+                                        ? NetworkImage(
+                                            userProvider.appUser.profileImage)
                                         : AssetImage(
                                             AssetPaths.COMPLETE_PROFILE_IMAGE),
                                     fit: BoxFit.fill))),

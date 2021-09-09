@@ -37,8 +37,6 @@ class _DrawerScreenState extends State<DrawerScreen>
   @override
   void initState() {
     super.initState();
-    baseService.localLocalUser();
-
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 200));
   }
@@ -110,6 +108,7 @@ class _DrawerScreenState extends State<DrawerScreen>
 
   //It includes user image and and close drawer button
   Widget profileData() {
+    var userProvider = Provider.of<AppUserProvider>(context, listen: true);
     return Column(
       children: [
         Row(
@@ -152,7 +151,9 @@ class _DrawerScreenState extends State<DrawerScreen>
                     border:
                         Border.all(color: AppColors.WHITE_COLOR, width: 2.0),
                     image: DecorationImage(
-                        image: AssetImage(AssetPaths.PROFILE_IMAGE),
+                        image: userProvider.appUser.profileImage != null
+                            ? NetworkImage(userProvider.appUser.profileImage)
+                            : AssetImage(AssetPaths.PROFILE_IMAGE),
                         fit: BoxFit.cover),
                   ),
                 ),

@@ -5,6 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:prayer_hybrid_app/auth/screens/auth_main_screen.dart';
 import 'package:prayer_hybrid_app/auth/screens/auth_verification_screen.dart';
@@ -132,8 +133,8 @@ class BaseService {
     Map<String, String> body,
   }) async {
     var uri = Uri.parse(ApiConst.BASE_URL + url);
-    debugPrint(uri.toString());
-    debugPrint(body.toString());
+    debugPrint("Url:" + uri.toString());
+    debugPrint("Body:" + body.toString());
     EasyLoading.show(status: "Loading", dismissOnTap: true);
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -155,7 +156,7 @@ class BaseService {
     try {
       if (response.statusCode == 200) {
         EasyLoading.dismiss();
-        debugPrint(respStr);
+        debugPrint("Response:" + respStr);
         return jsonDecode(respStr);
       }
     } catch (e) {
@@ -370,7 +371,6 @@ class BaseService {
       if (value["status"] == 1) {
         showToast(value["message"], AppColors.SUCCESS_COLOR);
         prefs.clear();
-        //userProvider.restUserProvider();
         AppNavigation.navigatorPop(context);
         AppNavigation.navigateToRemovingAll(context, AuthMainScreen());
       } else {
@@ -379,46 +379,103 @@ class BaseService {
     });
   }
 
+  //-----LOGOUT END------//
+
   ////====== SOCIAL LOGINS========/////
 
-  // void initiateFacebookLogin() async {
-  //   var facebookLogin = FacebookLogin();
-  //   var facebookLoginResult = await facebookLogin.logIn(["email"]);
-  //   switch (facebookLoginResult.status) {
-  //     case FacebookLoginStatus.error:
-  //       print("Error");
-  //       break;
-  //     case FacebookLoginStatus.cancelledByUser:
-  //       print("CancelledByUser");
-  //
-  //       break;
-  //     case FacebookLoginStatus.loggedIn:
-  //       print("LoggedIn");
-  //       var uri = Uri.parse(
-  //           'https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email&access_token=${facebookLoginResult.accessToken.token}');
-  //       var graphResponse = await http.get(uri);
-  //
-  //       var profile = json.decode(graphResponse.body);
-  //       print(profile.toString());
-  //
-  //       break;
-  //   }
-  // }
-
-  Future fbLogin() async {
+  Future fbSocialMethod(BuildContext context) async {
     final LoginResult result = await FacebookAuth.instance.login(
       permissions: ['public_profile', 'email'],
     );
+
     if (result.status == LoginStatus.success) {
       final AccessToken accessToken = result.accessToken;
 
       final graphResponse = await http.get(Uri.parse(
           'https://graph.facebook.com/v2.12/me?fields=name,picture.width(800).height(800),first_name,last_name,email&access_token=${accessToken.token}'));
       print("Graph response" + graphResponse.body.toString());
+      var data = jsonDecode(graphResponse.body);
+
+      socialLoginFacebook(
+        context,
+        data["id"],
+        data["name"],
+        data["email"],
+        data["picture"]["data"]["url"],
+      );
     }
   }
 
-  //-----LOGOUT END------//
+  Future googleSocialMethod(BuildContext context) async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
+
+    if (googleSignInAccount != null) {
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount.authentication;
+
+      socialLoginGoogle(
+          context,
+          googleSignIn.currentUser.id,
+          googleSignIn.currentUser.displayName,
+          googleSignIn.currentUser.email,
+          googleSignIn.currentUser.photoUrl);
+    }
+  }
+
+  Future socialLoginFacebook(
+      BuildContext context, accessToken, name, email, image) async {
+    Map<String, String> requestBody = <String, String>{
+      "access_token": accessToken,
+      "device_token": "testing",
+      "device_type": Platform.operatingSystem ?? "ios",
+      "provider": "facebook",
+      "name": name,
+      "email": email,
+      "image": image,
+      "phone": "",
+    };
+
+    await formDataBaseMethod(ApiConst.SOCIAL_LOGIN,
+            body: requestBody, bodyCheck: true)
+        .then((value) {
+      if (value["status"] == 1) {
+        setUserData(context, value);
+        showToast(value["message"], AppColors.SUCCESS_COLOR);
+        AppNavigation.navigateTo(context, DrawerScreen());
+      } else {
+        showToast(value["message"], AppColors.ERROR_COLOR);
+      }
+    });
+  }
+
+  Future socialLoginGoogle(
+      BuildContext context, accessToken, name, email, image) async {
+    Map<String, String> requestBody = <String, String>{
+      "access_token": accessToken,
+      "device_token": "testing",
+      "device_type": Platform.operatingSystem ?? "ios",
+      "provider": "google",
+      "name": name,
+      "email": email,
+      "image": image,
+      "phone": "",
+    };
+
+    await formDataBaseMethod(ApiConst.SOCIAL_LOGIN,
+            body: requestBody, bodyCheck: true)
+        .then((value) {
+      if (value["status"] == 1) {
+        setUserData(context, value);
+        showToast(value["message"], AppColors.SUCCESS_COLOR);
+        AppNavigation.navigateTo(context, DrawerScreen());
+      } else {
+        showToast(value["message"], AppColors.ERROR_COLOR);
+      }
+    });
+  }
+
+  ////====== SOCIAL LOGINS END========/////
 
   void login(BuildContext context, {email, password}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

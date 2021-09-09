@@ -16,4 +16,5 @@ class ApiConst {
   static const LOGOUT_URL = "logout";
   static const UPDATE_PASSWORD_URL = "change-password";
   static const HELP_FEEDBACK_URL = "add-feedback";
+  static const SOCIAL_LOGIN = "social-login";
 }
