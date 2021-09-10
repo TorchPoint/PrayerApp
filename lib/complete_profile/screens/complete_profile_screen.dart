@@ -48,6 +48,8 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
     _lastNameController.text = userProvider.appUser.lastName;
     _emailController.text = userProvider.appUser.email;
     _mobileNoController.text = userProvider.appUser.contactNo;
+    profileImagePath = userProvider.appUser.profileImage;
+    print(profileImagePath);
   }
 
   @override
@@ -78,10 +80,13 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                                 shape: BoxShape.circle,
                                 border: Border.all(
                                     color: profileFileImage == null
-                                        ? AppColors.TRANSPARENT_COLOR
-                                        : AppColors.WHITE_COLOR,
+                                        ? AppColors.WHITE_COLOR
+                                        : userProvider.appUser.profileImage ==
+                                                null
+                                            ? AppColors.WHITE_COLOR
+                                            : AppColors.TRANSPARENT_COLOR,
                                     width:
-                                        profileFileImage == null ? 0.0 : 3.0),
+                                        profileFileImage == null ? 1.0 : 3.0),
                                 image: DecorationImage(
                                     image: profileFileImage != null
                                         ? FileImage(profileFileImage)
@@ -90,8 +95,9 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                                             ? AssetImage(AssetPaths
                                                 .COMPLETE_PROFILE_IMAGE)
                                             : NetworkImage(userProvider
-                                                .appUser.profileImage),
-                                    fit: BoxFit.fill))),
+                                                    .appUser.profileImage ??
+                                                ""),
+                                    fit: BoxFit.cover))),
                       ),
                       SizedBox(
                         height: 25.0,
@@ -246,15 +252,16 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
       onTap: () {
         if (_completeProfileKey.currentState.validate()) {
           print("complete profile");
+          print(profileFileImage.toString());
           baseService.updateUserprofile(
             context,
             _firstNameController.text,
             _lastNameController.text,
             _mobileNoController.text,
-            attachment: File(profileFileImage.path),
+            attachment: profileFileImage,
           );
           //AppNavigation.navigatorPop(context);
-        }
+        } else {}
       },
     );
   }

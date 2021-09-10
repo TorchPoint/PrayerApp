@@ -19,6 +19,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   final GlobalKey<FormState> _resetPasswordKey = GlobalKey<FormState>();
   TextEditingController _previousPasswordController = TextEditingController();
   TextEditingController _newPasswordController = TextEditingController();
+  TextEditingController _confirmPasswordController = TextEditingController();
   BaseService baseService = BaseService();
   String passwordPattern = Constants.PASSWORD_VALIDATE_REGEX;
   RegExp passwordRegExp;
@@ -48,6 +49,10 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         height: 18.0,
                       ),
                       _newPasswordWidget(),
+                      SizedBox(
+                        height: 18.0,
+                      ),
+                      _confirmPasswordWidget(),
                       SizedBox(
                         height: 18.0,
                       ),
@@ -147,6 +152,37 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       },
     );
   }
+  Widget _confirmPasswordWidget() {
+    return CustomTextFormField(
+      textController: _confirmPasswordController,
+      containerWidth: MediaQuery.of(context).size.width * 0.82,
+      hintText: AppStrings.CONFIRM_PASSWORD_HINT_TEXT,
+      borderRadius: 30.0,
+      contentPaddingRight: 0.0,
+      prefixIcon: AssetPaths.PASSWORD_ICON,
+      prefixIconWidth: 15.0,
+      contentPaddingTop: 17.0,
+      contentPaddingBottom: 17.0,
+      obscureText: confirmPasswordInvisible == true ? true : false,
+      errorMaxLines: 4,
+      suffixIcon: confirmPasswordInvisible == true
+          ? AssetPaths.VISIBLE_OFF_ICON
+          : AssetPaths.VISIBLE_ON_ICON,
+      suffixIconWidth: 22.0,
+      onSuffixIconTap: () {
+        setState(() {
+          confirmPasswordInvisible = !confirmPasswordInvisible;
+        });
+      },
+      onValidate: (value) {
+        passwordRegExp = RegExp(passwordPattern);
+        if (value.trim().isEmpty) {
+          return AppStrings.NEW_PASSWORD_EMPTY_ERROR;
+        }
+        return null;
+      },
+    );
+  }
 
   //Reset Password Button Widget
   Widget _resetPasswordButtonWidget() {
@@ -170,10 +206,12 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     );
   }
 
+
   @override
   void dispose() {
     super.dispose();
     _previousPasswordController.dispose();
     _newPasswordController.dispose();
+    _confirmPasswordController.dispose();
   }
 }

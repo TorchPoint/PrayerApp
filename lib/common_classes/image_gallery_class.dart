@@ -89,21 +89,21 @@ class ImageGalleryClass {
         });
   }
 
-  Future<String> getCameraImage() async {
+  Future getCameraImage() async {
     getFilePath =
         await picker.pickImage(source: ImageSource.camera, imageQuality: 70);
     if (getFilePath != null) {
-      print(getFilePath.path.toString());
+      print(getFilePath.toString());
       return getFilePath.path;
     }
     return null;
   }
 
-  Future<String> getGalleryImage() async {
+  Future getGalleryImage() async {
     getFilePath =
         await picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
     if (getFilePath != null) {
-      print(getFilePath.path.toString());
+      print(getFilePath.toString());
       return getFilePath.path;
     }
     return null;

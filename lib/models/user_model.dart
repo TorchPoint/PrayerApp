@@ -9,7 +9,7 @@ class AppUser {
   String profileImage;
   int completeProfile;
   int accountVerified;
-  int isSocial;
+  String isSocial;
   String userSocialToken;
   String userSocialType;
   String userDeviceType;
@@ -47,7 +47,7 @@ class AppUser {
     profileImage = json['profile_image'];
     completeProfile = json['complete_profile'];
     accountVerified = json['account_verified'];
-    isSocial = json['is_social'];
+    isSocial = json['is_social'] ?? "";
     userSocialToken = json['user_social_token'];
     userSocialType = json['user_social_type'];
     userDeviceType = json['user_device_type'];

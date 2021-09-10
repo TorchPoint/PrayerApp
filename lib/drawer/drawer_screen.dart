@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/auth/screens/auth_main_screen.dart';
 import 'package:prayer_hybrid_app/complete_profile/screens/complete_profile_screen.dart';
@@ -146,10 +147,13 @@ class _DrawerScreenState extends State<DrawerScreen>
                   width: 90.0,
                   height: 90.0,
                   decoration: BoxDecoration(
-                    color: AppColors.WHITE_COLOR,
+                    color: AppColors.BACKGROUND1_COLOR,
                     shape: BoxShape.circle,
-                    border:
-                        Border.all(color: AppColors.WHITE_COLOR, width: 2.0),
+                    border: Border.all(
+                        color: userProvider.appUser.profileImage != null
+                            ? AppColors.WHITE_COLOR
+                            : AppColors.BACKGROUND1_COLOR,
+                        width: 2.0),
                     image: DecorationImage(
                         image: userProvider.appUser.profileImage != null
                             ? NetworkImage(userProvider.appUser.profileImage)
@@ -235,6 +239,7 @@ class _DrawerScreenState extends State<DrawerScreen>
   }
 
   Widget userMenuData() {
+    var userProvider = Provider.of<AppUserProvider>(context, listen: false);
     return ListView(
       padding: EdgeInsets.zero,
       children: [
@@ -275,17 +280,19 @@ class _DrawerScreenState extends State<DrawerScreen>
 
         //For Change Password
 
-        menuListTile(
-            imagePath: AssetPaths.PASSWORD_ICON,
-            title: AppStrings.CHANGE_PASSWORD,
-            index: 11,
-            topMargin: 14.0,
-            bottomMargin: 20.0,
-            imageWidth: 18,
-            sizedBoxWidth: 39,
-            leftPadding: 20.0,
-            imageColor: AppColors.WHITE_COLOR.withOpacity(0.8),
-            dividerContainer: false),
+        userProvider.appUser.isSocial == "yes"
+            ? Container()
+            : menuListTile(
+                imagePath: AssetPaths.PASSWORD_ICON,
+                title: AppStrings.CHANGE_PASSWORD,
+                index: 11,
+                topMargin: 14.0,
+                bottomMargin: 20.0,
+                imageWidth: 18,
+                sizedBoxWidth: 39,
+                leftPadding: 20.0,
+                imageColor: AppColors.WHITE_COLOR.withOpacity(0.8),
+                dividerContainer: false),
 
         //For Logout
         menuListTile(

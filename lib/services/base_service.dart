@@ -7,6 +7,7 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:prayer_hybrid_app/auth/screens/auth_main_screen.dart';
 import 'package:prayer_hybrid_app/auth/screens/auth_verification_screen.dart';
 import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
@@ -19,6 +20,7 @@ import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:http_parser/http_parser.dart';
 
 class BaseService {
   var id;
@@ -129,12 +131,12 @@ class BaseService {
     }
   }
 
-  Future formDataBaseMethod(
-    url, {
-    bool tokenCheck = false,
-    bodyCheck = true,
-    Map<String, String> body,
-  }) async {
+  Future formDataBaseMethod(url,
+      {bool tokenCheck = false,
+      bodyCheck = true,
+      Map<String, String> body,
+      File files,
+      filesCheck = false}) async {
     var uri = Uri.parse(ApiConst.BASE_URL + url);
     debugPrint("Url:" + uri.toString());
     debugPrint("Body:" + body.toString());
@@ -142,18 +144,25 @@ class BaseService {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    var request = http.MultipartRequest('POST', uri)
-      ..headers.addAll(tokenCheck == true
-          ? {
-              'Accept': 'application/json',
-              'Content-Type': 'multipart/form-data',
-              "Authorization": "Bearer ${prefs.getString("token")}"
-            }
-          : {
-              'Accept': 'application/json',
-              'Content-Type': 'multipart/form-data',
-            })
-      ..fields.addAll(bodyCheck == true ? body : {});
+    var request = http.MultipartRequest('POST', uri);
+
+    request.headers.addAll(tokenCheck == true
+        ? {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+            "Authorization": "Bearer ${prefs.getString("token")}"
+          }
+        : {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          });
+
+    if (filesCheck == true) {
+      request.files
+          .add(await http.MultipartFile.fromPath('attachment', files.path));
+    }
+    bodyCheck == true ? request.fields.addAll(body) : request.files.addAll({});
+
     var response = await request.send();
     final respStr = await response.stream.bytesToString();
     try {
@@ -166,7 +175,6 @@ class BaseService {
       debugPrint('Error: $e');
     }
   }
-
 
   /////-----BASE METHODS END----//////
 
@@ -185,7 +193,6 @@ class BaseService {
         showToast(value["message"], AppColors.ERROR_COLOR);
       } else if (value["status"] == 1) {
         if (value["data"]["account_verified"] == 0) {
-          print("account_verified me ghusa");
           AppNavigation.navigateTo(
               context,
               VerificationScreen(
@@ -193,7 +200,6 @@ class BaseService {
                 userData: value["data"]["id"].toString(),
               ));
         } else {
-          print("else me ghusa");
           setUserData(context, value);
           showToast(value["message"], AppColors.SUCCESS_COLOR);
           AppNavigation.navigateTo(context, DrawerScreen());
@@ -272,15 +278,20 @@ class BaseService {
       "first_name": firstName ?? "",
       "last_name": lastName ?? "",
       "contact_no": phoneNumber ?? "",
-      "attachment": attachment
     };
 
     await formDataBaseMethod(ApiConst.UPDATE_PROFILE,
-            bodyCheck: true, tokenCheck: true, body: requestBody)
+            bodyCheck: true,
+            tokenCheck: true,
+            body: requestBody,
+            files: attachment,
+            filesCheck: attachment != null ? true : false)
         .then((value) {
       if (value["status"] == 1) {
         showToast(value["message"], AppColors.SUCCESS_COLOR);
-        setUserData(context, value);
+        // setUserData(context, value);
+        prefs.setString("user", jsonEncode(AppUser.fromJson(value["data"])));
+        userProvider.setUser(AppUser.fromJson(value["data"]));
       }
     });
   }
