@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     _splashTimer();
     // loadData();
-    baseService.localLocalUser();
+    baseService.loadLocalUser();
   }
 
   @override

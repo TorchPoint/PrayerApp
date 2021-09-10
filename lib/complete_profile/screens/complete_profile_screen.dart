@@ -83,10 +83,8 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                                     width:
                                         profileFileImage == null ? 0.0 : 3.0),
                                 image: DecorationImage(
-                                    image: userProvider.appUser.profileImage !=
-                                            null
-                                        ? NetworkImage(
-                                            userProvider.appUser.profileImage)
+                                    image: profileFileImage != null
+                                        ? FileImage(profileFileImage)
                                         : AssetImage(
                                             AssetPaths.COMPLETE_PROFILE_IMAGE),
                                     fit: BoxFit.fill))),

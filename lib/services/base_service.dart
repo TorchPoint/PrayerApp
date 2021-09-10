@@ -36,9 +36,8 @@ class BaseService {
   }
 
   /////===== USER DATA SETTING AND LOADING ======/////
-  void localLocalUser() async {
+  void loadLocalUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
     id = prefs.getInt("userID");
     token = prefs.getString("token");
     user = prefs.getString("user");
@@ -181,11 +180,21 @@ class BaseService {
         .then((value) {
       if (value["status"] == 0) {
         showToast(value["message"], AppColors.ERROR_COLOR);
-      } else {
-        setUserData(context, value);
-
-        showToast(value["message"], AppColors.SUCCESS_COLOR);
-        AppNavigation.navigateTo(context, DrawerScreen());
+      } else if (value["status"] == 1) {
+        if (value["data"]["account_verified"] == 0) {
+          print("account_verified me ghusa");
+          AppNavigation.navigateTo(
+              context,
+              VerificationScreen(
+                emailVerificationCheck: false,
+                userData: value["data"]["id"].toString(),
+              ));
+        } else {
+          print("else me ghusa");
+          setUserData(context, value);
+          showToast(value["message"], AppColors.SUCCESS_COLOR);
+          AppNavigation.navigateTo(context, DrawerScreen());
+        }
       }
     });
   }
@@ -268,8 +277,7 @@ class BaseService {
         .then((value) {
       if (value["status"] == 1) {
         showToast(value["message"], AppColors.SUCCESS_COLOR);
-        prefs.setString("user", jsonEncode(AppUser.fromJson(value["data"])));
-        userProvider.setUser(AppUser.fromJson(value["data"]));
+        setUserData(context, value);
       }
     });
   }
@@ -366,6 +374,7 @@ class BaseService {
   //-----LOGOUT------//
 
   Future logoutUser(BuildContext context) async {
+    var userProvider = Provider.of<AppUserProvider>(context, listen: false);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await formDataBaseMethod(ApiConst.LOGOUT_URL,
             bodyCheck: false, tokenCheck: true)

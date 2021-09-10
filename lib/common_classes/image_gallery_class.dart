@@ -5,16 +5,16 @@ import 'package:image_picker/image_picker.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 
-
-class ImageGalleryClass
-{
+class ImageGalleryClass {
   ImagePicker picker = ImagePicker();
   XFile getFilePath;
   File imageFile;
 
 //Select Image Start
-  void imageGalleryBottomSheet({BuildContext context,VoidCallback onCameraTap,VoidCallback onGalleryTap}) {
-
+  void imageGalleryBottomSheet(
+      {BuildContext context,
+      VoidCallback onCameraTap,
+      VoidCallback onGalleryTap}) {
     showModalBottomSheet(
         context: context,
         builder: (_) {
@@ -27,20 +27,24 @@ class ImageGalleryClass
                     onTap: onCameraTap,
                     child: Container(
                       color: AppColors.TRANSPARENT_COLOR,
-                      margin: EdgeInsets.only(top: 15.0,bottom: 8.0),
+                      margin: EdgeInsets.only(top: 15.0, bottom: 8.0),
                       child: Row(
                         children: [
-                          SizedBox(width: 15.0,),
+                          SizedBox(
+                            width: 15.0,
+                          ),
                           Icon(
                             Icons.camera_enhance,
                             color: Colors.white,
                           ),
-                          SizedBox(width: 15.0,),
+                          SizedBox(
+                            width: 15.0,
+                          ),
                           Text(
                             AppStrings.CAMERA_TEXT,
-                            style:
-                            TextStyle(
-                                fontWeight: FontWeight.bold, color: Colors.white),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
                             textScaleFactor: 1.3,
                           ),
                         ],
@@ -54,20 +58,24 @@ class ImageGalleryClass
                     onTap: onGalleryTap,
                     child: Container(
                       color: AppColors.TRANSPARENT_COLOR,
-                      margin: EdgeInsets.only(top: 9.0,bottom: 15.0),
+                      margin: EdgeInsets.only(top: 9.0, bottom: 15.0),
                       child: Row(
                         children: [
-                          SizedBox(width: 15.0,),
+                          SizedBox(
+                            width: 15.0,
+                          ),
                           Icon(
                             Icons.image,
                             color: Colors.white,
                           ),
-                          SizedBox(width: 15.0,),
+                          SizedBox(
+                            width: 15.0,
+                          ),
                           Text(
                             AppStrings.GALLERY_TEXT,
-                            style:
-                            TextStyle(
-                                fontWeight: FontWeight.bold, color: Colors.white),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
                             textScaleFactor: 1.3,
                           ),
                         ],
@@ -78,35 +86,33 @@ class ImageGalleryClass
               ),
             ),
           );
-        }
-    );
+        });
   }
-  Future<String> getCameraImage() async
-  {
-    getFilePath = await picker.pickImage(source: ImageSource.camera,imageQuality: 70);
-    if(getFilePath != null)
-    {
+
+  Future<String> getCameraImage() async {
+    getFilePath =
+        await picker.pickImage(source: ImageSource.camera, imageQuality: 70);
+    if (getFilePath != null) {
+      print(getFilePath.path.toString());
       return getFilePath.path;
     }
     return null;
   }
 
-  Future<String> getGalleryImage() async
-  {
-    getFilePath = await picker.pickImage(source: ImageSource.gallery,imageQuality: 80);
-    if(getFilePath != null)
-    {
+  Future<String> getGalleryImage() async {
+    getFilePath =
+        await picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
+    if (getFilePath != null) {
+      print(getFilePath.path.toString());
       return getFilePath.path;
     }
     return null;
   }
 
-  Future<File> cropImage({String imageFilePath}) async
-  {
+  Future<File> cropImage({String imageFilePath}) async {
     imageFile = await ImageCropper.cropImage(
         sourcePath: imageFilePath,
         aspectRatioPresets: [
-
           CropAspectRatioPreset.square,
           CropAspectRatioPreset.ratio3x2,
           CropAspectRatioPreset.original,
@@ -121,12 +127,8 @@ class ImageGalleryClass
             lockAspectRatio: false),
         iosUiSettings: IOSUiSettings(
           minimumAspectRatio: 1.0,
-        )
-    );
+        ));
 
     return imageFile;
-
   }
-
-
 }

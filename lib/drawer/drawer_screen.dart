@@ -151,9 +151,7 @@ class _DrawerScreenState extends State<DrawerScreen>
                     border:
                         Border.all(color: AppColors.WHITE_COLOR, width: 2.0),
                     image: DecorationImage(
-                        image: userProvider.appUser.profileImage != null
-                            ? NetworkImage(userProvider.appUser.profileImage)
-                            : AssetImage(AssetPaths.PROFILE_IMAGE),
+                        image: AssetImage(AssetPaths.PROFILE_IMAGE),
                         fit: BoxFit.cover),
                   ),
                 ),
