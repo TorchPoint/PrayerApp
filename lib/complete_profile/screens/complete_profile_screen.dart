@@ -85,8 +85,12 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                                 image: DecorationImage(
                                     image: profileFileImage != null
                                         ? FileImage(profileFileImage)
-                                        : AssetImage(
-                                            AssetPaths.COMPLETE_PROFILE_IMAGE),
+                                        : userProvider.appUser.profileImage ==
+                                                null
+                                            ? AssetImage(AssetPaths
+                                                .COMPLETE_PROFILE_IMAGE)
+                                            : NetworkImage(userProvider
+                                                .appUser.profileImage),
                                     fit: BoxFit.fill))),
                       ),
                       SizedBox(
@@ -242,8 +246,13 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
       onTap: () {
         if (_completeProfileKey.currentState.validate()) {
           print("complete profile");
-          baseService.updateUserprofile(context, _firstNameController.text,
-              _lastNameController.text, _mobileNoController.text);
+          baseService.updateUserprofile(
+            context,
+            _firstNameController.text,
+            _lastNameController.text,
+            _mobileNoController.text,
+            attachment: File(profileFileImage.path),
+          );
           //AppNavigation.navigatorPop(context);
         }
       },

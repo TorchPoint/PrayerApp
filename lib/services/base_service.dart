@@ -56,6 +56,7 @@ class BaseService {
     } else {
       var data = jsonDecode(user);
       userProvider.setUser(AppUser.fromJson(data));
+
       AppNavigation.navigateReplacement(context, DrawerScreen());
     }
   }
@@ -67,6 +68,7 @@ class BaseService {
     id = prefs.getInt("userID");
     debugPrint("LocalID:" + id.toString());
     prefs.setString("token", value["bearer_token"]);
+    token = prefs.getString("token");
     token = prefs.getString("token");
     debugPrint("Token:" + token.toString());
     prefs.setString("user", jsonEncode(AppUser.fromJson(value["data"])));
@@ -165,6 +167,7 @@ class BaseService {
     }
   }
 
+
   /////-----BASE METHODS END----//////
 
   //---- SIGNUP AND LOGIN FLOW-----////////
@@ -262,14 +265,14 @@ class BaseService {
 
   Future updateUserprofile(
       BuildContext context, firstName, lastName, phoneNumber,
-      {attachment}) async {
+      {File attachment}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var userProvider = Provider.of<AppUserProvider>(context, listen: false);
     Map<String, String> requestBody = <String, String>{
       "first_name": firstName ?? "",
       "last_name": lastName ?? "",
       "contact_no": phoneNumber ?? "",
-      "attachment": attachment ?? ""
+      "attachment": attachment
     };
 
     await formDataBaseMethod(ApiConst.UPDATE_PROFILE,
