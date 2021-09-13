@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:prayer_hybrid_app/auth/screens/auth_main_screen.dart';
 import 'package:prayer_hybrid_app/auth/screens/auth_verification_screen.dart';
 import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
+import 'package:prayer_hybrid_app/models/prayer_model.dart';
 import 'package:prayer_hybrid_app/models/user_model.dart';
 import 'package:prayer_hybrid_app/password/screens/reset_password_screen.dart';
 import 'package:prayer_hybrid_app/providers/user_provider.dart';
@@ -125,6 +126,8 @@ class BaseService {
         var jsonData = jsonDecode(response.body);
         debugPrint(jsonData.toString());
         return jsonData;
+      } else {
+        EasyLoading.dismiss();
       }
     } catch (e) {
       debugPrint('Error: $e');
@@ -170,6 +173,8 @@ class BaseService {
         EasyLoading.dismiss();
         debugPrint("Response:" + respStr);
         return jsonDecode(respStr);
+      } else {
+        EasyLoading.dismiss();
       }
     } catch (e) {
       debugPrint('Error: $e');
@@ -548,6 +553,26 @@ class BaseService {
 
   /////======== CORE MODULE =========///////
 
+  Future addPrayer(BuildContext context, categoryID, desc, title, name) async {
+    var prayerProvider = Provider.of<PrayerProvider>(context, listen: false);
+    Map<String, String> requestBody = <String, String>{
+      "category": categoryID,
+      "description": desc,
+      "title": title,
+      "name": name,
+      "type": "prayer",
+    };
+
+    await formDataBaseMethod(ApiConst.ADD_PRAYER,
+            tokenCheck: true, bodyCheck: true, body: requestBody)
+        .then((value) {
+      if (value["status"] == 1) {
+        showToast("Prayer Added", AppColors.SUCCESS_COLOR);
+      }
+    });
+  }
+
+  /////======== CORE MODULE END =========///////
   void login(BuildContext context, {email, password}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 

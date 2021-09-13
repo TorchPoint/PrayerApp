@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:prayer_hybrid_app/models/prayer_model.dart';
 import 'package:prayer_hybrid_app/models/user_model.dart';
 
 class AppUserProvider extends ChangeNotifier {
@@ -14,6 +15,25 @@ class AppUserProvider extends ChangeNotifier {
 
   void restUserProvider() {
     _appUser = null;
+    notifyListeners();
+  }
+}
+
+class PrayerProvider extends ChangeNotifier {
+  PrayerModel _prayerModel;
+  List<PrayerModel> prayerList;
+
+  PrayerModel get prayerModel => _prayerModel;
+
+  void fetchPrayerList(List prayers) {
+    prayers.forEach((element) {
+      prayerList.add(PrayerModel.fromJson(element));
+    });
+    notifyListeners();
+  }
+
+  void addPrayer(PrayerModel prayerModel) {
+    prayerList.add(prayerModel);
     notifyListeners();
   }
 }

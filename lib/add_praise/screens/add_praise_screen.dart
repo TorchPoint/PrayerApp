@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_hybrid_app/models/category_model.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/prayer_praise_tab_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';

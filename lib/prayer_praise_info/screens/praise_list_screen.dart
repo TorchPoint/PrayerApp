@@ -14,45 +14,49 @@ class PraiseListScreen extends StatefulWidget {
 class _PraiseListScreenState extends State<PraiseListScreen> {
   TextEditingController _searchController = TextEditingController();
   int selectIndex = 0;
-  List<String> prayerList = ["Test","Marriage","Car","Medical Emergency","Loan"];
+  List<String> prayerList = [
+    "Test",
+    "Marriage",
+    "Car",
+    "Medical Emergency",
+    "Loan"
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 10.0,),
+        SizedBox(
+          height: 10.0,
+        ),
         _searchTextFormField(),
-        SizedBox(height: 10.0,),
+        SizedBox(
+          height: 10.0,
+        ),
         Expanded(
           child: SingleChildScrollView(
             child: Column(
               children: [
-                ListView.builder
-                  (
+                ListView.builder(
                     itemCount: prayerList.length,
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (BuildContext ctxt, int index) {
                       return _praiseList(index);
-                    }
-                ),
-
+                    }),
               ],
             ),
           ),
         ),
-
-
-
       ],
     );
   }
 
-  Widget _searchTextFormField()
-  {
+  Widget _searchTextFormField() {
     return CustomTextFormField(
       textController: _searchController,
-      containerWidth: MediaQuery.of(context).size.width*0.85,
+      containerWidth: MediaQuery.of(context).size.width * 0.85,
       hintText: AppStrings.SEARCH_HINT_TEXT,
       borderRadius: 28.0,
       contentPaddingTop: 13.0,
@@ -67,89 +71,100 @@ class _PraiseListScreenState extends State<PraiseListScreen> {
     );
   }
 
-  Widget _praiseList(int praiseIndex)
-  {
+  Widget _praiseList(int praiseIndex) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         print("next screen");
         AppNavigation.navigateTo(context, FinishPraiseScreen());
       },
-      onLongPress: (){
+      onLongPress: () {
         setState(() {
           selectIndex = praiseIndex;
         });
       },
       child: Container(
-        width: MediaQuery.of(context).size.width*0.85,
-        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.075,right: MediaQuery.of(context).size.width*0.075,top: 7.0,bottom: 7.0),
-        padding: EdgeInsets.only(top: 13.0,bottom: 13.0,left: 20.0,right: selectIndex == praiseIndex ? 6.0 : 20.0),
+        width: MediaQuery.of(context).size.width * 0.85,
+        margin: EdgeInsets.only(
+            left: MediaQuery.of(context).size.width * 0.075,
+            right: MediaQuery.of(context).size.width * 0.075,
+            top: 7.0,
+            bottom: 7.0),
+        padding: EdgeInsets.only(
+            top: 13.0,
+            bottom: 13.0,
+            left: 20.0,
+            right: selectIndex == praiseIndex ? 6.0 : 20.0),
         decoration: BoxDecoration(
-            color: selectIndex == praiseIndex ? AppColors.BUTTON_COLOR : AppColors.WHITE_COLOR,
+            color: selectIndex == praiseIndex
+                ? AppColors.BUTTON_COLOR
+                : AppColors.WHITE_COLOR,
             borderRadius: BorderRadius.circular(23.0),
-            boxShadow: selectIndex == praiseIndex ?
-            [
-              BoxShadow(
-                color: AppColors.LIGHT_BLACK_COLOR.withOpacity(0.2),
-                spreadRadius: 1,
-                blurRadius: 3,
-                offset: Offset(0, 3), // changes position of shadow
-              ),
-            ]
-                :
-            []
-        ),
+            boxShadow: selectIndex == praiseIndex
+                ? [
+                    BoxShadow(
+                      color: AppColors.LIGHT_BLACK_COLOR.withOpacity(0.2),
+                      spreadRadius: 1,
+                      blurRadius: 3,
+                      offset: Offset(0, 3), // changes position of shadow
+                    ),
+                  ]
+                : []),
         child: Row(
           children: [
             Expanded(
-              child: Text(prayerList[praiseIndex].toString(),style: TextStyle(fontSize: 14.5,color: selectIndex == praiseIndex ? AppColors.WHITE_COLOR : AppColors.BLACK_COLOR,fontWeight: FontWeight.w700),maxLines: 1,overflow: TextOverflow.ellipsis,),
+              child: Text(
+                prayerList[praiseIndex].toString(),
+                style: TextStyle(
+                    fontSize: 14.5,
+                    color: selectIndex == praiseIndex
+                        ? AppColors.WHITE_COLOR
+                        : AppColors.BLACK_COLOR,
+                    fontWeight: FontWeight.w700),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
-
             _arrowDeleteIcons(praiseIndex),
-
           ],
         ),
       ),
     );
   }
 
-  Widget _arrowDeleteIcons(int praiseIndex)
-  {
-    return selectIndex == praiseIndex ?
-    Row(
-      children: [
-        GestureDetector(
-          onTap: (){
-            print("arrow");
-          },
-          child: Container(
-            color: AppColors.TRANSPARENT_COLOR,
-            child: Padding(
-                padding: EdgeInsets.only(left: 3.0,right: 7.5),
-                child: Image.asset(AssetPaths.ARROW_ICON,width: 15.0,)
-            ),
-          ),
-        ),
-
-        GestureDetector(
-          onTap: (){
-            print("delete");
-          },
-          child: Container(
-            color: AppColors.TRANSPARENT_COLOR,
-            child: Padding(
-                padding: EdgeInsets.only(left: 7.5,right: 13.0),
-                child: Image.asset(AssetPaths.DELETE_ICON,width: 12.0,)
-            ),
-          ),
-        ),
-      ],
-    )
-        :
-    Container();
+  Widget _arrowDeleteIcons(int praiseIndex) {
+    return selectIndex == praiseIndex
+        ? Row(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  print("arrow");
+                },
+                child: Container(
+                  color: AppColors.TRANSPARENT_COLOR,
+                  child: Padding(
+                      padding: EdgeInsets.only(left: 3.0, right: 7.5),
+                      child: Image.asset(
+                        AssetPaths.ARROW_ICON,
+                        width: 15.0,
+                      )),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  print("delete");
+                },
+                child: Container(
+                  color: AppColors.TRANSPARENT_COLOR,
+                  child: Padding(
+                      padding: EdgeInsets.only(left: 7.5, right: 13.0),
+                      child: Image.asset(
+                        AssetPaths.DELETE_ICON,
+                        width: 12.0,
+                      )),
+                ),
+              ),
+            ],
+          )
+        : Container();
   }
-
-
-
-
-
 }
