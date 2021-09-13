@@ -404,7 +404,11 @@ class BaseService {
       if (value["status"] == 1) {
         showToast(value["message"], AppColors.SUCCESS_COLOR);
         prefs.clear();
-        prayerProvider.prayerList.clear();
+        // if (prayerProvider.prayerList != null) {
+        //   prayerProvider.prayerList.clear();
+        //   prayerProvider.praiseList.clear();
+        // }
+
         AppNavigation.navigatorPop(context);
         AppNavigation.navigateToRemovingAll(context, AuthMainScreen());
       } else {
