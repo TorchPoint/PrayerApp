@@ -20,9 +20,10 @@ class ApiConst {
 
 //------- Core Module URL--------//
 
-  static const CATEGORIES = "categories";
-  static const ADD_PRAYER = "add-prayer";
-  static const UPDATE_PRAYER = "update-prayer";
-  static const DELETE_PRAYER = "delete-prayer";
-  static const ANSWER_PRAYER = "finish-prayer";
+  static const CATEGORIES_URL = "categories";
+  static const FETCH_PRAYERS_URL = "prayers";
+  static const ADD_PRAYER_URL = "add-prayer";
+  static const UPDATE_PRAYER_URL = "update-prayer";
+  static const DELETE_PRAYER_URL = "delete-prayer";
+  static const ANSWER_PRAYER_URL = "finish-prayer";
 }

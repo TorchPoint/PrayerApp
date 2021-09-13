@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:prayer_hybrid_app/models/prayer_model.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/prayer_praise_tab_screen.dart';
+import 'package:prayer_hybrid_app/services/API_const.dart';
+import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
@@ -8,11 +13,14 @@ import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/widgets/custom_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class AddPraiseScreen extends StatefulWidget {
   final String praiseButtonText;
+  final PrayerModel praiseModel;
 
-  AddPraiseScreen({this.praiseButtonText});
+  AddPraiseScreen({this.praiseButtonText, this.praiseModel});
 
   @override
   _AddPraiseScreenState createState() => _AddPraiseScreenState();
@@ -24,7 +32,55 @@ class _AddPraiseScreenState extends State<AddPraiseScreen> {
   TextEditingController _addNameController = TextEditingController();
   TextEditingController _categoryController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
-  String currentCategoryValue;
+  Category currentCategoryValue;
+  BaseService baseService = BaseService();
+
+  List<Category> newCategories = [];
+
+  Future getCategories() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var uri = Uri.parse(ApiConst.BASE_URL + ApiConst.CATEGORIES_URL);
+
+    final http.Response response = await http.get(uri,
+        headers: {"Authorization": "Bearer ${prefs.getString("token")}"});
+
+    if (response.statusCode == 200) {
+      print(response.body);
+      Map data = jsonDecode(response.body);
+
+      data["data"].forEach((element) {
+        newCategories.add(Category.fromJson(element));
+        setState(() {});
+      });
+      if (widget.praiseModel != null) {
+        newCategories.forEach((element) {
+          if (widget.praiseModel.category.name == element.name) {
+            setState(() {
+              currentCategoryValue = element;
+            });
+          }
+        });
+      }
+      return data;
+    }
+  }
+
+  void loadData() {
+    if (widget.praiseModel != null) {
+      _addNameController.text = widget.praiseModel.name;
+      _praiseTitleController.text = widget.praiseModel.title;
+      _descriptionController.text = widget.praiseModel.description;
+      getCategories();
+    } else {
+      getCategories();
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    loadData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -147,7 +203,7 @@ class _AddPraiseScreenState extends State<AddPraiseScreen> {
       child: FormField<String>(
         builder: (FormFieldState<String> state) {
           return DropdownButtonHideUnderline(
-            child: DropdownButtonFormField<String>(
+            child: DropdownButtonFormField<Category>(
               iconEnabledColor: AppColors.WHITE_COLOR,
               dropdownColor: AppColors.WHITE_COLOR,
               decoration: InputDecoration(
@@ -190,17 +246,17 @@ class _AddPraiseScreenState extends State<AddPraiseScreen> {
                 }
                 return null;
               },
-              onChanged: (String categoryValue) {
+              onChanged: (Category categoryValue) {
                 setState(() {
                   currentCategoryValue = categoryValue;
                 });
               },
               selectedItemBuilder: (BuildContext context) {
-                return AppStrings.categories.map((value) {
+                return newCategories.map((value) {
                   return Container(
                     width: MediaQuery.of(context).size.width * 0.65,
                     child: Text(
-                      value.toString(),
+                      value.name,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           color: AppColors.WHITE_COLOR,
@@ -210,13 +266,13 @@ class _AddPraiseScreenState extends State<AddPraiseScreen> {
                   );
                 }).toList();
               },
-              items: AppStrings.categories.map((String value) {
-                return DropdownMenuItem<String>(
+              items: newCategories.map((Category value) {
+                return DropdownMenuItem<Category>(
                   value: value,
                   child: Container(
                     //width: MediaQuery.of(context).size.width*0.6,
                     child: Text(
-                      value,
+                      value.name,
                       style: TextStyle(
                         fontSize: 17.0,
                         color: value == currentCategoryValue
@@ -269,13 +325,25 @@ class _AddPraiseScreenState extends State<AddPraiseScreen> {
       paddingTop: 12.0,
       paddingBottom: 12.0,
       onTap: () {
+        print("praise");
+
         if (_addPraiseKey.currentState.validate()) {
           if (widget.praiseButtonText ==
               AppStrings.ADD_PRAISE_TEXT.toUpperCase()) {
-            AppNavigation.navigateReplacement(
-                context, PrayerPraiseTabScreen(tabInitialIndex: 1));
+            baseService.addPraise(
+                context,
+                currentCategoryValue.id.toString(),
+                _descriptionController.text,
+                _praiseTitleController.text,
+                _addNameController.text);
           } else {
-            AppNavigation.navigatorPop(context);
+            baseService.updatePraise(
+                context,
+                currentCategoryValue.id,
+                widget.praiseModel.id,
+                _descriptionController.text,
+                _praiseTitleController.text,
+                _addNameController.text);
           }
         }
       },

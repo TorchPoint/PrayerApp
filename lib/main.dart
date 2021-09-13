@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:prayer_hybrid_app/providers/user_provider.dart';
+import 'package:prayer_hybrid_app/providers/provider.dart';
 import 'package:prayer_hybrid_app/reminder_calendar/screens/calendar_screen.dart';
 import 'package:prayer_hybrid_app/splash/splash_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';

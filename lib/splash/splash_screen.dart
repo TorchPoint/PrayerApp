@@ -5,7 +5,7 @@ import 'package:prayer_hybrid_app/auth/screens/auth_main_screen.dart';
 import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
 import 'package:prayer_hybrid_app/home/home_screen.dart';
 import 'package:prayer_hybrid_app/models/user_model.dart';
-import 'package:prayer_hybrid_app/providers/user_provider.dart';
+import 'package:prayer_hybrid_app/providers/provider.dart';
 import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';

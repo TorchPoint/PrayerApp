@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_hybrid_app/providers/provider.dart';
+import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/finish_praying_screen.dart';
+import 'package:provider/provider.dart';
 
 class PrayersListScreen extends StatefulWidget {
   @override
@@ -14,6 +17,7 @@ class PrayersListScreen extends StatefulWidget {
 class _PrayersListScreenState extends State<PrayersListScreen> {
   TextEditingController _searchController = TextEditingController();
   int selectIndex = 0;
+  BaseService baseService = BaseService();
   List<String> prayerList = [
     "Test",
     "Marriage",
@@ -23,7 +27,15 @@ class _PrayersListScreenState extends State<PrayersListScreen> {
   ];
 
   @override
+  void initState() {
+    // TODO: implement initState
+    baseService.fetchPrayers(context);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var prayerProvider = Provider.of<PrayerProvider>(context, listen: true);
     return Column(
       children: [
         SizedBox(
@@ -34,20 +46,20 @@ class _PrayersListScreenState extends State<PrayersListScreen> {
           height: 10.0,
         ),
         Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                ListView.builder(
-                    itemCount: prayerList.length,
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (BuildContext ctxt, int index) {
-                      return _prayersList(index);
-                    }),
-              ],
-            ),
-          ),
+          child: prayerProvider.prayerList == null
+              ? Center(
+                  child: Text(
+                    "No Prayers Found",
+                    style: TextStyle(color: AppColors.WHITE_COLOR),
+                  ),
+                )
+              : ListView.builder(
+                  itemCount: prayerProvider.prayerList.length ?? 0,
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  itemBuilder: (BuildContext ctxt, int index) {
+                    return _prayersList(index);
+                  }),
         ),
       ],
     );
@@ -72,10 +84,15 @@ class _PrayersListScreenState extends State<PrayersListScreen> {
   }
 
   Widget _prayersList(int prayerIndex) {
+    var prayerProvider = Provider.of<PrayerProvider>(context, listen: true);
     return GestureDetector(
       onTap: () {
         print("next screen");
-        AppNavigation.navigateTo(context, FinishPrayingScreen());
+        AppNavigation.navigateTo(
+            context,
+            FinishPrayingScreen(
+              prayerModel: prayerProvider.prayerList[prayerIndex],
+            ));
       },
       onLongPress: () {
         setState(() {
@@ -113,7 +130,7 @@ class _PrayersListScreenState extends State<PrayersListScreen> {
           children: [
             Expanded(
               child: Text(
-                prayerList[prayerIndex],
+                prayerProvider.prayerList[prayerIndex].title,
                 style: TextStyle(
                     fontSize: 14.5,
                     color: selectIndex == prayerIndex
@@ -132,6 +149,7 @@ class _PrayersListScreenState extends State<PrayersListScreen> {
   }
 
   Widget _arrowDeleteIcons(int prayerIndex) {
+    var prayerProvider = Provider.of<PrayerProvider>(context, listen: true);
     return selectIndex == prayerIndex
         ? Row(
             children: [
@@ -152,6 +170,8 @@ class _PrayersListScreenState extends State<PrayersListScreen> {
               GestureDetector(
                 onTap: () {
                   print("delete");
+                  baseService.deletePrayer(
+                      context, prayerProvider.prayerList[prayerIndex].id);
                 },
                 child: Container(
                   color: AppColors.TRANSPARENT_COLOR,

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_hybrid_app/providers/provider.dart';
+import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/finish_praise_screen.dart';
+import 'package:provider/provider.dart';
 
 class PraiseListScreen extends StatefulWidget {
   @override
@@ -14,6 +17,7 @@ class PraiseListScreen extends StatefulWidget {
 class _PraiseListScreenState extends State<PraiseListScreen> {
   TextEditingController _searchController = TextEditingController();
   int selectIndex = 0;
+  BaseService baseService = BaseService();
   List<String> prayerList = [
     "Test",
     "Marriage",
@@ -23,7 +27,15 @@ class _PraiseListScreenState extends State<PraiseListScreen> {
   ];
 
   @override
+  void initState() {
+    // TODO: implement initState
+    baseService.fetchPraise(context);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var praiseProvider = Provider.of<PrayerProvider>(context, listen: true);
     return Column(
       children: [
         SizedBox(
@@ -34,20 +46,21 @@ class _PraiseListScreenState extends State<PraiseListScreen> {
           height: 10.0,
         ),
         Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                ListView.builder(
-                    itemCount: prayerList.length,
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (BuildContext ctxt, int index) {
-                      return _praiseList(index);
-                    }),
-              ],
-            ),
-          ),
+          child: praiseProvider.praiseList == null
+              ? Center(
+                  child: Text(
+                    "No Prayers Found",
+                    style: TextStyle(color: AppColors.WHITE_COLOR),
+                  ),
+                )
+              : ListView.builder(
+                  itemCount: praiseProvider.praiseList.length ?? 0,
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (BuildContext ctxt, int index) {
+                    return _praiseList(index);
+                  }),
         ),
       ],
     );
@@ -72,10 +85,15 @@ class _PraiseListScreenState extends State<PraiseListScreen> {
   }
 
   Widget _praiseList(int praiseIndex) {
+    var praiseProvider = Provider.of<PrayerProvider>(context, listen: true);
     return GestureDetector(
       onTap: () {
         print("next screen");
-        AppNavigation.navigateTo(context, FinishPraiseScreen());
+        AppNavigation.navigateTo(
+            context,
+            FinishPraiseScreen(
+              praiseModel: praiseProvider.praiseList[praiseIndex],
+            ));
       },
       onLongPress: () {
         setState(() {
@@ -113,7 +131,7 @@ class _PraiseListScreenState extends State<PraiseListScreen> {
           children: [
             Expanded(
               child: Text(
-                prayerList[praiseIndex].toString(),
+                praiseProvider.praiseList[praiseIndex].title.toString(),
                 style: TextStyle(
                     fontSize: 14.5,
                     color: selectIndex == praiseIndex
@@ -132,6 +150,7 @@ class _PraiseListScreenState extends State<PraiseListScreen> {
   }
 
   Widget _arrowDeleteIcons(int praiseIndex) {
+    var praiseProvider = Provider.of<PrayerProvider>(context, listen: true);
     return selectIndex == praiseIndex
         ? Row(
             children: [
@@ -151,6 +170,8 @@ class _PraiseListScreenState extends State<PraiseListScreen> {
               ),
               GestureDetector(
                 onTap: () {
+                  baseService.deletePraise(
+                      context, praiseProvider.praiseList[praiseIndex].id);
                   print("delete");
                 },
                 child: Container(

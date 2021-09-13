@@ -14,7 +14,9 @@ import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
 import 'package:prayer_hybrid_app/models/prayer_model.dart';
 import 'package:prayer_hybrid_app/models/user_model.dart';
 import 'package:prayer_hybrid_app/password/screens/reset_password_screen.dart';
-import 'package:prayer_hybrid_app/providers/user_provider.dart';
+import 'package:prayer_hybrid_app/prayer_praise_info/screens/prayer_praise_tab_screen.dart';
+import 'package:prayer_hybrid_app/prayer_praise_info/screens/prayers_list_screen.dart';
+import 'package:prayer_hybrid_app/providers/provider.dart';
 import 'package:prayer_hybrid_app/services/API_const.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
@@ -394,6 +396,7 @@ class BaseService {
 
   Future logoutUser(BuildContext context) async {
     var userProvider = Provider.of<AppUserProvider>(context, listen: false);
+    var prayerProvider = Provider.of<PrayerProvider>(context, listen: false);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await formDataBaseMethod(ApiConst.LOGOUT_URL,
             bodyCheck: false, tokenCheck: true)
@@ -401,6 +404,7 @@ class BaseService {
       if (value["status"] == 1) {
         showToast(value["message"], AppColors.SUCCESS_COLOR);
         prefs.clear();
+        prayerProvider.prayerList.clear();
         AppNavigation.navigatorPop(context);
         AppNavigation.navigateToRemovingAll(context, AuthMainScreen());
       } else {
@@ -553,8 +557,21 @@ class BaseService {
 
   /////======== CORE MODULE =========///////
 
-  Future addPrayer(BuildContext context, categoryID, desc, title, name) async {
+  Future fetchPrayers(BuildContext context) async {
     var prayerProvider = Provider.of<PrayerProvider>(context, listen: false);
+
+    await getBaseMethod(ApiConst.FETCH_PRAYERS_URL + "?type=prayer",
+            tokenCheck: true, loading: true)
+        .then((value) {
+      if (value["status"] == 1) {
+        prayerProvider.fetchPrayerList(value["data"]);
+      } else {
+        showToast(value["message"], AppColors.ERROR_COLOR);
+      }
+    });
+  }
+
+  Future addPrayer(BuildContext context, categoryID, desc, title, name) async {
     Map<String, String> requestBody = <String, String>{
       "category": categoryID,
       "description": desc,
@@ -563,11 +580,115 @@ class BaseService {
       "type": "prayer",
     };
 
-    await formDataBaseMethod(ApiConst.ADD_PRAYER,
+    await formDataBaseMethod(ApiConst.ADD_PRAYER_URL,
             tokenCheck: true, bodyCheck: true, body: requestBody)
         .then((value) {
       if (value["status"] == 1) {
         showToast("Prayer Added", AppColors.SUCCESS_COLOR);
+      }
+    });
+  }
+
+  Future updatePrayer(
+      BuildContext context, categoryID, prayerId, desc, title, name) async {
+    Map<String, String> requestBody = <String, String>{
+      "category": categoryID.toString(),
+      "description": desc,
+      "title": title,
+      "name": name,
+      "type": "prayer",
+      "prayer": prayerId.toString(),
+    };
+
+    await formDataBaseMethod(ApiConst.UPDATE_PRAYER_URL,
+            body: requestBody, bodyCheck: true, tokenCheck: true)
+        .then((value) {
+      if (value["status"] == 1) {
+        showToast(value["message"], AppColors.SUCCESS_COLOR);
+        AppNavigation.navigateTo(context, PrayerPraiseTabScreen());
+      }
+    });
+  }
+
+  Future deletePrayer(BuildContext context, prayerID) async {
+    Map<String, String> requestBody = <String, String>{
+      "prayer": prayerID.toString(),
+    };
+
+    await formDataBaseMethod(ApiConst.DELETE_PRAYER_URL,
+            bodyCheck: true, body: requestBody, tokenCheck: true)
+        .then((value) {
+      if (value["status"] == 1) {
+        showToast(value["message"], AppColors.SUCCESS_COLOR);
+        fetchPrayers(context);
+      }
+    });
+  }
+
+  Future fetchPraise(BuildContext context) async {
+    var praiseProvider = Provider.of<PrayerProvider>(context, listen: false);
+
+    await getBaseMethod(ApiConst.FETCH_PRAYERS_URL + "?type=praise",
+            tokenCheck: true, loading: true)
+        .then((value) {
+      if (value["status"] == 1) {
+        praiseProvider.fetchPraiseList(value["data"]);
+      } else {
+        showToast(value["message"], AppColors.ERROR_COLOR);
+      }
+    });
+  }
+
+  Future addPraise(BuildContext context, categoryID, desc, title, name) async {
+    Map<String, String> requestBody = <String, String>{
+      "category": categoryID,
+      "description": desc,
+      "title": title,
+      "name": name,
+      "type": "praise",
+    };
+
+    await formDataBaseMethod(ApiConst.ADD_PRAYER_URL,
+            tokenCheck: true, bodyCheck: true, body: requestBody)
+        .then((value) {
+      if (value["status"] == 1) {
+        showToast("Praise Added", AppColors.SUCCESS_COLOR);
+      }
+    });
+  }
+
+  Future updatePraise(
+      BuildContext context, categoryID, praiseId, desc, title, name) async {
+    Map<String, String> requestBody = <String, String>{
+      "category": categoryID.toString(),
+      "description": desc,
+      "title": title,
+      "name": name,
+      "type": "praise",
+      "prayer": praiseId.toString(),
+    };
+
+    await formDataBaseMethod(ApiConst.UPDATE_PRAYER_URL,
+            body: requestBody, bodyCheck: true, tokenCheck: true)
+        .then((value) {
+      if (value["status"] == 1) {
+        showToast(value["message"], AppColors.SUCCESS_COLOR);
+        AppNavigation.navigateTo(context, PrayerPraiseTabScreen());
+      }
+    });
+  }
+
+  Future deletePraise(BuildContext context, praiseID) async {
+    Map<String, String> requestBody = <String, String>{
+      "prayer": praiseID.toString(),
+    };
+
+    await formDataBaseMethod(ApiConst.DELETE_PRAYER_URL,
+            bodyCheck: true, body: requestBody, tokenCheck: true)
+        .then((value) {
+      if (value["status"] == 1) {
+        showToast(value["message"], AppColors.SUCCESS_COLOR);
+        fetchPraise(context);
       }
     });
   }

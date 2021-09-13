@@ -22,12 +22,24 @@ class AppUserProvider extends ChangeNotifier {
 class PrayerProvider extends ChangeNotifier {
   PrayerModel _prayerModel;
   List<PrayerModel> prayerList;
+  List<PrayerModel> praiseList;
 
   PrayerModel get prayerModel => _prayerModel;
 
   void fetchPrayerList(List prayers) {
-    prayers.forEach((element) {
-      prayerList.add(PrayerModel.fromJson(element));
+    prayerList = [];
+    if (prayers != null) {
+      prayers.forEach((element) {
+        prayerList.add(PrayerModel.fromJson(element));
+      });
+    }
+    notifyListeners();
+  }
+
+  void fetchPraiseList(List praise) {
+    praiseList = [];
+    praise.forEach((element) {
+      praiseList.add(PrayerModel.fromJson(element));
     });
     notifyListeners();
   }

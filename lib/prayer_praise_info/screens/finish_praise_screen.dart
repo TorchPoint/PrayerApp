@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/add_praise/screens/add_praise_screen.dart';
 import 'package:prayer_hybrid_app/common_classes/share_class.dart';
+import 'package:prayer_hybrid_app/models/prayer_model.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/bible_promises_dialog_screen.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/stop_watch_alert_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
@@ -11,17 +12,20 @@ import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/widgets/custom_gesture_detector_container.dart';
 
-
 class FinishPraiseScreen extends StatefulWidget {
+  PrayerModel praiseModel;
+
+  FinishPraiseScreen({this.praiseModel});
+
   @override
   _FinishPraiseScreenState createState() => _FinishPraiseScreenState();
 }
 
 class _FinishPraiseScreenState extends State<FinishPraiseScreen> {
-
   bool answerTick = true;
   StopWatchAlertScreen stopWatchAlertScreen = StopWatchAlertScreen();
-  BiblePromisesDialogScreen _biblePromisesDialogScreen = BiblePromisesDialogScreen();
+  BiblePromisesDialogScreen _biblePromisesDialogScreen =
+      BiblePromisesDialogScreen();
 
   @override
   Widget build(BuildContext context) {
@@ -38,49 +42,71 @@ class _FinishPraiseScreenState extends State<FinishPraiseScreen> {
                       height: 10.0,
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 4.0,vertical: 0.0),
-                      child: Text(AppStrings.PRAISE_TITLE_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w700,letterSpacing: 1.0),textScaleFactor: 1.8,maxLines: 1,overflow: TextOverflow.ellipsis,),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 4.0, vertical: 0.0),
+                      child: Text(
+                        widget.praiseModel.title ??
+                            AppStrings.PRAISE_TITLE_TEXT,
+                        style: TextStyle(
+                            color: AppColors.WHITE_COLOR,
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: 1.0),
+                        textScaleFactor: 1.8,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-
                     SizedBox(
                       height: 7.0,
                     ),
-
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 4.0,vertical: 0.0),
-                      child: Text(AppStrings.PRAYER_USER_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600,letterSpacing: 1.0),textScaleFactor: 1.1,maxLines: 1,overflow: TextOverflow.ellipsis,),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 4.0, vertical: 0.0),
+                      child: Text(
+                        widget.praiseModel.name ?? AppStrings.PRAYER_USER_TEXT,
+                        style: TextStyle(
+                            color: AppColors.WHITE_COLOR,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 1.0),
+                        textScaleFactor: 1.1,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-
                     SizedBox(
                       height: 8.0,
                     ),
-
                     Expanded(
                       child: SingleChildScrollView(
                         child: Padding(
-                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.06,right: MediaQuery.of(context).size.width*0.06),
-                          child: Text(AppStrings.LOREM_EPSUM_STRING,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w700,height: 1.4),textScaleFactor: 1.05),
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.06,
+                              right: MediaQuery.of(context).size.width * 0.06),
+                          child: Text(widget.praiseModel.description ?? "",
+                              style: TextStyle(
+                                  color: AppColors.WHITE_COLOR,
+                                  fontWeight: FontWeight.w700,
+                                  height: 1.4),
+                              textScaleFactor: 1.05),
                         ),
                       ),
                     ),
-
                     SizedBox(
-                      height: MediaQuery.of(context).size.height*0.025,
+                      height: MediaQuery.of(context).size.height * 0.025,
                     ),
-
                     _stopWatchImageWidget(),
-
-                    SizedBox(height: MediaQuery.of(context).size.height*0.025,),
-
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.025,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         _biblePromisesWidget(),
                       ],
                     ),
-
-                    SizedBox(height: MediaQuery.of(context).size.height*0.025,),
-
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.025,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -88,57 +114,50 @@ class _FinishPraiseScreenState extends State<FinishPraiseScreen> {
                         _sharePromisesWidget(),
                       ],
                     ),
-
-                    SizedBox(height: MediaQuery.of(context).size.height*0.05,),
-
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.05,
+                    ),
                     _editPraiseWidget(),
-
                   ],
                 ),
               ),
             ],
-          )
-      ),
+          )),
     );
   }
 
-
   //Custom App Bar Widget
-  Widget _customAppBar()
-  {
+  Widget _customAppBar() {
     return CustomAppBar(
       leadingIconPath: AssetPaths.BACK_ICON,
       paddingTop: 20.0,
-      leadingTap: (){
+      leadingTap: () {
         AppNavigation.navigatorPop(context);
       },
     );
   }
 
   //Stop Watch Timer Widget
-  Widget _stopWatchImageWidget()
-  {
+  Widget _stopWatchImageWidget() {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         print("Stop Watch Image Widget");
         stopWatchAlertScreen.stopWatchAlert(context);
       },
       child: Container(
-        width: MediaQuery.of(context).size.width*0.3,
-        height: MediaQuery.of(context).size.height*0.11,
+        width: MediaQuery.of(context).size.width * 0.3,
+        height: MediaQuery.of(context).size.height * 0.11,
         decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage(AssetPaths.STOP_WATCH_IMAGE),
-              fit: BoxFit.contain
-          ),
+              fit: BoxFit.contain),
         ),
       ),
     );
   }
 
   //Bible Promises Widget
-  Widget _biblePromisesWidget()
-  {
+  Widget _biblePromisesWidget() {
     return CustomGestureDetectorContainer(
       buttonColor: AppColors.BUTTON_COLOR,
       title: AppStrings.BIBLE_PROMISES_TEXT,
@@ -146,7 +165,7 @@ class _FinishPraiseScreenState extends State<FinishPraiseScreen> {
       containerHorizontal: 21.0,
       borderRadius: 22.0,
       textSize: 0.95,
-      onTap: (){
+      onTap: () {
         print("Bible Promises");
         _biblePromisesDialogScreen.showDialogMethod(context: context);
       },
@@ -154,8 +173,7 @@ class _FinishPraiseScreenState extends State<FinishPraiseScreen> {
   }
 
   //Answered Widget
-  Widget _answeredPromisesWidget()
-  {
+  Widget _answeredPromisesWidget() {
     return CustomGestureDetectorContainer(
       buttonColor: AppColors.BUTTON_COLOR,
       title: AppStrings.ANSWERED_TEXT,
@@ -164,7 +182,7 @@ class _FinishPraiseScreenState extends State<FinishPraiseScreen> {
       borderRadius: 22.0,
       textSize: 0.95,
       suffixImagePath: answerTick == true ? AssetPaths.ANSWERED_ICON : null,
-      onTap: (){
+      onTap: () {
         print("Answered");
         // setState(() {
         //   answerTick = !answerTick;
@@ -175,8 +193,7 @@ class _FinishPraiseScreenState extends State<FinishPraiseScreen> {
   }
 
   //Share Widget
-  Widget _sharePromisesWidget()
-  {
+  Widget _sharePromisesWidget() {
     return CustomGestureDetectorContainer(
       buttonColor: AppColors.BUTTON_COLOR,
       title: AppStrings.SHARE_TEXT,
@@ -185,40 +202,51 @@ class _FinishPraiseScreenState extends State<FinishPraiseScreen> {
       borderRadius: 22.0,
       textSize: 0.95,
       suffixImagePath: AssetPaths.SHARE_ICON,
-      onTap: (){
+      onTap: () {
         print("Share");
         _shareMethod();
       },
     );
   }
 
-  Widget _editPraiseWidget()
-  {
+  Widget _editPraiseWidget() {
     return GestureDetector(
-      onTap: (){
-        AppNavigation.navigateTo(context, AddPraiseScreen(praiseButtonText: AppStrings.UPDATE_PRAISE_TEXT.toUpperCase(),));
+      onTap: () {
+        AppNavigation.navigateTo(
+            context,
+            AddPraiseScreen(
+              praiseModel: widget.praiseModel,
+              praiseButtonText: AppStrings.UPDATE_PRAISE_TEXT.toUpperCase(),
+
+            ));
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
         color: AppColors.BUTTON_COLOR,
-        padding: EdgeInsets.only(top: 11.0,bottom: 11.0),
+        padding: EdgeInsets.only(top: 11.0, bottom: 11.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(AppStrings.EDIT_TEXT.toUpperCase(),style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w700),textScaleFactor: 0.95,),
-            SizedBox(width: 6.0,),
-            Image.asset(AssetPaths.EDIT_ICON,width: 18.0,)
+            Text(
+              AppStrings.EDIT_TEXT.toUpperCase(),
+              style: TextStyle(
+                  color: AppColors.WHITE_COLOR, fontWeight: FontWeight.w700),
+              textScaleFactor: 0.95,
+            ),
+            SizedBox(
+              width: 6.0,
+            ),
+            Image.asset(
+              AssetPaths.EDIT_ICON,
+              width: 18.0,
+            )
           ],
         ),
       ),
     );
   }
 
-
-  void _shareMethod()
-  {
+  void _shareMethod() {
     ShareClass.shareMethod(message: AppStrings.SHARE_MESSAGE_TEXT);
   }
-
-
 }

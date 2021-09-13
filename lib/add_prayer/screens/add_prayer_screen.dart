@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/models/category_model.dart';
+import 'package:prayer_hybrid_app/models/prayer_model.dart';
+import 'package:prayer_hybrid_app/providers/provider.dart';
 
 import 'package:prayer_hybrid_app/services/API_const.dart';
 import 'package:prayer_hybrid_app/services/base_service.dart';
@@ -14,12 +16,14 @@ import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/widgets/custom_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AddPrayerScreen extends StatefulWidget {
   final String prayerButtonText;
+  final PrayerModel prayerModel;
 
-  AddPrayerScreen({this.prayerButtonText});
+  AddPrayerScreen({this.prayerButtonText, this.prayerModel});
 
   @override
   _AddPrayerScreenState createState() => _AddPrayerScreenState();
@@ -31,14 +35,14 @@ class _AddPrayerScreenState extends State<AddPrayerScreen> {
   TextEditingController _addNameController = TextEditingController();
   TextEditingController _categoryController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
-  Categories currentCategoryValue;
+  Category currentCategoryValue;
   BaseService baseService = BaseService();
 
-  List<Categories> newCategories = [];
+  List<Category> newCategories = [];
 
   Future getCategories() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var uri = Uri.parse(ApiConst.BASE_URL + ApiConst.CATEGORIES);
+    var uri = Uri.parse(ApiConst.BASE_URL + ApiConst.CATEGORIES_URL);
 
     final http.Response response = await http.get(uri,
         headers: {"Authorization": "Bearer ${prefs.getString("token")}"});
@@ -48,9 +52,30 @@ class _AddPrayerScreenState extends State<AddPrayerScreen> {
       Map data = jsonDecode(response.body);
 
       data["data"].forEach((element) {
-        newCategories.add(Categories.fromJson(element));
+        newCategories.add(Category.fromJson(element));
+        setState(() {});
       });
-      setState(() {});
+      if (widget.prayerModel != null) {
+        newCategories.forEach((element) {
+          if (widget.prayerModel.category.name == element.name) {
+            setState(() {
+              currentCategoryValue = element;
+            });
+          }
+        });
+      }
+      return data;
+    }
+  }
+
+  void loadData() {
+    if (widget.prayerModel != null) {
+      _addNameController.text = widget.prayerModel.name;
+      _prayerTitleController.text = widget.prayerModel.title;
+      _descriptionController.text = widget.prayerModel.description;
+      getCategories();
+    } else {
+      getCategories();
     }
   }
 
@@ -58,8 +83,7 @@ class _AddPrayerScreenState extends State<AddPrayerScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    getCategories();
+    loadData();
   }
 
   @override
@@ -183,7 +207,7 @@ class _AddPrayerScreenState extends State<AddPrayerScreen> {
       child: FormField<String>(
         builder: (FormFieldState<String> state) {
           return DropdownButtonHideUnderline(
-            child: DropdownButtonFormField<Categories>(
+            child: DropdownButtonFormField<Category>(
               iconEnabledColor: AppColors.WHITE_COLOR,
               dropdownColor: AppColors.WHITE_COLOR,
               decoration: InputDecoration(
@@ -226,7 +250,7 @@ class _AddPrayerScreenState extends State<AddPrayerScreen> {
                 }
                 return null;
               },
-              onChanged: (Categories categoryValue) {
+              onChanged: (Category categoryValue) {
                 //print("current categoryValue:${categoryValue}");
                 setState(() {
                   currentCategoryValue = categoryValue;
@@ -248,8 +272,8 @@ class _AddPrayerScreenState extends State<AddPrayerScreen> {
                   );
                 }).toList();
               },
-              items: newCategories.map((Categories value) {
-                return DropdownMenuItem<Categories>(
+              items: newCategories.map((Category value) {
+                return DropdownMenuItem<Category>(
                   value: value,
                   child: Container(
                     //width: MediaQuery.of(context).size.width*0.6,
@@ -318,7 +342,13 @@ class _AddPrayerScreenState extends State<AddPrayerScreen> {
               _addNameController.text,
             );
           } else {
-            AppNavigation.navigatorPop(context);
+            baseService.updatePrayer(
+                context,
+                currentCategoryValue.id,
+                widget.prayerModel.id,
+                _descriptionController.text,
+                _prayerTitleController.text,
+                _addNameController.text);
           }
         }
       },

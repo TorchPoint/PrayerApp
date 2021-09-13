@@ -4,7 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:prayer_hybrid_app/password/screens/continue_email_screen.dart';
-import 'package:prayer_hybrid_app/providers/user_provider.dart';
+import 'package:prayer_hybrid_app/providers/provider.dart';
 
 import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';

@@ -1,17 +1,14 @@
-import 'dart:convert';
-import 'dart:developer';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:prayer_hybrid_app/auth/screens/auth_main_screen.dart';
+
 import 'package:prayer_hybrid_app/complete_profile/screens/complete_profile_screen.dart';
 import 'package:prayer_hybrid_app/home/home_screen.dart';
-import 'package:prayer_hybrid_app/models/user_model.dart';
+
 import 'package:prayer_hybrid_app/notification/screens/notification_screen.dart';
 import 'package:prayer_hybrid_app/password/change_password.dart';
 import 'package:prayer_hybrid_app/prayer_group/screens/prayer_group_list_screen.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/prayer_praise_tab_screen.dart';
-import 'package:prayer_hybrid_app/providers/user_provider.dart';
+import 'package:prayer_hybrid_app/providers/provider.dart';
 import 'package:prayer_hybrid_app/reminder_calendar/screens/reminder_screen.dart';
 import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/terms_privacy_screen/screens/terms_privacy_screen.dart';
