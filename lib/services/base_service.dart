@@ -644,8 +644,6 @@ class BaseService {
         praiseProvider.fetchPraiseList(value["data"]);
       } else {
         showToast(value["message"], AppColors.ERROR_COLOR);
-        AppNavigation.navigatorPop(context);
-        AppNavigation.navigateTo(context, PrayerPraiseTabScreen());
       }
     });
   }
