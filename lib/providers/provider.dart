@@ -28,16 +28,16 @@ class PrayerProvider extends ChangeNotifier {
   PrayerModel get prayerModel => _prayerModel;
 
   void resetPrayerProvider() {
-    if(praiseList!=null){
+    if (praiseList != null) {
       prayerList.clear();
     }
     notifyListeners();
   }
 
   void restPraise() {
-   if(praiseList!=null){
-     praiseList.clear();
-   }
+    if (praiseList != null) {
+      praiseList.clear();
+    }
     notifyListeners();
   }
 
@@ -75,8 +75,9 @@ class ReminderProvider extends ChangeNotifier {
   ReminderModel get reminderModel => _reminderModel;
 
   void resetReminderModel() {
-    reminderList.clear();
-
+    if (reminderList != null) {
+      reminderList.clear();
+    }
     notifyListeners();
   }
 

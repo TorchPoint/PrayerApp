@@ -399,6 +399,8 @@ class BaseService {
   Future logoutUser(BuildContext context) async {
     var userProvider = Provider.of<AppUserProvider>(context, listen: false);
     var prayerProvider = Provider.of<PrayerProvider>(context, listen: false);
+    var reminderProvider =
+        Provider.of<ReminderProvider>(context, listen: false);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await formDataBaseMethod(ApiConst.LOGOUT_URL,
             bodyCheck: false, tokenCheck: true)
@@ -406,10 +408,13 @@ class BaseService {
       if (value["status"] == 1) {
         showToast(value["message"], AppColors.SUCCESS_COLOR);
         prefs.clear();
-        // if (prayerProvider != null) {
-        //   prayerProvider.resetPrayerProvider();
-        // }
-
+        if (prayerProvider != null) {
+          prayerProvider.resetPrayerProvider();
+          prayerProvider.restPraise();
+        }
+        if (reminderProvider != null) {
+          reminderProvider.resetReminderModel();
+        }
         AppNavigation.navigatorPop(context);
         AppNavigation.navigateToRemovingAll(context, AuthMainScreen());
       } else {
@@ -644,6 +649,7 @@ class BaseService {
         praiseProvider.fetchPraiseList(value["data"]);
       } else {
         showToast(value["message"], AppColors.ERROR_COLOR);
+        praiseProvider.restPraise();
       }
     });
   }
@@ -730,7 +736,11 @@ class BaseService {
     await getBaseMethod(ApiConst.FETCH_REMINDERS_URL,
             tokenCheck: true, loading: true)
         .then((value) {
-      reminderProvider.fetchReminderList(value["data"]);
+      if (value["status"] == 1) {
+        reminderProvider.fetchReminderList(value["data"]);
+      } else {
+        reminderProvider.resetReminderModel();
+      }
     });
   }
 
