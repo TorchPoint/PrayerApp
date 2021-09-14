@@ -17,6 +17,8 @@ import 'package:prayer_hybrid_app/password/screens/reset_password_screen.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/prayer_praise_tab_screen.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/prayers_list_screen.dart';
 import 'package:prayer_hybrid_app/providers/provider.dart';
+import 'package:prayer_hybrid_app/reminder_calendar/screens/calendar_screen.dart';
+import 'package:prayer_hybrid_app/reminder_calendar/screens/reminder_screen.dart';
 import 'package:prayer_hybrid_app/services/API_const.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
@@ -695,10 +697,7 @@ class BaseService {
       if (value["status"] == 1) {
         showToast(value["message"], AppColors.SUCCESS_COLOR);
         fetchPraise(context);
-      } else {
-        // prayerProvider.praiseList=[];
-        // fetchPraise(context);
-      }
+      } else {}
     });
   }
 
@@ -715,6 +714,59 @@ class BaseService {
         showToast("Prayer Ended", AppColors.SUCCESS_COLOR);
         Navigator.pop(context);
         fetchPrayers(context);
+      }
+    });
+  }
+
+  Future fetchReminderList(BuildContext context) async {
+    var reminderProvider =
+        Provider.of<ReminderProvider>(context, listen: false);
+
+    await getBaseMethod(ApiConst.FETCH_REMINDERS_URL,
+            tokenCheck: true, loading: true)
+        .then((value) {
+      reminderProvider.fetchReminderList(value["data"]);
+    });
+  }
+
+  Future addReminder(BuildContext context, title, frequency, reminderTime,
+      reminderDate) async {
+    Map<String, String> requestBody = <String, String>{
+      "title": title,
+      "reminder_date": reminderDate,
+      "type": frequency,
+      "reminder_time": reminderTime,
+    };
+
+    await formDataBaseMethod(ApiConst.ADD_REMINDER_URL,
+            bodyCheck: true, body: requestBody, tokenCheck: true)
+        .then((value) {
+      if (value["status"] == 1) {
+        showToast("Reminder Added", AppColors.SUCCESS_COLOR);
+        // Navigator.pop(context);
+        // fetchReminderList(context);
+        AppNavigation.navigatorPop(context);
+        AppNavigation.navigateReplacement(context, ReminderScreen());
+      }
+    });
+  }
+
+  Future updateReminder(BuildContext context, title, frequency, reminderTime,
+      reminderDate, reminderID) async {
+    Map<String, String> requestBody = <String, String>{
+      "title": title,
+      "reminder_date": reminderDate,
+      "type": frequency,
+      "reminder_time": reminderTime,
+      "reminder": reminderID.toString(),
+    };
+    await formDataBaseMethod(ApiConst.UPDATE_REMINDER_URL,
+            bodyCheck: true, body: requestBody, tokenCheck: true)
+        .then((value) {
+      if (value["status"] == 1) {
+        showToast("Reminder Updated", AppColors.SUCCESS_COLOR);
+        AppNavigation.navigatorPop(context);
+        AppNavigation.navigateReplacement(context, ReminderScreen());
       }
     });
   }

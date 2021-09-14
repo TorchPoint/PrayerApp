@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:prayer_hybrid_app/models/prayer_model.dart';
+import 'package:prayer_hybrid_app/models/reminder_model.dart';
 import 'package:prayer_hybrid_app/models/user_model.dart';
 
 class AppUserProvider extends ChangeNotifier {
@@ -48,16 +49,40 @@ class PrayerProvider extends ChangeNotifier {
 
   void fetchPraiseList(List praise) {
     praiseList = [];
-   if(praise!=null){
-     praise.forEach((element) {
-       praiseList.add(PrayerModel.fromJson(element));
-     });
-   }
+    if (praise != null) {
+      praise.forEach((element) {
+        praiseList.add(PrayerModel.fromJson(element));
+      });
+    }
     notifyListeners();
   }
 
   void addPrayer(PrayerModel prayerModel) {
     prayerList.add(prayerModel);
+    notifyListeners();
+  }
+}
+
+class ReminderProvider extends ChangeNotifier {
+  ReminderModel _reminderModel;
+
+  List<ReminderModel> reminderList;
+
+  ReminderModel get reminderModel => _reminderModel;
+
+  void resetReminderModel() {
+    reminderList.clear();
+
+    notifyListeners();
+  }
+
+  void fetchReminderList(List reminders) {
+    reminderList = [];
+    if (reminders != null) {
+      reminders.forEach((element) {
+        reminderList.add(ReminderModel.fromJson(element));
+      });
+    }
     notifyListeners();
   }
 }

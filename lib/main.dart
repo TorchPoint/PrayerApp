@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => AppUserProvider()),
         ChangeNotifierProvider(create: (_) => PrayerProvider()),
+        ChangeNotifierProvider(create: (_) => ReminderProvider()),
       ],
       child: MaterialApp(
           title: AppStrings.APP_TITLE_TEXT,

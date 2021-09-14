@@ -1,9 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:prayer_hybrid_app/models/category_model.dart';
+
 import 'package:prayer_hybrid_app/models/prayer_model.dart';
-import 'package:prayer_hybrid_app/providers/provider.dart';
 
 import 'package:prayer_hybrid_app/services/API_const.dart';
 import 'package:prayer_hybrid_app/services/base_service.dart';
@@ -16,7 +15,7 @@ import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/widgets/custom_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AddPrayerScreen extends StatefulWidget {
