@@ -46,7 +46,8 @@ class _PraiseListScreenState extends State<PraiseListScreen> {
           height: 10.0,
         ),
         Expanded(
-          child: praiseProvider.praiseList == null
+          child: praiseProvider.praiseList == null ||
+                  praiseProvider.praiseList.length == 0
               ? Center(
                   child: Text(
                     "No Prayers Found",

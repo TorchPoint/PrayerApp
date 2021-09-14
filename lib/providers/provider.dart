@@ -26,6 +26,16 @@ class PrayerProvider extends ChangeNotifier {
 
   PrayerModel get prayerModel => _prayerModel;
 
+  void resetPrayerProvider() {
+    prayerList.clear();
+    notifyListeners();
+  }
+
+  void restPraise() {
+    praiseList.clear();
+    notifyListeners();
+  }
+
   void fetchPrayerList(List prayers) {
     prayerList = [];
     if (prayers != null) {
@@ -38,9 +48,11 @@ class PrayerProvider extends ChangeNotifier {
 
   void fetchPraiseList(List praise) {
     praiseList = [];
-    praise.forEach((element) {
-      praiseList.add(PrayerModel.fromJson(element));
-    });
+   if(praise!=null){
+     praise.forEach((element) {
+       praiseList.add(PrayerModel.fromJson(element));
+     });
+   }
     notifyListeners();
   }
 

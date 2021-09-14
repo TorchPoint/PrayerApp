@@ -16,7 +16,7 @@ class PrayersListScreen extends StatefulWidget {
 
 class _PrayersListScreenState extends State<PrayersListScreen> {
   TextEditingController _searchController = TextEditingController();
-  int selectIndex = 0;
+  int selectIndex=0;
   BaseService baseService = BaseService();
   List<String> prayerList = [
     "Test",
@@ -46,7 +46,7 @@ class _PrayersListScreenState extends State<PrayersListScreen> {
           height: 10.0,
         ),
         Expanded(
-          child: prayerProvider.prayerList == null
+          child: prayerProvider.prayerList==null || prayerProvider.prayerList.length==0
               ? Center(
                   child: Text(
                     "No Prayers Found",

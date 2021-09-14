@@ -404,9 +404,8 @@ class BaseService {
       if (value["status"] == 1) {
         showToast(value["message"], AppColors.SUCCESS_COLOR);
         prefs.clear();
-        // if (prayerProvider.prayerList != null) {
-        //   prayerProvider.prayerList.clear();
-        //   prayerProvider.praiseList.clear();
+        // if (prayerProvider != null) {
+        //   prayerProvider.resetPrayerProvider();
         // }
 
         AppNavigation.navigatorPop(context);
@@ -571,6 +570,7 @@ class BaseService {
         prayerProvider.fetchPrayerList(value["data"]);
       } else {
         showToast(value["message"], AppColors.ERROR_COLOR);
+        prayerProvider.resetPrayerProvider();
       }
     });
   }
@@ -639,6 +639,7 @@ class BaseService {
         praiseProvider.fetchPraiseList(value["data"]);
       } else {
         showToast(value["message"], AppColors.ERROR_COLOR);
+        praiseProvider.restPraise();
       }
     });
   }
@@ -683,6 +684,7 @@ class BaseService {
   }
 
   Future deletePraise(BuildContext context, praiseID) async {
+    var prayerProvider = Provider.of<PrayerProvider>(context, listen: false);
     Map<String, String> requestBody = <String, String>{
       "prayer": praiseID.toString(),
     };
@@ -693,6 +695,9 @@ class BaseService {
       if (value["status"] == 1) {
         showToast(value["message"], AppColors.SUCCESS_COLOR);
         fetchPraise(context);
+      } else {
+        // prayerProvider.praiseList=[];
+        // fetchPraise(context);
       }
     });
   }
