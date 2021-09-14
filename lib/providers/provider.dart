@@ -28,12 +28,16 @@ class PrayerProvider extends ChangeNotifier {
   PrayerModel get prayerModel => _prayerModel;
 
   void resetPrayerProvider() {
-    prayerList.clear();
+    if(praiseList!=null){
+      prayerList.clear();
+    }
     notifyListeners();
   }
 
   void restPraise() {
-    praiseList.clear();
+   if(praiseList!=null){
+     praiseList.clear();
+   }
     notifyListeners();
   }
 

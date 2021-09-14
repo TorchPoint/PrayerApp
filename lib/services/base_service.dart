@@ -591,6 +591,8 @@ class BaseService {
         .then((value) {
       if (value["status"] == 1) {
         showToast("Prayer Added", AppColors.SUCCESS_COLOR);
+        AppNavigation.navigatorPop(context);
+        AppNavigation.navigateTo(context, PrayerPraiseTabScreen());
       }
     });
   }
@@ -611,6 +613,7 @@ class BaseService {
         .then((value) {
       if (value["status"] == 1) {
         showToast(value["message"], AppColors.SUCCESS_COLOR);
+        AppNavigation.navigatorPop(context);
         AppNavigation.navigateTo(context, PrayerPraiseTabScreen());
       }
     });
@@ -641,7 +644,8 @@ class BaseService {
         praiseProvider.fetchPraiseList(value["data"]);
       } else {
         showToast(value["message"], AppColors.ERROR_COLOR);
-        praiseProvider.restPraise();
+        AppNavigation.navigatorPop(context);
+        AppNavigation.navigateTo(context, PrayerPraiseTabScreen());
       }
     });
   }
@@ -660,6 +664,8 @@ class BaseService {
         .then((value) {
       if (value["status"] == 1) {
         showToast("Praise Added", AppColors.SUCCESS_COLOR);
+        AppNavigation.navigatorPop(context);
+        AppNavigation.navigateTo(context, PrayerPraiseTabScreen());
       }
     });
   }
@@ -680,6 +686,7 @@ class BaseService {
         .then((value) {
       if (value["status"] == 1) {
         showToast(value["message"], AppColors.SUCCESS_COLOR);
+        AppNavigation.navigatorPop(context);
         AppNavigation.navigateTo(context, PrayerPraiseTabScreen());
       }
     });
@@ -712,8 +719,8 @@ class BaseService {
         .then((value) {
       if (value["status"] == 1) {
         showToast("Prayer Ended", AppColors.SUCCESS_COLOR);
-        Navigator.pop(context);
-        fetchPrayers(context);
+        AppNavigation.navigatorPop(context);
+        AppNavigation.navigateTo(context, PrayerPraiseTabScreen());
       }
     });
   }
