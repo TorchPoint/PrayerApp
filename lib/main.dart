@@ -35,8 +35,6 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    SharedPreferences.setMockInitialValues({});
-
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AppUserProvider()),

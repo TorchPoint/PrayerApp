@@ -4,6 +4,7 @@ import 'package:prayer_hybrid_app/common_classes/share_class.dart';
 import 'package:prayer_hybrid_app/models/prayer_model.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/bible_promises_dialog_screen.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/stop_watch_alert_screen.dart';
+import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
@@ -24,6 +25,7 @@ class FinishPrayingScreen extends StatefulWidget {
 class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
   bool answerTick = false;
   StopWatchAlertScreen stopWatchAlertScreen = StopWatchAlertScreen();
+  BaseService baseService = BaseService();
   BiblePromisesDialogScreen _biblePromisesDialogScreen =
       BiblePromisesDialogScreen();
 
@@ -187,7 +189,8 @@ class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
         setState(() {
           answerTick = !answerTick;
         });
-
+        baseService.finishPrayer(context, widget.prayerModel.id.toString(),
+            stopWatchAlertScreen.displayTime ?? "00:00:00");
         //AppNavigation.navigatorPop(context);
       },
     );

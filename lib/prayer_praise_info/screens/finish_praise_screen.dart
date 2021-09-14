@@ -26,6 +26,14 @@ class _FinishPraiseScreenState extends State<FinishPraiseScreen> {
   StopWatchAlertScreen stopWatchAlertScreen = StopWatchAlertScreen();
   BiblePromisesDialogScreen _biblePromisesDialogScreen =
       BiblePromisesDialogScreen();
+  var time;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    time = widget.praiseModel.prayerDuration;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +102,13 @@ class _FinishPraiseScreenState extends State<FinishPraiseScreen> {
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.025,
                     ),
-                    _stopWatchImageWidget(),
+                    Text(
+                      "Prayer Time: ${time ?? "00:00:00"}",
+                      style: TextStyle(
+                          color: AppColors.WHITE_COLOR,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.025,
                     ),
@@ -143,6 +157,8 @@ class _FinishPraiseScreenState extends State<FinishPraiseScreen> {
       onTap: () {
         print("Stop Watch Image Widget");
         stopWatchAlertScreen.stopWatchAlert(context);
+        print(stopWatchAlertScreen.displayTime);
+        print(widget.praiseModel.prayerDuration);
       },
       child: Container(
         width: MediaQuery.of(context).size.width * 0.3,
@@ -217,7 +233,6 @@ class _FinishPraiseScreenState extends State<FinishPraiseScreen> {
             AddPraiseScreen(
               praiseModel: widget.praiseModel,
               praiseButtonText: AppStrings.UPDATE_PRAISE_TEXT.toUpperCase(),
-
             ));
       },
       child: Container(

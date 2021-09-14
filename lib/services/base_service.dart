@@ -697,6 +697,23 @@ class BaseService {
     });
   }
 
+  Future finishPrayer(BuildContext context, prayerID, prayerDuration) async {
+    Map<String, String> requestBody = <String, String>{
+      "prayer": prayerID.toString(),
+      "prayer_duration": prayerDuration
+    };
+
+    await formDataBaseMethod(ApiConst.ANSWER_PRAYER_URL,
+            body: requestBody, bodyCheck: true, tokenCheck: true)
+        .then((value) {
+      if (value["status"] == 1) {
+        showToast("Prayer Ended", AppColors.SUCCESS_COLOR);
+        Navigator.pop(context);
+        fetchPrayers(context);
+      }
+    });
+  }
+
   /////======== CORE MODULE END =========///////
   void login(BuildContext context, {email, password}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
