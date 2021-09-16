@@ -54,20 +54,30 @@ class _PraiseListScreenState extends State<PraiseListScreen> {
                     style: TextStyle(color: AppColors.WHITE_COLOR),
                   ),
                 )
-              : ListView.builder(
-                  itemCount: praiseProvider.praiseList.length ?? 0,
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (BuildContext ctxt, int index) {
-                    return _praiseList(index);
-                  }),
+              : _searchController.text.isEmpty
+                  ? ListView.builder(
+                      itemCount: praiseProvider.praiseList.length ?? 0,
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (BuildContext ctxt, int index) {
+                        return _praiseList(index);
+                      })
+                  : ListView.builder(
+                      itemCount: praiseProvider.searchPraiseList.length ?? 0,
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (BuildContext ctxt, int index) {
+                        return _praiseList(index);
+                      }),
         ),
       ],
     );
   }
 
   Widget _searchTextFormField() {
+    var prayerProvider = Provider.of<PrayerProvider>(context, listen: true);
     return CustomTextFormField(
       textController: _searchController,
       containerWidth: MediaQuery.of(context).size.width * 0.85,
@@ -82,6 +92,13 @@ class _PraiseListScreenState extends State<PraiseListScreen> {
       hintSize: 15.0,
       textSize: 15.0,
       isCollapsed: true,
+      onChange: (val) {
+        if (_searchController.text.isEmpty) {
+          prayerProvider.resetPraiseSearchList();
+        } else {
+          baseService.searchPrayer(context, val.toString());
+        }
+      },
     );
   }
 
@@ -132,7 +149,10 @@ class _PraiseListScreenState extends State<PraiseListScreen> {
           children: [
             Expanded(
               child: Text(
-                praiseProvider.praiseList[praiseIndex].title.toString(),
+                _searchController.text.isEmpty
+                    ? praiseProvider.praiseList[praiseIndex].title.toString()
+                    : praiseProvider.searchPraiseList[praiseIndex].title
+                        .toString(),
                 style: TextStyle(
                     fontSize: 14.5,
                     color: selectIndex == praiseIndex

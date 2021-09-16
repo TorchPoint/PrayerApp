@@ -170,6 +170,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
   }
 
   Widget _arrowDeleteIcons(int prayerIndex) {
+    var reminderProvider = Provider.of<ReminderProvider>(context, listen: true);
     return currentReminderIndex == prayerIndex
         ? Row(
             children: [
@@ -190,6 +191,8 @@ class _ReminderScreenState extends State<ReminderScreen> {
               GestureDetector(
                 onTap: () {
                   print("delete");
+                  baseService.deleteReminder(context,
+                      reminderProvider.reminderList[prayerIndex].id.toString());
                 },
                 child: Container(
                   color: AppColors.TRANSPARENT_COLOR,

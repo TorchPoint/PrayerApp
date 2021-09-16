@@ -1,19 +1,9 @@
-import 'dart:convert';
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:prayer_hybrid_app/auth/screens/auth_main_screen.dart';
-import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
-import 'package:prayer_hybrid_app/home/home_screen.dart';
-import 'package:prayer_hybrid_app/models/user_model.dart';
-import 'package:prayer_hybrid_app/providers/provider.dart';
 import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
-import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'dart:async';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -32,7 +22,6 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     _splashTimer();
-    // loadData();
     getToken();
     baseService.loadLocalUser();
   }

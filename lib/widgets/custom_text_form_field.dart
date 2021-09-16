@@ -25,7 +25,7 @@ class CustomTextFormField extends StatelessWidget {
       prefixIconColor;
   final TextInputType keyBoardType;
   final List<TextInputFormatter> textInputFormatter;
-  final Function onTextFieldTap, onSuffixIconTap;
+  final Function onTextFieldTap, onSuffixIconTap, onChange;
 
   CustomTextFormField(
       {this.textController,
@@ -57,7 +57,8 @@ class CustomTextFormField extends StatelessWidget {
       this.textFieldReadOnly,
       this.onTextFieldTap,
       this.prefixIconColor,
-      this.onSuffixIconTap});
+      this.onSuffixIconTap,
+      this.onChange});
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +70,7 @@ class CustomTextFormField extends StatelessWidget {
         onTap: onTextFieldTap,
         readOnly: textFieldReadOnly ?? false,
         autovalidateMode: AutovalidateMode.disabled,
+        onChanged: onChange,
         decoration: InputDecoration(
           isCollapsed: isCollapsed ?? false,
           enabledBorder: OutlineInputBorder(
@@ -133,6 +135,7 @@ class CustomTextFormField extends StatelessWidget {
           color: textColor ?? AppColors.WHITE_COLOR,
           fontWeight: FontWeight.w700,
         ),
+
         keyboardType: keyBoardType ?? TextInputType.emailAddress,
         obscureText: obscureText ?? false,
         cursorColor: cursorColor ?? Colors.white,

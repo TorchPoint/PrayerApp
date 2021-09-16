@@ -41,7 +41,7 @@ class _PrayerPartnerListScreenState extends State<PrayerPartnerListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var userProvider = Provider.of<AppUserProvider>(context, listen: false);
+    var userProvider = Provider.of<AppUserProvider>(context, listen: true);
     return CustomBackgroundContainer(
       child: Scaffold(
         backgroundColor: AppColors.TRANSPARENT_COLOR,
@@ -127,7 +127,12 @@ class _PrayerPartnerListScreenState extends State<PrayerPartnerListScreen> {
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                      image: AssetImage(AssetPaths.PARTNER_IMAGE),
+                      image: userProvider.prayerPartnersList[partnerIndex]
+                                  .profileImage ==
+                              null
+                          ? AssetImage(AssetPaths.PARTNER_IMAGE)
+                          : NetworkImage(userProvider
+                              .prayerPartnersList[partnerIndex].profileImage),
                       fit: BoxFit.cover)),
             ),
             SizedBox(

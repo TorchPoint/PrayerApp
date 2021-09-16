@@ -41,6 +41,8 @@ class PrayerProvider extends ChangeNotifier {
   PrayerModel _prayerModel;
   List<PrayerModel> prayerList;
   List<PrayerModel> praiseList;
+  List<PrayerModel> searchPrayerList;
+  List<PrayerModel> searchPraiseList;
 
   PrayerModel get prayerModel => _prayerModel;
 
@@ -74,6 +76,36 @@ class PrayerProvider extends ChangeNotifier {
       praise.forEach((element) {
         praiseList.add(PrayerModel.fromJson(element));
       });
+    }
+    notifyListeners();
+  }
+
+  void fetchSearchList(List searchList) {
+    searchPraiseList = [];
+    searchPrayerList = [];
+
+    if (searchList != null) {
+      searchList.forEach((element) {
+        if (element["type"] == "praise") {
+          searchPraiseList.add(PrayerModel.fromJson(element));
+        } else if (element["type"] == "prayer") {
+          searchPrayerList.add(PrayerModel.fromJson(element));
+        }
+      });
+    }
+    notifyListeners();
+  }
+
+  void resetPrayerSearchList() {
+    if (searchPrayerList != null) {
+      searchPrayerList.clear();
+    }
+    notifyListeners();
+  }
+
+  void resetPraiseSearchList() {
+    if (searchPraiseList != null) {
+      searchPraiseList.clear();
     }
     notifyListeners();
   }

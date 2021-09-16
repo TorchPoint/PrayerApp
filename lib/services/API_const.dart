@@ -26,6 +26,7 @@ class ApiConst {
   static const UPDATE_PRAYER_URL = "update-prayer";
   static const DELETE_PRAYER_URL = "delete-prayer";
   static const ANSWER_PRAYER_URL = "finish-prayer";
+  static const SEARCH_PRAYERS_URL = "prayer-search";
 
   static const ADD_REMINDER_URL = "add-reminder";
   static const FETCH_REMINDERS_URL = "reminders";

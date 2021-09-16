@@ -3,22 +3,17 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
-
 import 'package:prayer_hybrid_app/auth/screens/auth_main_screen.dart';
 import 'package:prayer_hybrid_app/auth/screens/auth_verification_screen.dart';
 import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
-
 import 'package:prayer_hybrid_app/models/user_model.dart';
 import 'package:prayer_hybrid_app/password/screens/reset_password_screen.dart';
 import 'package:prayer_hybrid_app/prayer_partner/screens/prayer_partner_list_screen.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/prayer_praise_tab_screen.dart';
-
 import 'package:prayer_hybrid_app/providers/provider.dart';
-
 import 'package:prayer_hybrid_app/reminder_calendar/screens/reminder_screen.dart';
 import 'package:prayer_hybrid_app/services/API_const.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
@@ -36,7 +31,7 @@ class BaseService {
     Fluttertoast.showToast(
       msg: message,
       backgroundColor: color,
-      toastLength: Toast.LENGTH_SHORT,
+      toastLength: Toast.LENGTH_LONG,
       gravity: ToastGravity.BOTTOM,
       textColor: AppColors.WHITE_COLOR,
     );
@@ -211,7 +206,7 @@ class BaseService {
         } else {
           setUserData(context, value);
           showToast(value["message"], AppColors.SUCCESS_COLOR);
-          AppNavigation.navigateTo(context, DrawerScreen());
+          AppNavigation.navigateReplacement(context, DrawerScreen());
         }
       }
     });
@@ -507,7 +502,7 @@ class BaseService {
       if (value["status"] == 1) {
         setUserData(context, value);
         showToast(value["message"], AppColors.SUCCESS_COLOR);
-        AppNavigation.navigateTo(context, DrawerScreen());
+        AppNavigation.navigateReplacement(context, DrawerScreen());
       } else {
         showToast(value["message"], AppColors.ERROR_COLOR);
       }
@@ -533,7 +528,7 @@ class BaseService {
       if (value["status"] == 1) {
         setUserData(context, value);
         showToast(value["message"], AppColors.SUCCESS_COLOR);
-        AppNavigation.navigateTo(context, DrawerScreen());
+        AppNavigation.navigateReplacement(context, DrawerScreen());
       } else {
         showToast(value["message"], AppColors.ERROR_COLOR);
       }
@@ -559,7 +554,7 @@ class BaseService {
       if (value["status"] == 1) {
         setUserData(context, value);
         showToast(value["message"], AppColors.SUCCESS_COLOR);
-        AppNavigation.navigateTo(context, DrawerScreen());
+        AppNavigation.navigateReplacement(context, DrawerScreen());
       } else {
         showToast(value["message"], AppColors.ERROR_COLOR);
       }
@@ -700,7 +695,6 @@ class BaseService {
   }
 
   Future deletePraise(BuildContext context, praiseID) async {
-    var prayerProvider = Provider.of<PrayerProvider>(context, listen: false);
     Map<String, String> requestBody = <String, String>{
       "prayer": praiseID.toString(),
     };
@@ -728,6 +722,22 @@ class BaseService {
         showToast("Prayer Ended", AppColors.SUCCESS_COLOR);
         AppNavigation.navigatorPop(context);
         AppNavigation.navigateTo(context, PrayerPraiseTabScreen());
+      }
+    });
+  }
+
+  Future searchPrayer(BuildContext context, search) async {
+    var praiseProvider = Provider.of<PrayerProvider>(context, listen: false);
+
+    getBaseMethod(ApiConst.SEARCH_PRAYERS_URL + "?search=${search}",
+            loading: true, tokenCheck: true)
+        .then((value) {
+      if (value["status"] == 1) {
+        praiseProvider.fetchSearchList(value["data"]);
+      } else {
+        praiseProvider.resetPrayerSearchList();
+        praiseProvider.resetPraiseSearchList();
+        showToast(value["message"], AppColors.ERROR_COLOR);
       }
     });
   }
@@ -789,6 +799,21 @@ class BaseService {
     });
   }
 
+  Future deleteReminder(BuildContext context, reminderID) async {
+    Map<String, String> requestBody = <String, String>{
+      "reminder": reminderID.toString(),
+    };
+
+    formDataBaseMethod(ApiConst.DELETE_REMINDER_URL,
+            bodyCheck: true, body: requestBody, tokenCheck: true)
+        .then((value) {
+      if (value["status"] == 1) {
+        showToast("Reminder Deleted", AppColors.SUCCESS_COLOR);
+        fetchReminderList(context);
+      } else {}
+    });
+  }
+
   Future fetchPartnersList(BuildContext context) async {
     var userProvider = Provider.of<AppUserProvider>(context, listen: false);
     await getBaseMethod(ApiConst.FETCH_PARTNERS_URL,
@@ -814,6 +839,7 @@ class BaseService {
         .then((value) {
       if (value["status"] == 0) {
         showToast(value["message"], AppColors.ERROR_COLOR);
+        AppNavigation.navigatorPop(context);
       } else {
         showToast(value["message"], AppColors.SUCCESS_COLOR);
         AppNavigation.navigatorPop(context);

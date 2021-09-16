@@ -16,7 +16,7 @@ class PrayersListScreen extends StatefulWidget {
 
 class _PrayersListScreenState extends State<PrayersListScreen> {
   TextEditingController _searchController = TextEditingController();
-  int selectIndex=0;
+  int selectIndex = 0;
   BaseService baseService = BaseService();
   List<String> prayerList = [
     "Test",
@@ -46,26 +46,36 @@ class _PrayersListScreenState extends State<PrayersListScreen> {
           height: 10.0,
         ),
         Expanded(
-          child: prayerProvider.prayerList==null || prayerProvider.prayerList.length==0
+          child: prayerProvider.prayerList == null ||
+                  prayerProvider.prayerList.length == 0
               ? Center(
                   child: Text(
                     "No Prayers Found",
                     style: TextStyle(color: AppColors.WHITE_COLOR),
                   ),
                 )
-              : ListView.builder(
-                  itemCount: prayerProvider.prayerList.length ?? 0,
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  itemBuilder: (BuildContext ctxt, int index) {
-                    return _prayersList(index);
-                  }),
+              : _searchController.text.isEmpty
+                  ? ListView.builder(
+                      itemCount: prayerProvider.prayerList.length ?? 0,
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      itemBuilder: (BuildContext ctxt, int index) {
+                        return _prayersList(index);
+                      })
+                  : ListView.builder(
+                      itemCount: prayerProvider.searchPrayerList.length ?? 0,
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      itemBuilder: (BuildContext ctxt, int index) {
+                        return _prayersList(index);
+                      }),
         ),
       ],
     );
   }
 
   Widget _searchTextFormField() {
+    var prayerProvider = Provider.of<PrayerProvider>(context, listen: true);
     return CustomTextFormField(
       textController: _searchController,
       containerWidth: MediaQuery.of(context).size.width * 0.85,
@@ -80,6 +90,13 @@ class _PrayersListScreenState extends State<PrayersListScreen> {
       hintSize: 15.0,
       textSize: 15.0,
       isCollapsed: true,
+      onChange: (val) {
+        if (_searchController.text.isEmpty) {
+          prayerProvider.resetPrayerSearchList();
+        } else {
+          baseService.searchPrayer(context, val.toString());
+        }
+      },
     );
   }
 
@@ -130,7 +147,9 @@ class _PrayersListScreenState extends State<PrayersListScreen> {
           children: [
             Expanded(
               child: Text(
-                prayerProvider.prayerList[prayerIndex].title,
+                _searchController.text.isEmpty
+                    ? prayerProvider.prayerList[prayerIndex].title
+                    : prayerProvider.searchPrayerList[prayerIndex].title,
                 style: TextStyle(
                     fontSize: 14.5,
                     color: selectIndex == prayerIndex
