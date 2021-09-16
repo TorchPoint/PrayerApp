@@ -5,7 +5,7 @@ import 'package:prayer_hybrid_app/models/user_model.dart';
 
 class AppUserProvider extends ChangeNotifier {
   AppUser _appUser;
-  List<AppUser> appUserList;
+  List<AppUser> prayerPartnersList;
 
   AppUser get appUser => _appUser;
 
@@ -16,6 +16,23 @@ class AppUserProvider extends ChangeNotifier {
 
   void restUserProvider() {
     _appUser = null;
+    notifyListeners();
+  }
+
+  void fetchPrayerPartners(List newPartners) {
+    prayerPartnersList = [];
+    if (newPartners != null) {
+      newPartners.forEach((element) {
+        prayerPartnersList.add(AppUser.fromJson(element));
+      });
+    }
+    notifyListeners();
+  }
+
+  void resetPartnersList() {
+    if (prayerPartnersList != null) {
+      prayerPartnersList.clear();
+    }
     notifyListeners();
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:prayer_hybrid_app/prayer_partner/screens/contact_list_screen.dart';
+import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
@@ -21,10 +22,12 @@ class AddPrayerPartnerScreen extends StatefulWidget {
 class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
   TextEditingController _addNameController = TextEditingController();
   TextEditingController _addMobileNoController = TextEditingController();
-  bool errorBoolName = true,errorBoolMobile = true;
-  String errorName = "",errorMobile ="";
-  Map<String,dynamic> contactInfo = Map<String,dynamic>();
+  bool errorBoolName = true, errorBoolMobile = true;
+  String errorName = "", errorMobile = "";
+  Map<String, dynamic> contactInfo = Map<String, dynamic>();
   final GlobalKey<FormState> _addPrayerPartnerKey = GlobalKey<FormState>();
+  BaseService baseService = BaseService();
+
   @override
   Widget build(BuildContext context) {
     return CustomBackgroundContainer(
@@ -33,7 +36,9 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
         body: Column(
           children: [
             _customAppBar(),
-            SizedBox(height: 6.0,),
+            SizedBox(
+              height: 6.0,
+            ),
             Expanded(
               child: SingleChildScrollView(
                 child: Form(
@@ -41,39 +46,31 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 23.0,),
+                      SizedBox(
+                        height: 23.0,
+                      ),
                       Align(
                           alignment: Alignment.center,
-                          child: _addNameTextFormField()
+                          child: _addNameTextFormField()),
+                      SizedBox(
+                        height: 23.0,
                       ),
-
-
-                      SizedBox(height: 23.0,),
-
-
                       Align(
                           alignment: Alignment.center,
-                          child: _addMobileNoTextFormField()
-                      ),
-
-
+                          child: _addMobileNoTextFormField()),
                       SizedBox(height: 23.0),
-
-                      Align(
-                        alignment: Alignment.center,
-                          child: _addPrayerPartnerWidget()
-                      ),
-
-                      SizedBox(height: 20.0,),
-
                       Align(
                           alignment: Alignment.center,
-                          child: _searchContactButtonWidget()
+                          child: _addPrayerPartnerWidget()),
+                      SizedBox(
+                        height: 20.0,
                       ),
-
-                      SizedBox(height: 15.0,),
-
-
+                      Align(
+                          alignment: Alignment.center,
+                          child: _searchContactButtonWidget()),
+                      SizedBox(
+                        height: 15.0,
+                      ),
                     ],
                   ),
                 ),
@@ -86,24 +83,22 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
   }
 
   //Custom App Bar Widget
-  Widget _customAppBar()
-  {
+  Widget _customAppBar() {
     return CustomAppBar(
       title: AppStrings.PRAYER_PARTNER_TEXT,
       leadingIconPath: AssetPaths.BACK_ICON,
       paddingTop: 20.0,
-      leadingTap: (){
+      leadingTap: () {
         AppNavigation.navigatorPop(context);
       },
     );
   }
 
   //Group Title Text Form Field
-  Widget _addNameTextFormField()
-  {
+  Widget _addNameTextFormField() {
     return CustomTextFormField(
       textController: _addNameController,
-      containerWidth: MediaQuery.of(context).size.width*0.85,
+      containerWidth: MediaQuery.of(context).size.width * 0.85,
       hintText: AppStrings.ADD_NAME_TEXT,
       borderRadius: 28.0,
       contentPaddingTop: 17.5,
@@ -116,9 +111,8 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
       hintColor: AppColors.WHITE_COLOR,
       textColor: AppColors.WHITE_COLOR,
       cursorColor: AppColors.WHITE_COLOR,
-      onValidate: (value){
-        if(value.trim().isEmpty)
-        {
+      onValidate: (value) {
+        if (value.trim().isEmpty) {
           return AppStrings.ADD_NAME_EMPTY_ERROR;
         }
         return null;
@@ -126,13 +120,11 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
     );
   }
 
-
   //Add Mobile No Text Form Field
-  Widget _addMobileNoTextFormField()
-  {
+  Widget _addMobileNoTextFormField() {
     return CustomTextFormField(
       textController: _addMobileNoController,
-      containerWidth: MediaQuery.of(context).size.width*0.85,
+      containerWidth: MediaQuery.of(context).size.width * 0.85,
       hintText: AppStrings.ADD_MOBILE_NO_HINT_TEXT,
       borderRadius: 28.0,
       contentPaddingTop: 17.5,
@@ -148,43 +140,37 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
       textColor: AppColors.WHITE_COLOR,
       cursorColor: AppColors.WHITE_COLOR,
       keyBoardType: TextInputType.phone,
-      onValidate: (value){
-        if(value.trim().isEmpty)
-          {
-            return AppStrings.MOBILE_NO_EMPTY_ERROR;
-          }
+      onValidate: (value) {
+        if (value.trim().isEmpty) {
+          return AppStrings.MOBILE_NO_EMPTY_ERROR;
+        }
         return null;
       },
     );
   }
 
-
   //Create Group Button Widget
-  Widget _addPrayerPartnerWidget()
-  {
+  Widget _addPrayerPartnerWidget() {
     return CustomButton(
-      containerWidth: MediaQuery.of(context).size.width*0.75,
-      buttonColor: AppColors.BUTTON_COLOR,
-      borderColor: AppColors.BUTTON_COLOR,
-      elevation: true,
-      buttonText: AppStrings.ADD_PRAYER_PARTNER_TEXT.toUpperCase(),
-      textColor: AppColors.WHITE_COLOR,
-      fontWeight: FontWeight.w700,
-      paddingTop: 13.5,
-      paddingBottom: 13.5,
-      fontSize: 1.2,
-      onTap: () {
-        _addPrayerPartnerMethod();
-      }
-    );
+        containerWidth: MediaQuery.of(context).size.width * 0.75,
+        buttonColor: AppColors.BUTTON_COLOR,
+        borderColor: AppColors.BUTTON_COLOR,
+        elevation: true,
+        buttonText: AppStrings.ADD_PRAYER_PARTNER_TEXT.toUpperCase(),
+        textColor: AppColors.WHITE_COLOR,
+        fontWeight: FontWeight.w700,
+        paddingTop: 13.5,
+        paddingBottom: 13.5,
+        fontSize: 1.2,
+        onTap: () {
+          _addPrayerPartnerMethod();
+        });
   }
 
-
   //Create Search Contact Button Widget
-  Widget _searchContactButtonWidget()
-  {
+  Widget _searchContactButtonWidget() {
     return CustomButton(
-      containerWidth: MediaQuery.of(context).size.width*0.75,
+      containerWidth: MediaQuery.of(context).size.width * 0.75,
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
       elevation: true,
@@ -194,36 +180,32 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
       fontSize: 1.2,
       paddingTop: 13.5,
       paddingBottom: 13.5,
-      onTap: (){
+      onTap: () {
         _askPermissions();
       },
     );
   }
 
-
-  void _addPrayerPartnerMethod()
-    {
-      if(_addPrayerPartnerKey.currentState.validate())
-        {
-          AppNavigation.navigatorPop(context);
-        }
-
+  void _addPrayerPartnerMethod() {
+    if (_addPrayerPartnerKey.currentState.validate()) {
+      baseService.addPrayerPartners(
+          context, _addMobileNoController.text, _addNameController.text);
     }
-
+  }
 
   Future<void> _askPermissions() async {
     PermissionStatus permissionStatus = await _getContactPermission();
     if (permissionStatus == PermissionStatus.granted) {
       getContactInfo();
     } else {
-      _handleInvalidPermissions(permissionStatus);
+      getContactInfo();
+      // _handleInvalidPermissions(permissionStatus);
     }
   }
 
   Future<PermissionStatus> _getContactPermission() async {
-  
     PermissionStatus permission = await Permission.contacts.status;
-    print("PErmission"+permission.toString());
+    print("PErmission" + permission.toString());
     if (permission != PermissionStatus.granted &&
         permission != PermissionStatus.permanentlyDenied) {
       PermissionStatus permissionStatus = await Permission.contacts.request();
@@ -235,25 +217,21 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
 
   void _handleInvalidPermissions(PermissionStatus permissionStatus) {
     if (permissionStatus == PermissionStatus.denied) {
-      AppDialogs.showToast(message:AppStrings.CONTACT_DENIED_ERROR);
+      AppDialogs.showToast(message: AppStrings.CONTACT_DENIED_ERROR);
     } else if (permissionStatus == PermissionStatus.permanentlyDenied) {
-      AppDialogs.showToast(message:AppStrings.CONTACT_PERMANENTLY_DENIED_ERROR);
+      AppDialogs.showToast(
+          message: AppStrings.CONTACT_PERMANENTLY_DENIED_ERROR);
       //ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
   }
 
-  void getContactInfo() async
-  {
-    contactInfo = await AppNavigation.navigateToUpdate(context, ContactListScreen());
-    if(contactInfo != null)
-    {
-    _addNameController.text = contactInfo["name"].toString();
-    _addMobileNoController.text = contactInfo["phone no"].toString();
+  void getContactInfo() async {
+    contactInfo =
+        await AppNavigation.navigateToUpdate(context, ContactListScreen());
+    if (contactInfo != null) {
+      _addNameController.text = contactInfo["name"].toString();
+      _addMobileNoController.text = contactInfo["phone no"].toString();
     }
     //print(contactInfo.toString());
   }
-
-
-
-
 }

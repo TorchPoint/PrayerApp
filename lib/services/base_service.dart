@@ -7,17 +7,18 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
-import 'package:image_picker/image_picker.dart';
+
 import 'package:prayer_hybrid_app/auth/screens/auth_main_screen.dart';
 import 'package:prayer_hybrid_app/auth/screens/auth_verification_screen.dart';
 import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
-import 'package:prayer_hybrid_app/models/prayer_model.dart';
+
 import 'package:prayer_hybrid_app/models/user_model.dart';
 import 'package:prayer_hybrid_app/password/screens/reset_password_screen.dart';
+import 'package:prayer_hybrid_app/prayer_partner/screens/prayer_partner_list_screen.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/prayer_praise_tab_screen.dart';
-import 'package:prayer_hybrid_app/prayer_praise_info/screens/prayers_list_screen.dart';
+
 import 'package:prayer_hybrid_app/providers/provider.dart';
-import 'package:prayer_hybrid_app/reminder_calendar/screens/calendar_screen.dart';
+
 import 'package:prayer_hybrid_app/reminder_calendar/screens/reminder_screen.dart';
 import 'package:prayer_hybrid_app/services/API_const.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
@@ -25,7 +26,6 @@ import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import 'package:http_parser/http_parser.dart';
 
 class BaseService {
   var id;
@@ -415,6 +415,9 @@ class BaseService {
         if (reminderProvider != null) {
           reminderProvider.resetReminderModel();
         }
+        if (userProvider != null) {
+          userProvider.resetPartnersList();
+        }
         AppNavigation.navigatorPop(context);
         AppNavigation.navigateToRemovingAll(context, AuthMainScreen());
       } else {
@@ -782,6 +785,39 @@ class BaseService {
         showToast("Reminder Updated", AppColors.SUCCESS_COLOR);
         AppNavigation.navigatorPop(context);
         AppNavigation.navigateReplacement(context, ReminderScreen());
+      }
+    });
+  }
+
+  Future fetchPartnersList(BuildContext context) async {
+    var userProvider = Provider.of<AppUserProvider>(context, listen: false);
+    await getBaseMethod(ApiConst.FETCH_PARTNERS_URL,
+            loading: true, tokenCheck: true)
+        .then((value) {
+      if (value["status"] == 1) {
+        userProvider.fetchPrayerPartners(value["data"]);
+      } else {
+        showToast(value["message"], AppColors.ERROR_COLOR);
+        userProvider.resetPartnersList();
+      }
+    });
+  }
+
+  Future addPrayerPartners(BuildContext context, contact, name) async {
+    Map<String, String> requestBody = <String, String>{
+      "contact_no": contact,
+      "name": name,
+    };
+
+    await formDataBaseMethod(ApiConst.ADD_PARTNERS_URL,
+            tokenCheck: true, body: requestBody, bodyCheck: true)
+        .then((value) {
+      if (value["status"] == 0) {
+        showToast(value["message"], AppColors.ERROR_COLOR);
+      } else {
+        showToast(value["message"], AppColors.SUCCESS_COLOR);
+        AppNavigation.navigatorPop(context);
+        AppNavigation.navigateReplacement(context, PrayerPartnerListScreen());
       }
     });
   }

@@ -3,6 +3,8 @@ import 'package:prayer_hybrid_app/chat_audio_video/screens/chat_screen.dart';
 import 'package:prayer_hybrid_app/common_classes/share_class.dart';
 import 'package:prayer_hybrid_app/prayer_group/screens/create_prayer_group_screen.dart';
 import 'package:prayer_hybrid_app/prayer_partner/screens/add_prayer_partner_screen.dart';
+import 'package:prayer_hybrid_app/providers/provider.dart';
+import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
@@ -10,6 +12,7 @@ import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/widgets/custom_button.dart';
+import 'package:provider/provider.dart';
 
 class PrayerPartnerListScreen extends StatefulWidget {
   @override
@@ -28,8 +31,17 @@ class _PrayerPartnerListScreenState extends State<PrayerPartnerListScreen> {
   ];
   int prayerPartnerSelectedIndex = 0;
 
+  BaseService baseService = BaseService();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    baseService.fetchPartnersList(context);
+  }
+
   @override
   Widget build(BuildContext context) {
+    var userProvider = Provider.of<AppUserProvider>(context, listen: false);
     return CustomBackgroundContainer(
       child: Scaffold(
         backgroundColor: AppColors.TRANSPARENT_COLOR,
@@ -40,12 +52,20 @@ class _PrayerPartnerListScreenState extends State<PrayerPartnerListScreen> {
               height: 20.0,
             ),
             Expanded(
-              child: ListView.builder(
-                  itemCount: prayerPartnerList.length,
-                  padding: EdgeInsets.zero,
-                  itemBuilder: (BuildContext ctxt, int index) {
-                    return _praiyerGroupsListWidget(index);
-                  }),
+              child: userProvider.prayerPartnersList == null ||
+                      userProvider.prayerPartnersList.length == 0
+                  ? Center(
+                      child: Text(
+                        "No Prayers Found",
+                        style: TextStyle(color: AppColors.WHITE_COLOR),
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: userProvider.prayerPartnersList.length ?? 0,
+                      padding: EdgeInsets.zero,
+                      itemBuilder: (BuildContext ctxt, int index) {
+                        return _praiyerGroupsListWidget(index);
+                      }),
             ),
             SizedBox(
               height: 19.0,
@@ -79,6 +99,7 @@ class _PrayerPartnerListScreenState extends State<PrayerPartnerListScreen> {
 
   //Prayer Groups List Widget
   Widget _praiyerGroupsListWidget(int partnerIndex) {
+    var userProvider = Provider.of<AppUserProvider>(context, listen: true);
     return GestureDetector(
       onTap: () {
         print("next screen");
@@ -114,7 +135,7 @@ class _PrayerPartnerListScreenState extends State<PrayerPartnerListScreen> {
             ),
             Expanded(
               child: Text(
-                prayerPartnerList[partnerIndex],
+                userProvider.prayerPartnersList[partnerIndex].firstName,
                 style: TextStyle(
                     fontSize: 15.5,
                     color: AppColors.BLACK_COLOR,

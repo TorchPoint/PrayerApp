@@ -31,4 +31,8 @@ class ApiConst {
   static const FETCH_REMINDERS_URL = "reminders";
   static const UPDATE_REMINDER_URL = "update-reminder";
   static const DELETE_REMINDER_URL = "delete-reminder";
+
+  static const FETCH_PARTNERS_URL = "partners";
+  static const ADD_PARTNERS_URL = "add-partner";
+  static const SEARCH_PARTNERS_URL = "search-partners";
 }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/auth/screens/auth_main_screen.dart';
 import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
@@ -22,11 +23,17 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   BaseService baseService = BaseService();
 
+  void getToken() async {
+    String token = await FirebaseMessaging.instance.getToken();
+    print(token);
+  }
+
   @override
   void initState() {
     super.initState();
     _splashTimer();
     // loadData();
+    getToken();
     baseService.loadLocalUser();
   }
 
