@@ -9,7 +9,6 @@ import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
-import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
 import 'package:prayer_hybrid_app/reminder_calendar/screens/time_alert_screen.dart';
@@ -26,10 +25,8 @@ class CalendarScreen extends StatefulWidget {
 
 class _CalendarScreenState extends State<CalendarScreen> {
   TextEditingController _addReminderController = TextEditingController();
-  bool errorBoolReminder = true,
-      errorBoolFrequency = true;
-  String errorMessageReminder = "",
-      errorMessageFrequency = "";
+  bool errorBoolReminder = true, errorBoolFrequency = true;
+  String errorMessageReminder = "", errorMessageFrequency = "";
   String currentFrequencyValue;
   List<String> frequencies = ["Once", "Daily", "Weekly", "Monthly"];
   TimeAlertScreen timeAlertScreen = TimeAlertScreen();
@@ -119,14 +116,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       ),
                       Container(
                           margin: EdgeInsets.only(
-                              left: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .width * 0.02,
-                              right: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .width * 0.02),
+                              left: MediaQuery.of(context).size.width * 0.02,
+                              right: MediaQuery.of(context).size.width * 0.02),
                           child: _calendarWidget()),
                     ],
                   ),
@@ -154,10 +145,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   Widget _addReminderTextFormField() {
     return CustomTextFormField(
       textController: _addReminderController,
-      containerWidth: MediaQuery
-          .of(context)
-          .size
-          .width * 0.85,
+      containerWidth: MediaQuery.of(context).size.width * 0.85,
       hintText: AppStrings.ADD_REMINDER_TITLE_HINT_TEXT,
       borderRadius: 28.0,
       contentPaddingTop: 14.0,
@@ -175,9 +163,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
       textColor: AppColors.WHITE_COLOR,
       cursorColor: AppColors.WHITE_COLOR,
       onValidate: (value) {
-        if (value
-            .trim()
-            .isEmpty) {
+        if (value.trim().isEmpty) {
           return AppStrings.ADD_REMINDER_TITLE_ERROR_TEXT;
         }
         return null;
@@ -188,10 +174,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   //Frequency Widget
   Widget _frequencyWidget() {
     return Container(
-        width: MediaQuery
-            .of(context)
-            .size
-            .width * 0.85,
+        width: MediaQuery.of(context).size.width * 0.85,
         child: DropdownButtonHideUnderline(
           child: DropdownButtonFormField<String>(
             iconEnabledColor: AppColors.BLACK_COLOR,
@@ -207,11 +190,11 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 errorBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0),
                     borderSide:
-                    BorderSide(color: AppColors.ERROR_COLOR, width: 1.3)),
+                        BorderSide(color: AppColors.ERROR_COLOR, width: 1.3)),
                 focusedErrorBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0),
                     borderSide:
-                    BorderSide(color: AppColors.ERROR_COLOR, width: 1.3)),
+                        BorderSide(color: AppColors.ERROR_COLOR, width: 1.3)),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30.0),
                 ),
@@ -247,10 +230,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
             selectedItemBuilder: (BuildContext context) {
               return frequencies.map((value) {
                 return Container(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width * 0.6,
+                  width: MediaQuery.of(context).size.width * 0.6,
                   child: Text(
                     value.toString(),
                     overflow: TextOverflow.ellipsis,
@@ -266,10 +246,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
               return DropdownMenuItem<String>(
                 value: value,
                 child: Container(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width * 0.6,
+                  width: MediaQuery.of(context).size.width * 0.6,
                   child: Text(
                     value,
                     style: TextStyle(
@@ -313,10 +290,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
         ),
         leftChevronPadding: EdgeInsets.zero,
         leftChevronMargin:
-        EdgeInsets.only(left: MediaQuery
-            .of(context)
-            .size
-            .width * 0.2),
+            EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.2),
         rightChevronIcon: Icon(
           Icons.chevron_right,
           color: AppColors.WHITE_COLOR,
@@ -324,10 +298,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
         ),
         rightChevronPadding: EdgeInsets.zero,
         rightChevronMargin:
-        EdgeInsets.only(right: MediaQuery
-            .of(context)
-            .size
-            .width * 0.2),
+            EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.2),
       ),
       calendarStyle: CalendarStyle(outsideDaysVisible: false),
       formatAnimation: FormatAnimation.slide,
@@ -405,10 +376,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   //Week Days Widget
   Widget weekDaysWidget(String weekDay) {
     return Container(
-      height: MediaQuery
-          .of(context)
-          .size
-          .height * 0.11,
+      height: MediaQuery.of(context).size.height * 0.11,
       padding: EdgeInsets.only(left: 1.5, right: 1.5, top: 1.5, bottom: 1.5),
       margin: EdgeInsets.only(left: 0.5, right: 0.5),
       decoration: BoxDecoration(
@@ -417,7 +385,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
           border: Border.all(color: AppColors.WHITE_COLOR)),
       child: Container(
         decoration:
-        BoxDecoration(color: AppColors.WHITE_COLOR, shape: BoxShape.circle),
+            BoxDecoration(color: AppColors.WHITE_COLOR, shape: BoxShape.circle),
         child: Center(
           child: Text(
             weekDay.substring(0, 2).toUpperCase(),
@@ -470,13 +438,20 @@ class _CalendarScreenState extends State<CalendarScreen> {
         if (widget.reminderModel == null) {
           print("ADD REMINDER");
           baseService.addReminder(
-              context, _addReminderController.text, currentFrequencyValue.toLowerCase(),
-              calendarReminerTime, date.toString().substring(0, 10));
-        }else{
+              context,
+              _addReminderController.text,
+              currentFrequencyValue.toLowerCase(),
+              calendarReminerTime,
+              date.toString().substring(0, 10));
+        } else {
           print("UPDATE REMINDER");
           baseService.updateReminder(
-              context, _addReminderController.text, currentFrequencyValue.toLowerCase(),
-              calendarReminerTime, date.toString().substring(0, 10),widget.reminderModel.id.toString());
+              context,
+              _addReminderController.text,
+              currentFrequencyValue.toLowerCase(),
+              calendarReminerTime,
+              date.toString().substring(0, 10),
+              widget.reminderModel.id.toString());
         }
       } else {
         reminderTimeError();

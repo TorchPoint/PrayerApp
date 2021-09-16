@@ -742,6 +742,21 @@ class BaseService {
     });
   }
 
+  Future searchGroupPartners(BuildContext context, search) async {
+    var userProvider = Provider.of<AppUserProvider>(context, listen: false);
+
+    await getBaseMethod(ApiConst.SEARCH_PARTNERS_URL + "?search=${search}",
+            tokenCheck: true, loading: true)
+        .then((value) {
+      if (value["status"] == 1) {
+        userProvider.fetchSearchListPartners(value["data"]);
+      } else {
+        userProvider.resetSearchPartnersList();
+        showToast(value["message"], AppColors.ERROR_COLOR);
+      }
+    });
+  }
+
   Future fetchReminderList(BuildContext context) async {
     var reminderProvider =
         Provider.of<ReminderProvider>(context, listen: false);

@@ -12,6 +12,7 @@ import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/widgets/custom_button.dart';
+import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
 import 'package:provider/provider.dart';
 
 class PrayerPartnerListScreen extends StatefulWidget {
@@ -21,14 +22,7 @@ class PrayerPartnerListScreen extends StatefulWidget {
 }
 
 class _PrayerPartnerListScreenState extends State<PrayerPartnerListScreen> {
-  List<String> prayerPartnerList = [
-    "Ben",
-    "Mildred",
-    "Andy",
-    "Christina",
-    "George",
-    "Bryan"
-  ];
+  TextEditingController _searchController = TextEditingController();
   int prayerPartnerSelectedIndex = 0;
 
   BaseService baseService = BaseService();
@@ -51,6 +45,10 @@ class _PrayerPartnerListScreenState extends State<PrayerPartnerListScreen> {
             SizedBox(
               height: 20.0,
             ),
+            _searchTextFormField(),
+            SizedBox(
+              height: 20.0,
+            ),
             Expanded(
               child: userProvider.prayerPartnersList == null ||
                       userProvider.prayerPartnersList.length == 0
@@ -60,15 +58,24 @@ class _PrayerPartnerListScreenState extends State<PrayerPartnerListScreen> {
                         style: TextStyle(color: AppColors.WHITE_COLOR),
                       ),
                     )
-                  : ListView.builder(
-                      itemCount: userProvider.prayerPartnersList.length ?? 0,
-                      padding: EdgeInsets.zero,
-                      itemBuilder: (BuildContext ctxt, int index) {
-                        return _praiyerGroupsListWidget(index);
-                      }),
+                  : _searchController.text.isEmpty
+                      ? ListView.builder(
+                          itemCount:
+                              userProvider.prayerPartnersList.length ?? 0,
+                          padding: EdgeInsets.zero,
+                          itemBuilder: (BuildContext ctxt, int index) {
+                            return _praiyerGroupsListWidget(index);
+                          })
+                      : ListView.builder(
+                          itemCount:
+                              userProvider.searchPartnersList.length ?? 0,
+                          padding: EdgeInsets.zero,
+                          itemBuilder: (BuildContext ctxt, int index) {
+                            return _praiyerGroupsListWidget(index);
+                          }),
             ),
             SizedBox(
-              height: 19.0,
+              height: 10.0,
             ),
             _addPrayerButtonWidget(),
             SizedBox(
@@ -93,7 +100,8 @@ class _PrayerPartnerListScreenState extends State<PrayerPartnerListScreen> {
       leadingTap: () {
         AppNavigation.navigatorPop(context);
       },
-      trailingIconPath: AssetPaths.SEARCH_ICON,
+      //trailingIconPath: AssetPaths.SEARCH_ICON,
+      //t
     );
   }
 
@@ -140,7 +148,9 @@ class _PrayerPartnerListScreenState extends State<PrayerPartnerListScreen> {
             ),
             Expanded(
               child: Text(
-                userProvider.prayerPartnersList[partnerIndex].firstName,
+                _searchController.text.isEmpty
+                    ? userProvider.prayerPartnersList[partnerIndex].firstName
+                    : userProvider.searchPartnersList[partnerIndex].firstName,
                 style: TextStyle(
                     fontSize: 15.5,
                     color: AppColors.BLACK_COLOR,
@@ -189,6 +199,33 @@ class _PrayerPartnerListScreenState extends State<PrayerPartnerListScreen> {
       paddingBottom: 13.5,
       onTap: () {
         _inviteFriend();
+      },
+    );
+  }
+
+  Widget _searchTextFormField() {
+    var prayerProvider = Provider.of<PrayerProvider>(context, listen: true);
+    var userProvider = Provider.of<AppUserProvider>(context, listen: true);
+    return CustomTextFormField(
+      textController: _searchController,
+      containerWidth: MediaQuery.of(context).size.width * 0.85,
+      hintText: AppStrings.SEARCH_HINT_TEXT,
+      borderRadius: 28.0,
+      contentPaddingTop: 13.0,
+      contentPaddingBottom: 13.0,
+      contentPaddingRight: 8.0,
+      contentPaddingLeft: 20.0,
+      suffixIcon: AssetPaths.SEARCH_ICON,
+      suffixIconWidth: 15,
+      hintSize: 15.0,
+      textSize: 15.0,
+      isCollapsed: true,
+      onChange: (val) {
+        if (_searchController.text.isEmpty) {
+          userProvider.resetSearchPartnersList();
+        } else {
+          baseService.searchGroupPartners(context, val.toString());
+        }
       },
     );
   }
