@@ -1,5 +1,12 @@
+import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/common_classes/share_class.dart';
+import 'package:prayer_hybrid_app/models/user_model.dart';
+import 'package:prayer_hybrid_app/providers/provider.dart';
+import 'package:prayer_hybrid_app/services/API_const.dart';
+import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
@@ -8,30 +15,61 @@ import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/widgets/custom_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:textfield_search/textfield_search.dart';
-
+import 'package:http/http.dart' as http;
 
 class CreatePrayerGroupScreen extends StatefulWidget {
   @override
-  _CreatePrayerGroupScreenState createState() => _CreatePrayerGroupScreenState();
+  _CreatePrayerGroupScreenState createState() =>
+      _CreatePrayerGroupScreenState();
 }
 
 class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
   TextEditingController _groupTitleController = TextEditingController();
   TextEditingController _searchMemberController = TextEditingController();
-  final membersList = [
-    'John',
-    'Mathews',
-    'Brain',
-    'Tom',
-    'Terry'
-  ];
-  List<String> groupMemberList = ["Victoria","Mildred","Andy"];
+  final membersList = ['John', 'Mathews', 'Brain', 'Tom', 'Terry'];
+  List<AppUser> user = [];
+  List<AppUser> groupMemberList = [];
   bool groupTitleBool = true;
   bool groupMemberBool = true;
   String currentMember = "";
+  BaseService baseService = BaseService();
+  int selectedIndex = 0;
+  List<int> memberIds = [];
+
+  Future fetchData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var uri = Uri.parse(ApiConst.BASE_URL + ApiConst.FETCH_PARTNERS_URL);
+
+    final http.Response response = await http.get(uri,
+        headers: {"Authorization": "Bearer ${prefs.getString("token")}"});
+
+    if (response.statusCode == 200) {
+      print(response.body);
+      Map data = jsonDecode(response.body);
+
+      data["data"].forEach((element) {
+        user.add(AppUser.fromJson(element));
+        setState(() {});
+      });
+      return user;
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // fetchData().then((value) {
+    //   print(user.length.toString());
+    // });
+  }
+
   @override
   Widget build(BuildContext context) {
+    var userProvider = Provider.of<AppUserProvider>(context, listen: true);
     return CustomBackgroundContainer(
       child: Scaffold(
         backgroundColor: AppColors.TRANSPARENT_COLOR,
@@ -41,86 +79,106 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _customAppBar(),
-             Expanded(
-               child: Column(
-                 crossAxisAlignment: CrossAxisAlignment.start,
-                 children: [
-                 SizedBox(height: 18.0,),
-                 Padding(
-                     padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.075,right: MediaQuery.of(context).size.width*0.075),
-                     child: Text(AppStrings.GROUP_TITLE_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600),textScaleFactor: 1.18,)
-                 ),
-                 SizedBox(height: 10.0,),
-                 Align(
-                   alignment: Alignment.center,
-                     child: _groupTitleTextFormField()),
-
-                   _errorGroupTitleWidget(),
-
-                   SizedBox(height: 18.0,),
-
-                   Padding(
-                       padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.075,right: MediaQuery.of(context).size.width*0.075),
-                       child: Text(AppStrings.GROUP_MEMBERS_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600),textScaleFactor: 1.18,)
-                   ),
-                   SizedBox(height: 10.0,),
-
-                   Align(
-                       alignment: Alignment.center,
-                       child: _searchMembersTextFormField()),
-
-                   _errorMemberWidget(),
-
-                   SizedBox(height: 18.0,),
-
-                   Align(
-                     alignment: Alignment.center,
-                       child: _addMemberWidget()
-                   ),
-
-                   SizedBox(height: 10.0,),
-
-                   _groupMembersListTextWidget(),
-
-                   Expanded(
-                     child: SingleChildScrollView(
-                       child: Column(
-                         children: [
-                           ListView.builder
-                             (
-                               padding: EdgeInsets.zero,
-                               itemCount: groupMemberList.length,
-                               shrinkWrap: true,
-                               physics: NeverScrollableScrollPhysics(),
-                               itemBuilder: (BuildContext ctxt, int index) {
-                                 return _groupMembersListWidget(index);
-                               }
-                           ),
-                           SizedBox(height: 10.0,),
-                           Align(
-                               alignment: Alignment.center,
-                               child: _createGroupWidget()
-                           ),
-
-                           SizedBox(height: 10.0,),
-
-                           Align(
-                               alignment: Alignment.center,
-                               child: _inviteToPrayerAppWidget()
-                           ),
-
-                           SizedBox(height: 10.0,)
-                         ],
-                       ),
-                     ),
-                   ),
-
-
-
-               ],
-               ),
-             ),
-
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 18.0,
+                  ),
+                  Padding(
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width * 0.075,
+                          right: MediaQuery.of(context).size.width * 0.075),
+                      child: Text(
+                        AppStrings.GROUP_TITLE_TEXT,
+                        style: TextStyle(
+                            color: AppColors.WHITE_COLOR,
+                            fontWeight: FontWeight.w600),
+                        textScaleFactor: 1.18,
+                      )),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Align(
+                      alignment: Alignment.center,
+                      child: _groupTitleTextFormField()),
+                  _errorGroupTitleWidget(),
+                  SizedBox(
+                    height: 18.0,
+                  ),
+                  Padding(
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width * 0.075,
+                          right: MediaQuery.of(context).size.width * 0.075),
+                      child: Text(
+                        AppStrings.GROUP_MEMBERS_TEXT,
+                        style: TextStyle(
+                            color: AppColors.WHITE_COLOR,
+                            fontWeight: FontWeight.w600),
+                        textScaleFactor: 1.18,
+                      )),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Align(
+                      alignment: Alignment.center,
+                      child: _searchMembersTextFormField()),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  _searchMemberController.text.isEmpty
+                      ? Container()
+                      : Wrap(
+                          children: List.generate(
+                              userProvider.searchPartnersList.length ?? 0,
+                              (index) {
+                            return _searchUserWidget(index);
+                          }),
+                        ),
+                  _errorMemberWidget(),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Align(alignment: Alignment.center, child: _addMemberWidget()),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  _groupMembersListTextWidget(),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          ListView.builder(
+                              padding: EdgeInsets.zero,
+                              itemCount: groupMemberList.length,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemBuilder: (BuildContext ctxt, int index) {
+                                return _groupMembersListWidget(index);
+                              }),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Align(
+                              alignment: Alignment.center,
+                              child: _createGroupWidget()),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Align(
+                              alignment: Alignment.center,
+                              child: _inviteToPrayerAppWidget()),
+                          SizedBox(
+                            height: 10.0,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -128,13 +186,12 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
   }
 
   //Custom App Bar Widget
-  Widget _customAppBar()
-  {
+  Widget _customAppBar() {
     return CustomAppBar(
       title: AppStrings.PRAYER_GROUPS_TEXT,
       leadingIconPath: AssetPaths.BACK_ICON,
       paddingTop: 20.0,
-      leadingTap: (){
+      leadingTap: () {
         AppNavigation.navigatorPop(context);
       },
       // trailingIconPath: AssetPaths.SETTING_ICON,
@@ -145,11 +202,10 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
   }
 
   //Group Title Text Form Field
-  Widget _groupTitleTextFormField()
-  {
+  Widget _groupTitleTextFormField() {
     return CustomTextFormField(
       textController: _groupTitleController,
-      containerWidth: MediaQuery.of(context).size.width*0.85,
+      containerWidth: MediaQuery.of(context).size.width * 0.85,
       hintText: AppStrings.GROUP_TITLE_HINT_TEXT,
       borderRadius: 28.0,
       contentPaddingTop: 13.0,
@@ -159,7 +215,9 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
       hintSize: 15.0,
       textSize: 15.0,
       isCollapsed: true,
-      borderColor: groupTitleBool == true ? AppColors.TRANSPARENT_COLOR : AppColors.ERROR_COLOR,
+      borderColor: groupTitleBool == true
+          ? AppColors.TRANSPARENT_COLOR
+          : AppColors.ERROR_COLOR,
       filledColor: AppColors.WHITE_COLOR,
       hintColor: AppColors.BLACK_COLOR,
       textColor: AppColors.BLACK_COLOR,
@@ -167,87 +225,85 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
     );
   }
 
-
   //Search Members Text Form Field
-  Widget _searchMembersTextFormField()
-  {
+  Widget _searchMembersTextFormField() {
+    var userProvider = Provider.of<AppUserProvider>(context, listen: true);
     return Container(
-      width: MediaQuery.of(context).size.width*0.85,
-      margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.075,right: MediaQuery.of(context).size.width*0.075),
-      child: TextFieldSearch(
-          initialList: membersList,
-          label: "",
-          controller: _searchMemberController,
-          decoration: InputDecoration(
-            isCollapsed: true,
-            enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(28.0),
-                borderSide: BorderSide(color:groupMemberBool == true ? AppColors.TRANSPARENT_COLOR : AppColors.ERROR_COLOR)
-            ),
-
-            focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(28.0),
-                borderSide: BorderSide(color: groupMemberBool == true ? AppColors.TRANSPARENT_COLOR : AppColors.ERROR_COLOR)
-            ),
-
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(28.0),
-              //borderSide: BorderSide(color: AppColors.WHITE_COLOR)
-            ),
-
-            hintText: AppStrings.SEARCH_MEMBERS_HINT_TEXT,
-            hintStyle: TextStyle(
-              fontSize: 15,
-              color: AppColors.BLACK_COLOR,
-              fontWeight: FontWeight.w400,
-
-            ),
-            contentPadding: EdgeInsets.only(top: 13.0,bottom: 13.0,left: 20.0,right: 20.0),
-            fillColor: AppColors.WHITE_COLOR,
-            filled: true,
-          ),
-        textStyle: TextStyle(
-          fontSize:15.5,
-          color: AppColors.BLACK_COLOR,
-          fontWeight: FontWeight.w600,
-        ),
-      )
-    );
-
+        width: MediaQuery.of(context).size.width * 0.85,
+        margin: EdgeInsets.only(
+            left: MediaQuery.of(context).size.width * 0.075,
+            right: MediaQuery.of(context).size.width * 0.075),
+        child: CustomTextFormField(
+          prefixIconColor: AppColors.BLACK_COLOR,
+          filledColor: AppColors.WHITE_COLOR,
+          hintColor: AppColors.BLACK_COLOR,
+          textColor: AppColors.BLACK_COLOR,
+          cursorColor: AppColors.BLACK_COLOR,
+          textController: _searchMemberController,
+          containerWidth: MediaQuery.of(context).size.width * 0.85,
+          hintText: AppStrings.SEARCH_HINT_TEXT,
+          borderRadius: 28.0,
+          contentPaddingTop: 13.0,
+          contentPaddingBottom: 13.0,
+          contentPaddingRight: 8.0,
+          contentPaddingLeft: 20.0,
+          suffixIcon: AssetPaths.SEARCH_ICON,
+          suffixColor: AppColors.BLACK_COLOR,
+          suffixIconWidth: 15,
+          hintSize: 15.0,
+          textSize: 15.0,
+          isCollapsed: true,
+          onChange: (val) {
+            if (_searchMemberController.text.isEmpty) {
+              userProvider.resetSearchPartnersList();
+            } else {
+              baseService.searchGroupPartners(context, val.toString());
+            }
+          },
+        ));
   }
 
-
-
   //Error Group Title Widget
-  Widget _errorGroupTitleWidget()
-  {
-    return groupTitleBool == true ?
-    Container()
-        :
-    Padding(
-        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.1,right: MediaQuery.of(context).size.width*0.075,top: 10.0),
-        child: Text(AppStrings.GROUP_TITLE_EMPTY_ERROR,style: TextStyle(fontSize: 13.0, color:  AppColors.ERROR_COLOR, fontWeight: FontWeight.w600,),)
-    );
+  Widget _errorGroupTitleWidget() {
+    return groupTitleBool == true
+        ? Container()
+        : Padding(
+            padding: EdgeInsets.only(
+                left: MediaQuery.of(context).size.width * 0.1,
+                right: MediaQuery.of(context).size.width * 0.075,
+                top: 10.0),
+            child: Text(
+              AppStrings.GROUP_TITLE_EMPTY_ERROR,
+              style: TextStyle(
+                fontSize: 13.0,
+                color: AppColors.ERROR_COLOR,
+                fontWeight: FontWeight.w600,
+              ),
+            ));
   }
 
   //Error Member Widget
-  Widget _errorMemberWidget()
-  {
-    return groupMemberBool == true ?
-    Container()
-        :
-    Padding(
-        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.1,right: MediaQuery.of(context).size.width*0.075,top: 10.0),
-        child: Text(AppStrings.SEARCH_MEMBER_EMPTY_ERROR,style: TextStyle(fontSize: 13.0, color:  AppColors.ERROR_COLOR, fontWeight: FontWeight.w600,),)
-    );
+  Widget _errorMemberWidget() {
+    return groupMemberBool == true
+        ? Container()
+        : Padding(
+            padding: EdgeInsets.only(
+                left: MediaQuery.of(context).size.width * 0.1,
+                right: MediaQuery.of(context).size.width * 0.075,
+                top: 10.0),
+            child: Text(
+              AppStrings.SEARCH_MEMBER_EMPTY_ERROR,
+              style: TextStyle(
+                fontSize: 13.0,
+                color: AppColors.ERROR_COLOR,
+                fontWeight: FontWeight.w600,
+              ),
+            ));
   }
 
-
-
-  Widget _addMemberWidget()
-  {
+  Widget _addMemberWidget() {
     return CustomButton(
-      containerWidth: MediaQuery.of(context).size.width*0.75,
+      containerWidth: MediaQuery.of(context).size.width * 0.75,
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
       elevation: true,
@@ -257,14 +313,12 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
       fontSize: 1.25,
       paddingTop: 11.5,
       paddingBottom: 11.5,
-      onTap: (){
-        if(_searchMemberController.text.trim().isEmpty)
-        {
+      onTap: () {
+        if (_searchMemberController.text.trim().isEmpty) {
           setState(() {
             groupMemberBool = false;
           });
-        }
-        else{
+        } else {
           setState(() {
             groupMemberBool = true;
           });
@@ -274,31 +328,38 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
     );
   }
 
-
-
 //Group Members Row Add Widget
-  Widget _groupMembersListTextWidget()
-  {
+  Widget _groupMembersListTextWidget() {
     return Padding(
-        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.075,right: MediaQuery.of(context).size.width*0.075),
-        child:Text(AppStrings.GROUP_MEMBERS_LIST_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600),textScaleFactor: 1.18,),
+      padding: EdgeInsets.only(
+          left: MediaQuery.of(context).size.width * 0.075,
+          right: MediaQuery.of(context).size.width * 0.075),
+      child: Text(
+        AppStrings.GROUP_MEMBERS_LIST_TEXT,
+        style: TextStyle(
+            color: AppColors.WHITE_COLOR, fontWeight: FontWeight.w600),
+        textScaleFactor: 1.18,
+      ),
     );
-
   }
 
-
- //Add Group Members List
-  Widget _groupMembersListWidget(int groupMemberIndex)
-  {
+  //Add Group Members List
+  Widget _groupMembersListWidget(int groupMemberIndex) {
     return GestureDetector(
-      onTap: (){
-       print("group members");
+      onTap: () {
+        print("group members");
         //AppNavigation.navigateTo(context, BibleChapterDetailsScreen());
       },
       child: Container(
-        width: MediaQuery.of(context).size.width*0.85,
-        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.075,right: MediaQuery.of(context).size.width*0.075,top: 8.0,bottom:groupMemberList.length -1 == groupMemberIndex ? 16.0 :8.0),
-        padding: EdgeInsets.only(top: 13.0,bottom: 13.0,left: 20.0,right: 20.0),
+        width: MediaQuery.of(context).size.width * 0.85,
+        margin: EdgeInsets.only(
+            left: MediaQuery.of(context).size.width * 0.075,
+            right: MediaQuery.of(context).size.width * 0.075,
+            top: 8.0,
+            bottom:
+                groupMemberList.length - 1 == groupMemberIndex ? 16.0 : 8.0),
+        padding:
+            EdgeInsets.only(top: 13.0, bottom: 13.0, left: 20.0, right: 20.0),
         decoration: BoxDecoration(
           color: AppColors.WHITE_COLOR,
           borderRadius: BorderRadius.circular(23.0),
@@ -306,21 +367,37 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
         child: Row(
           children: [
             Expanded(
-              child: Text(groupMemberList[groupMemberIndex],style: TextStyle(fontSize: 14.5,color: AppColors.BLACK_COLOR,fontWeight: FontWeight.w700),maxLines: 1,overflow: TextOverflow.ellipsis,),
+              child: Text(
+                groupMemberList[groupMemberIndex].firstName,
+                style: TextStyle(
+                    fontSize: 14.5,
+                    color: AppColors.BLACK_COLOR,
+                    fontWeight: FontWeight.w700),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
-
+            Spacer(),
+            GestureDetector(
+                onTap: () {
+                  groupMemberList.removeAt(groupMemberIndex);
+                  setState(() {});
+                },
+                child: Icon(
+                  CupertinoIcons.delete,
+                  color: AppColors.BLACK_COLOR,
+                  size: 16,
+                ))
           ],
         ),
       ),
     );
   }
 
-
   //Create Group Button Widget
-  Widget _createGroupWidget()
-  {
+  Widget _createGroupWidget() {
     return CustomButton(
-      containerWidth: MediaQuery.of(context).size.width*0.75,
+      containerWidth: MediaQuery.of(context).size.width * 0.75,
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
       elevation: true,
@@ -330,14 +407,17 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
       fontSize: 1.25,
       paddingTop: 11.5,
       paddingBottom: 11.5,
-      onTap: (){
-        if(_groupTitleController.text.trim().isEmpty)
-          {
-            setState(() {
-              groupTitleBool = false;
-            });
-          }
-        else{
+      onTap: () {
+        memberIds.clear();
+        if (_groupTitleController.text.trim().isEmpty) {
+          setState(() {
+            groupTitleBool = false;
+          });
+          groupMemberList.forEach((element) {
+            memberIds.add(element.id);
+          });
+          print(memberIds);
+        } else {
           setState(() {
             groupTitleBool = true;
           });
@@ -348,12 +428,67 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
     );
   }
 
+  Widget _searchUserWidget(int index) {
+    var userProvider = Provider.of<AppUserProvider>(context, listen: true);
+    return GestureDetector(
+      onTap: () {
+        groupMemberList.add(userProvider.searchPartnersList[index]);
+        setState(() {});
+      },
+      child: Container(
+        margin: EdgeInsets.only(
+            left: MediaQuery.of(context).size.width * 0.075,
+            right: MediaQuery.of(context).size.width * 0.075,
+            top: 5,
+            bottom: 5),
+        padding:
+            EdgeInsets.only(top: 6.0, bottom: 6.0, left: 12.0, right: 12.0),
+        decoration: BoxDecoration(
+          color: AppColors.WHITE_COLOR,
+          borderRadius: BorderRadius.circular(40.0),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 38.0,
+              height: 38.0,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                      image:
+                          userProvider.searchPartnersList[index].profileImage ==
+                                  null
+                              ? AssetImage(AssetPaths.PARTNER_IMAGE)
+                              : NetworkImage(userProvider
+                                  .searchPartnersList[index].profileImage),
+                      fit: BoxFit.cover)),
+            ),
+            SizedBox(
+              width: 15.0,
+            ),
+            Expanded(
+              child: Text(
+                _searchMemberController.text.isEmpty
+                    ? userProvider.searchPartnersList[index].firstName
+                    : userProvider.searchPartnersList[index].firstName,
+                style: TextStyle(
+                    fontSize: 15.5,
+                    color: AppColors.BLACK_COLOR,
+                    fontWeight: FontWeight.w700),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   //Add new prayer button widget
-  Widget _inviteToPrayerAppWidget()
-  {
+  Widget _inviteToPrayerAppWidget() {
     return CustomButton(
-      containerWidth: MediaQuery.of(context).size.width*0.75,
+      containerWidth: MediaQuery.of(context).size.width * 0.75,
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
       elevation: true,
@@ -363,18 +498,15 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
       fontSize: 1.25,
       paddingTop: 11.5,
       paddingBottom: 11.5,
-      onTap: (){
+      onTap: () {
         _inviteFriend();
       },
     );
   }
 
-  void _inviteFriend()
-  {
+  void _inviteFriend() {
     ShareClass.shareMethod(message: AppStrings.SHARE_MESSAGE_TEXT);
   }
-
-
 
   @override
   void dispose() {
@@ -382,8 +514,4 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
     _groupTitleController.dispose();
     _searchMemberController.dispose();
   }
-
-
-
-
 }

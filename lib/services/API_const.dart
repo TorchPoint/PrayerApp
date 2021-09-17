@@ -36,4 +36,9 @@ class ApiConst {
   static const FETCH_PARTNERS_URL = "partners";
   static const ADD_PARTNERS_URL = "add-partner";
   static const SEARCH_PARTNERS_URL = "search-partners";
+
+  static const ADD_PRAYER_GROUP_URL = "add-group";
+  static const FETCH_GROUP_PRAYER = "joined-group";
+  static const UPDATE_PRAYER_GROUP = "update-group";
+  static const DELETE_PRAYER_GROUP = "delete-group";
 }

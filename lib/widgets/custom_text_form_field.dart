@@ -22,7 +22,7 @@ class CustomTextFormField extends StatelessWidget {
       hintColor,
       textColor,
       cursorColor,
-      prefixIconColor;
+      prefixIconColor,suffixColor;
   final TextInputType keyBoardType;
   final List<TextInputFormatter> textInputFormatter;
   final Function onTextFieldTap, onSuffixIconTap, onChange;
@@ -58,7 +58,7 @@ class CustomTextFormField extends StatelessWidget {
       this.onTextFieldTap,
       this.prefixIconColor,
       this.onSuffixIconTap,
-      this.onChange});
+      this.onChange,this.suffixColor});
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +122,7 @@ class CustomTextFormField extends StatelessWidget {
                   onTap: onSuffixIconTap,
                   child: Padding(
                       padding: EdgeInsets.only(right: 14.0),
-                      child: Image.asset(suffixIcon, width: suffixIconWidth)),
+                      child: Image.asset(suffixIcon, width: suffixIconWidth,color: suffixColor,)),
                 )
               : null,
           suffixIconConstraints: BoxConstraints(),

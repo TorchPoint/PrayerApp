@@ -63,6 +63,8 @@ dependencies:
   firebase:
   firebase_messaging:
   firebase_core:
+  #auto_search:
+  #material_floating_search_bar:
 
 
 

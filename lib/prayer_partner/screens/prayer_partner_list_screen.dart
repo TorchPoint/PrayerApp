@@ -54,7 +54,7 @@ class _PrayerPartnerListScreenState extends State<PrayerPartnerListScreen> {
                       userProvider.prayerPartnersList.length == 0
                   ? Center(
                       child: Text(
-                        "No Prayers Found",
+                        "No Partners Found",
                         style: TextStyle(color: AppColors.WHITE_COLOR),
                       ),
                     )
@@ -163,6 +163,7 @@ class _PrayerPartnerListScreenState extends State<PrayerPartnerListScreen> {
         ),
       ),
     );
+
   }
 
   //Add new prayer button widget
@@ -204,7 +205,6 @@ class _PrayerPartnerListScreenState extends State<PrayerPartnerListScreen> {
   }
 
   Widget _searchTextFormField() {
-    var prayerProvider = Provider.of<PrayerProvider>(context, listen: true);
     var userProvider = Provider.of<AppUserProvider>(context, listen: true);
     return CustomTextFormField(
       textController: _searchController,

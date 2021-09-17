@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(
       children: [
         Spacer(
-          flex: 2,
+          flex: 1,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
