@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/common_classes/share_class.dart';
+import 'package:prayer_hybrid_app/models/group_prayer_model.dart';
 import 'package:prayer_hybrid_app/models/user_model.dart';
 import 'package:prayer_hybrid_app/providers/provider.dart';
 import 'package:prayer_hybrid_app/services/API_const.dart';
@@ -21,6 +22,10 @@ import 'package:textfield_search/textfield_search.dart';
 import 'package:http/http.dart' as http;
 
 class CreatePrayerGroupScreen extends StatefulWidget {
+  final GroupPrayerModel groupPrayerModel;
+
+  CreatePrayerGroupScreen({this.groupPrayerModel});
+
   @override
   _CreatePrayerGroupScreenState createState() =>
       _CreatePrayerGroupScreenState();
@@ -62,9 +67,11 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // fetchData().then((value) {
-    //   print(user.length.toString());
-    // });
+    if (widget.groupPrayerModel != null) {
+      baseService.fetchGroupMembers(context);
+      _groupTitleController.text = widget.groupPrayerModel.name;
+      groupMemberList = widget.groupPrayerModel.member;
+    }
   }
 
   @override
@@ -378,16 +385,18 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
               ),
             ),
             Spacer(),
-            GestureDetector(
-                onTap: () {
-                  groupMemberList.removeAt(groupMemberIndex);
-                  setState(() {});
-                },
-                child: Icon(
-                  CupertinoIcons.delete,
-                  color: AppColors.BLACK_COLOR,
-                  size: 16,
-                ))
+            widget.groupPrayerModel != null
+                ? Container()
+                : GestureDetector(
+                    onTap: () {
+                      groupMemberList.removeAt(groupMemberIndex);
+                      setState(() {});
+                    },
+                    child: Icon(
+                      CupertinoIcons.delete,
+                      color: AppColors.BLACK_COLOR,
+                      size: 16,
+                    ))
           ],
         ),
       ),
@@ -413,16 +422,46 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
           setState(() {
             groupTitleBool = false;
           });
-          groupMemberList.forEach((element) {
-            memberIds.add(element.id);
-          });
           print(memberIds);
         } else {
           setState(() {
             groupTitleBool = true;
           });
+          if (widget.groupPrayerModel != null) {
+            widget.groupPrayerModel.member.forEach((element) {
+              memberIds.add(element.id);
+            });
+            print(memberIds);
+            baseService.updatePrayerGroup(
+                context,
+                widget.groupPrayerModel.id,
+                _groupTitleController.text,
+                memberIds
+                    .toString()
+                    .replaceAll("[", "")
+                    .toString()
+                    .replaceAll("]", ""));
+          } else {
+            groupMemberList.forEach((element) {
+              memberIds.add(element.id);
+            });
+            print(memberIds
+                .toString()
+                .replaceAll("[", "")
+                .toString()
+                .replaceAll("]", ""));
+            baseService.addPrayerGroup(
+                context,
+                _groupTitleController.text,
+                memberIds
+                    .toString()
+                    .replaceAll("[", "")
+                    .toString()
+                    .replaceAll("]", ""));
+          }
+
           //AppNavigation.navigateTo(context,PrayerGroupListScreen());
-          AppNavigation.navigatorPop(context);
+          // AppNavigation.navigatorPop(context);
         }
       },
     );

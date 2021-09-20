@@ -75,6 +75,7 @@ class BiblePromisesDialogScreen {
         AppNavigation.navigateTo(
             context,
             BiblePromisesDescriptionScreen(
+                qoutes: AppStrings.BIBLE_PROMISES[indexNo],
                 title: AppStrings.BIBLECATEGORIES[indexNo]));
       },
       child: Container(

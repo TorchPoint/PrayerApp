@@ -24,18 +24,27 @@ class _BibleChapterListScreenState extends State<BibleChapterListScreen> {
             Expanded(
               child: Column(
                 children: [
-                  SizedBox(height: 15.0,),
-                  Text(AppStrings.GENESIS_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600,letterSpacing: 1.0),textScaleFactor: 1.5,),
-                  SizedBox(height: 12.0,),
+                  SizedBox(
+                    height: 15.0,
+                  ),
+                  Text(
+                    AppStrings.GENESIS_TEXT,
+                    style: TextStyle(
+                        color: AppColors.WHITE_COLOR,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 1.0),
+                    textScaleFactor: 1.5,
+                  ),
+                  SizedBox(
+                    height: 12.0,
+                  ),
                   Expanded(
-                    child:ListView.builder
-                      (
+                    child: ListView.builder(
                         itemCount: 10,
                         padding: EdgeInsets.zero,
                         itemBuilder: (BuildContext ctxt, int index) {
                           return _bibleChaptersList(index);
-                        }
-                    ),
+                        }),
                   ),
                 ],
               ),
@@ -47,29 +56,32 @@ class _BibleChapterListScreenState extends State<BibleChapterListScreen> {
   }
 
   //Custom App Bar Widget
-  Widget _customAppBar()
-  {
+  Widget _customAppBar() {
     return CustomAppBar(
       title: AppStrings.BIBLE_SECOND_TEXT,
       leadingIconPath: AssetPaths.BACK_ICON,
       paddingTop: 20.0,
-      leadingTap: (){
+      leadingTap: () {
         AppNavigation.navigatorPop(context);
       },
     );
   }
 
-  Widget _bibleChaptersList(int bibleChapterIndex)
-  {
+  Widget _bibleChaptersList(int bibleChapterIndex) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         print("bible chapter screen");
         AppNavigation.navigateTo(context, BibleChapterDetailsScreen());
       },
       child: Container(
-        width: MediaQuery.of(context).size.width*0.85,
-        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.075,right: MediaQuery.of(context).size.width*0.075,top: 7.5,bottom: bibleChapterIndex == 9 ? 15.0 : 7.5),
-        padding: EdgeInsets.only(top: 13.0,bottom: 13.0,left: 20.0,right: 20.0),
+        width: MediaQuery.of(context).size.width * 0.85,
+        margin: EdgeInsets.only(
+            left: MediaQuery.of(context).size.width * 0.075,
+            right: MediaQuery.of(context).size.width * 0.075,
+            top: 7.5,
+            bottom: bibleChapterIndex == 9 ? 15.0 : 7.5),
+        padding:
+            EdgeInsets.only(top: 13.0, bottom: 13.0, left: 20.0, right: 20.0),
         decoration: BoxDecoration(
           color: AppColors.WHITE_COLOR,
           borderRadius: BorderRadius.circular(23.0),
@@ -77,9 +89,16 @@ class _BibleChapterListScreenState extends State<BibleChapterListScreen> {
         child: Row(
           children: [
             Expanded(
-              child: Text("Chapter ${bibleChapterIndex+1}",style: TextStyle(fontSize: 14.5,color: AppColors.BLACK_COLOR,fontWeight: FontWeight.w700),maxLines: 1,overflow: TextOverflow.ellipsis,),
+              child: Text(
+                "Chapter ${bibleChapterIndex + 1}",
+                style: TextStyle(
+                    fontSize: 14.5,
+                    color: AppColors.BLACK_COLOR,
+                    fontWeight: FontWeight.w700),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
-
           ],
         ),
       ),

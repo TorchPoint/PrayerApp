@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/chat_audio_video/screens/chat_screen.dart';
 import 'package:prayer_hybrid_app/prayer_group/screens/create_prayer_group_screen.dart';
+import 'package:prayer_hybrid_app/prayer_praise_info/screens/finish_praying_screen.dart';
+import 'package:prayer_hybrid_app/providers/provider.dart';
+import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/subscription/screens/buy_now_subscription.dart';
 import 'package:prayer_hybrid_app/subscription/screens/pay_subscription_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
@@ -10,6 +13,8 @@ import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/widgets/custom_button.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PrayerGroupListScreen extends StatefulWidget {
   @override
@@ -27,8 +32,24 @@ class _PrayerGroupListScreenState extends State<PrayerGroupListScreen> {
   ];
   int prayerGroupSelectedIndex = 0;
 
+  BaseService baseService = BaseService();
+
+  void loadID() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.getString("userID");
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    baseService.fetchGroups(context);
+    baseService.loadLocalUser();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    var groupProvider = Provider.of<GroupProvider>(context, listen: true);
     return CustomBackgroundContainer(
       child: Scaffold(
         backgroundColor: AppColors.TRANSPARENT_COLOR,
@@ -39,12 +60,20 @@ class _PrayerGroupListScreenState extends State<PrayerGroupListScreen> {
               height: 20.0,
             ),
             Expanded(
-              child: ListView.builder(
-                  itemCount: prayerGroupList.length,
-                  padding: EdgeInsets.zero,
-                  itemBuilder: (BuildContext ctxt, int index) {
-                    return _praiyerGroupsListWidget(index);
-                  }),
+              child: groupProvider.groupList == null ||
+                      groupProvider.groupList.length == 0
+                  ? Center(
+                      child: Text(
+                        "No Groups Found",
+                        style: TextStyle(color: AppColors.WHITE_COLOR),
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: groupProvider.groupList.length,
+                      padding: EdgeInsets.zero,
+                      itemBuilder: (BuildContext ctxt, int index) {
+                        return _praiyerGroupsListWidget(index);
+                      }),
             ),
             SizedBox(
               height: 19.0,
@@ -73,11 +102,13 @@ class _PrayerGroupListScreenState extends State<PrayerGroupListScreen> {
 
   //_prayerGroupsListWidget
   Widget _praiyerGroupsListWidget(int groupIndex) {
+    var groupProvider = Provider.of<GroupProvider>(context, listen: true);
+
     return GestureDetector(
       onTap: () {
         print("next screen");
-        //AppNavigation.navigateTo(context, FinishPrayingScreen());
-        AppNavigation.navigateTo(context, ChatScreen());
+
+        //AppNavigation.navigateTo(context, ChatScreen());
       },
       onLongPress: () {
         setState(() {
@@ -112,7 +143,7 @@ class _PrayerGroupListScreenState extends State<PrayerGroupListScreen> {
           children: [
             Expanded(
               child: Text(
-                prayerGroupList[groupIndex],
+                groupProvider.groupList[groupIndex].name,
                 style: TextStyle(
                     fontSize: 14.5,
                     color: prayerGroupSelectedIndex == groupIndex
@@ -124,10 +155,33 @@ class _PrayerGroupListScreenState extends State<PrayerGroupListScreen> {
               ),
             ),
             Spacer(),
-            Image.asset(
-              AssetPaths.EDIT_ICON,
-              height: 18,
+            GestureDetector(
+              onTap: () {
+                AppNavigation.navigateTo(
+                    context,
+                    CreatePrayerGroupScreen(
+                      groupPrayerModel: groupProvider.groupList[groupIndex],
+                    ));
+              },
+              child: Image.asset(
+                AssetPaths.EDIT_ICON,
+                height: 18,
+              ),
             ),
+            SizedBox(
+              width: 10,
+            ),
+            baseService.id == groupProvider.groupList[groupIndex].groupAdmin.id
+                ? GestureDetector(
+                    onTap: () {
+                    baseService.deleteGroupPrayer(context, groupProvider.groupList[groupIndex].id);
+                    },
+                    child: Image.asset(
+                      AssetPaths.DELETE_ICON,
+                      height: 18,
+                    ),
+                  )
+                : Container(),
           ],
         ),
       ),

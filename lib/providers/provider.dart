@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:prayer_hybrid_app/models/group_prayer_model.dart';
 import 'package:prayer_hybrid_app/models/prayer_model.dart';
 import 'package:prayer_hybrid_app/models/reminder_model.dart';
 import 'package:prayer_hybrid_app/models/user_model.dart';
@@ -7,6 +8,7 @@ class AppUserProvider extends ChangeNotifier {
   AppUser _appUser;
   List<AppUser> prayerPartnersList;
   List<AppUser> searchPartnersList;
+  List<AppUser> groupMembersList;
 
   AppUser get appUser => _appUser;
 
@@ -153,6 +155,40 @@ class ReminderProvider extends ChangeNotifier {
     if (reminders != null) {
       reminders.forEach((element) {
         reminderList.add(ReminderModel.fromJson(element));
+      });
+    }
+    notifyListeners();
+  }
+}
+
+class GroupProvider extends ChangeNotifier {
+  GroupPrayerModel groupPrayerModel;
+
+  List<GroupPrayerModel> groupList;
+  List<AppUser> groupMembersList;
+
+  void fetchGroups(List groups) {
+    groupList = [];
+    if (groupList != null) {
+      groups.forEach((element) {
+        groupList.add(GroupPrayerModel.fromJson(element));
+      });
+    }
+    notifyListeners();
+  }
+
+  void resetGroupsList() {
+    if (groupList != null) {
+      groupList.clear();
+    }
+    notifyListeners();
+  }
+
+  void fetchGroupMembersList(List members) {
+    groupMembersList = [];
+    if (groupMembersList != null) {
+      members.forEach((element) {
+        groupMembersList.add(AppUser.fromJson(element));
       });
     }
     notifyListeners();

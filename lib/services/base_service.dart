@@ -11,6 +11,7 @@ import 'package:prayer_hybrid_app/auth/screens/auth_verification_screen.dart';
 import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
 import 'package:prayer_hybrid_app/models/user_model.dart';
 import 'package:prayer_hybrid_app/password/screens/reset_password_screen.dart';
+import 'package:prayer_hybrid_app/prayer_group/screens/prayer_group_list_screen.dart';
 import 'package:prayer_hybrid_app/prayer_partner/screens/prayer_partner_list_screen.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/prayer_praise_tab_screen.dart';
 import 'package:prayer_hybrid_app/providers/provider.dart';
@@ -751,7 +752,6 @@ class BaseService {
       if (value["status"] == 1) {
         userProvider.fetchSearchListPartners(value["data"]);
       } else {
-        userProvider.resetSearchPartnersList();
         showToast(value["message"], AppColors.ERROR_COLOR);
       }
     });
@@ -859,6 +859,95 @@ class BaseService {
         showToast(value["message"], AppColors.SUCCESS_COLOR);
         AppNavigation.navigatorPop(context);
         AppNavigation.navigateReplacement(context, PrayerPartnerListScreen());
+      }
+    });
+  }
+
+  Future fetchGroups(BuildContext context) async {
+    var groupProvider = Provider.of<GroupProvider>(context, listen: false);
+    await getBaseMethod(ApiConst.FETCH_GROUP_PRAYER,
+            tokenCheck: true, loading: true)
+        .then((value) {
+      if (value["status"] == 1) {
+        groupProvider.fetchGroups(value["data"]);
+      } else {
+        showToast(value["message"], AppColors.ERROR_COLOR);
+      }
+    });
+  }
+
+  Future fetchGroupMembers(BuildContext context) async {
+    var groupProvider = Provider.of<GroupProvider>(context, listen: false);
+
+    await getBaseMethod(ApiConst.FETCH_GROUP_PRAYER,
+            tokenCheck: true, loading: true)
+        .then((value) {
+      if (value["status"] == 1) {
+        value["data"].forEach((element) {
+          groupProvider.fetchGroupMembersList(element["member"]);
+        });
+      }
+    });
+  }
+
+  Future addPrayerGroup(
+    BuildContext context,
+    name,
+    member,
+  ) async {
+    Map<String, String> requestBody = <String, String>{
+      "members": member,
+      "name": name,
+    };
+
+    await formDataBaseMethod(ApiConst.ADD_PRAYER_GROUP_URL,
+            tokenCheck: true, body: requestBody, bodyCheck: true)
+        .then((value) {
+      if (value["status"] == 1) {
+        showToast("Prayer Group Added", AppColors.SUCCESS_COLOR);
+        AppNavigation.navigatorPop(context);
+        fetchGroups(context);
+        //AppNavigation.navigateTo(context, PrayerGroupListScreen());
+      }
+    });
+  }
+
+  Future updatePrayerGroup(BuildContext context, groupID, name, member) async {
+    Map<String, String> requestBody = <String, String>{
+      "members": member,
+      "name": name,
+      "group": groupID.toString(),
+    };
+
+    await formDataBaseMethod(ApiConst.UPDATE_PRAYER_GROUP,
+            tokenCheck: true, bodyCheck: true, body: requestBody)
+        .then((value) {
+      if (value["status"] == 1) {
+        showToast("Group Updated", AppColors.SUCCESS_COLOR);
+        AppNavigation.navigatorPop(context);
+        fetchGroups(context);
+        // AppNavigation.navigateTo(context, PrayerGroupListScreen());
+      } else {
+        showToast(value["message"], AppColors.ERROR_COLOR);
+      }
+    });
+  }
+
+  Future deleteGroupPrayer(BuildContext context, groupID) async {
+    Map<String, String> requestBody = <String, String>{
+      "group": groupID.toString(),
+    };
+
+    await formDataBaseMethod(ApiConst.DELETE_PRAYER_GROUP,
+            tokenCheck: true, body: requestBody, bodyCheck: true)
+        .then((value) {
+      if (value["status"] == 1) {
+        showToast("Group Deleted", AppColors.SUCCESS_COLOR);
+
+        fetchGroups(context);
+        //AppNavigation.navigateTo(context, PrayerGroupListScreen());
+      } else {
+        showToast(value["message"], AppColors.ERROR_COLOR);
       }
     });
   }
