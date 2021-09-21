@@ -714,8 +714,6 @@ class BaseService {
     });
   }
 
-
-
   Future finishPrayer(BuildContext context, prayerID, prayerDuration) async {
     Map<String, String> requestBody = <String, String>{
       "prayer": prayerID.toString(),

@@ -169,6 +169,7 @@ class GroupProvider extends ChangeNotifier {
 
   void fetchGroups(List groups) {
     groupList = [];
+
     if (groupList != null) {
       groups.forEach((element) {
         groupList.add(GroupPrayerModel.fromJson(element));
