@@ -67,9 +67,9 @@ class Groupadmin {
   String profileImage;
   int completeProfile;
   int accountVerified;
-  Null isSocial;
-  Null userSocialToken;
-  Null userSocialType;
+  String isSocial;
+  String userSocialToken;
+  String userSocialType;
   String userDeviceType;
   String userDeviceToken;
   String createdAt;

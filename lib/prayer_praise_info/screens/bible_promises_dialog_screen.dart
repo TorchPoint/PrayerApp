@@ -76,6 +76,7 @@ class BiblePromisesDialogScreen {
             context,
             BiblePromisesDescriptionScreen(
                 qoutes: AppStrings.BIBLE_PROMISES[indexNo],
+                qouteWriter: AppStrings.BIBLE_PROMISE_WRITER[indexNo],
                 title: AppStrings.BIBLECATEGORIES[indexNo]));
       },
       child: Container(

@@ -397,6 +397,7 @@ class BaseService {
     var prayerProvider = Provider.of<PrayerProvider>(context, listen: false);
     var reminderProvider =
         Provider.of<ReminderProvider>(context, listen: false);
+    var groupProvider = Provider.of<GroupProvider>(context, listen: false);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await formDataBaseMethod(ApiConst.LOGOUT_URL,
             bodyCheck: false, tokenCheck: true)
@@ -413,6 +414,9 @@ class BaseService {
         }
         if (userProvider != null) {
           userProvider.resetPartnersList();
+        }
+        if (groupProvider != null) {
+          groupProvider.resetGroupsList();
         }
         AppNavigation.navigatorPop(context);
         AppNavigation.navigateToRemovingAll(context, AuthMainScreen());
@@ -720,7 +724,7 @@ class BaseService {
             body: requestBody, bodyCheck: true, tokenCheck: true)
         .then((value) {
       if (value["status"] == 1) {
-        showToast("Prayer Ended", AppColors.SUCCESS_COLOR);
+        showToast("Ended", AppColors.SUCCESS_COLOR);
         AppNavigation.navigatorPop(context);
         AppNavigation.navigateTo(context, PrayerPraiseTabScreen());
       }
@@ -872,6 +876,7 @@ class BaseService {
         groupProvider.fetchGroups(value["data"]);
       } else {
         showToast(value["message"], AppColors.ERROR_COLOR);
+        groupProvider.resetGroupsList();
       }
     });
   }

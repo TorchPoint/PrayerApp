@@ -4,6 +4,7 @@ import 'package:prayer_hybrid_app/common_classes/share_class.dart';
 import 'package:prayer_hybrid_app/models/prayer_model.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/bible_promises_dialog_screen.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/stop_watch_alert_screen.dart';
+import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
@@ -27,6 +28,7 @@ class _FinishPraiseScreenState extends State<FinishPraiseScreen> {
   BiblePromisesDialogScreen _biblePromisesDialogScreen =
       BiblePromisesDialogScreen();
   var time;
+  BaseService baseService = BaseService();
 
   @override
   void initState() {
@@ -200,10 +202,7 @@ class _FinishPraiseScreenState extends State<FinishPraiseScreen> {
       suffixImagePath: answerTick == true ? AssetPaths.ANSWERED_ICON : null,
       onTap: () {
         print("Answered");
-        // setState(() {
-        //   answerTick = !answerTick;
-        // });
-        //AppNavigation.navigatorPop(context);
+        baseService.finishPrayer(context, widget.praiseModel.id.toString(), "");
       },
     );
   }

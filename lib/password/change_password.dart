@@ -29,6 +29,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   Widget build(BuildContext context) {
     return CustomBackgroundContainer(
       child: Scaffold(
+          
         backgroundColor: AppColors.TRANSPARENT_COLOR,
         body: Column(
           children: [

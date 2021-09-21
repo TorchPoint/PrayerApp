@@ -9,8 +9,9 @@ import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 class BiblePromisesDescriptionScreen extends StatefulWidget {
   String title;
   List qoutes;
+  List qouteWriter;
 
-  BiblePromisesDescriptionScreen({this.title, this.qoutes});
+  BiblePromisesDescriptionScreen({this.title, this.qoutes, this.qouteWriter});
 
   @override
   _BiblePromisesDescriptionScreenState createState() =>
@@ -20,12 +21,6 @@ class BiblePromisesDescriptionScreen extends StatefulWidget {
 class _BiblePromisesDescriptionScreenState
     extends State<BiblePromisesDescriptionScreen> {
   PageController pageController = PageController();
-  List<String> test = [
-    "“God is my strength and power, And He makes my way perfect.”",
-    "“I will bless the LORD who has given me counsel; My heart also instructs me in the night seasons.”",
-    "“It is God who arms me with strength, And makes my way perfect.”"
-  ];
-  List<String> writer = ["II Samuel 22:33", "Psalms 16:7", "Psalms 18:32"];
 
   @override
   Widget build(BuildContext context) {
@@ -127,13 +122,13 @@ class _BiblePromisesDescriptionScreenState
             textScaleFactor: 1.2,
             textAlign: TextAlign.center,
             maxLines: 7,
-           // overflow: TextOverflow.ellipsis,
+            // overflow: TextOverflow.ellipsis,
           ),
           SizedBox(
             height: 20.0,
           ),
           Text(
-            AppStrings.QUOTE_AUTHOR_TEXT,
+            widget.qouteWriter[index],
             style: TextStyle(
                 color: AppColors.BLACK_COLOR, fontWeight: FontWeight.w600),
             textScaleFactor: 1.2,

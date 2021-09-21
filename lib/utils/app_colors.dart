@@ -17,4 +17,5 @@ class AppColors {
   static const Color MOST_DARK_GREY_COLOR = Color(0XFF959595);
   static const Color GREY_COLOR = Colors.grey;
   static const Color SUCCESS_COLOR = Colors.green;
+
 }
