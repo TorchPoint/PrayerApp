@@ -26,14 +26,17 @@ class _PaySubscriptionState extends State<PaySubscription> {
             Expanded(
               child: Column(
                 children: [
-                  SizedBox(height: MediaQuery.of(context).size.height*0.05),
-
-                  Text(AppStrings.ANNUAL_SUBSCRIPTION_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w600,letterSpacing: 1.0),textScaleFactor: 1.45,),
-
-                  SizedBox(height: MediaQuery.of(context).size.height*0.04),
-
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                  Text(
+                    AppStrings.ANNUAL_SUBSCRIPTION_TEXT,
+                    style: TextStyle(
+                        color: AppColors.WHITE_COLOR,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 1.0),
+                    textScaleFactor: 1.45,
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                   _paySubscriptionWidget(),
-
                 ],
               ),
             )
@@ -44,31 +47,27 @@ class _PaySubscriptionState extends State<PaySubscription> {
   }
 
   //Custom App Bar Widget
-  Widget _customAppBar()
-  {
+  Widget _customAppBar() {
     return CustomAppBar(
       leadingIconPath: AssetPaths.BACK_ICON,
-      leadingTap: (){
+      leadingTap: () {
         print("Leading tap");
         AppNavigation.navigatorPop(context);
       },
     );
   }
 
-
-
   //Subscription Widget
-  Widget _paySubscriptionWidget()
-  {
+  Widget _paySubscriptionWidget() {
     return Container(
-      width: MediaQuery.of(context).size.width*0.82,
-      height: MediaQuery.of(context).size.height*0.48,
+      width: MediaQuery.of(context).size.width * 0.82,
+      height: MediaQuery.of(context).size.height * 0.48,
       color: AppColors.TRANSPARENT_COLOR,
       child: Stack(
         children: [
           Container(
-            width: MediaQuery.of(context).size.width*0.82,
-            height: MediaQuery.of(context).size.height*0.45,
+            width: MediaQuery.of(context).size.width * 0.82,
+            height: MediaQuery.of(context).size.height * 0.45,
             decoration: BoxDecoration(
               color: AppColors.WHITE_COLOR,
               borderRadius: BorderRadius.circular(6.0),
@@ -83,59 +82,66 @@ class _PaySubscriptionState extends State<PaySubscription> {
             child: Column(
               children: [
                 Container(
-                  width: MediaQuery.of(context).size.width*0.82,
-                  height: MediaQuery.of(context).size.height*0.09,
+                  width: MediaQuery.of(context).size.width * 0.82,
+                  height: MediaQuery.of(context).size.height * 0.09,
                   decoration: BoxDecoration(
                     color: AppColors.BUTTON_COLOR,
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(6.0),
-                        topRight: Radius.circular(6.0)
-                    ),
+                        topRight: Radius.circular(6.0)),
                   ),
-                  child: Center(child: Text(AppStrings.DOLLAR_NINE_TEXT,style: TextStyle(color: AppColors.WHITE_COLOR,fontWeight: FontWeight.w700,letterSpacing: 1.0),textScaleFactor: 1.9,textAlign: TextAlign.center,)),
+                  child: Center(
+                      child: Text(
+                    AppStrings.DOLLAR_NINE_TEXT,
+                    style: TextStyle(
+                        color: AppColors.WHITE_COLOR,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 1.0),
+                    textScaleFactor: 1.9,
+                    textAlign: TextAlign.center,
+                  )),
                 ),
-
-               Flexible(
-                 flex: 1,
-                fit: FlexFit.tight,
-                 child: Container(),
-               ),
-
                 Flexible(
-                  flex: 8,
+                  flex: 1,
                   fit: FlexFit.tight,
-                    child:ListView.builder
-                      (
+                  child: Container(),
+                ),
+                Flexible(
+                    flex: 8,
+                    fit: FlexFit.tight,
+                    child: ListView.builder(
                         itemCount: 6,
                         padding: EdgeInsets.zero,
                         itemBuilder: (BuildContext ctxt, int index) {
                           return Padding(
-                            padding: EdgeInsets.only(top:6.0,bottom: 6.0),
+                            padding: EdgeInsets.only(top: 6.0, bottom: 6.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-
                                 Padding(
-                                  padding:EdgeInsets.only(top:3.0),
-                                    child: Image.asset(AssetPaths.TICK_ICON,width: 10.0,)
+                                    padding: EdgeInsets.only(top: 3.0),
+                                    child: Image.asset(
+                                      AssetPaths.TICK_ICON,
+                                      width: 10.0,
+                                    )),
+                                SizedBox(
+                                  width: 8.0,
                                 ),
-                                SizedBox(width: 8.0,),
-                                Text(AppStrings.LOREM_IPSUM_TEXT2,style: TextStyle(color: AppColors.BLACK_COLOR,fontWeight: FontWeight.w900,letterSpacing: 1.0),textScaleFactor: 0.9),
+                                Text(AppStrings.LOREM_IPSUM_TEXT2,
+                                    style: TextStyle(
+                                        color: AppColors.BLACK_COLOR,
+                                        fontWeight: FontWeight.w900,
+                                        letterSpacing: 1.0),
+                                    textScaleFactor: 0.9),
                               ],
                             ),
                           );
-                        }
-                    )
-                ),
-
+                        })),
                 Flexible(
                   flex: 2,
                   fit: FlexFit.tight,
                   child: Container(),
                 ),
-
-
-
               ],
             ),
           ),
@@ -148,11 +154,9 @@ class _PaySubscriptionState extends State<PaySubscription> {
     );
   }
 
-
-  Widget _buyNowWidget()
-  {
+  Widget _buyNowWidget() {
     return CustomButton(
-      containerWidth: MediaQuery.of(context).size.width*0.35,
+      containerWidth: MediaQuery.of(context).size.width * 0.35,
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
       elevation: true,
@@ -162,11 +166,9 @@ class _PaySubscriptionState extends State<PaySubscription> {
       fontSize: 0.9,
       paddingTop: 11.5,
       paddingBottom: 11.5,
-      onTap: (){
+      onTap: () {
         AppNavigation.navigateReplacement(context, CreatePrayerGroupScreen());
       },
     );
   }
-
-
 }

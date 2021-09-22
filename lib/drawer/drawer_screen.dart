@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:prayer_hybrid_app/complete_profile/screens/complete_profile_screen.dart';
@@ -19,6 +18,8 @@ import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:provider/provider.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:socket_io_client/socket_io_client.dart';
 
 class DrawerScreen extends StatefulWidget {
   @override
@@ -35,6 +36,7 @@ class _DrawerScreenState extends State<DrawerScreen>
   @override
   void initState() {
     super.initState();
+
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 200));
   }
@@ -183,10 +185,8 @@ class _DrawerScreenState extends State<DrawerScreen>
         Padding(
             padding: EdgeInsets.only(left: 5.0, right: 5.0),
             child: Text(
-              (userProvider.appUser.firstName +
-                      " " +
-                      userProvider.appUser.lastName) ??
-                  AppStrings.USER_NAME_TEXT,
+              "${userProvider.appUser.firstName}${userProvider.appUser.lastName}" ??
+                  "",
               style: TextStyle(
                   color: AppColors.WHITE_COLOR,
                   fontWeight: FontWeight.w700,
@@ -201,33 +201,38 @@ class _DrawerScreenState extends State<DrawerScreen>
         ),
         Padding(
             padding: EdgeInsets.only(left: 5.0, right: 5.0),
-            child: Text(
-              // userProvider.appUser.contactNo ?? AppStrings.USER_PHONE_NO_TEXT,
-              (userProvider.appUser.contactNo == null ||
-                      userProvider.appUser.contactNo.isEmpty
-                  ? AppStrings.USER_PHONE_NO_TEXT
-                  : userProvider.appUser.contactNo),
-              style: TextStyle(
-                  color: AppColors.WHITE_COLOR, fontWeight: FontWeight.w700),
-              textScaleFactor: 0.98,
-              textAlign: TextAlign.start,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            )),
+            child: userProvider.appUser.contactNo == null ||
+                    userProvider.appUser.contactNo.isEmpty
+                ? Container()
+                : Text(
+                    // userProvider.appUser.contactNo ?? AppStrings.USER_PHONE_NO_TEXT,
+                    userProvider.appUser.contactNo,
+                    style: TextStyle(
+                        color: AppColors.WHITE_COLOR,
+                        fontWeight: FontWeight.w700),
+                    textScaleFactor: 0.98,
+                    textAlign: TextAlign.start,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  )),
         SizedBox(
           height: 5.0,
         ),
         Padding(
             padding: EdgeInsets.only(left: 5.0, right: 5.0),
-            child: Text(
-              userProvider.appUser.email ?? AppStrings.USER_EMAIL_TEXT,
-              style: TextStyle(
-                  color: AppColors.WHITE_COLOR, fontWeight: FontWeight.w700),
-              textScaleFactor: 0.98,
-              textAlign: TextAlign.start,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            )),
+            child: userProvider.appUser.email == null ||
+                    userProvider.appUser.email.isEmpty
+                ? Container()
+                : Text(
+                    userProvider.appUser.email,
+                    style: TextStyle(
+                        color: AppColors.WHITE_COLOR,
+                        fontWeight: FontWeight.w700),
+                    textScaleFactor: 0.98,
+                    textAlign: TextAlign.start,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  )),
         SizedBox(
           height: 6.0,
         ),

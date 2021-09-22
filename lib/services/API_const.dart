@@ -1,5 +1,6 @@
 class ApiConst {
   static const BASE_URL = "https://server.appsstaging.com/3048/prayer/api/";
+  static const AGORA_APP_ID = "d16d4a2e151647c18a8a2a99d57593a7";
 
   //------- Registration Module URL--------//
 

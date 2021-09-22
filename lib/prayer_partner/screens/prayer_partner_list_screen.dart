@@ -163,7 +163,6 @@ class _PrayerPartnerListScreenState extends State<PrayerPartnerListScreen> {
         ),
       ),
     );
-
   }
 
   //Add new prayer button widget

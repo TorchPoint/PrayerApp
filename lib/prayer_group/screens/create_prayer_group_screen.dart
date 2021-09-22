@@ -138,7 +138,7 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
                       ? Container()
                       : Wrap(
                           children: List.generate(
-                              userProvider.searchPartnersList.length ?? 0,
+                              userProvider.searchPartnersList?.length ?? 0,
                               (index) {
                             return _searchUserWidget(index);
                           }),
@@ -147,7 +147,7 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
                   SizedBox(
                     height: 10.0,
                   ),
-                  Align(alignment: Alignment.center, child: _addMemberWidget()),
+                  // Align(alignment: Alignment.center, child: _addMemberWidget()),
                   SizedBox(
                     height: 10.0,
                   ),
@@ -471,6 +471,26 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
     var userProvider = Provider.of<AppUserProvider>(context, listen: true);
     return GestureDetector(
       onTap: () {
+        // print("USER PROVIDER ID:" +
+        //     userProvider.searchPartnersList[index].id.toString());
+        // if (groupMemberList.length > 0) {
+        //
+        //   groupMemberList.forEach((element) {
+        //     print("ELEMENT ID:" + element.id.toString());
+        //     print(groupMemberList[index].id.toString());
+        //     if (groupMemberList[index].id ==
+        //         userProvider.searchPartnersList[index].id) {
+        //       print("matched");
+        //     } else {
+        //       print("not matched");
+        //       groupMemberList.add(userProvider.searchPartnersList[index]);
+        //       setState(() {});
+        //     }
+        //   });
+        // } else {
+        //   groupMemberList.add(userProvider.searchPartnersList[index]);
+        //   setState(() {});
+        // }
         groupMemberList.add(userProvider.searchPartnersList[index]);
         setState(() {});
       },

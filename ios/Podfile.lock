@@ -1,4 +1,8 @@
 PODS:
+  - agora_rtc_engine (4.0.7):
+    - AgoraRtcEngine_iOS (= 3.5.0.3)
+    - Flutter
+  - AgoraRtcEngine_iOS (3.5.0.3)
   - AppAuth (1.4.0):
     - AppAuth/Core (= 1.4.0)
     - AppAuth/ExternalUserAgent (= 1.4.0)
@@ -137,6 +141,7 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
+  - agora_rtc_engine (from `.symlinks/plugins/agora_rtc_engine/ios`)
   - contacts_service (from `.symlinks/plugins/contacts_service/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
@@ -159,6 +164,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - AgoraRtcEngine_iOS
     - AppAuth
     - FBAEMKit
     - FBSDKCoreKit
@@ -181,6 +187,8 @@ SPEC REPOS:
     - TOCropViewController
 
 EXTERNAL SOURCES:
+  agora_rtc_engine:
+    :path: ".symlinks/plugins/agora_rtc_engine/ios"
   contacts_service:
     :path: ".symlinks/plugins/contacts_service/ios"
   firebase_core:
@@ -221,6 +229,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/webview_flutter/ios"
 
 SPEC CHECKSUMS:
+  agora_rtc_engine: 0820b82b3a71a8fcaf8b27c000622e671349f0ba
+  AgoraRtcEngine_iOS: ff8e085161ea98c917173783a899882f884dd9ef
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   contacts_service: 849e1f84281804c8bfbec1b4c3eedcb23c5d3eca
   FBAEMKit: 5c8a8d08e5b2c79628490784883e0fcc75b12615

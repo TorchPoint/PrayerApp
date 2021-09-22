@@ -63,6 +63,8 @@ dependencies:
   firebase:
   firebase_messaging:
   firebase_core:
+  socket_io_client:
+  agora_rtc_engine:
   #auto_search:
   #material_floating_search_bar:
 
