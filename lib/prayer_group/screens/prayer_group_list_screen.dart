@@ -155,26 +155,30 @@ class _PrayerGroupListScreenState extends State<PrayerGroupListScreen> {
               ),
             ),
             Spacer(),
-            GestureDetector(
-              onTap: () {
-                AppNavigation.navigateTo(
-                    context,
-                    CreatePrayerGroupScreen(
-                      groupPrayerModel: groupProvider.groupList[groupIndex],
-                    ));
-              },
-              child: Image.asset(
-                AssetPaths.EDIT_ICON,
-                height: 18,
-              ),
-            ),
+            baseService.id == groupProvider.groupList[groupIndex].groupAdmin.id
+                ? GestureDetector(
+                    onTap: () {
+                      AppNavigation.navigateTo(
+                          context,
+                          CreatePrayerGroupScreen(
+                            groupPrayerModel:
+                                groupProvider.groupList[groupIndex],
+                          ));
+                    },
+                    child: Image.asset(
+                      AssetPaths.EDIT_ICON,
+                      height: 18,
+                    ),
+                  )
+                : Container(),
             SizedBox(
               width: 10,
             ),
             baseService.id == groupProvider.groupList[groupIndex].groupAdmin.id
                 ? GestureDetector(
                     onTap: () {
-                    baseService.deleteGroupPrayer(context, groupProvider.groupList[groupIndex].id);
+                      baseService.deleteGroupPrayer(
+                          context, groupProvider.groupList[groupIndex].id);
                     },
                     child: Image.asset(
                       AssetPaths.DELETE_ICON,

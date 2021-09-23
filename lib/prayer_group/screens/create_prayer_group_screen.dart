@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:prayer_hybrid_app/common_classes/share_class.dart';
 import 'package:prayer_hybrid_app/models/group_prayer_model.dart';
 import 'package:prayer_hybrid_app/models/user_model.dart';
@@ -43,6 +45,7 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
   BaseService baseService = BaseService();
   int selectedIndex = 0;
   List<int> memberIds = [];
+  bool check = false;
 
   Future fetchData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -469,29 +472,43 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
 
   Widget _searchUserWidget(int index) {
     var userProvider = Provider.of<AppUserProvider>(context, listen: true);
+    bool inList = false;
     return GestureDetector(
       onTap: () {
-        // print("USER PROVIDER ID:" +
-        //     userProvider.searchPartnersList[index].id.toString());
-        // if (groupMemberList.length > 0) {
-        //
-        //   groupMemberList.forEach((element) {
-        //     print("ELEMENT ID:" + element.id.toString());
-        //     print(groupMemberList[index].id.toString());
-        //     if (groupMemberList[index].id ==
-        //         userProvider.searchPartnersList[index].id) {
-        //       print("matched");
-        //     } else {
-        //       print("not matched");
-        //       groupMemberList.add(userProvider.searchPartnersList[index]);
-        //       setState(() {});
-        //     }
-        //   });
-        // } else {
-        //   groupMemberList.add(userProvider.searchPartnersList[index]);
-        //   setState(() {});
-        // }
-        groupMemberList.add(userProvider.searchPartnersList[index]);
+        // check = false;
+        if (groupMemberList.length > 0)
+          groupMemberList.forEach((element) {
+            if (userProvider.searchPartnersList[index].id != element.id) {
+            } else {
+              inList = true;
+              Flushbar(
+                icon: Icon(
+                  FontAwesomeIcons.exclamationCircle,
+                  color: AppColors.WHITE_COLOR,
+                ),
+                flushbarPosition: FlushbarPosition.TOP,
+                barBlur: 20.0,
+                margin: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                borderRadius: BorderRadius.circular(8.0),
+                messageText: Text(
+                 "User is Already Added",
+                  style: TextStyle(color: Colors.white),
+                ),
+                backgroundColor: AppColors.BUTTON_COLOR,
+                duration: Duration(seconds: 2),
+              ).show(context);
+              // baseService.showToast(
+              //     "User is Already Added", AppColors.ERROR_COLOR);
+            }
+          });
+        else {
+          inList = true;
+          groupMemberList.add(userProvider.searchPartnersList[index]);
+        }
+
+        !inList
+            ? groupMemberList.add(userProvider.searchPartnersList[index])
+            : null;
         setState(() {});
       },
       child: Container(

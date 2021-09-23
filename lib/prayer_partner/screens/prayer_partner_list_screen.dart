@@ -66,13 +66,20 @@ class _PrayerPartnerListScreenState extends State<PrayerPartnerListScreen> {
                           itemBuilder: (BuildContext ctxt, int index) {
                             return _praiyerGroupsListWidget(index);
                           })
-                      : ListView.builder(
-                          itemCount:
-                              userProvider.searchPartnersList.length ?? 0,
-                          padding: EdgeInsets.zero,
-                          itemBuilder: (BuildContext ctxt, int index) {
-                            return _praiyerGroupsListWidget(index);
-                          }),
+                      : userProvider.searchPartnersList.length == 0
+                          ? Center(
+                              child: Text(
+                                "No Partners Found",
+                                style: TextStyle(color: AppColors.WHITE_COLOR),
+                              ),
+                            )
+                          : ListView.builder(
+                              itemCount:
+                                  userProvider.searchPartnersList.length ?? 0,
+                              padding: EdgeInsets.zero,
+                              itemBuilder: (BuildContext ctxt, int index) {
+                                return _praiyerGroupsListWidget(index);
+                              }),
             ),
             SizedBox(
               height: 10.0,

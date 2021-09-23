@@ -32,6 +32,8 @@ class BaseService {
     Fluttertoast.showToast(
       msg: message,
       backgroundColor: color,
+      //webBgColor: color,
+
       toastLength: Toast.LENGTH_LONG,
       gravity: ToastGravity.BOTTOM,
       textColor: AppColors.WHITE_COLOR,
@@ -89,16 +91,21 @@ class BaseService {
     if (loading) {
       EasyLoading.show(dismissOnTap: true, status: "Loading...");
     }
-    final http.Response response = await http.get(uri,
-        headers: tokenCheck == true
-            ? {"Authorization": "Bearer ${prefs.getString("token")}"}
-            : {});
+    try {
+      final http.Response response = await http.get(uri,
+          headers: tokenCheck == true
+              ? {"Authorization": "Bearer ${prefs.getString("token")}"}
+              : {});
 
-    if (response.statusCode == 200) {
+      if (response.statusCode == 200) {
+        EasyLoading.dismiss();
+        var jsonData = jsonDecode(response.body);
+        debugPrint(jsonData.toString());
+        return jsonData;
+      }
+    } catch (e) {
       EasyLoading.dismiss();
-      var jsonData = jsonDecode(response.body);
-      debugPrint(jsonData.toString());
-      return jsonData;
+      showToast("Internet Not Working", AppColors.ERROR_COLOR);
     }
   }
 
@@ -130,6 +137,8 @@ class BaseService {
         EasyLoading.dismiss();
       }
     } catch (e) {
+      EasyLoading.dismiss();
+      showToast("Internet Not Working", AppColors.ERROR_COLOR);
       debugPrint('Error: $e');
     }
   }
@@ -168,15 +177,21 @@ class BaseService {
 
     var response = await request.send();
     final respStr = await response.stream.bytesToString();
+
     try {
       if (response.statusCode == 200) {
         EasyLoading.dismiss();
         debugPrint("Response:" + respStr);
         return jsonDecode(respStr);
       } else {
+        print("____"+response.reasonPhrase);
         EasyLoading.dismiss();
       }
     } catch (e) {
+      print("____"+response.reasonPhrase);
+      print(response.persistentConnection);
+      EasyLoading.dismiss();
+      showToast("Internet Not Working", AppColors.ERROR_COLOR);
       debugPrint('Error: $e');
     }
   }
@@ -579,7 +594,7 @@ class BaseService {
       if (value["status"] == 1) {
         prayerProvider.fetchPrayerList(value["data"]);
       } else {
-        showToast(value["message"], AppColors.ERROR_COLOR);
+        //showToast(value["message"], AppColors.ERROR_COLOR);
         prayerProvider.resetPrayerProvider();
       }
     });
@@ -651,7 +666,7 @@ class BaseService {
       if (value["status"] == 1) {
         praiseProvider.fetchPraiseList(value["data"]);
       } else {
-        showToast(value["message"], AppColors.ERROR_COLOR);
+        //showToast(value["message"], AppColors.ERROR_COLOR);
         praiseProvider.restPraise();
       }
     });
@@ -742,7 +757,7 @@ class BaseService {
       } else {
         praiseProvider.resetPrayerSearchList();
         praiseProvider.resetPraiseSearchList();
-        showToast(value["message"], AppColors.ERROR_COLOR);
+        //showToast(value["message"], AppColors.ERROR_COLOR);
       }
     });
   }
@@ -756,7 +771,8 @@ class BaseService {
       if (value["status"] == 1) {
         userProvider.fetchSearchListPartners(value["data"]);
       } else {
-        showToast(value["message"], AppColors.ERROR_COLOR);
+        //showToast(value["message"], AppColors.ERROR_COLOR);
+        userProvider.resetSearchPartnersList();
       }
     });
   }
@@ -841,7 +857,7 @@ class BaseService {
       if (value["status"] == 1) {
         userProvider.fetchPrayerPartners(value["data"]);
       } else {
-        showToast(value["message"], AppColors.ERROR_COLOR);
+        //showToast(value["message"], AppColors.ERROR_COLOR);
         userProvider.resetPartnersList();
       }
     });
@@ -875,7 +891,7 @@ class BaseService {
       if (value["status"] == 1) {
         groupProvider.fetchGroups(value["data"]);
       } else {
-        showToast(value["message"], AppColors.ERROR_COLOR);
+        // showToast(value["message"], AppColors.ERROR_COLOR);
         groupProvider.resetGroupsList();
       }
     });
