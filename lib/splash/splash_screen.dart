@@ -4,6 +4,7 @@ import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'dart:async';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -14,8 +15,9 @@ class _SplashScreenState extends State<SplashScreen> {
   BaseService baseService = BaseService();
 
   void getToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     String token = await FirebaseMessaging.instance.getToken();
-    print(token);
+    prefs.setString("xyz", token);
   }
 
   @override

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/chat_audio_video/screens/audio_screen.dart';
 import 'package:prayer_hybrid_app/chat_audio_video/screens/video_screen.dart';
 import 'package:prayer_hybrid_app/common_classes/image_gallery_class.dart';
+import 'package:prayer_hybrid_app/models/user_model.dart';
+import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
@@ -13,21 +15,22 @@ import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class ChatScreen extends StatefulWidget {
+  final AppUser user;
+
+  ChatScreen({this.user});
+
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> {
   IO.Socket socket;
-  List<String> userMessage = [
-    "Please pray for Matt",
-    "Will do.Can you pray at 1pm",
-    "Sure,Thankyou!"
-  ];
+  List<String> userMessage = [];
   TextEditingController _sendMessageController = TextEditingController();
   File profileFileImage;
   String profileImagePath;
   ImageGalleryClass imageGalleryClass = ImageGalleryClass();
+  BaseService baseService = BaseService();
 
   void connect() {
     socket = IO.io('https://server.appsstaging.com:3099', <String, dynamic>{
@@ -52,11 +55,19 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
+  void sendMessage(text) {
+    setState(() {
+      if (_sendMessageController.text.isNotEmpty) {
+        userMessage.add(text);
+      }
+    });
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     connect();
-    print("chat");
+    baseService.loadLocalUser();
     super.initState();
   }
 
@@ -76,7 +87,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   itemCount: userMessage.length,
                   padding: EdgeInsets.zero,
                   itemBuilder: (BuildContext ctxt, int index) {
-                    return index.isEven
+                    return baseService.id != widget.user.id
                         ? sendUser(userMessage[index])
                         : receiveUser(userMessage[index]);
                   }),
@@ -97,16 +108,17 @@ class _ChatScreenState extends State<ChatScreen> {
   //Custom Chat App Bar Widget
   Widget _customChatAppBar() {
     return CustomChatAppBar(
-      title: AppStrings.CHAT_USER_NAME,
+      title: "${widget.user.firstName + " " + widget.user.lastName}" ??
+          AppStrings.CHAT_USER_NAME,
       leadingIconPath: AssetPaths.BACK_ICON,
       leadingTap: () {
         print("Leading tap");
         AppNavigation.navigatorPop(context);
       },
-      trailingVideoIconPath: AssetPaths.VIDEO_ICON,
-      trailingVideoTap: () {
-        AppNavigation.navigateTo(context, VideoScreen());
-      },
+      // trailingVideoIconPath: AssetPaths.VIDEO_ICON,
+      // trailingVideoTap: () {
+      //   AppNavigation.navigateTo(context, VideoScreen());
+      // },
       trailingAudioIconPath: AssetPaths.AUDIO_ICON,
       trailingAudioTap: () {
         AppNavigation.navigateTo(context, AudioScreen());
@@ -170,7 +182,9 @@ class _ChatScreenState extends State<ChatScreen> {
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                  image: AssetImage(AssetPaths.PROFILE_IMAGE),
+                  image: widget.user.profileImage == null
+                      ? AssetImage(AssetPaths.PROFILE_IMAGE)
+                      : NetworkImage(widget.user.profileImage),
                   fit: BoxFit.fill,
                 )),
           ),
@@ -207,6 +221,7 @@ class _ChatScreenState extends State<ChatScreen> {
       child: Container(
         margin: EdgeInsets.only(
             left: MediaQuery.of(context).size.width * 0.05,
+            bottom: 10,
             right: MediaQuery.of(context).size.width * 0.05),
         decoration: BoxDecoration(
           color: AppColors.WHITE_COLOR,
@@ -232,7 +247,8 @@ class _ChatScreenState extends State<ChatScreen> {
               padding: EdgeInsets.only(right: 12.0, top: 2.0, bottom: 2.0),
               child: GestureDetector(
                 onTap: () {
-                  print("send chat");
+                  sendMessage(_sendMessageController.text);
+                  _sendMessageController.clear();
                 },
                 child: Image.asset(
                   AssetPaths.SEND_CHAT_IMAGE,
@@ -249,6 +265,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Widget _sendMessageTextField() {
     return TextField(
+      onTap: () {},
       controller: _sendMessageController,
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(

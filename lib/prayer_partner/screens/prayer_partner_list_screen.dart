@@ -119,7 +119,11 @@ class _PrayerPartnerListScreenState extends State<PrayerPartnerListScreen> {
       onTap: () {
         print("next screen");
         //AppNavigation.navigateTo(context, FinishPrayingScreen());
-        AppNavigation.navigateTo(context, ChatScreen());
+        AppNavigation.navigateTo(
+            context,
+            ChatScreen(
+              user: userProvider.prayerPartnersList[partnerIndex]
+            ));
       },
       child: Container(
         width: MediaQuery.of(context).size.width * 0.85,

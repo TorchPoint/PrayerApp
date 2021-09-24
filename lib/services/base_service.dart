@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -27,6 +28,7 @@ class BaseService {
   var id;
   String token;
   String user;
+  String FCM_Token;
 
   void showToast(message, color) {
     Fluttertoast.showToast(
@@ -46,6 +48,7 @@ class BaseService {
     id = prefs.getInt("userID");
     token = prefs.getString("token");
     user = prefs.getString("user");
+
     debugPrint("ID FROM LOCAL:" + id.toString());
     debugPrint("Token FROM LOCAL:" + token.toString());
     debugPrint("User FROM Local:" + user.toString());
@@ -184,11 +187,11 @@ class BaseService {
         debugPrint("Response:" + respStr);
         return jsonDecode(respStr);
       } else {
-        print("____"+response.reasonPhrase);
+        print("____" + response.reasonPhrase);
         EasyLoading.dismiss();
       }
     } catch (e) {
-      print("____"+response.reasonPhrase);
+      print("____" + response.reasonPhrase);
       print(response.persistentConnection);
       EasyLoading.dismiss();
       showToast("Internet Not Working", AppColors.ERROR_COLOR);
@@ -201,10 +204,13 @@ class BaseService {
   //---- SIGNUP AND LOGIN FLOW-----////////
 
   Future loginFormUser(BuildContext context, {email, password}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // print("*******" + prefs.getString("xyz").toString());
+    String tokens = await FirebaseMessaging.instance.getToken();
     Map<String, String> requestBody = <String, String>{
       "email": email ?? "",
       "password": password ?? "",
-      "device_token": "testing",
+      "device_token": tokens ?? "testing",
       "device_type": Platform.operatingSystem ?? "ios"
     };
     await formDataBaseMethod(ApiConst.SIGN_IN_URL, body: requestBody)
@@ -230,10 +236,13 @@ class BaseService {
 
   Future signUpUser(BuildContext context, firstName, lastName, email,
       phoneNumber, password) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // FCM_Token = prefs.getString("fcmToken");
+    String tokens = await FirebaseMessaging.instance.getToken();
     Map<String, String> requestBody = <String, String>{
       "email": email ?? "",
       "password": password ?? "",
-      "device_token": "testing",
+      "device_token": tokens ?? "testing",
       "device_type": Platform.operatingSystem ?? "ios",
       "first_name": firstName ?? "",
       "last_name": lastName ?? "",
@@ -494,30 +503,30 @@ class BaseService {
         AppleIDAuthorizationScopes.fullName,
       ],
     );
-    if (userProvider.appUser == null) {
+    if (credential != null) {
       socialLoginApple(context, credential.userIdentifier, credential.givenName,
           credential.email);
-    } else {
-      socialLoginApple(context, userProvider.appUser.userSocialToken,
-          userProvider.appUser.firstName, userProvider.appUser.email);
     }
-    print(credential);
+    // print(credential);
   }
 
   Future socialLoginApple(
       BuildContext context, accessToken, name, email) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // FCM_Token = prefs.getString("fcmToken");
+    String tokens = await FirebaseMessaging.instance.getToken();
     Map<String, String> requestBody = <String, String>{
       "access_token": accessToken,
-      "device_token": "testing",
+      "device_token": tokens ?? "testing",
       "device_type": Platform.operatingSystem ?? "ios",
       "provider": "apple",
-      "name": name,
-      "email": email,
+      "name": name ?? "",
+      "email": email ?? "",
       "image": "",
       "phone": "",
     };
     await formDataBaseMethod(ApiConst.SOCIAL_LOGIN,
-            body: requestBody, bodyCheck: true)
+            body: requestBody, bodyCheck: true, filesCheck: false)
         .then((value) {
       if (value["status"] == 1) {
         setUserData(context, value);
@@ -531,9 +540,12 @@ class BaseService {
 
   Future socialLoginFacebook(
       BuildContext context, accessToken, name, email, image) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //FCM_Token = prefs.getString("fcmToken");
+    String tokens = await FirebaseMessaging.instance.getToken();
     Map<String, String> requestBody = <String, String>{
       "access_token": accessToken,
-      "device_token": "testing",
+      "device_token": tokens ?? "test",
       "device_type": Platform.operatingSystem ?? "ios",
       "provider": "facebook",
       "name": name,
@@ -557,9 +569,12 @@ class BaseService {
 
   Future socialLoginGoogle(
       BuildContext context, accessToken, name, email, image) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // FCM_Token = prefs.getString("fcmToken");
+    String tokens = await FirebaseMessaging.instance.getToken();
     Map<String, String> requestBody = <String, String>{
       "access_token": accessToken,
-      "device_token": "testing",
+      "device_token": tokens ?? "testing",
       "device_type": Platform.operatingSystem ?? "ios",
       "provider": "google",
       "name": name,
@@ -976,11 +991,12 @@ class BaseService {
   /////======== CORE MODULE END =========///////
   void login(BuildContext context, {email, password}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
+    // FCM_Token = prefs.getString("fcmToken");
+    String tokens = await FirebaseMessaging.instance.getToken();
     await postBaseMethod(ApiConst.SIGN_IN_URL, {
       "email": email ?? "",
       "password": password ?? "",
-      "device_token": "testing",
+      "device_token": tokens ?? "testing",
       "device_type": Platform.operatingSystem ?? "ios"
     }).then((value) {
       if (value["status"] == 0) {
