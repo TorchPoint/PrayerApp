@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:prayer_hybrid_app/models/group_prayer_model.dart';
+import 'package:prayer_hybrid_app/models/notification_model.dart';
 import 'package:prayer_hybrid_app/models/prayer_model.dart';
 import 'package:prayer_hybrid_app/models/reminder_model.dart';
 import 'package:prayer_hybrid_app/models/user_model.dart';
@@ -191,6 +192,28 @@ class GroupProvider extends ChangeNotifier {
       members.forEach((element) {
         groupMembersList.add(AppUser.fromJson(element));
       });
+    }
+    notifyListeners();
+  }
+}
+
+class NotificationProvider extends ChangeNotifier {
+  NotificationModel _notificationModel;
+  List<NotificationModel> notificationList;
+
+  void fetchNotification(List newNotifications) {
+    notificationList = [];
+    if (notificationList != null) {
+      newNotifications.forEach((element) {
+        notificationList.add(NotificationModel.fromJson(element));
+      });
+    }
+    notifyListeners();
+  }
+
+  void resetNotificationList() {
+    if (notificationList != null) {
+      notificationList.clear();
     }
     notifyListeners();
   }

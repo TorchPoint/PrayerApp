@@ -42,4 +42,6 @@ class ApiConst {
   static const FETCH_GROUP_PRAYER = "joined-group";
   static const UPDATE_PRAYER_GROUP = "update-group";
   static const DELETE_PRAYER_GROUP = "delete-group";
+
+  static const NOTIFICATION_URL = "notifications";
 }

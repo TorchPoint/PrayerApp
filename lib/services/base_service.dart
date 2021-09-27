@@ -87,7 +87,8 @@ class BaseService {
 
   /////-----BASE METHODS----//////
 
-  Future getBaseMethod(url, {loading = true, tokenCheck = false}) async {
+  Future getBaseMethod(context, url,
+      {loading = true, tokenCheck = false}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var uri = Uri.parse(ApiConst.BASE_URL + url);
     print(uri);
@@ -105,6 +106,12 @@ class BaseService {
         var jsonData = jsonDecode(response.body);
         debugPrint(jsonData.toString());
         return jsonData;
+      } else if (response.statusCode == 401) {
+        print("********${response.statusCode.toString()}*****");
+        EasyLoading.dismiss();
+        AppNavigation.navigatorPop(context);
+        AppNavigation.navigateToRemovingAll(context, AuthMainScreen());
+        showToast("UnAuthorized", AppColors.ERROR_COLOR);
       }
     } catch (e) {
       EasyLoading.dismiss();
@@ -146,7 +153,7 @@ class BaseService {
     }
   }
 
-  Future formDataBaseMethod(url,
+  Future formDataBaseMethod(context, url,
       {bool tokenCheck = false,
       bodyCheck = true,
       Map<String, String> body,
@@ -186,9 +193,18 @@ class BaseService {
         EasyLoading.dismiss();
         debugPrint("Response:" + respStr);
         return jsonDecode(respStr);
+      } else if (response.statusCode == 401) {
+        print("********${response.statusCode.toString()}*****");
+        EasyLoading.dismiss();
+        AppNavigation.navigatorPop(context);
+        AppNavigation.navigateToRemovingAll(context, AuthMainScreen());
+        showToast("UnAuthorized", AppColors.ERROR_COLOR);
       } else {
         print("____" + response.reasonPhrase);
         EasyLoading.dismiss();
+        AppNavigation.navigatorPop(context);
+        AppNavigation.navigateToRemovingAll(context, AuthMainScreen());
+        showToast("UnAuthorized", AppColors.ERROR_COLOR);
       }
     } catch (e) {
       print("____" + response.reasonPhrase);
@@ -213,7 +229,7 @@ class BaseService {
       "device_token": tokens ?? "testing",
       "device_type": Platform.operatingSystem ?? "ios"
     };
-    await formDataBaseMethod(ApiConst.SIGN_IN_URL, body: requestBody)
+    await formDataBaseMethod(context, ApiConst.SIGN_IN_URL, body: requestBody)
         .then((value) {
       if (value["status"] == 0) {
         showToast(value["message"], AppColors.ERROR_COLOR);
@@ -248,7 +264,7 @@ class BaseService {
       "last_name": lastName ?? "",
       "contact_no": phoneNumber ?? ""
     };
-    await formDataBaseMethod(ApiConst.SIGNUP_URL,
+    await formDataBaseMethod(context, ApiConst.SIGNUP_URL,
             bodyCheck: true, body: requestBody)
         .then((value) {
       if (value["status"] == 1) {
@@ -272,7 +288,7 @@ class BaseService {
       "otp": otp,
     };
 
-    await formDataBaseMethod(ApiConst.VERIFICATION_URL,
+    await formDataBaseMethod(context, ApiConst.VERIFICATION_URL,
             body: requestBody, bodyCheck: true)
         .then((value) {
       if (value["status"] == 1) {
@@ -289,7 +305,7 @@ class BaseService {
     Map<String, String> requestBody = <String, String>{
       "user_id": userID,
     };
-    await formDataBaseMethod(ApiConst.RESEND_EMAIL_VERIFICATION_URL,
+    await formDataBaseMethod(context, ApiConst.RESEND_EMAIL_VERIFICATION_URL,
             bodyCheck: true, body: requestBody)
         .then((value) {
       if (value["status"] == 1) {
@@ -309,7 +325,7 @@ class BaseService {
       "contact_no": phoneNumber ?? "",
     };
 
-    await formDataBaseMethod(ApiConst.UPDATE_PROFILE,
+    await formDataBaseMethod(context, ApiConst.UPDATE_PROFILE,
             bodyCheck: true,
             tokenCheck: true,
             body: requestBody,
@@ -332,7 +348,7 @@ class BaseService {
       "new_password": newPassword,
     };
 
-    await formDataBaseMethod(ApiConst.UPDATE_PASSWORD_URL,
+    await formDataBaseMethod(context, ApiConst.UPDATE_PASSWORD_URL,
             bodyCheck: true, body: requestBody, tokenCheck: true)
         .then((value) {
       if (value["status"] == 1) {
@@ -352,7 +368,7 @@ class BaseService {
     Map<String, String> requestBody = <String, String>{
       "email": email ?? "",
     };
-    await formDataBaseMethod(ApiConst.FORGET_PASSWORD_URL,
+    await formDataBaseMethod(context, ApiConst.FORGET_PASSWORD_URL,
             body: requestBody, bodyCheck: true)
         .then((value) {
       if (value["status"] == 1) {
@@ -376,7 +392,7 @@ class BaseService {
       "otp": otp,
     };
 
-    await formDataBaseMethod(ApiConst.FORGET_VERIFICATION_URL,
+    await formDataBaseMethod(context, ApiConst.FORGET_VERIFICATION_URL,
             bodyCheck: true, body: requestBody)
         .then((value) {
       if (value["status"] == 1) {
@@ -400,7 +416,7 @@ class BaseService {
       "new_password": newPassword
     };
 
-    await formDataBaseMethod(ApiConst.RESET_PASSWORD_URL,
+    await formDataBaseMethod(context, ApiConst.RESET_PASSWORD_URL,
             body: requestBody, bodyCheck: true)
         .then((value) {
       if (value["status"] == 1) {
@@ -422,8 +438,10 @@ class BaseService {
     var reminderProvider =
         Provider.of<ReminderProvider>(context, listen: false);
     var groupProvider = Provider.of<GroupProvider>(context, listen: false);
+    var notificationProvider =
+        Provider.of<NotificationProvider>(context, listen: false);
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await formDataBaseMethod(ApiConst.LOGOUT_URL,
+    await formDataBaseMethod(context, ApiConst.LOGOUT_URL,
             bodyCheck: false, tokenCheck: true)
         .then((value) {
       if (value["status"] == 1) {
@@ -441,6 +459,9 @@ class BaseService {
         }
         if (groupProvider != null) {
           groupProvider.resetGroupsList();
+        }
+        if (notificationProvider != null) {
+          notificationProvider.resetNotificationList();
         }
         AppNavigation.navigatorPop(context);
         AppNavigation.navigateToRemovingAll(context, AuthMainScreen());
@@ -525,7 +546,7 @@ class BaseService {
       "image": "",
       "phone": "",
     };
-    await formDataBaseMethod(ApiConst.SOCIAL_LOGIN,
+    await formDataBaseMethod(context, ApiConst.SOCIAL_LOGIN,
             body: requestBody, bodyCheck: true, filesCheck: false)
         .then((value) {
       if (value["status"] == 1) {
@@ -554,7 +575,7 @@ class BaseService {
       "phone": "",
     };
 
-    await formDataBaseMethod(ApiConst.SOCIAL_LOGIN,
+    await formDataBaseMethod(context, ApiConst.SOCIAL_LOGIN,
             body: requestBody, bodyCheck: true)
         .then((value) {
       if (value["status"] == 1) {
@@ -583,7 +604,7 @@ class BaseService {
       "phone": "",
     };
 
-    await formDataBaseMethod(ApiConst.SOCIAL_LOGIN,
+    await formDataBaseMethod(context, ApiConst.SOCIAL_LOGIN,
             body: requestBody, bodyCheck: true)
         .then((value) {
       if (value["status"] == 1) {
@@ -603,7 +624,7 @@ class BaseService {
   Future fetchPrayers(BuildContext context) async {
     var prayerProvider = Provider.of<PrayerProvider>(context, listen: false);
 
-    await getBaseMethod(ApiConst.FETCH_PRAYERS_URL + "?type=prayer",
+    await getBaseMethod(context, ApiConst.FETCH_PRAYERS_URL + "?type=prayer",
             tokenCheck: true, loading: true)
         .then((value) {
       if (value["status"] == 1) {
@@ -624,7 +645,7 @@ class BaseService {
       "type": "prayer",
     };
 
-    await formDataBaseMethod(ApiConst.ADD_PRAYER_URL,
+    await formDataBaseMethod(context, ApiConst.ADD_PRAYER_URL,
             tokenCheck: true, bodyCheck: true, body: requestBody)
         .then((value) {
       if (value["status"] == 1) {
@@ -646,7 +667,7 @@ class BaseService {
       "prayer": prayerId.toString(),
     };
 
-    await formDataBaseMethod(ApiConst.UPDATE_PRAYER_URL,
+    await formDataBaseMethod(context, ApiConst.UPDATE_PRAYER_URL,
             body: requestBody, bodyCheck: true, tokenCheck: true)
         .then((value) {
       if (value["status"] == 1) {
@@ -662,7 +683,7 @@ class BaseService {
       "prayer": prayerID.toString(),
     };
 
-    await formDataBaseMethod(ApiConst.DELETE_PRAYER_URL,
+    await formDataBaseMethod(context, ApiConst.DELETE_PRAYER_URL,
             bodyCheck: true, body: requestBody, tokenCheck: true)
         .then((value) {
       if (value["status"] == 1) {
@@ -675,7 +696,7 @@ class BaseService {
   Future fetchPraise(BuildContext context) async {
     var praiseProvider = Provider.of<PrayerProvider>(context, listen: false);
 
-    await getBaseMethod(ApiConst.FETCH_PRAYERS_URL + "?type=praise",
+    await getBaseMethod(context, ApiConst.FETCH_PRAYERS_URL + "?type=praise",
             tokenCheck: true, loading: true)
         .then((value) {
       if (value["status"] == 1) {
@@ -696,7 +717,7 @@ class BaseService {
       "type": "praise",
     };
 
-    await formDataBaseMethod(ApiConst.ADD_PRAYER_URL,
+    await formDataBaseMethod(context, ApiConst.ADD_PRAYER_URL,
             tokenCheck: true, bodyCheck: true, body: requestBody)
         .then((value) {
       if (value["status"] == 1) {
@@ -718,7 +739,7 @@ class BaseService {
       "prayer": praiseId.toString(),
     };
 
-    await formDataBaseMethod(ApiConst.UPDATE_PRAYER_URL,
+    await formDataBaseMethod(context, ApiConst.UPDATE_PRAYER_URL,
             body: requestBody, bodyCheck: true, tokenCheck: true)
         .then((value) {
       if (value["status"] == 1) {
@@ -734,7 +755,7 @@ class BaseService {
       "prayer": praiseID.toString(),
     };
 
-    await formDataBaseMethod(ApiConst.DELETE_PRAYER_URL,
+    await formDataBaseMethod(context, ApiConst.DELETE_PRAYER_URL,
             bodyCheck: true, body: requestBody, tokenCheck: true)
         .then((value) {
       if (value["status"] == 1) {
@@ -750,7 +771,7 @@ class BaseService {
       "prayer_duration": prayerDuration
     };
 
-    await formDataBaseMethod(ApiConst.ANSWER_PRAYER_URL,
+    await formDataBaseMethod(context, ApiConst.ANSWER_PRAYER_URL,
             body: requestBody, bodyCheck: true, tokenCheck: true)
         .then((value) {
       if (value["status"] == 1) {
@@ -764,7 +785,7 @@ class BaseService {
   Future searchPrayer(BuildContext context, search) async {
     var praiseProvider = Provider.of<PrayerProvider>(context, listen: false);
 
-    getBaseMethod(ApiConst.SEARCH_PRAYERS_URL + "?search=${search}",
+    getBaseMethod(context, ApiConst.SEARCH_PRAYERS_URL + "?search=${search}",
             loading: true, tokenCheck: true)
         .then((value) {
       if (value["status"] == 1) {
@@ -780,7 +801,8 @@ class BaseService {
   Future searchGroupPartners(BuildContext context, search) async {
     var userProvider = Provider.of<AppUserProvider>(context, listen: false);
 
-    await getBaseMethod(ApiConst.SEARCH_PARTNERS_URL + "?search=${search}",
+    await getBaseMethod(
+            context, ApiConst.SEARCH_PARTNERS_URL + "?search=${search}",
             tokenCheck: true, loading: true)
         .then((value) {
       if (value["status"] == 1) {
@@ -796,7 +818,7 @@ class BaseService {
     var reminderProvider =
         Provider.of<ReminderProvider>(context, listen: false);
 
-    await getBaseMethod(ApiConst.FETCH_REMINDERS_URL,
+    await getBaseMethod(context, ApiConst.FETCH_REMINDERS_URL,
             tokenCheck: true, loading: true)
         .then((value) {
       if (value["status"] == 1) {
@@ -816,7 +838,7 @@ class BaseService {
       "reminder_time": reminderTime,
     };
 
-    await formDataBaseMethod(ApiConst.ADD_REMINDER_URL,
+    await formDataBaseMethod(context, ApiConst.ADD_REMINDER_URL,
             bodyCheck: true, body: requestBody, tokenCheck: true)
         .then((value) {
       if (value["status"] == 1) {
@@ -838,7 +860,7 @@ class BaseService {
       "reminder_time": reminderTime,
       "reminder": reminderID.toString(),
     };
-    await formDataBaseMethod(ApiConst.UPDATE_REMINDER_URL,
+    await formDataBaseMethod(context, ApiConst.UPDATE_REMINDER_URL,
             bodyCheck: true, body: requestBody, tokenCheck: true)
         .then((value) {
       if (value["status"] == 1) {
@@ -854,7 +876,7 @@ class BaseService {
       "reminder": reminderID.toString(),
     };
 
-    formDataBaseMethod(ApiConst.DELETE_REMINDER_URL,
+    formDataBaseMethod(context, ApiConst.DELETE_REMINDER_URL,
             bodyCheck: true, body: requestBody, tokenCheck: true)
         .then((value) {
       if (value["status"] == 1) {
@@ -866,7 +888,7 @@ class BaseService {
 
   Future fetchPartnersList(BuildContext context) async {
     var userProvider = Provider.of<AppUserProvider>(context, listen: false);
-    await getBaseMethod(ApiConst.FETCH_PARTNERS_URL,
+    await getBaseMethod(context, ApiConst.FETCH_PARTNERS_URL,
             loading: true, tokenCheck: true)
         .then((value) {
       if (value["status"] == 1) {
@@ -884,7 +906,7 @@ class BaseService {
       "name": name,
     };
 
-    await formDataBaseMethod(ApiConst.ADD_PARTNERS_URL,
+    await formDataBaseMethod(context, ApiConst.ADD_PARTNERS_URL,
             tokenCheck: true, body: requestBody, bodyCheck: true)
         .then((value) {
       if (value["status"] == 0) {
@@ -900,7 +922,7 @@ class BaseService {
 
   Future fetchGroups(BuildContext context) async {
     var groupProvider = Provider.of<GroupProvider>(context, listen: false);
-    await getBaseMethod(ApiConst.FETCH_GROUP_PRAYER,
+    await getBaseMethod(context, ApiConst.FETCH_GROUP_PRAYER,
             tokenCheck: true, loading: true)
         .then((value) {
       if (value["status"] == 1) {
@@ -915,7 +937,7 @@ class BaseService {
   Future fetchGroupMembers(BuildContext context) async {
     var groupProvider = Provider.of<GroupProvider>(context, listen: false);
 
-    await getBaseMethod(ApiConst.FETCH_GROUP_PRAYER,
+    await getBaseMethod(context, ApiConst.FETCH_GROUP_PRAYER,
             tokenCheck: true, loading: true)
         .then((value) {
       if (value["status"] == 1) {
@@ -936,7 +958,7 @@ class BaseService {
       "name": name,
     };
 
-    await formDataBaseMethod(ApiConst.ADD_PRAYER_GROUP_URL,
+    await formDataBaseMethod(context, ApiConst.ADD_PRAYER_GROUP_URL,
             tokenCheck: true, body: requestBody, bodyCheck: true)
         .then((value) {
       if (value["status"] == 1) {
@@ -955,7 +977,7 @@ class BaseService {
       "group": groupID.toString(),
     };
 
-    await formDataBaseMethod(ApiConst.UPDATE_PRAYER_GROUP,
+    await formDataBaseMethod(context, ApiConst.UPDATE_PRAYER_GROUP,
             tokenCheck: true, bodyCheck: true, body: requestBody)
         .then((value) {
       if (value["status"] == 1) {
@@ -974,7 +996,7 @@ class BaseService {
       "group": groupID.toString(),
     };
 
-    await formDataBaseMethod(ApiConst.DELETE_PRAYER_GROUP,
+    await formDataBaseMethod(context, ApiConst.DELETE_PRAYER_GROUP,
             tokenCheck: true, body: requestBody, bodyCheck: true)
         .then((value) {
       if (value["status"] == 1) {
@@ -984,6 +1006,21 @@ class BaseService {
         //AppNavigation.navigateTo(context, PrayerGroupListScreen());
       } else {
         showToast(value["message"], AppColors.ERROR_COLOR);
+      }
+    });
+  }
+
+  Future fetchNotificationList(BuildContext context) async {
+    var notificationProvider =
+        Provider.of<NotificationProvider>(context, listen: false);
+
+    await getBaseMethod(context, ApiConst.NOTIFICATION_URL,
+            tokenCheck: true, loading: true)
+        .then((value) {
+      if (value["status"] == 1) {
+        notificationProvider.fetchNotification(value["data"]);
+      } else {
+        notificationProvider.resetNotificationList();
       }
     });
   }

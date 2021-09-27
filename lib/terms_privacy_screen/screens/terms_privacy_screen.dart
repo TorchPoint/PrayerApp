@@ -25,8 +25,8 @@ class _TermsPrivacyScreenState extends State<TermsPrivacyScreen> {
 
   Future getContents(BuildContext context) async {
     await baseService
-        .getBaseMethod(ApiConst.CONTENT_URL + "?type=terms-and-conditions",
-            loading: true)
+        .getBaseMethod(context, ApiConst.CONTENT_URL + "?type=${widget.title}",
+            loading: true, tokenCheck: true)
         .then((value) {
       if (widget.title == AppStrings.TERMS_CONDITIONS_TEXT) {
         content = value["data"][0]["body"];

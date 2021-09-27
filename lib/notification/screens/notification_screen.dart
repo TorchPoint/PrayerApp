@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_hybrid_app/providers/provider.dart';
 import 'package:prayer_hybrid_app/reminder_calendar/screens/reminder_screen.dart';
+import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
+import 'package:provider/provider.dart';
 
 class NotificationScreen extends StatefulWidget {
   @override
@@ -13,6 +16,15 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
+  BaseService baseService = BaseService();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    baseService.fetchNotificationList(context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomBackgroundContainer(
@@ -44,22 +56,33 @@ class _NotificationScreenState extends State<NotificationScreen> {
       leadingTap: () {
         AppNavigation.navigatorPop(context);
       },
-      trailingIconPath: AssetPaths.NOTIFICATION_ICON,
-      trailingTap: () {
-        AppNavigation.navigateTo(context, ReminderScreen());
-      },
+      // trailingIconPath: AssetPaths.NOTIFICATION_ICON,
+      // trailingTap: () {
+      //   AppNavigation.navigateTo(context, ReminderScreen());
+      // },
     );
   }
 
   Widget _notificationListWidget() {
-    return ListView.builder(
-        itemCount: 8,
-        itemBuilder: (BuildContext context, int index) {
-          return _notificationContainerWidget();
-        });
+    var notificationProvider =
+        Provider.of<NotificationProvider>(context, listen: true);
+    return notificationProvider.notificationList?.length == 0 ||
+            notificationProvider.notificationList == null
+        ? Center(
+            child: Text(
+              "No Notifications Found",
+              style: TextStyle(color: AppColors.WHITE_COLOR),
+            ),
+          )
+        : ListView.builder(
+            padding: EdgeInsets.zero,
+            itemCount: notificationProvider.notificationList?.length ?? 0,
+            itemBuilder: (BuildContext context, int index) {
+              return _notificationContainerWidget(index);
+            });
   }
 
-  Widget _notificationContainerWidget() {
+  Widget _notificationContainerWidget(int index) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.9,
       margin: EdgeInsets.only(
@@ -74,29 +97,37 @@ class _NotificationScreenState extends State<NotificationScreen> {
           borderRadius: BorderRadius.circular(8.0)),
       child: Row(
         children: [
-          _imageWidget(),
+          _imageWidget(index),
           SizedBox(
             width: 10.0,
           ),
-          Expanded(child: _notificationDetailWidget())
+          Expanded(child: _notificationDetailWidget(index))
         ],
       ),
     );
   }
 
-  Widget _imageWidget() {
+  Widget _imageWidget(index) {
+    var notificationProvider =
+        Provider.of<NotificationProvider>(context, listen: true);
     return Container(
       width: 55.0,
       height: 55.0,
       decoration: BoxDecoration(
           shape: BoxShape.circle,
           image: DecorationImage(
-              image: AssetImage(AssetPaths.VIDEO_USER1_IMAGE),
+              image: notificationProvider.notificationList[index].data.image ==
+                      null
+                  ? AssetImage(AssetPaths.VIDEO_USER1_IMAGE)
+                  : NetworkImage(
+                      notificationProvider.notificationList[index].data.image),
               fit: BoxFit.cover)),
     );
   }
 
-  Widget _notificationDetailWidget() {
+  Widget _notificationDetailWidget(int index) {
+    var notificationProvider =
+        Provider.of<NotificationProvider>(context, listen: true);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -105,14 +136,16 @@ class _NotificationScreenState extends State<NotificationScreen> {
           children: [
             Expanded(
               child: Text(
-                AppStrings.USER_NAME_TEXT,
+                notificationProvider.notificationList[index].data.name ?? "",
                 style: TextStyle(
                     color: AppColors.BLACK_COLOR, fontWeight: FontWeight.w600),
                 textScaleFactor: 1.2,
               ),
             ),
             Text(
-              AppStrings.NOTIFICATION_DATE_TEXT,
+              notificationProvider.notificationList[index].createdAt
+                  .split('T')
+                  .first,
               style: TextStyle(
                   color: AppColors.BLACK_COLOR, fontWeight: FontWeight.w600),
               textScaleFactor: 1.05,
@@ -125,12 +158,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
         Padding(
             padding: EdgeInsets.only(right: 20.0),
             child: Text(
-              AppStrings.NOTIFICATION_DESCRIPTION_TEXT,
+              notificationProvider.notificationList[index].data.message,
               style: TextStyle(
                   color: AppColors.BLACK_COLOR, fontWeight: FontWeight.w400),
               textScaleFactor: 1.1,
               overflow: TextOverflow.ellipsis,
-              maxLines: 1,
+              maxLines: 3,
             )),
       ],
     );
