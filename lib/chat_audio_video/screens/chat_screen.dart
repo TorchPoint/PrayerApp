@@ -1,10 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:prayer_hybrid_app/chat_audio_video/screens/audio_screen.dart';
 import 'package:prayer_hybrid_app/chat_audio_video/screens/video_screen.dart';
 import 'package:prayer_hybrid_app/common_classes/image_gallery_class.dart';
+import 'package:prayer_hybrid_app/models/group_prayer_model.dart';
+import 'package:prayer_hybrid_app/models/message_model.dart';
 import 'package:prayer_hybrid_app/models/user_model.dart';
+import 'package:prayer_hybrid_app/providers/provider.dart';
 import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
@@ -12,12 +16,15 @@ import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'package:prayer_hybrid_app/widgets/custom_chat_app_bar.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
+import 'package:provider/provider.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class ChatScreen extends StatefulWidget {
   final AppUser user;
+  final GroupPrayerModel groupPrayerModel;
+  final int role; // role=0 is for 1:1 chat and role=1 is for group chat
 
-  ChatScreen({this.user});
+  ChatScreen({this.user, this.role, this.groupPrayerModel});
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -25,40 +32,88 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   IO.Socket socket;
-  List<String> userMessage = [];
+  List<MessageModel> userMessage = [];
   TextEditingController _sendMessageController = TextEditingController();
   File profileFileImage;
   String profileImagePath;
   ImageGalleryClass imageGalleryClass = ImageGalleryClass();
   BaseService baseService = BaseService();
+  ScrollController _controller = ScrollController();
 
-  void connect() {
-    socket = IO.io('https://server.appsstaging.com:3099', <String, dynamic>{
+  void connect(BuildContext context) {
+    print("----ROLE----:" + widget.role.toString());
+    var chatProvider = Provider.of<ChatProvider>(context, listen: false);
+    socket = IO.io('https://server.appsstaging.com:3010', <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
     });
     socket.connect();
     print(socket.connected);
-    print(socket.io.uri);
-    print(socket.io.autoConnect);
-    print(socket.io.options);
+    EasyLoading.show(status: "Loading...", dismissOnTap: true);
     socket.onError((data) {
       print("erroe");
+      baseService.showToast("Connection Error", AppColors.ERROR_COLOR);
+      EasyLoading.dismiss();
     });
-    socket.onConnectError((data) => print("error"));
+    socket.onConnectError((data) {
+      print("error");
+      EasyLoading.dismiss();
+    });
     socket.onConnect((data) {
       print("connected");
+      var dataChatSingle = {
+        "sender_id": baseService.id,
+        "reciever_id": widget.user?.id
+      };
+      var dataChatGroup = {
+        "sender_id": baseService.id,
+        "group_id": widget.groupPrayerModel?.id
+      };
+
+      var singleChat = "get_messages";
+      var groupChat = "group_get_messages";
+
+      //print(dataChatSingle.toString());
+      socket.emit(widget.role == 0 ? singleChat : groupChat,
+          widget.role == 0 ? dataChatSingle : dataChatGroup);
+      socket.on("response", (data) {
+        EasyLoading.dismiss();
+        print("DATA" + data.toString());
+
+        chatProvider.fetchMessages(data["data"]);
+        // setState(() {
+        //   data["data"].forEach((element) {
+        //     userMessage.insert(0, MessageModel.fromJson(element));
+        //   });
+        // });
+      });
     });
     socket.onConnectTimeout((data) {
       print(data);
       print("timeout");
+      baseService.showToast("Session TimeOut Error", AppColors.ERROR_COLOR);
+      EasyLoading.dismiss();
     });
   }
 
   void sendMessage(text) {
     setState(() {
       if (_sendMessageController.text.isNotEmpty) {
-        userMessage.add(text);
+        var data = {
+          'sender_id': baseService.id,
+          'reciever_id': widget.user?.id,
+          'message': _sendMessageController.text
+        };
+        var dataGroup = {
+          'sender_id': baseService.id,
+          'group_id': widget.groupPrayerModel?.id,
+          'message': _sendMessageController.text
+        };
+        var single = "send_message";
+        var group = "group_send_message";
+
+        socket.emit(widget.role == 0 ? single : group,
+            widget.role == 0 ? data : dataGroup);
       }
     });
   }
@@ -66,13 +121,22 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    connect();
+    connect(context);
     baseService.loadLocalUser();
+    _controller = ScrollController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => {
+          _controller.animateTo(
+            1.0,
+            duration: Duration(milliseconds: 200),
+            curve: Curves.bounceIn,
+          )
+        });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    var chatProvider = Provider.of<ChatProvider>(context, listen: true);
     return CustomBackgroundContainer(
       child: Scaffold(
         backgroundColor: AppColors.TRANSPARENT_COLOR,
@@ -83,14 +147,36 @@ class _ChatScreenState extends State<ChatScreen> {
               height: 15.0,
             ),
             Expanded(
-              child: ListView.builder(
-                  itemCount: userMessage.length,
-                  padding: EdgeInsets.zero,
-                  itemBuilder: (BuildContext ctxt, int index) {
-                    return baseService.id != widget.user.id
-                        ? sendUser(userMessage[index])
-                        : receiveUser(userMessage[index]);
-                  }),
+              child: chatProvider.messageList == null ||
+                      chatProvider.messageList?.length == 0
+                  ? Center(
+                      child: Text(
+                        "No History Found",
+                        style: TextStyle(color: AppColors.WHITE_COLOR),
+                      ),
+                    )
+                  : ListView.builder(
+                      controller: _controller,
+                      reverse: true,
+                      itemCount: chatProvider.messageList?.length ?? 0,
+                      padding: EdgeInsets.zero,
+                      itemBuilder: (BuildContext ctxt, int index) {
+                        return widget.role == 0
+                            ? baseService.id ==
+                                    chatProvider.messageList[index].senderId
+                                ? sendUser(
+                                    chatProvider.messageList[index].message)
+                                : receiveUser(
+                                    chatProvider.messageList[index].message,
+                                    index: index)
+                            : baseService.id ==
+                                    chatProvider.messageList[index].senderId
+                                ? sendUser(
+                                    chatProvider.messageList[index].message)
+                                : receiveUser(
+                                    chatProvider.messageList[index].message,
+                                    index: index);
+                      }),
             ),
             SizedBox(
               height: 7.0,
@@ -107,12 +193,17 @@ class _ChatScreenState extends State<ChatScreen> {
 
   //Custom Chat App Bar Widget
   Widget _customChatAppBar() {
+    var chatProvider = Provider.of<ChatProvider>(context, listen: true);
     return CustomChatAppBar(
-      title: "${widget.user.firstName + " " + widget.user.lastName}" ??
-          AppStrings.CHAT_USER_NAME,
+      title: widget.role == 0
+          ? "${widget.user.firstName + " " + widget.user.lastName}"
+          : "${widget.groupPrayerModel.name}",
       leadingIconPath: AssetPaths.BACK_ICON,
       leadingTap: () {
         print("Leading tap");
+        socket.dispose();
+        chatProvider.resetMessageList();
+
         AppNavigation.navigatorPop(context);
       },
       // trailingVideoIconPath: AssetPaths.VIDEO_ICON,
@@ -166,7 +257,8 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  Widget receiveUser(String receiveMessage) {
+  Widget receiveUser(String receiveMessage, {index}) {
+    var chatProvider = Provider.of<ChatProvider>(context, listen: true);
     return Padding(
       padding: EdgeInsets.only(
           left: MediaQuery.of(context).size.width * 0.05,
@@ -182,9 +274,14 @@ class _ChatScreenState extends State<ChatScreen> {
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                  image: widget.user.profileImage == null
-                      ? AssetImage(AssetPaths.PROFILE_IMAGE)
-                      : NetworkImage(widget.user.profileImage),
+                  image: widget.role == 0
+                      ? widget.user.profileImage == null
+                          ? AssetImage(AssetPaths.PROFILE_IMAGE)
+                          : NetworkImage(widget.user.profileImage)
+                      : chatProvider.messageList[index].profileImage == null
+                          ? AssetImage(AssetPaths.PROFILE_IMAGE)
+                          : NetworkImage(
+                              chatProvider.messageList[index].profileImage),
                   fit: BoxFit.fill,
                 )),
           ),

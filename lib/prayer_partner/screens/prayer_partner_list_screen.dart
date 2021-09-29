@@ -122,8 +122,7 @@ class _PrayerPartnerListScreenState extends State<PrayerPartnerListScreen> {
         AppNavigation.navigateTo(
             context,
             ChatScreen(
-              user: userProvider.prayerPartnersList[partnerIndex]
-            ));
+                role: 0, user: userProvider.prayerPartnersList[partnerIndex]));
       },
       child: Container(
         width: MediaQuery.of(context).size.width * 0.85,

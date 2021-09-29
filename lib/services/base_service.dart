@@ -108,10 +108,12 @@ class BaseService {
         return jsonData;
       } else if (response.statusCode == 401) {
         print("********${response.statusCode.toString()}*****");
+        prefs.clear();
         EasyLoading.dismiss();
         AppNavigation.navigatorPop(context);
         AppNavigation.navigateToRemovingAll(context, AuthMainScreen());
         showToast("UnAuthorized", AppColors.ERROR_COLOR);
+
       }
     } catch (e) {
       EasyLoading.dismiss();
@@ -201,12 +203,15 @@ class BaseService {
         showToast("UnAuthorized", AppColors.ERROR_COLOR);
       } else {
         print("____" + response.reasonPhrase);
+        prefs.clear();
         EasyLoading.dismiss();
         AppNavigation.navigatorPop(context);
         AppNavigation.navigateToRemovingAll(context, AuthMainScreen());
         showToast("UnAuthorized", AppColors.ERROR_COLOR);
+
       }
     } catch (e) {
+      prefs.clear();
       print("____" + response.reasonPhrase);
       print(response.persistentConnection);
       EasyLoading.dismiss();

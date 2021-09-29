@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:prayer_hybrid_app/models/group_prayer_model.dart';
+import 'package:prayer_hybrid_app/models/message_model.dart';
 import 'package:prayer_hybrid_app/models/notification_model.dart';
 import 'package:prayer_hybrid_app/models/prayer_model.dart';
 import 'package:prayer_hybrid_app/models/reminder_model.dart';
@@ -214,6 +215,28 @@ class NotificationProvider extends ChangeNotifier {
   void resetNotificationList() {
     if (notificationList != null) {
       notificationList.clear();
+    }
+    notifyListeners();
+  }
+}
+
+class ChatProvider extends ChangeNotifier {
+  MessageModel messageModel;
+  List<MessageModel> messageList;
+
+  void fetchMessages(List newMessages) {
+    // messageList = [];
+    if (messageList != null) {
+      newMessages.forEach((element) {
+        messageList.insert(0, MessageModel.fromJson(element));
+      });
+      notifyListeners();
+    }
+  }
+
+  void resetMessageList() {
+    if (messageList != null) {
+      messageList.clear();
     }
     notifyListeners();
   }

@@ -22,14 +22,6 @@ class PrayerGroupListScreen extends StatefulWidget {
 }
 
 class _PrayerGroupListScreenState extends State<PrayerGroupListScreen> {
-  List<String> prayerGroupList = [
-    "Test",
-    "Friends",
-    "Family",
-    "Church",
-    "Church And Family",
-    "Home"
-  ];
   int prayerGroupSelectedIndex = 0;
 
   BaseService baseService = BaseService();
@@ -108,7 +100,12 @@ class _PrayerGroupListScreenState extends State<PrayerGroupListScreen> {
       onTap: () {
         print("next screen");
 
-        //AppNavigation.navigateTo(context, ChatScreen());
+        AppNavigation.navigateTo(
+            context,
+            ChatScreen(
+              role: 1,
+              groupPrayerModel: groupProvider.groupList[groupIndex],
+            ));
       },
       onLongPress: () {
         setState(() {
@@ -145,13 +142,13 @@ class _PrayerGroupListScreenState extends State<PrayerGroupListScreen> {
               child: Text(
                 groupProvider.groupList[groupIndex].name,
                 style: TextStyle(
-                    fontSize: 14.5,
+                    fontSize: 14,
                     color: prayerGroupSelectedIndex == groupIndex
                         ? AppColors.WHITE_COLOR
                         : AppColors.BLACK_COLOR,
                     fontWeight: FontWeight.w700),
                 maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+                overflow: TextOverflow.visible,
               ),
             ),
             Spacer(),
