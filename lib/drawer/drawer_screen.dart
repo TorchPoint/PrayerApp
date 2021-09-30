@@ -149,14 +149,14 @@ class _DrawerScreenState extends State<DrawerScreen>
                     color: AppColors.BACKGROUND1_COLOR,
                     shape: BoxShape.circle,
                     border: Border.all(
-                        color: userProvider.appUser.profileImage != null
+                        color: userProvider.appUser.profileImage == null
                             ? AppColors.WHITE_COLOR
-                            : AppColors.BACKGROUND1_COLOR,
+                            : AppColors.WHITE_COLOR,
                         width: 2.0),
                     image: DecorationImage(
                         image: userProvider.appUser.profileImage != null
                             ? NetworkImage(userProvider.appUser.profileImage)
-                            : AssetImage(AssetPaths.PROFILE_IMAGE),
+                            : AssetImage(AssetPaths.NO_IMAGE),
                         fit: BoxFit.cover),
                   ),
                 ),

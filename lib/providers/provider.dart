@@ -222,13 +222,14 @@ class NotificationProvider extends ChangeNotifier {
 
 class ChatProvider extends ChangeNotifier {
   MessageModel messageModel;
-  List<MessageModel> messageList;
+  List<MessageModel> messageList = [];
 
   void fetchMessages(List newMessages) {
-    // messageList = [];
+    //messageList = [];
     if (messageList != null) {
       newMessages.forEach((element) {
         messageList.insert(0, MessageModel.fromJson(element));
+
       });
       notifyListeners();
     }

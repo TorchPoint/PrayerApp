@@ -1,28 +1,36 @@
-class AssetPaths
-{
+class AssetPaths {
   //Images
   static const String FOREGROUND_IMAGE = "assets/images/foreground_image.png";
-  static const String AUTH_SECOND_SCREEN_IMAGE = "assets/images/auth_second_screen_image.png";
-  static const String PROFILE_IMAGE  = "assets/images/profile_image.jpg";
-  static const String DRAWER_BACKGROUND_IMAGE  = "assets/images/drawer_background_image.png";
-  static const String PRAY_NOW_IMAGE  = "assets/images/pray_now_image.png";
-  static const String ADD_PRAYER_IMAGE  = "assets/images/add_prayer_image.png";
-  static const String BIBLE_IMAGE  = "assets/images/bible_image.png";
-  static const String ADD_PRAISE_IMAGE  = "assets/images/add_praise_image.png";
-  static const String PRAYER_PARTNER_WITHOUT_SUBSCRIPTION_IMAGE  = "assets/images/prayer_partners_without_subs_image.png";
-  static const String PRAYER_PARTNER_SUBSCRIPTION_IMAGE  = "assets/images/prayer_partners_subscription_image.png";
-  static const String PRAYER_GROUP_IMAGE  = "assets/images/prayer_group_image.png";
-  static const String PRAY_NOW_SECOND_IMAGE  = "assets/images/pray_now_second_image.png";
-  static const String STOP_WATCH_IMAGE  = "assets/images/stop_watch_image.png";
-  static const String SEND_CHAT_IMAGE  = "assets/images/send_chat_image.png";
-  static const String SUBSCRIPTION_TEXT_IMAGE  = "assets/images/subscribe_text_image.png";
+  static const String AUTH_SECOND_SCREEN_IMAGE =
+      "assets/images/auth_second_screen_image.png";
+  static const String PROFILE_IMAGE = "assets/images/profile_image.jpg";
+  static const String DRAWER_BACKGROUND_IMAGE =
+      "assets/images/drawer_background_image.png";
+  static const String PRAY_NOW_IMAGE = "assets/images/pray_now_image.png";
+  static const String ADD_PRAYER_IMAGE = "assets/images/add_prayer_image.png";
+  static const String BIBLE_IMAGE = "assets/images/bible_image.png";
+  static const String ADD_PRAISE_IMAGE = "assets/images/add_praise_image.png";
+  static const String PRAYER_PARTNER_WITHOUT_SUBSCRIPTION_IMAGE =
+      "assets/images/prayer_partners_without_subs_image.png";
+  static const String PRAYER_PARTNER_SUBSCRIPTION_IMAGE =
+      "assets/images/prayer_partners_subscription_image.png";
+  static const String PRAYER_GROUP_IMAGE =
+      "assets/images/prayer_group_image.png";
+  static const String PRAY_NOW_SECOND_IMAGE =
+      "assets/images/pray_now_second_image.png";
+  static const String STOP_WATCH_IMAGE = "assets/images/stop_watch_image.png";
+  static const String SEND_CHAT_IMAGE = "assets/images/send_chat_image.png";
+  static const String SUBSCRIPTION_TEXT_IMAGE =
+      "assets/images/subscribe_text_image.png";
   static const String VISA_CARD_IMAGE = "assets/images/visa_card.png";
   static const String MASTER_CARD_IMAGE = "assets/images/master_card.png";
   static const String UCB_CARD_IMAGE = "assets/images/ucb_card.png";
-  static const String COMPLETE_PROFILE_IMAGE = "assets/images/complete_profile_image.png";
+  static const String COMPLETE_PROFILE_IMAGE =
+      "assets/images/complete_profile_image.png";
   static const String PARTNER_IMAGE = "assets/images/partner_image.png";
   static const String VIDEO_USER1_IMAGE = "assets/images/video_user1_image.png";
   static const String VIDEO_USER2_IMAGE = "assets/images/video_user2_image.png";
+  static const String NO_IMAGE = "assets/images/noimage.png";
 
   //Icons
   static const String NAME_ICON = "assets/icons/name_icon.png";
@@ -34,15 +42,22 @@ class AssetPaths
   static const String MENU_ICON = "assets/icons/menu_icon.png";
   static const String NOTIFICATION_ICON = "assets/icons/notification_icon.png";
   static const String EDIT_MENU_ICON = "assets/icons/edit_menu_icon.png";
-  static const String PRAYER_LIST_MENU_ICON = "assets/icons/prayer_list_menu_icon.png";
-  static const String PRAISE_LIST_MENU_ICON = "assets/icons/praise_list_menu_icon.png";
-  static const String SHARED_PRAYERS_MENU_ICON = "assets/icons/shared_prayers_menu_icon.png";
-  static const String PRAYER_GROUPS_MENU_ICON = "assets/icons/prayer_groups_menu_icon.png";
+  static const String PRAYER_LIST_MENU_ICON =
+      "assets/icons/prayer_list_menu_icon.png";
+  static const String PRAISE_LIST_MENU_ICON =
+      "assets/icons/praise_list_menu_icon.png";
+  static const String SHARED_PRAYERS_MENU_ICON =
+      "assets/icons/shared_prayers_menu_icon.png";
+  static const String PRAYER_GROUPS_MENU_ICON =
+      "assets/icons/prayer_groups_menu_icon.png";
   static const String REPORT_MENU_ICON = "assets/icons/report_menu_icon.png";
-  static const String SETTINGS_MENU_ICON = "assets/icons/settings_menu_icon.png";
-  static const String NOTIFICATION_MENU_ICON = "assets/icons/notification_menu_icon.png";
+  static const String SETTINGS_MENU_ICON =
+      "assets/icons/settings_menu_icon.png";
+  static const String NOTIFICATION_MENU_ICON =
+      "assets/icons/notification_menu_icon.png";
   static const String TIMER_MENU_ICON = "assets/icons/timer_menu_icon.png";
-  static const String SECURITY_MENU_ICON = "assets/icons/security_menu_icon.png";
+  static const String SECURITY_MENU_ICON =
+      "assets/icons/security_menu_icon.png";
   static const String LOGOUT_MENU_ICON = "assets/icons/logout_menu_icon.png";
   static const String BACK_ICON = "assets/icons/back_icon.png";
   static const String ADD_ICON = "assets/icons/add_icon.png";
@@ -66,8 +81,10 @@ class AssetPaths
   static const String VISIBLE_ON_ICON = "assets/icons/visible_on_icon.png";
   static const String VISIBLE_OFF_ICON = "assets/icons/visible_off_icon.png";
   static const String ATTACHMENT_ICON = "assets/icons/attachment_icon.png";
-  static const String TERMS_CONDITION_MENU_ICON = "assets/icons/terms_condition_icon.png";
-  static const String PRIVACY_POLICY_MENU_ICON = "assets/icons/privacy_policy_icon.png";
+  static const String TERMS_CONDITION_MENU_ICON =
+      "assets/icons/terms_condition_icon.png";
+  static const String PRIVACY_POLICY_MENU_ICON =
+      "assets/icons/privacy_policy_icon.png";
   static const String CHAT_ICON = "assets/icons/chat_icon.png";
   static const String LOUDSPEAKER_ICON = "assets/icons/loudspeaker_icon.png";
   static const String MICROPHONE_ICON = "assets/icons/microphone_icon.png";

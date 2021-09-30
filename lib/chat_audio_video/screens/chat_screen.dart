@@ -58,12 +58,14 @@ class _ChatScreenState extends State<ChatScreen> {
     socket.onConnectError((data) {
       print("error");
       EasyLoading.dismiss();
+      baseService.showToast("Connection Error", AppColors.ERROR_COLOR);
+      AppNavigation.navigatorPop(context);
     });
     socket.onConnect((data) {
       print("connected");
       var dataChatSingle = {
         "sender_id": baseService.id,
-        "reciever_id": widget.user?.id
+        "reciever_id": widget.user?.id ?? 0
       };
       var dataChatGroup = {
         "sender_id": baseService.id,
@@ -73,7 +75,9 @@ class _ChatScreenState extends State<ChatScreen> {
       var singleChat = "get_messages";
       var groupChat = "group_get_messages";
 
-      //print(dataChatSingle.toString());
+      print(widget.role == 0
+          ? dataChatSingle.toString()
+          : dataChatGroup.toString());
       socket.emit(widget.role == 0 ? singleChat : groupChat,
           widget.role == 0 ? dataChatSingle : dataChatGroup);
       socket.on("response", (data) {
@@ -127,7 +131,7 @@ class _ChatScreenState extends State<ChatScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) => {
           _controller.animateTo(
             1.0,
-            duration: Duration(milliseconds: 200),
+            duration: Duration(milliseconds: 900),
             curve: Curves.bounceIn,
           )
         });
@@ -144,7 +148,7 @@ class _ChatScreenState extends State<ChatScreen> {
           children: [
             _customChatAppBar(),
             SizedBox(
-              height: 15.0,
+              height: 10.0,
             ),
             Expanded(
               child: chatProvider.messageList == null ||
@@ -158,7 +162,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   : ListView.builder(
                       controller: _controller,
                       reverse: true,
-                      itemCount: chatProvider.messageList?.length ?? 0,
+                      itemCount: chatProvider.messageList.length,
                       padding: EdgeInsets.zero,
                       itemBuilder: (BuildContext ctxt, int index) {
                         return widget.role == 0
@@ -201,7 +205,7 @@ class _ChatScreenState extends State<ChatScreen> {
       leadingIconPath: AssetPaths.BACK_ICON,
       leadingTap: () {
         print("Leading tap");
-        socket.dispose();
+        //socket.dispose();
         chatProvider.resetMessageList();
 
         AppNavigation.navigatorPop(context);
@@ -327,19 +331,19 @@ class _ChatScreenState extends State<ChatScreen> {
         child: Row(
           children: [
             Expanded(child: _sendMessageTextField()),
-            Padding(
-              padding: EdgeInsets.only(right: 10.0, top: 2.0, bottom: 2.0),
-              child: GestureDetector(
-                onTap: () {
-                  _imageGalleryOption();
-                },
-                child: Image.asset(
-                  AssetPaths.ATTACHMENT_ICON,
-                  width: 23.0,
-                  height: 23.0,
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.only(right: 10.0, top: 2.0, bottom: 2.0),
+            //   child: GestureDetector(
+            //     onTap: () {
+            //       _imageGalleryOption();
+            //     },
+            //     child: Image.asset(
+            //       AssetPaths.ATTACHMENT_ICON,
+            //       width: 23.0,
+            //       height: 23.0,
+            //     ),
+            //   ),
+            // ),
             Padding(
               padding: EdgeInsets.only(right: 12.0, top: 2.0, bottom: 2.0),
               child: GestureDetector(
@@ -434,5 +438,6 @@ class _ChatScreenState extends State<ChatScreen> {
   void dispose() {
     super.dispose();
     _sendMessageController.dispose();
+    socket.dispose();
   }
 }
