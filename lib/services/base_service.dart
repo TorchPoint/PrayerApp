@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -93,7 +94,18 @@ class BaseService {
     var uri = Uri.parse(ApiConst.BASE_URL + url);
     print(uri);
     if (loading) {
-      EasyLoading.show(dismissOnTap: true, status: "Loading...");
+      EasyLoading.instance
+        ..indicatorType = EasyLoadingIndicatorType.cubeGrid
+        ..loadingStyle = EasyLoadingStyle.custom
+        ..backgroundColor = AppColors.BACKGROUND1_COLOR
+        ..indicatorColor = AppColors.WHITE_COLOR
+        ..textColor = AppColors.WHITE_COLOR
+        ..indicatorSize = 35.0
+        ..radius = 10.0
+        ..maskColor = AppColors.BLACK_COLOR.withOpacity(0.6)
+        ..userInteractions = false
+        ..dismissOnTap = false;
+      EasyLoading.show(status: "Loading", maskType: EasyLoadingMaskType.custom);
     }
     try {
       final http.Response response = await http.get(uri,
@@ -113,7 +125,6 @@ class BaseService {
         AppNavigation.navigatorPop(context);
         AppNavigation.navigateToRemovingAll(context, AuthMainScreen());
         showToast("UnAuthorized", AppColors.ERROR_COLOR);
-
       }
     } catch (e) {
       EasyLoading.dismiss();
@@ -164,7 +175,18 @@ class BaseService {
     var uri = Uri.parse(ApiConst.BASE_URL + url);
     debugPrint("Url:" + uri.toString());
     debugPrint("Body:" + body.toString());
-    EasyLoading.show(status: "Loading", dismissOnTap: true);
+    EasyLoading.instance
+      ..indicatorType = EasyLoadingIndicatorType.cubeGrid
+      ..loadingStyle = EasyLoadingStyle.custom
+      ..backgroundColor = AppColors.BACKGROUND1_COLOR
+      ..indicatorColor = AppColors.WHITE_COLOR
+      ..textColor = AppColors.WHITE_COLOR
+      ..indicatorSize = 35.0
+      ..radius = 10.0
+      ..maskColor = AppColors.BLACK_COLOR.withOpacity(0.6)
+      ..userInteractions = false
+      ..dismissOnTap = false;
+    EasyLoading.show(status: "Loading", maskType: EasyLoadingMaskType.custom);
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -208,7 +230,6 @@ class BaseService {
         AppNavigation.navigatorPop(context);
         AppNavigation.navigateToRemovingAll(context, AuthMainScreen());
         showToast("UnAuthorized", AppColors.ERROR_COLOR);
-
       }
     } catch (e) {
       prefs.clear();

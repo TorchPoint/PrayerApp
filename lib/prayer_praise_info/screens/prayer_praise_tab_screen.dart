@@ -78,7 +78,7 @@ class _PrayerPraiseTabScreenState extends State<PrayerPraiseTabScreen> with Sing
       leadingTap: (){
         AppNavigation.navigatorPop(context);
       },
-      trailingIconPath: AssetPaths.A_TO_Z_ICON,
+      //trailingIconPath: AssetPaths.A_TO_Z_ICON,
       paddingTop: 20.0,
       trailingTap: (){
         print("A to Z icon");

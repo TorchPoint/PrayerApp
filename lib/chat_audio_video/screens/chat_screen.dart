@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:prayer_hybrid_app/chat_audio_video/screens/audio_screen.dart';
-import 'package:prayer_hybrid_app/chat_audio_video/screens/video_screen.dart';
 import 'package:prayer_hybrid_app/common_classes/image_gallery_class.dart';
 import 'package:prayer_hybrid_app/models/group_prayer_model.dart';
 import 'package:prayer_hybrid_app/models/message_model.dart';
@@ -141,55 +140,61 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     var chatProvider = Provider.of<ChatProvider>(context, listen: true);
-    return CustomBackgroundContainer(
-      child: Scaffold(
-        backgroundColor: AppColors.TRANSPARENT_COLOR,
-        body: Column(
-          children: [
-            _customChatAppBar(),
-            SizedBox(
-              height: 10.0,
-            ),
-            Expanded(
-              child: chatProvider.messageList == null ||
-                      chatProvider.messageList?.length == 0
-                  ? Center(
-                      child: Text(
-                        "No History Found",
-                        style: TextStyle(color: AppColors.WHITE_COLOR),
-                      ),
-                    )
-                  : ListView.builder(
-                      controller: _controller,
-                      reverse: true,
-                      itemCount: chatProvider.messageList.length,
-                      padding: EdgeInsets.zero,
-                      itemBuilder: (BuildContext ctxt, int index) {
-                        return widget.role == 0
-                            ? baseService.id ==
-                                    chatProvider.messageList[index].senderId
-                                ? sendUser(
-                                    chatProvider.messageList[index].message)
-                                : receiveUser(
-                                    chatProvider.messageList[index].message,
-                                    index: index)
-                            : baseService.id ==
-                                    chatProvider.messageList[index].senderId
-                                ? sendUser(
-                                    chatProvider.messageList[index].message)
-                                : receiveUser(
-                                    chatProvider.messageList[index].message,
-                                    index: index);
-                      }),
-            ),
-            SizedBox(
-              height: 7.0,
-            ),
-            _sendMessageContainerWidget(),
-            SizedBox(
-              height: 10.0,
-            ),
-          ],
+    return WillPopScope(
+      onWillPop: () {
+        chatProvider.resetMessageList();
+        return;
+      },
+      child: CustomBackgroundContainer(
+        child: Scaffold(
+          backgroundColor: AppColors.TRANSPARENT_COLOR,
+          body: Column(
+            children: [
+              _customChatAppBar(),
+              SizedBox(
+                height: 10.0,
+              ),
+              Expanded(
+                child: chatProvider.messageList == null ||
+                        chatProvider.messageList?.length == 0
+                    ? Center(
+                        child: Text(
+                          "No History Found",
+                          style: TextStyle(color: AppColors.WHITE_COLOR),
+                        ),
+                      )
+                    : ListView.builder(
+                        controller: _controller,
+                        reverse: true,
+                        itemCount: chatProvider.messageList.length,
+                        padding: EdgeInsets.zero,
+                        itemBuilder: (BuildContext ctxt, int index) {
+                          return widget.role == 0
+                              ? baseService.id ==
+                                      chatProvider.messageList[index].senderId
+                                  ? sendUser(
+                                      chatProvider.messageList[index].message)
+                                  : receiveUser(
+                                      chatProvider.messageList[index].message,
+                                      index: index)
+                              : baseService.id ==
+                                      chatProvider.messageList[index].senderId
+                                  ? sendUser(
+                                      chatProvider.messageList[index].message)
+                                  : receiveUser(
+                                      chatProvider.messageList[index].message,
+                                      index: index);
+                        }),
+              ),
+              SizedBox(
+                height: 7.0,
+              ),
+              _sendMessageContainerWidget(),
+              SizedBox(
+                height: 10.0,
+              ),
+            ],
+          ),
         ),
       ),
     );

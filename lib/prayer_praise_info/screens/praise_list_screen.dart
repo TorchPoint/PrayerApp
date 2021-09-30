@@ -50,27 +50,35 @@ class _PraiseListScreenState extends State<PraiseListScreen> {
                   praiseProvider.praiseList.length == 0
               ? Center(
                   child: Text(
-                    "No Prayers Found",
+                    "No Praise Found",
                     style: TextStyle(color: AppColors.WHITE_COLOR),
                   ),
                 )
               : _searchController.text.isEmpty
                   ? ListView.builder(
-                      itemCount: praiseProvider.praiseList.length ?? 0,
+                      itemCount: praiseProvider.praiseList?.length ?? 0,
                       padding: EdgeInsets.zero,
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (BuildContext ctxt, int index) {
                         return _praiseList(index);
                       })
-                  : ListView.builder(
-                      itemCount: praiseProvider.searchPraiseList.length ?? 0,
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (BuildContext ctxt, int index) {
-                        return _praiseList(index);
-                      }),
+                  : praiseProvider.searchPraiseList.length == 0
+                      ? Center(
+                          child: Text(
+                            "No Praise Found",
+                            style: TextStyle(color: AppColors.WHITE_COLOR),
+                          ),
+                        )
+                      : ListView.builder(
+                          itemCount:
+                              praiseProvider.searchPraiseList.length ?? 0,
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (BuildContext ctxt, int index) {
+                            return _praiseList(index);
+                          }),
         ),
       ],
     );

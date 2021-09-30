@@ -51,7 +51,7 @@ class _PrayerPartnerListScreenState extends State<PrayerPartnerListScreen> {
             ),
             Expanded(
               child: userProvider.prayerPartnersList == null ||
-                      userProvider.prayerPartnersList.length == 0
+                      userProvider.prayerPartnersList?.length == 0
                   ? Center(
                       child: Text(
                         "No Partners Found",
@@ -61,12 +61,13 @@ class _PrayerPartnerListScreenState extends State<PrayerPartnerListScreen> {
                   : _searchController.text.isEmpty
                       ? ListView.builder(
                           itemCount:
-                              userProvider.prayerPartnersList.length ?? 0,
+                              userProvider.prayerPartnersList?.length ?? 0,
                           padding: EdgeInsets.zero,
                           itemBuilder: (BuildContext ctxt, int index) {
                             return _praiyerGroupsListWidget(index);
                           })
-                      : userProvider.searchPartnersList.length == 0
+                      : userProvider.searchPartnersList?.length == 0 ||
+                              userProvider.searchPartnersList == null
                           ? Center(
                               child: Text(
                                 "No Partners Found",
@@ -75,7 +76,7 @@ class _PrayerPartnerListScreenState extends State<PrayerPartnerListScreen> {
                             )
                           : ListView.builder(
                               itemCount:
-                                  userProvider.searchPartnersList.length ?? 0,
+                                  userProvider.searchPartnersList?.length ?? 0,
                               padding: EdgeInsets.zero,
                               itemBuilder: (BuildContext ctxt, int index) {
                                 return _praiyerGroupsListWidget(index);

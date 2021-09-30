@@ -21,20 +21,24 @@ class _AudioScreenState extends State<AudioScreen> {
         backgroundColor: AppColors.TRANSPARENT_COLOR,
         body: Column(
           children: [
-            Spacer(flex: 1,),
+            Spacer(
+              flex: 1,
+            ),
             _userImageWidget(),
-            Spacer(flex: 3,),
+            Spacer(
+              flex: 3,
+            ),
             _audioIconsWidget(),
-            Spacer(flex: 1,),
+            Spacer(
+              flex: 1,
+            ),
           ],
         ),
       ),
     );
   }
 
-
-  Widget _userImageWidget()
-  {
+  Widget _userImageWidget() {
     return Align(
       alignment: Alignment.center,
       child: Container(
@@ -61,7 +65,8 @@ class _AudioScreenState extends State<AudioScreen> {
                     width: 125.0,
                     height: 125.0,
                     decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.WHITE_COLOR,width: 2.0),
+                      border:
+                          Border.all(color: AppColors.WHITE_COLOR, width: 2.0),
                       shape: BoxShape.circle,
                       image: DecorationImage(
                         image: AssetImage(AssetPaths.PARTNER_IMAGE),
@@ -78,8 +83,7 @@ class _AudioScreenState extends State<AudioScreen> {
     );
   }
 
-  Widget _audioIconsWidget()
-  {
+  Widget _audioIconsWidget() {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -90,60 +94,46 @@ class _AudioScreenState extends State<AudioScreen> {
       ],
     );
   }
-  
 
-  Widget _microphoneContainerWidget()
-  {
+  Widget _microphoneContainerWidget() {
     return CommonAudioVideoIconsContainer(
-      image: AssetPaths.MICROPHONE_ICON,
-      imageWidth: 28.0,
-      onTap: (){
-        log("Microphone");
-      }
-    );
+        image: AssetPaths.MICROPHONE_ICON,
+        imageWidth: 28.0,
+        onTap: () {
+          log("Microphone");
+        });
   }
 
-
-  Widget _chatEndCallContainerWidget()
-  {
+  Widget _chatEndCallContainerWidget() {
     return Column(
       children: [
         CommonAudioVideoIconsContainer(
-        image: AssetPaths.CHAT_ICON,
-        imageWidth: 29.0,
-        onTap: (){
-          log("chat");
-          AppNavigation.navigateTo(context, ChatScreen());
-         }
-      ),
-        SizedBox(height: MediaQuery.of(context).size.height*0.06),
-
+            image: AssetPaths.CHAT_ICON,
+            imageWidth: 29.0,
+            onTap: () {
+              log("chat");
+              AppNavigation.navigatorPop(context);
+            }),
+        SizedBox(height: MediaQuery.of(context).size.height * 0.06),
         CommonAudioVideoIconsContainer(
             image: AssetPaths.END_CALL_ICON,
             containerColor: AppColors.RED_COLOR,
             imageWidth: 28.0,
             shadow: true,
-            onTap: (){
+            onTap: () {
               log("end call");
               AppNavigation.navigatorPop(context);
-            }
-        ),
+            }),
       ],
     );
   }
 
-
-  Widget _loudSpeakerContainerWidget()
-  {
+  Widget _loudSpeakerContainerWidget() {
     return CommonAudioVideoIconsContainer(
         image: AssetPaths.LOUDSPEAKER_ICON,
         imageWidth: 30.0,
-        onTap: (){
+        onTap: () {
           log("loudspeaker");
-        }
-    );
+        });
   }
-
-
-
 }

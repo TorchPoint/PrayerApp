@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'package:prayer_hybrid_app/models/prayer_model.dart';
 
@@ -42,11 +43,23 @@ class _AddPrayerScreenState extends State<AddPrayerScreen> {
   Future getCategories() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var uri = Uri.parse(ApiConst.BASE_URL + ApiConst.CATEGORIES_URL);
-
+    EasyLoading.instance
+      ..indicatorType = EasyLoadingIndicatorType.cubeGrid
+      ..loadingStyle = EasyLoadingStyle.custom
+      ..backgroundColor = AppColors.BACKGROUND1_COLOR
+      ..indicatorColor = AppColors.WHITE_COLOR
+      ..textColor = AppColors.WHITE_COLOR
+      ..indicatorSize = 35.0
+      ..radius = 10.0
+      ..maskColor = AppColors.BLACK_COLOR.withOpacity(0.6)
+      ..userInteractions = false
+      ..dismissOnTap = false;
+    EasyLoading.show(status: "Loading", maskType: EasyLoadingMaskType.custom);
     final http.Response response = await http.get(uri,
         headers: {"Authorization": "Bearer ${prefs.getString("token")}"});
 
     if (response.statusCode == 200) {
+      EasyLoading.dismiss();
       print(response.body);
       Map data = jsonDecode(response.body);
 
@@ -64,6 +77,8 @@ class _AddPrayerScreenState extends State<AddPrayerScreen> {
         });
       }
       return data;
+    } else {
+      EasyLoading.dismiss();
     }
   }
 

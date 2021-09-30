@@ -62,13 +62,21 @@ class _PrayersListScreenState extends State<PrayersListScreen> {
                       itemBuilder: (BuildContext ctxt, int index) {
                         return _prayersList(index);
                       })
-                  : ListView.builder(
-                      itemCount: prayerProvider.searchPrayerList.length ?? 0,
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      itemBuilder: (BuildContext ctxt, int index) {
-                        return _prayersList(index);
-                      }),
+                  : prayerProvider.searchPrayerList?.length == 0
+                      ? Center(
+                          child: Text(
+                            "No Prayers Found",
+                            style: TextStyle(color: AppColors.WHITE_COLOR),
+                          ),
+                        )
+                      : ListView.builder(
+                          itemCount:
+                              prayerProvider.searchPrayerList?.length ?? 0,
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          itemBuilder: (BuildContext ctxt, int index) {
+                            return _prayersList(index);
+                          }),
         ),
       ],
     );

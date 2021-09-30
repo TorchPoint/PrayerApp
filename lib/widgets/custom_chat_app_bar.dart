@@ -33,7 +33,7 @@ class CustomChatAppBar extends StatelessWidget {
             Visibility(
                 visible: true,
                 child: Padding(
-                    padding: EdgeInsets.only(bottom: 15.0),
+                    padding: EdgeInsets.only(bottom: 5.0),
                     child: Image.asset(
                       AssetPaths.FOREGROUND_IMAGE,
                       width: 110.0,
