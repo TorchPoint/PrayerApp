@@ -1,13 +1,16 @@
 import 'dart:io';
 
+import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:prayer_hybrid_app/chat_audio_video/screens/audio_screen.dart';
 import 'package:prayer_hybrid_app/common_classes/image_gallery_class.dart';
 import 'package:prayer_hybrid_app/models/group_prayer_model.dart';
 import 'package:prayer_hybrid_app/models/message_model.dart';
 import 'package:prayer_hybrid_app/models/user_model.dart';
 import 'package:prayer_hybrid_app/providers/provider.dart';
+import 'package:prayer_hybrid_app/services/API_const.dart';
 import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
@@ -30,6 +33,8 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  RtcEngine rtcEngine;
+
   IO.Socket socket;
   List<MessageModel> userMessage = [];
   TextEditingController _sendMessageController = TextEditingController();
@@ -42,7 +47,7 @@ class _ChatScreenState extends State<ChatScreen> {
   void connect(BuildContext context) {
     print("----ROLE----:" + widget.role.toString());
     var chatProvider = Provider.of<ChatProvider>(context, listen: false);
-    socket = IO.io('https://server.appsstaging.com:3010', <String, dynamic>{
+    socket = IO.io('https://server.appsstaging.com:3090', <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
     });
@@ -58,6 +63,7 @@ class _ChatScreenState extends State<ChatScreen> {
       print("error");
       EasyLoading.dismiss();
       baseService.showToast("Connection Error", AppColors.ERROR_COLOR);
+      chatProvider.resetMessageList();
       AppNavigation.navigatorPop(context);
     });
     socket.onConnect((data) {
@@ -121,19 +127,13 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
+
   @override
   void initState() {
     // TODO: implement initState
     connect(context);
+
     baseService.loadLocalUser();
-    _controller = ScrollController();
-    WidgetsBinding.instance.addPostFrameCallback((_) => {
-          _controller.animateTo(
-            1.0,
-            duration: Duration(milliseconds: 900),
-            curve: Curves.bounceIn,
-          )
-        });
     super.initState();
   }
 
@@ -142,6 +142,7 @@ class _ChatScreenState extends State<ChatScreen> {
     var chatProvider = Provider.of<ChatProvider>(context, listen: true);
     return WillPopScope(
       onWillPop: () {
+        AppNavigation.navigatorPop(context);
         chatProvider.resetMessageList();
         return;
       },
@@ -221,7 +222,11 @@ class _ChatScreenState extends State<ChatScreen> {
       // },
       trailingAudioIconPath: AssetPaths.AUDIO_ICON,
       trailingAudioTap: () {
-        AppNavigation.navigateTo(context, AudioScreen());
+        AppNavigation.navigateTo(
+            context,
+            AudioScreen(
+              appUser: widget.user,
+            ));
       },
     );
   }
@@ -443,6 +448,7 @@ class _ChatScreenState extends State<ChatScreen> {
   void dispose() {
     super.dispose();
     _sendMessageController.dispose();
+
     socket.dispose();
   }
 }

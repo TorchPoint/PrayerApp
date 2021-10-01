@@ -229,7 +229,6 @@ class ChatProvider extends ChangeNotifier {
     if (messageList != null) {
       newMessages.forEach((element) {
         messageList.insert(0, MessageModel.fromJson(element));
-
       });
       notifyListeners();
     }
