@@ -7,6 +7,7 @@ import 'package:prayer_hybrid_app/chat_audio_video/screens/chat_screen.dart';
 import 'package:prayer_hybrid_app/chat_audio_video/widgets/common_audio_video_icons_container.dart';
 import 'package:prayer_hybrid_app/models/user_model.dart';
 import 'package:prayer_hybrid_app/services/API_const.dart';
+import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
@@ -23,17 +24,33 @@ class AudioScreen extends StatefulWidget {
 
 class _AudioScreenState extends State<AudioScreen> {
   RtcEngine rtcEngine;
+  RtcStats rtcStats;
+  bool connect = false;
 
   bool loudSpeaker = false, mute = false;
+  BaseService baseService = BaseService();
 
   Future<void> _initAgoraRtcEngine() async {
     await [Permission.microphone, Permission.camera].request();
     rtcEngine = await RtcEngine.create(ApiConst.AGORA_APP_ID);
     await rtcEngine.disableVideo();
     await rtcEngine.enableAudio();
-    await rtcEngine.setEnableSpeakerphone(true);
+
+    //rtcEngine.enableAudioVolumeIndication(2, 1, true);
+    //await rtcEngine.setEnableSpeakerphone(true);
     rtcEngine.setEventHandler(
-      RtcEngineEventHandler(error: (code) {
+      RtcEngineEventHandler(connectionLost: () {
+        connect = true;
+        log("gone");
+        baseService.showToast("Connection Lost", AppColors.ERROR_COLOR);
+        rtcEngine.leaveChannel();
+        rtcEngine.destroy();
+        AppNavigation.navigatorPop(context);
+      }, connectionInterrupted: () {
+        connect = true;
+        setState(() {});
+        baseService.showToast("Connection Interrupted", AppColors.ERROR_COLOR);
+      }, error: (code) {
         print("error: ${code.toString()}");
       }, joinChannelSuccess: (String channel, int uid, int elapsed) {
         print("local user $uid joined");
@@ -41,23 +58,41 @@ class _AudioScreenState extends State<AudioScreen> {
         print("remote user $uid joined");
       }, userOffline: (int uid, UserOfflineReason reason) {
         print("remote user $uid left channel");
+        connect = true;
+        setState(() {});
+        baseService.showToast(
+            "${widget.appUser.firstName} left Call", AppColors.ERROR_COLOR);
+        rtcEngine.leaveChannel();
+        rtcEngine.destroy();
+        AppNavigation.navigatorPop(context);
       }, leaveChannel: (stats) {
+        connect = true;
+        rtcEngine.leaveChannel();
+        rtcEngine.destroy();
+        AppNavigation.navigatorPop(context);
         print("Channel Leaved ${stats.toString()}");
       }),
     );
 
-    // await rtcEngine.joinChannel(null, "test", null,0);
-    //
     await rtcEngine.joinChannel(
-        "006d16d4a2e151647c18a8a2a99d57593a7IABvvOG+MlzD1sCnvvVdNGfT7tJ1IFVcGp2FZ3nYrRy/Jzrs1w9fsThcIgAYhQAAo2NYYQQAAQAzIFdhAwAzIFdhAgAzIFdhBAAzIFdh",
-        "testc",
+        baseService.id == widget.appUser.id
+            ? "006d16d4a2e151647c18a8a2a99d57593a7IABkTY7/0oSziKcVChwDRBcD89y6SNkGsVV9wEje9zoPyGwgLfCWWfHSEADjZHVU/DpcYQEAAQCM91ph"
+            : "006d16d4a2e151647c18a8a2a99d57593a7IAB6r0T8qFy1gEzZ61vSStNJ8yv69ahKWxEM2Zxm70fMemwgLfAAafalEADjZHVUVEVcYQEAAQDkAVth",
+        "kljjl534534@",
         null,
-        0);
+        baseService.id != widget.appUser.id
+            ? baseService.id
+            : widget.appUser.id);
+
+    print(baseService.id != widget.appUser.id
+        ? baseService.id.toString()
+        : widget.appUser.id.toString());
   }
 
   @override
   void initState() {
     // TODO: implement initState
+    baseService.loadLocalUser();
     _initAgoraRtcEngine();
     super.initState();
   }
@@ -65,30 +100,66 @@ class _AudioScreenState extends State<AudioScreen> {
   @override
   void dispose() {
     // TODO: implement dispose
-    rtcEngine.leaveChannel();
-    rtcEngine.destroy();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return CustomBackgroundContainer(
-      child: Scaffold(
-        backgroundColor: AppColors.TRANSPARENT_COLOR,
-        body: Column(
-          children: [
-            Spacer(
-              flex: 1,
+    return WillPopScope(
+      onWillPop: () {
+        rtcEngine.leaveChannel();
+        rtcEngine.destroy();
+
+        AppNavigation.navigatorPop(context);
+        return;
+      },
+      child: CustomBackgroundContainer(
+        child: Scaffold(
+          backgroundColor: AppColors.TRANSPARENT_COLOR,
+          appBar: AppBar(
+            title: Text(
+              widget.appUser.firstName,
+              textAlign: TextAlign.center,
+              textScaleFactor: 1.2,
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
-            _userImageWidget(),
-            Spacer(
-              flex: 3,
-            ),
-            _audioIconsWidget(),
-            Spacer(
-              flex: 1,
-            ),
-          ],
+            centerTitle: true,
+            backgroundColor: AppColors.TRANSPARENT_COLOR,
+            elevation: 0,
+            automaticallyImplyLeading: false,
+          ),
+          body: Column(
+            children: [
+              Spacer(
+                flex: 1,
+              ),
+              _userImageWidget(),
+              Spacer(
+                flex: 1,
+              ),
+              connect == true
+                  ? Text(
+                      "Reconnecting....",
+                      textAlign: TextAlign.center,
+                      textScaleFactor: 1.2,
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.w500),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    )
+                  : Text(""),
+              Spacer(
+                flex: 2,
+              ),
+              _audioIconsWidget(),
+              Spacer(
+                flex: 1,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -126,7 +197,7 @@ class _AudioScreenState extends State<AudioScreen> {
                       shape: BoxShape.circle,
                       image: DecorationImage(
                         image: widget.appUser.profileImage == null
-                            ? AssetImage(AssetPaths.PARTNER_IMAGE)
+                            ? AssetImage(AssetPaths.NO_IMAGE)
                             : NetworkImage(widget.appUser.profileImage),
                         fit: BoxFit.cover,
                       ),
@@ -157,7 +228,19 @@ class _AudioScreenState extends State<AudioScreen> {
     return CommonAudioVideoIconsContainer(
         image: AssetPaths.MICROPHONE_ICON,
         imageWidth: 28.0,
+        containerColor: mute == true
+            ? AppColors.MOST_DARK_GREY_COLOR
+            : AppColors.WHITE_COLOR,
         onTap: () {
+          if (mute == true) {
+            mute = false;
+            setState(() {});
+            rtcEngine.muteLocalAudioStream(false);
+          } else {
+            mute = true;
+            setState(() {});
+            rtcEngine.muteLocalAudioStream(true);
+          }
           log("Microphone");
         });
   }
@@ -165,20 +248,22 @@ class _AudioScreenState extends State<AudioScreen> {
   Widget _chatEndCallContainerWidget() {
     return Column(
       children: [
-        CommonAudioVideoIconsContainer(
-            image: AssetPaths.CHAT_ICON,
-            imageWidth: 29.0,
-            onTap: () {
-              log("chat");
-              AppNavigation.navigatorPop(context);
-            }),
-        SizedBox(height: MediaQuery.of(context).size.height * 0.06),
+        // CommonAudioVideoIconsContainer(
+        //     image: AssetPaths.CHAT_ICON,
+        //     imageWidth: 29.0,
+        //     onTap: () {
+        //       log("chat");
+        //       AppNavigation.navigatorPop(context);
+        //     }),
+        //SizedBox(height: MediaQuery.of(context).size.height * 0.06),
         CommonAudioVideoIconsContainer(
             image: AssetPaths.END_CALL_ICON,
             containerColor: AppColors.RED_COLOR,
             imageWidth: 28.0,
             shadow: true,
             onTap: () {
+              rtcEngine.leaveChannel();
+              rtcEngine.destroy();
               log("end call");
               AppNavigation.navigatorPop(context);
             }),

@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/services/base_service.dart';
+import 'package:prayer_hybrid_app/services/push_notifications_class.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'dart:async';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
@@ -16,14 +17,25 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String token = await FirebaseMessaging.instance.getToken();
+    // String token = await FirebaseMessaging.instance.getToken();
+    final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+    _firebaseMessaging.requestPermission();
+    String token = await _firebaseMessaging.getToken();
+
     prefs.setString("xyz", token);
+
+    print("----" + token + "-=---");
   }
+
+  PushNotificationsManager pushNotificationsManager =
+      PushNotificationsManager();
 
   @override
   void initState() {
     super.initState();
     _splashTimer();
+    pushNotificationsManager.init();
+    //pushNotificationsManager.listen();
     getToken();
     baseService.loadLocalUser();
   }
@@ -49,6 +61,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<Timer> _splashTimer() async {
+    //pushNotificationsManager.init();
     return Timer(Duration(seconds: 3), _onComplete);
   }
 

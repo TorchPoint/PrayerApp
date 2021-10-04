@@ -290,10 +290,10 @@ class _ChatScreenState extends State<ChatScreen> {
                 image: DecorationImage(
                   image: widget.role == 0
                       ? widget.user.profileImage == null
-                          ? AssetImage(AssetPaths.PROFILE_IMAGE)
+                          ? AssetImage(AssetPaths.NO_IMAGE)
                           : NetworkImage(widget.user.profileImage)
                       : chatProvider.messageList[index].profileImage == null
-                          ? AssetImage(AssetPaths.PROFILE_IMAGE)
+                          ? AssetImage(AssetPaths.NO_IMAGE)
                           : NetworkImage(
                               chatProvider.messageList[index].profileImage),
                   fit: BoxFit.fill,

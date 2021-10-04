@@ -149,7 +149,7 @@ class _PrayerPartnerListScreenState extends State<PrayerPartnerListScreen> {
                       image: userProvider.prayerPartnersList[partnerIndex]
                                   .profileImage ==
                               null
-                          ? AssetImage(AssetPaths.PARTNER_IMAGE)
+                          ? AssetImage(AssetPaths.NO_IMAGE)
                           : NetworkImage(userProvider
                               .prayerPartnersList[partnerIndex].profileImage),
                       fit: BoxFit.cover)),

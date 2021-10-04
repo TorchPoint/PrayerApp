@@ -61,7 +61,7 @@
 	<key>NSContactsUsageDescription</key>
 	<string>It's required to access and show the contacts inside app.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>This app does not require access to the microphone.</string>
+	<string>This app does require access to the microphone.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>It's required to access the photo library to get photos.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -70,6 +70,7 @@
 	<array>
 		<string>audio</string>
 		<string>fetch</string>
+		<string>processing</string>
 		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
