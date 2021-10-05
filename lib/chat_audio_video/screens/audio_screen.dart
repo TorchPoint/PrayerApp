@@ -14,6 +14,7 @@ import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 
 class AudioScreen extends StatefulWidget {
+  static String id = "audio";
   final AppUser appUser;
 
   AudioScreen({this.appUser});
@@ -118,7 +119,7 @@ class _AudioScreenState extends State<AudioScreen> {
           backgroundColor: AppColors.TRANSPARENT_COLOR,
           appBar: AppBar(
             title: Text(
-              widget.appUser.firstName,
+              widget.appUser?.firstName ?? "",
               textAlign: TextAlign.center,
               textScaleFactor: 1.2,
               style:
@@ -196,7 +197,7 @@ class _AudioScreenState extends State<AudioScreen> {
                           Border.all(color: AppColors.WHITE_COLOR, width: 2.0),
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                        image: widget.appUser.profileImage == null
+                        image: widget.appUser?.profileImage == null
                             ? AssetImage(AssetPaths.NO_IMAGE)
                             : NetworkImage(widget.appUser.profileImage),
                         fit: BoxFit.cover,

@@ -1,23 +1,35 @@
 import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:prayer_hybrid_app/chat_audio_video/screens/audio_screen.dart';
 import 'package:prayer_hybrid_app/providers/provider.dart';
+import 'package:prayer_hybrid_app/services/local_notifications_class.dart';
+import 'package:prayer_hybrid_app/services/push_notifications_class.dart';
 import 'package:prayer_hybrid_app/splash/splash_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:provider/provider.dart';
 
+Future<void> backGroundHandleFCM(RemoteMessage remoteMessage) async {
+  print(remoteMessage.data.toString());
+  print(remoteMessage.notification?.title);
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  HttpOverrides.global =  MyHttpOverrides();
+  LocalNotifications().initialize();
+  FirebaseMessaging.onBackgroundMessage(backGroundHandleFCM);
+
+
+  HttpOverrides.global = MyHttpOverrides();
   runApp(MyApp());
 }
 
-void configLoading() {
-}
+void configLoading() {}
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -28,7 +40,18 @@ class MyHttpOverrides extends HttpOverrides {
   }
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    // LocalNotifications().initialize(context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -55,6 +78,9 @@ class MyApp extends StatelessWidget {
             fontFamily: 'Quicksand',
           ),
           builder: EasyLoading.init(),
+          routes: {
+            AudioScreen.id: (context) => AudioScreen(),
+          },
           home: SplashScreen()),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/services/base_service.dart';
+import 'package:prayer_hybrid_app/services/local_notifications_class.dart';
 import 'package:prayer_hybrid_app/services/push_notifications_class.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'dart:async';
@@ -30,14 +31,15 @@ class _SplashScreenState extends State<SplashScreen> {
   PushNotificationsManager pushNotificationsManager =
       PushNotificationsManager();
 
+
   @override
   void initState() {
     super.initState();
-    _splashTimer();
-    pushNotificationsManager.init();
-    //pushNotificationsManager.listen();
+
     getToken();
     baseService.loadLocalUser();
+    pushNotificationsManager.loadFCM(context);
+    //LocalNotifications().initialize();
   }
 
   @override
@@ -60,12 +62,5 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
-  Future<Timer> _splashTimer() async {
-    //pushNotificationsManager.init();
-    return Timer(Duration(seconds: 3), _onComplete);
-  }
 
-  void _onComplete() {
-    baseService.loadUserData(context);
-  }
 }

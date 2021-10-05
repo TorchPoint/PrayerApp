@@ -149,13 +149,13 @@ class _DrawerScreenState extends State<DrawerScreen>
                     color: AppColors.BACKGROUND1_COLOR,
                     shape: BoxShape.circle,
                     border: Border.all(
-                        color: userProvider.appUser.profileImage == null
+                        color: userProvider.appUser?.profileImage == null
                             ? AppColors.WHITE_COLOR
                             : AppColors.WHITE_COLOR,
                         width: 2.0),
                     image: DecorationImage(
-                        image: userProvider.appUser.profileImage != null
-                            ? NetworkImage(userProvider.appUser.profileImage)
+                        image: userProvider.appUser?.profileImage != null
+                            ? NetworkImage(userProvider.appUser?.profileImage)
                             : AssetImage(AssetPaths.NO_IMAGE),
                         fit: BoxFit.cover),
                   ),
@@ -185,7 +185,7 @@ class _DrawerScreenState extends State<DrawerScreen>
         Padding(
             padding: EdgeInsets.only(left: 5.0, right: 5.0),
             child: Text(
-              "${userProvider.appUser.firstName}${userProvider.appUser.lastName}" ??
+              "${userProvider.appUser?.firstName}${userProvider.appUser?.lastName}" ??
                   "",
               style: TextStyle(
                   color: AppColors.WHITE_COLOR,
@@ -201,12 +201,12 @@ class _DrawerScreenState extends State<DrawerScreen>
         ),
         Padding(
             padding: EdgeInsets.only(left: 5.0, right: 5.0),
-            child: userProvider.appUser.contactNo == null ||
+            child: userProvider.appUser?.contactNo == null ||
                     userProvider.appUser.contactNo.isEmpty
                 ? Container()
                 : Text(
                     // userProvider.appUser.contactNo ?? AppStrings.USER_PHONE_NO_TEXT,
-                    userProvider.appUser.contactNo,
+                    userProvider.appUser?.contactNo,
                     style: TextStyle(
                         color: AppColors.WHITE_COLOR,
                         fontWeight: FontWeight.w700),
@@ -220,11 +220,11 @@ class _DrawerScreenState extends State<DrawerScreen>
         ),
         Padding(
             padding: EdgeInsets.only(left: 5.0, right: 5.0),
-            child: userProvider.appUser.email == null ||
+            child: userProvider.appUser?.email == null ||
                     userProvider.appUser.email.isEmpty
                 ? Container()
                 : Text(
-                    userProvider.appUser.email,
+                    userProvider.appUser?.email,
                     style: TextStyle(
                         color: AppColors.WHITE_COLOR,
                         fontWeight: FontWeight.w700),
@@ -282,7 +282,7 @@ class _DrawerScreenState extends State<DrawerScreen>
 
         //For Change Password
 
-        userProvider.appUser.isSocial == "yes"
+        userProvider.appUser?.isSocial == "yes"
             ? Container()
             : menuListTile(
                 imagePath: AssetPaths.PASSWORD_ICON,
