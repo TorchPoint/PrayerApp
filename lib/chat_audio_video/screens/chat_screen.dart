@@ -44,6 +44,21 @@ class _ChatScreenState extends State<ChatScreen> {
   BaseService baseService = BaseService();
   ScrollController _controller = ScrollController();
 
+  Future getTokenRTC() async {
+    var user=Provider.of<AppUserProvider>(context,listen: false);
+    return await baseService.postBaseMethod(
+      "http://server.appsstaging.com:3060/rtctoken",
+      {
+        "isPublisher": true,
+        "sender_id": baseService.id,
+        "reciever_id": widget.user.id,
+        "group_id": "",
+        "group_name": "",
+        "name": user.appUser.firstName
+      },
+    );
+  }
+
   void connect(BuildContext context) {
     print("----ROLE----:" + widget.role.toString());
     var chatProvider = Provider.of<ChatProvider>(context, listen: false);
@@ -126,7 +141,6 @@ class _ChatScreenState extends State<ChatScreen> {
       }
     });
   }
-
 
   @override
   void initState() {
@@ -222,11 +236,16 @@ class _ChatScreenState extends State<ChatScreen> {
       // },
       trailingAudioIconPath: AssetPaths.AUDIO_ICON,
       trailingAudioTap: () {
-        AppNavigation.navigateTo(
-            context,
-            AudioScreen(
-              appUser: widget.user,
-            ));
+        print("check");
+        getTokenRTC().then((value) {
+          AppNavigation.navigateTo(
+              context,
+              AudioScreen(
+                appUser: widget.user,
+                channelName: value["channel"],
+                channelToken: value["token"],
+              ));
+        });
       },
     );
   }

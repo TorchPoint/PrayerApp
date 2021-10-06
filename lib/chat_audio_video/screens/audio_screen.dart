@@ -16,8 +16,9 @@ import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 class AudioScreen extends StatefulWidget {
   static String id = "audio";
   final AppUser appUser;
+  final String channelName, channelToken;
 
-  AudioScreen({this.appUser});
+  AudioScreen({this.appUser, this.channelName, this.channelToken});
 
   @override
   _AudioScreenState createState() => _AudioScreenState();
@@ -47,26 +48,40 @@ class _AudioScreenState extends State<AudioScreen> {
         rtcEngine.leaveChannel();
         rtcEngine.destroy();
         AppNavigation.navigatorPop(context);
+      }, rtcStats: (stats) {
+        if (stats.userCount < 1) {
+          baseService.showToast("No Users Avaialabale", AppColors.ERROR_COLOR);
+          rtcEngine.leaveChannel();
+          rtcEngine.destroy();
+          AppNavigation.navigatorPop(context);
+        }
+        print("-------" + stats.userCount.toString() + "------");
+      }, tokenPrivilegeWillExpire: (event) {
+        print("Expired");
+        baseService.showToast("About to Expired", AppColors.ERROR_COLOR);
       }, connectionInterrupted: () {
         connect = true;
         setState(() {});
         baseService.showToast("Connection Interrupted", AppColors.ERROR_COLOR);
       }, error: (code) {
+        baseService.showToast("${code.toString()}", AppColors.ERROR_COLOR);
+        //AppNavigation.navigatorPop(context);
         print("error: ${code.toString()}");
       }, joinChannelSuccess: (String channel, int uid, int elapsed) {
         print("local user $uid joined");
+        // print(rtcStats.userCount.toString());
       }, userJoined: (int uid, int elapsed) {
         print("remote user $uid joined");
       }, userOffline: (int uid, UserOfflineReason reason) {
         print("remote user $uid left channel");
         connect = true;
-        setState(() {});
         baseService.showToast(
             "${widget.appUser.firstName} left Call", AppColors.ERROR_COLOR);
         rtcEngine.leaveChannel();
         rtcEngine.destroy();
         AppNavigation.navigatorPop(context);
       }, leaveChannel: (stats) {
+        print("-------" + stats.userCount.toString() + "------");
         connect = true;
         rtcEngine.leaveChannel();
         rtcEngine.destroy();
@@ -74,20 +89,9 @@ class _AudioScreenState extends State<AudioScreen> {
         print("Channel Leaved ${stats.toString()}");
       }),
     );
-
+//baseid = sender; // widget.appUser.id= receieving;
     await rtcEngine.joinChannel(
-        baseService.id == widget.appUser.id
-            ? "006d16d4a2e151647c18a8a2a99d57593a7IABkTY7/0oSziKcVChwDRBcD89y6SNkGsVV9wEje9zoPyGwgLfCWWfHSEADjZHVU/DpcYQEAAQCM91ph"
-            : "006d16d4a2e151647c18a8a2a99d57593a7IAB6r0T8qFy1gEzZ61vSStNJ8yv69ahKWxEM2Zxm70fMemwgLfAAafalEADjZHVUVEVcYQEAAQDkAVth",
-        "kljjl534534@",
-        null,
-        baseService.id != widget.appUser.id
-            ? baseService.id
-            : widget.appUser.id);
-
-    print(baseService.id != widget.appUser.id
-        ? baseService.id.toString()
-        : widget.appUser.id.toString());
+        widget.channelToken, widget.channelName, null, baseService.id);
   }
 
   @override
@@ -101,6 +105,8 @@ class _AudioScreenState extends State<AudioScreen> {
   @override
   void dispose() {
     // TODO: implement dispose
+    rtcEngine.leaveChannel();
+    rtcEngine.destroy();
     super.dispose();
   }
 
@@ -266,6 +272,7 @@ class _AudioScreenState extends State<AudioScreen> {
               rtcEngine.leaveChannel();
               rtcEngine.destroy();
               log("end call");
+
               AppNavigation.navigatorPop(context);
             }),
       ],

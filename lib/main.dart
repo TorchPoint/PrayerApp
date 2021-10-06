@@ -30,6 +30,8 @@ void main() async {
 }
 
 void configLoading() {}
+final GlobalKey<NavigatorState> navigatorKey =
+new GlobalKey<NavigatorState>();
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -54,6 +56,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarBrightness:
             Brightness.dark // Dark == white status bar -- for IOS.
@@ -78,6 +81,7 @@ class _MyAppState extends State<MyApp> {
             fontFamily: 'Quicksand',
           ),
           builder: EasyLoading.init(),
+          navigatorKey: navigatorKey,
           routes: {
             AudioScreen.id: (context) => AudioScreen(),
           },

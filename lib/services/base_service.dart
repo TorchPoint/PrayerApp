@@ -134,9 +134,9 @@ class BaseService {
   }
 
   Future postBaseMethod(url, body, {token}) async {
-    var uri = Uri.parse(ApiConst.BASE_URL + url);
+    var uri = Uri.parse(url);
     debugPrint(uri.toString());
-    debugPrint(body);
+    debugPrint(body.toString());
     EasyLoading.instance..backgroundColor = AppColors.BACKGROUND1_COLOR;
     EasyLoading.show(
       status: "Loading",
@@ -148,7 +148,6 @@ class BaseService {
       headers: {
         'Content-type': 'application/json',
         'Accept': 'application/json',
-        "Authorization": "Bearer $token"
       },
     );
     try {

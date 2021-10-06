@@ -1,5 +1,6 @@
 import UIKit
 import Flutter
+import UserNotifications
 
 
 @UIApplicationMain
@@ -9,6 +10,8 @@ import Flutter
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
     GeneratedPluginRegistrant.register(with: self)
+    UNUserNotificationCenter.current().delegate = self
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
+
 }
