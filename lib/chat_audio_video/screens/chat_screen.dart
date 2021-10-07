@@ -45,15 +45,15 @@ class _ChatScreenState extends State<ChatScreen> {
   ScrollController _controller = ScrollController();
 
   Future getTokenRTC() async {
-    var user=Provider.of<AppUserProvider>(context,listen: false);
+    var user = Provider.of<AppUserProvider>(context, listen: false);
     return await baseService.postBaseMethod(
       "http://server.appsstaging.com:3060/rtctoken",
       {
         "isPublisher": true,
         "sender_id": baseService.id,
-        "reciever_id": widget.user.id,
-        "group_id": "",
-        "group_name": "",
+        "reciever_id": widget.role == 0 ? widget.user.id : null,
+        "group_id": widget.role == 1 ? widget.groupPrayerModel.id : null,
+        "group_name": widget.role == 1 ? widget.groupPrayerModel.name : null,
         "name": user.appUser.firstName
       },
     );
@@ -237,15 +237,27 @@ class _ChatScreenState extends State<ChatScreen> {
       trailingAudioIconPath: AssetPaths.AUDIO_ICON,
       trailingAudioTap: () {
         print("check");
-        getTokenRTC().then((value) {
-          AppNavigation.navigateTo(
-              context,
-              AudioScreen(
-                appUser: widget.user,
-                channelName: value["channel"],
-                channelToken: value["token"],
-              ));
-        });
+        if (widget.role == 0) {
+          getTokenRTC().then((value) {
+            AppNavigation.navigateTo(
+                context,
+                AudioScreen(
+                  appUser: widget.user,
+                  channelName: value["channel"],
+                  channelToken: value["token"],
+                ));
+          });
+        } else {
+          getTokenRTC().then((value) {
+            AppNavigation.navigateTo(
+                context,
+                AudioScreen(
+                  groupPrayerModel: widget.groupPrayerModel,
+                  channelName: value["channel"],
+                  channelToken: value["token"],
+                ));
+          });
+        }
       },
     );
   }

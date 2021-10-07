@@ -7,6 +7,7 @@ import 'package:prayer_hybrid_app/main.dart';
 import 'package:prayer_hybrid_app/models/user_model.dart';
 import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/services/local_notifications_class.dart';
+import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -70,16 +71,19 @@ class PushNotificationsManager {
     if (remoteMessage.data["type"] == "call") {
       print(remoteMessage.data.toString());
       joinCall(remoteMessage).then((value) {
-        print(remoteMessage.data["channel"]);
-        print(remoteMessage.data["user"]);
-        print(remoteMessage.data["token"]);
-        AppNavigation.navigateTo(
-            navigatorKey.currentContext,
-            AudioScreen(
-              channelToken: remoteMessage.data["token"],
-              appUser: AppUser.fromJson(value["user"]),
-              channelName: remoteMessage.data["channel"],
-            ));
+        if (value["status"] == 1) {
+          AppNavigation.navigateTo(
+              navigatorKey.currentContext,
+              AudioScreen(
+                channelToken: remoteMessage.data["token"],
+                appUser: AppUser.fromJson(value["user"]),
+                channelName: remoteMessage.data["channel"],
+              ));
+          //AppNavigation.navigatorPop(navigatorKey.currentContext);
+        } else {
+          baseService.showToast(value["message"], AppColors.ERROR_COLOR);
+          AppNavigation.navigateTo(navigatorKey.currentContext, DrawerScreen());
+        }
       });
     }
   }

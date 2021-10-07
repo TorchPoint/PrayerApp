@@ -261,6 +261,10 @@ class AppStrings {
   static const String CONFLICT_DROPDOWN_TEXT = "Conflict";
   static const String OTHER_DROPDOWN_TEXT = "Other";
 
+  static const String KING_JAMES = "King James";
+  static const String REVISED_VERSION = "Revised Version";
+  static const String HOLY_BIBLE = "The Holy Bible American Standard ";
+
   // -------------- PRAYER AND PRAISE DROPDOWN LIST -------------------- //
   static const List<String> categories = [
     // HOME_DROPDOWN_TEXT,

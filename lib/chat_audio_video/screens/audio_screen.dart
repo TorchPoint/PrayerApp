@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:prayer_hybrid_app/chat_audio_video/screens/chat_screen.dart';
 import 'package:prayer_hybrid_app/chat_audio_video/widgets/common_audio_video_icons_container.dart';
+import 'package:prayer_hybrid_app/models/group_prayer_model.dart';
 import 'package:prayer_hybrid_app/models/user_model.dart';
 import 'package:prayer_hybrid_app/services/API_const.dart';
 import 'package:prayer_hybrid_app/services/base_service.dart';
@@ -16,9 +17,14 @@ import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 class AudioScreen extends StatefulWidget {
   static String id = "audio";
   final AppUser appUser;
+  final GroupPrayerModel groupPrayerModel;
   final String channelName, channelToken;
 
-  AudioScreen({this.appUser, this.channelName, this.channelToken});
+  AudioScreen(
+      {this.appUser,
+      this.channelName,
+      this.channelToken,
+      this.groupPrayerModel});
 
   @override
   _AudioScreenState createState() => _AudioScreenState();
@@ -31,6 +37,20 @@ class _AudioScreenState extends State<AudioScreen> {
 
   bool loudSpeaker = false, mute = false;
   BaseService baseService = BaseService();
+
+  Future cancelCall() async {
+    await baseService.postBaseMethod(
+        "http://server.appsstaging.com:3060/leave-channel", {
+      "channel": widget.channelName,
+      "user_id": baseService.id
+    }).then((value) {
+      rtcEngine.leaveChannel();
+      rtcEngine.destroy();
+      log("end call");
+
+      AppNavigation.navigatorPop(context);
+    });
+  }
 
   Future<void> _initAgoraRtcEngine() async {
     await [Permission.microphone, Permission.camera].request();
@@ -49,12 +69,12 @@ class _AudioScreenState extends State<AudioScreen> {
         rtcEngine.destroy();
         AppNavigation.navigatorPop(context);
       }, rtcStats: (stats) {
-        if (stats.userCount < 1) {
-          baseService.showToast("No Users Avaialabale", AppColors.ERROR_COLOR);
-          rtcEngine.leaveChannel();
-          rtcEngine.destroy();
-          AppNavigation.navigatorPop(context);
-        }
+        // if (stats.userCount < 1) {
+        //   baseService.showToast("No Users Avaialabale", AppColors.ERROR_COLOR);
+        //   rtcEngine.leaveChannel();
+        //   rtcEngine.destroy();
+        //   AppNavigation.navigatorPop(context);
+        // }
         print("-------" + stats.userCount.toString() + "------");
       }, tokenPrivilegeWillExpire: (event) {
         print("Expired");
@@ -77,9 +97,7 @@ class _AudioScreenState extends State<AudioScreen> {
         connect = true;
         baseService.showToast(
             "${widget.appUser.firstName} left Call", AppColors.ERROR_COLOR);
-        rtcEngine.leaveChannel();
-        rtcEngine.destroy();
-        AppNavigation.navigatorPop(context);
+        cancelCall();
       }, leaveChannel: (stats) {
         print("-------" + stats.userCount.toString() + "------");
         connect = true;
@@ -89,7 +107,7 @@ class _AudioScreenState extends State<AudioScreen> {
         print("Channel Leaved ${stats.toString()}");
       }),
     );
-//baseid = sender; // widget.appUser.id= receieving;
+
     await rtcEngine.joinChannel(
         widget.channelToken, widget.channelName, null, baseService.id);
   }
@@ -125,7 +143,9 @@ class _AudioScreenState extends State<AudioScreen> {
           backgroundColor: AppColors.TRANSPARENT_COLOR,
           appBar: AppBar(
             title: Text(
-              widget.appUser?.firstName ?? "",
+              widget.appUser?.firstName == null
+                  ? widget.groupPrayerModel?.name
+                  : widget.appUser?.firstName,
               textAlign: TextAlign.center,
               textScaleFactor: 1.2,
               style:
@@ -269,11 +289,7 @@ class _AudioScreenState extends State<AudioScreen> {
             imageWidth: 28.0,
             shadow: true,
             onTap: () {
-              rtcEngine.leaveChannel();
-              rtcEngine.destroy();
-              log("end call");
-
-              AppNavigation.navigatorPop(context);
+              cancelCall();
             }),
       ],
     );

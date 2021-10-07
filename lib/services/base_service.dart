@@ -133,14 +133,64 @@ class BaseService {
     }
   }
 
+  Future getBaseMethodBible(context, url, {loading = true}) async {
+    var uri = Uri.parse(url);
+    print(uri);
+    if (loading) {
+      EasyLoading.instance
+        ..indicatorType = EasyLoadingIndicatorType.cubeGrid
+        ..loadingStyle = EasyLoadingStyle.custom
+        ..backgroundColor = AppColors.BACKGROUND1_COLOR
+        ..indicatorColor = AppColors.WHITE_COLOR
+        ..textColor = AppColors.WHITE_COLOR
+        ..indicatorSize = 35.0
+        ..radius = 10.0
+        ..maskColor = AppColors.BLACK_COLOR.withOpacity(0.6)
+        ..userInteractions = false
+        ..dismissOnTap = false;
+      EasyLoading.show(status: "Loading", maskType: EasyLoadingMaskType.custom);
+    }
+    try {
+      final http.Response response = await http.get(uri, headers: {
+        "cache-control": "no-cache",
+        "content-type": "application/json",
+        "api-key": "${ApiConst.BIBLE_API_KEY}"
+      });
+
+      if (response.statusCode == 200) {
+        EasyLoading.dismiss();
+        var jsonData = jsonDecode(response.body);
+        debugPrint(jsonData.toString());
+        return jsonData;
+      } else if (response.statusCode == 401) {
+        print("********${response.statusCode.toString()}*****");
+        EasyLoading.dismiss();
+      } else {
+        EasyLoading.dismiss();
+      }
+    } catch (e) {
+      EasyLoading.dismiss();
+      showToast("Internet Not Working", AppColors.ERROR_COLOR);
+    }
+  }
+
   Future postBaseMethod(url, body, {token}) async {
     var uri = Uri.parse(url);
     debugPrint(uri.toString());
     debugPrint(body.toString());
     EasyLoading.instance..backgroundColor = AppColors.BACKGROUND1_COLOR;
-    EasyLoading.show(
-      status: "Loading",
-    );
+    EasyLoading.instance
+      ..indicatorType = EasyLoadingIndicatorType.cubeGrid
+      ..loadingStyle = EasyLoadingStyle.custom
+      ..backgroundColor = AppColors.BACKGROUND1_COLOR
+      ..indicatorColor = AppColors.WHITE_COLOR
+      ..textColor = AppColors.WHITE_COLOR
+      ..indicatorSize = 35.0
+      ..radius = 10.0
+      ..maskColor = AppColors.BLACK_COLOR.withOpacity(0.6)
+      ..userInteractions = false
+      ..dismissOnTap = false;
+    EasyLoading.show(status: "Loading", maskType: EasyLoadingMaskType.custom);
 
     final http.Response response = await http.post(
       uri,

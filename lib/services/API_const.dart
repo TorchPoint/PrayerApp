@@ -1,6 +1,10 @@
 class ApiConst {
   static const BASE_URL = "https://server.appsstaging.com/3048/prayer/api/";
   static const AGORA_APP_ID = "d16d4a2e151647c18a8a2a99d57593a7";
+  static const BIBLE_API_KEY = "1087e0406f67749607a83b2feee32de3";
+  static const KING_JAMES_VERSION_ID = "de4e12af7f28f599-01";
+  static const REVISED_VERSION_ID = "40072c4a5aba4022-01";
+  static const HOLY_BIBLE_ID = "06125adad2d5898a-01";
 
   //------- Registration Module URL--------//
 

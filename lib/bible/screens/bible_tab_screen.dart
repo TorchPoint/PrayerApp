@@ -8,13 +8,13 @@ import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 
-
 class BibleTabScreen extends StatefulWidget {
   @override
   _BibleTabScreenState createState() => _BibleTabScreenState();
 }
 
-class _BibleTabScreenState extends State<BibleTabScreen> with SingleTickerProviderStateMixin{
+class _BibleTabScreenState extends State<BibleTabScreen>
+    with SingleTickerProviderStateMixin {
   TabController _bibleTabController;
 
   @override
@@ -36,19 +36,25 @@ class _BibleTabScreenState extends State<BibleTabScreen> with SingleTickerProvid
                 children: [
                   SizedBox(height: 23.0),
                   _tabBarWidget(),
-                  SizedBox(height: 10.0,),
+                  SizedBox(
+                    height: 10.0,
+                  ),
                   Expanded(
-                    child: TabBarView(
-                        controller: _bibleTabController,
-                        children: [
-                          BiblePrayerListScreen(),
-                          BiblePrayerListScreen(),
-                          BiblePrayerListScreen(),
-                        ]
-                    ),
+                    child:
+                        TabBarView(controller: _bibleTabController, children: [
+                      BiblePrayerListScreen(
+                        bibleVersion: AppStrings.KING_JAMES,
+                      ),
+                      BiblePrayerListScreen(
+                        bibleVersion: AppStrings.REVISED_VERSION,
+                      ),
+                      BiblePrayerListScreen(
+                        bibleVersion: AppStrings.HOLY_BIBLE,
+                      ),
+                    ]),
                   ),
                 ],
-              ) ,
+              ),
             ),
           ],
         ),
@@ -56,27 +62,24 @@ class _BibleTabScreenState extends State<BibleTabScreen> with SingleTickerProvid
     );
   }
 
-
   //Custom App Bar Widget
-  Widget _customAppBar()
-  {
+  Widget _customAppBar() {
     return CustomAppBar(
       title: AppStrings.BIBLE_SECOND_TEXT,
       leadingIconPath: AssetPaths.BACK_ICON,
-      leadingTap: (){
+      leadingTap: () {
         AppNavigation.navigatorPop(context);
       },
-      trailingIconPath: AssetPaths.SETTING_ICON,
-      paddingTop: 20.0,
-      trailingTap: (){
-        print("A to Z icon");
-      },
+      // trailingIconPath: AssetPaths.SETTING_ICON,
+      // paddingTop: 20.0,
+      // trailingTap: (){
+      //   print("A to Z icon");
+      // },
     );
   }
 
   //Tab Bar Widget
-  Widget _tabBarWidget()
-  {
+  Widget _tabBarWidget() {
     return Theme(
       data: ThemeData(
         splashColor: AppColors.TRANSPARENT_COLOR,
@@ -92,31 +95,39 @@ class _BibleTabScreenState extends State<BibleTabScreen> with SingleTickerProvid
           indicatorColor: AppColors.BUTTON_COLOR,
           tabBarIndicatorSize: TabBarIndicatorSize.label,
           indicatorRadius: 30.0,
-          padding: EdgeInsets.only(left: 15.0,right: 15.0,top: 11.0,bottom: 9.0),
+          padding:
+              EdgeInsets.only(left: 10.0, right: 10.0, top: 11.0, bottom: 9.0),
         ),
         tabs: [
           Tab(
             child: Padding(
-                padding: EdgeInsets.only(left: 7.0,right: 7.0),
-                child: Text(AppStrings.PRAYERS_TEXT.toUpperCase(),style: TextStyle(color: AppColors.WHITE_COLOR),textScaleFactor: 1.1,)
-            ),
+                padding: EdgeInsets.only(left: 7.0, right: 7.0),
+                child: Text(
+                  AppStrings.KING_JAMES.toUpperCase(),
+                  style: TextStyle(color: AppColors.WHITE_COLOR),
+                  textScaleFactor: 1.1,
+                )),
           ),
           Tab(
             child: Padding(
-                padding: EdgeInsets.only(left: 7.0,right: 7.0),
-                child: Text(AppStrings.HIGHLIGHTS_TEXT.toUpperCase(),style: TextStyle(color: AppColors.WHITE_COLOR),textScaleFactor: 1.1,)
-            ),
+                padding: EdgeInsets.only(left: 7.0, right: 7.0),
+                child: Text(
+                  AppStrings.REVISED_VERSION.toUpperCase(),
+                  style: TextStyle(color: AppColors.WHITE_COLOR),
+                  textScaleFactor: 1.1,
+                )),
           ),
           Tab(
             child: Padding(
-                padding: EdgeInsets.only(left: 7.0,right: 7.0),
-                child: Text(AppStrings.NOTES_TEXT.toUpperCase(),style: TextStyle(color: AppColors.WHITE_COLOR),textScaleFactor: 1.1,)
-            ),
+                padding: EdgeInsets.only(left: 7.0, right: 7.0),
+                child: Text(
+                  AppStrings.HOLY_BIBLE.toUpperCase(),
+                  style: TextStyle(color: AppColors.WHITE_COLOR),
+                  textScaleFactor: 1.1,
+                )),
           ),
         ],
       ),
     );
   }
-
-
 }
