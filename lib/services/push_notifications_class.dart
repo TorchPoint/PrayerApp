@@ -73,12 +73,13 @@ class PushNotificationsManager {
       joinCall(remoteMessage).then((value) {
         if (value["status"] == 1) {
           AppNavigation.navigateTo(
-              navigatorKey.currentContext,
+              navigatorKey.currentState.context,
               AudioScreen(
                 channelToken: remoteMessage.data["token"],
                 appUser: AppUser.fromJson(value["user"]),
                 channelName: remoteMessage.data["channel"],
               ));
+
           //AppNavigation.navigatorPop(navigatorKey.currentContext);
         } else {
           baseService.showToast(value["message"], AppColors.ERROR_COLOR);

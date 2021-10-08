@@ -1,5 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+import 'package:intl/intl.dart';
 import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/services/local_notifications_class.dart';
 import 'package:prayer_hybrid_app/services/push_notifications_class.dart';
@@ -7,6 +9,8 @@ import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'dart:async';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -30,15 +34,18 @@ class _SplashScreenState extends State<SplashScreen> {
 
   PushNotificationsManager pushNotificationsManager =
       PushNotificationsManager();
+  String _timezone = 'Unknown';
+
 
 
   @override
   void initState() {
     super.initState();
-
     getToken();
     baseService.loadLocalUser();
     pushNotificationsManager.loadFCM(context);
+
+
     //LocalNotifications().initialize();
   }
 
@@ -61,6 +68,4 @@ class _SplashScreenState extends State<SplashScreen> {
       )),
     );
   }
-
-
 }

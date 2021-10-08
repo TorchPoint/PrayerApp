@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
@@ -64,8 +65,7 @@ class BaseService {
     } else {
       var data = jsonDecode(user);
       userProvider.setUser(AppUser.fromJson(data));
-
-      AppNavigation.navigateReplacement(context, DrawerScreen());
+      AppNavigation.navigateToRemovingAll(context, DrawerScreen());
     }
   }
 
@@ -107,12 +107,23 @@ class BaseService {
       EasyLoading.show(status: "Loading", maskType: EasyLoadingMaskType.custom);
     }
     try {
-      final http.Response response = await http.get(uri,
-          headers: tokenCheck == true
-              ? {"Authorization": "Bearer ${prefs.getString("token")}"}
-              : {});
+      final http.Response response = await http
+          .get(uri,
+              headers: tokenCheck == true
+                  ? {"Authorization": "Bearer ${prefs.getString("token")}"}
+                  : {})
+          .timeout(
+        Duration(seconds: 10),
+        onTimeout: () {
+          // Time has run out, do what you wanted to do.// Replace 500 with your http code.
+          EasyLoading.dismiss();
+          showToast("Check Your Connection", AppColors.ERROR_COLOR);
+          return;
+        },
+      );
 
       if (response.statusCode == 200) {
+        debugPrint("${response.persistentConnection.toString()}");
         EasyLoading.dismiss();
         var jsonData = jsonDecode(response.body);
         debugPrint(jsonData.toString());
@@ -265,6 +276,7 @@ class BaseService {
     try {
       if (response.statusCode == 200) {
         EasyLoading.dismiss();
+
         debugPrint("Response:" + respStr);
         return jsonDecode(respStr);
       } else if (response.statusCode == 401) {
@@ -297,13 +309,15 @@ class BaseService {
 
   Future loginFormUser(BuildContext context, {email, password}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    var _timezone = await FlutterNativeTimezone.getLocalTimezone();
     // print("*******" + prefs.getString("xyz").toString());
     String tokens = await FirebaseMessaging.instance.getToken();
     Map<String, String> requestBody = <String, String>{
       "email": email ?? "",
       "password": password ?? "",
       "device_token": tokens ?? "testing",
-      "device_type": Platform.operatingSystem ?? "ios"
+      "device_type": Platform.operatingSystem ?? "ios",
+      "time_zone": _timezone
     };
     await formDataBaseMethod(context, ApiConst.SIGN_IN_URL, body: requestBody)
         .then((value) {
@@ -610,6 +624,7 @@ class BaseService {
   Future socialLoginApple(
       BuildContext context, accessToken, name, email) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    var _timezone = await FlutterNativeTimezone.getLocalTimezone();
     // FCM_Token = prefs.getString("fcmToken");
     String tokens = await FirebaseMessaging.instance.getToken();
     Map<String, String> requestBody = <String, String>{
@@ -621,6 +636,7 @@ class BaseService {
       "email": email ?? "",
       "image": "",
       "phone": "",
+      "time_zone": _timezone
     };
     await formDataBaseMethod(context, ApiConst.SOCIAL_LOGIN,
             body: requestBody, bodyCheck: true, filesCheck: false)
@@ -638,6 +654,7 @@ class BaseService {
   Future socialLoginFacebook(
       BuildContext context, accessToken, name, email, image) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    var _timezone = await FlutterNativeTimezone.getLocalTimezone();
     //FCM_Token = prefs.getString("fcmToken");
     String tokens = await FirebaseMessaging.instance.getToken();
     Map<String, String> requestBody = <String, String>{
@@ -649,6 +666,7 @@ class BaseService {
       "email": email,
       "image": image,
       "phone": "",
+      "time_zone": _timezone
     };
 
     await formDataBaseMethod(context, ApiConst.SOCIAL_LOGIN,
@@ -667,6 +685,7 @@ class BaseService {
   Future socialLoginGoogle(
       BuildContext context, accessToken, name, email, image) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    var _timezone = await FlutterNativeTimezone.getLocalTimezone();
     // FCM_Token = prefs.getString("fcmToken");
     String tokens = await FirebaseMessaging.instance.getToken();
     Map<String, String> requestBody = <String, String>{
@@ -678,6 +697,7 @@ class BaseService {
       "email": email,
       "image": image,
       "phone": "",
+      "time_zone": _timezone
     };
 
     await formDataBaseMethod(context, ApiConst.SOCIAL_LOGIN,
@@ -1104,6 +1124,7 @@ class BaseService {
   /////======== CORE MODULE END =========///////
   void login(BuildContext context, {email, password}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
     // FCM_Token = prefs.getString("fcmToken");
     String tokens = await FirebaseMessaging.instance.getToken();
     await postBaseMethod(ApiConst.SIGN_IN_URL, {

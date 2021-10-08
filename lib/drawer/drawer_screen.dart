@@ -44,48 +44,50 @@ class _DrawerScreenState extends State<DrawerScreen>
   @override
   Widget build(BuildContext context) {
     var userProvider = Provider.of<AppUserProvider>(context, listen: false);
-    return CustomBackgroundContainer(
-        child: Scaffold(
-            key: _scaffoldKey,
-            backgroundColor: AppColors.TRANSPARENT_COLOR,
-            drawer: Drawer(
-              child: Container(
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.topRight,
-                        end: Alignment.bottomLeft,
-                        colors: [
-                      AppColors.BACKGROUND1_COLOR,
-                      AppColors.BACKGROUND2_COLOR,
-                      AppColors.BACKGROUND2_COLOR,
-                    ],
-                        stops: [
-                      0.1,
-                      0.5,
-                      1.0
-                    ])),
-                child: SafeArea(
-                  child: Column(
-                    children: [
-                      //For Profile Container
-                      profileData(),
-                      //For Menu Container
-                      Expanded(
-                        child: userMenuData(),
-                      )
-                    ],
+    return WillPopScope(
+      child: CustomBackgroundContainer(
+          child: Scaffold(
+              key: _scaffoldKey,
+              backgroundColor: AppColors.TRANSPARENT_COLOR,
+              drawer: Drawer(
+                child: Container(
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.topRight,
+                          end: Alignment.bottomLeft,
+                          colors: [
+                        AppColors.BACKGROUND1_COLOR,
+                        AppColors.BACKGROUND2_COLOR,
+                        AppColors.BACKGROUND2_COLOR,
+                      ],
+                          stops: [
+                        0.1,
+                        0.5,
+                        1.0
+                      ])),
+                  child: SafeArea(
+                    child: Column(
+                      children: [
+                        //For Profile Container
+                        profileData(),
+                        //For Menu Container
+                        Expanded(
+                          child: userMenuData(),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            body: Column(
-              children: [
-                _customAppBar(),
-                Expanded(
-                  child: HomeScreen(),
-                ),
-              ],
-            )));
+              body: Column(
+                children: [
+                  _customAppBar(),
+                  Expanded(
+                    child: HomeScreen(),
+                  ),
+                ],
+              ))),
+    );
   }
 
   //Custom App Bar Widget
@@ -185,7 +187,7 @@ class _DrawerScreenState extends State<DrawerScreen>
         Padding(
             padding: EdgeInsets.only(left: 5.0, right: 5.0),
             child: Text(
-              "${userProvider.appUser?.firstName}${userProvider.appUser?.lastName}" ??
+              "${userProvider.appUser?.firstName} ${userProvider.appUser?.lastName}" ??
                   "",
               style: TextStyle(
                   color: AppColors.WHITE_COLOR,

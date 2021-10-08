@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:agora_rtc_engine/rtc_engine.dart';
@@ -7,6 +8,8 @@ import 'package:prayer_hybrid_app/chat_audio_video/screens/chat_screen.dart';
 import 'package:prayer_hybrid_app/chat_audio_video/widgets/common_audio_video_icons_container.dart';
 import 'package:prayer_hybrid_app/models/group_prayer_model.dart';
 import 'package:prayer_hybrid_app/models/user_model.dart';
+import 'package:prayer_hybrid_app/prayer_partner/screens/prayer_partner_list_screen.dart';
+import 'package:prayer_hybrid_app/prayer_praise_info/screens/prayers_list_screen.dart';
 import 'package:prayer_hybrid_app/services/API_const.dart';
 import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
@@ -47,7 +50,6 @@ class _AudioScreenState extends State<AudioScreen> {
       rtcEngine.leaveChannel();
       rtcEngine.destroy();
       log("end call");
-
       AppNavigation.navigatorPop(context);
     });
   }
@@ -65,16 +67,17 @@ class _AudioScreenState extends State<AudioScreen> {
         connect = true;
         log("gone");
         baseService.showToast("Connection Lost", AppColors.ERROR_COLOR);
-        rtcEngine.leaveChannel();
-        rtcEngine.destroy();
-        AppNavigation.navigatorPop(context);
+        cancelCall();
       }, rtcStats: (stats) {
-        // if (stats.userCount < 1) {
-        //   baseService.showToast("No Users Avaialabale", AppColors.ERROR_COLOR);
-        //   rtcEngine.leaveChannel();
-        //   rtcEngine.destroy();
-        //   AppNavigation.navigatorPop(context);
-        // }
+        if (stats.userCount <= 1) {
+          // Timer(Duration(seconds: 20), () {
+          //   baseService.showToast(
+          //       "No Users Avaialabale", AppColors.ERROR_COLOR);
+          //   rtcEngine.leaveChannel();
+          //   rtcEngine.destroy();
+          //   AppNavigation.navigatorPop(context);
+          // });
+        }
         print("-------" + stats.userCount.toString() + "------");
       }, tokenPrivilegeWillExpire: (event) {
         print("Expired");
@@ -101,9 +104,7 @@ class _AudioScreenState extends State<AudioScreen> {
       }, leaveChannel: (stats) {
         print("-------" + stats.userCount.toString() + "------");
         connect = true;
-        rtcEngine.leaveChannel();
-        rtcEngine.destroy();
-        AppNavigation.navigatorPop(context);
+        cancelCall();
         print("Channel Leaved ${stats.toString()}");
       }),
     );
@@ -123,8 +124,6 @@ class _AudioScreenState extends State<AudioScreen> {
   @override
   void dispose() {
     // TODO: implement dispose
-    rtcEngine.leaveChannel();
-    rtcEngine.destroy();
     super.dispose();
   }
 
