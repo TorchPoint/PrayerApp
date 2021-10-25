@@ -427,6 +427,8 @@ class BaseService {
         // setUserData(context, value);
         prefs.setString("user", jsonEncode(AppUser.fromJson(value["data"])));
         userProvider.setUser(AppUser.fromJson(value["data"]));
+      } else {
+        showToast(value["message"], AppColors.RED_COLOR);
       }
     });
   }

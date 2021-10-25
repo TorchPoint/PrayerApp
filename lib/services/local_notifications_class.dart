@@ -1,21 +1,29 @@
+import 'dart:convert';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:prayer_hybrid_app/chat_audio_video/screens/audio_screen.dart';
+import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
+import 'package:prayer_hybrid_app/main.dart';
+import 'package:prayer_hybrid_app/services/push_notifications_class.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
 
 class LocalNotifications {
+  PushNotificationsManager pushNotificationsManager =
+      PushNotificationsManager();
   final FlutterLocalNotificationsPlugin localNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  Future<void> selectNotification(String payload, context) async {
+  Future<void> selectNotification(String payload) async {
     if (payload != null) {
       debugPrint('notification payload: $payload');
     }
-    await Navigator.pushNamed(context, payload);
+
+    pushNotificationsManager.handleMessage(jsonDecode(payload));
   }
 
   void initialize() {
@@ -31,9 +39,8 @@ class LocalNotifications {
           requestSoundPermission: true),
     );
 
-    localNotificationsPlugin.initialize(
-      initializationSettings,
-    );
+    localNotificationsPlugin.initialize(initializationSettings,
+        onSelectNotification: selectNotification);
   }
 
   Future<void> showLocalNotifications(RemoteMessage remoteMessage) async {
@@ -55,12 +62,9 @@ class LocalNotifications {
             presentSound: true,
             subtitle: ""),
       );
-      localNotificationsPlugin.show(
-        id,
-        remoteMessage.notification.title,
-        remoteMessage.notification.body,
-        notificationDetails,
-      );
+      localNotificationsPlugin.show(id, remoteMessage.notification.title,
+          remoteMessage.notification.body, notificationDetails,
+          payload: jsonEncode(remoteMessage.data));
     } on Exception catch (e) {
       print(e);
     }

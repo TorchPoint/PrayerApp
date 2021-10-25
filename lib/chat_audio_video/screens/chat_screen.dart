@@ -181,7 +181,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     : ListView.builder(
                         controller: _controller,
                         reverse: true,
-                        itemCount: chatProvider.messageList.length,
+                        itemCount: chatProvider.messageList.length ?? 0,
                         padding: EdgeInsets.zero,
                         itemBuilder: (BuildContext ctxt, int index) {
                           return widget.role == 0
@@ -479,7 +479,6 @@ class _ChatScreenState extends State<ChatScreen> {
   void dispose() {
     super.dispose();
     _sendMessageController.dispose();
-
     socket.dispose();
   }
 }

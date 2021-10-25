@@ -10,8 +10,6 @@ import 'dart:async';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
-
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -36,15 +34,12 @@ class _SplashScreenState extends State<SplashScreen> {
       PushNotificationsManager();
   String _timezone = 'Unknown';
 
-
-
   @override
   void initState() {
     super.initState();
     getToken();
     baseService.loadLocalUser();
-    pushNotificationsManager.loadFCM(context);
-
+    pushNotificationsManager.loadFCM();
 
     //LocalNotifications().initialize();
   }

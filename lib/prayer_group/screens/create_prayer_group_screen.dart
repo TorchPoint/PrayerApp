@@ -534,7 +534,7 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
                       image:
                           userProvider.searchPartnersList[index].profileImage ==
                                   null
-                              ? AssetImage(AssetPaths.PARTNER_IMAGE)
+                              ? AssetImage(AssetPaths.NO_IMAGE)
                               : NetworkImage(userProvider
                                   .searchPartnersList[index].profileImage),
                       fit: BoxFit.cover)),

@@ -3,19 +3,24 @@ import 'dart:developer';
 
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:prayer_hybrid_app/chat_audio_video/screens/chat_screen.dart';
 import 'package:prayer_hybrid_app/chat_audio_video/widgets/common_audio_video_icons_container.dart';
+import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
+import 'package:prayer_hybrid_app/main.dart';
 import 'package:prayer_hybrid_app/models/group_prayer_model.dart';
 import 'package:prayer_hybrid_app/models/user_model.dart';
 import 'package:prayer_hybrid_app/prayer_partner/screens/prayer_partner_list_screen.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/prayers_list_screen.dart';
+import 'package:prayer_hybrid_app/providers/provider.dart';
 import 'package:prayer_hybrid_app/services/API_const.dart';
 import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
+import 'package:provider/provider.dart';
 
 class AudioScreen extends StatefulWidget {
   static String id = "audio";
@@ -42,6 +47,7 @@ class _AudioScreenState extends State<AudioScreen> {
   BaseService baseService = BaseService();
 
   Future cancelCall() async {
+    var chatProvider = Provider.of<ChatProvider>(context, listen: false);
     await baseService.postBaseMethod(
         "http://server.appsstaging.com:3060/leave-channel", {
       "channel": widget.channelName,
@@ -50,14 +56,17 @@ class _AudioScreenState extends State<AudioScreen> {
       rtcEngine.leaveChannel();
       rtcEngine.destroy();
       log("end call");
-      AppNavigation.navigatorPop(context);
+      chatProvider.resetMessageList();
+      // AppNavigation.navigatorPop(navigatorKey.currentContext);
+      AppNavigation.navigateToRemovingAll(
+          navigatorKey.currentContext, DrawerScreen());
     });
   }
 
   Future<void> _initAgoraRtcEngine() async {
     await [Permission.microphone, Permission.camera].request();
     rtcEngine = await RtcEngine.create(ApiConst.AGORA_APP_ID);
-    await rtcEngine.disableVideo();
+    // await rtcEngine.disableVideo();
     await rtcEngine.enableAudio();
 
     //rtcEngine.enableAudioVolumeIndication(2, 1, true);
