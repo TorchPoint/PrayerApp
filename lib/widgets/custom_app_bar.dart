@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';

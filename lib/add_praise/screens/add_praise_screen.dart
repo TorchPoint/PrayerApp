@@ -5,6 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:prayer_hybrid_app/models/prayer_model.dart';
 import 'package:prayer_hybrid_app/services/API_const.dart';
 import 'package:prayer_hybrid_app/services/base_service.dart';
+
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
@@ -172,6 +173,7 @@ class _AddPraiseScreenState extends State<AddPraiseScreen> {
       },
       trailingIconPath: AssetPaths.NOTIFICATION_ICON,
       trailingTap: () {
+
         print("Notification Icon");
       },
     );

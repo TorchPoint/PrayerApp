@@ -118,7 +118,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           image: DecorationImage(
               image: notificationProvider.notificationList[index].data.image ==
                       null
-                  ? AssetImage(AssetPaths.VIDEO_USER1_IMAGE)
+                  ? AssetImage(AssetPaths.NO_IMAGE)
                   : NetworkImage(
                       notificationProvider.notificationList[index].data.image),
               fit: BoxFit.cover)),

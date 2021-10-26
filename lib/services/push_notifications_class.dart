@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/services.dart';
+
 import 'package:prayer_hybrid_app/chat_audio_video/screens/audio_screen.dart';
 import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
 import 'package:prayer_hybrid_app/main.dart';
@@ -10,7 +10,7 @@ import 'package:prayer_hybrid_app/models/user_model.dart';
 import 'package:prayer_hybrid_app/providers/provider.dart';
 import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/services/local_notifications_class.dart';
-import 'package:prayer_hybrid_app/splash/splash_screen.dart';
+
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +24,7 @@ class PushNotificationsManager {
   static final PushNotificationsManager instance = PushNotificationsManager._();
 
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-  bool _initialized = false;
+
   BaseService baseService = BaseService();
 
   Future joinCall(Map message) async {

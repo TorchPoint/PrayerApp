@@ -12,6 +12,7 @@ import 'package:http/http.dart' as http;
 import 'package:prayer_hybrid_app/auth/screens/auth_main_screen.dart';
 import 'package:prayer_hybrid_app/auth/screens/auth_verification_screen.dart';
 import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
+import 'package:prayer_hybrid_app/models/notification_model.dart';
 import 'package:prayer_hybrid_app/models/user_model.dart';
 import 'package:prayer_hybrid_app/password/screens/reset_password_screen.dart';
 import 'package:prayer_hybrid_app/prayer_partner/screens/prayer_partner_list_screen.dart';
@@ -308,7 +309,7 @@ class BaseService {
   //---- SIGNUP AND LOGIN FLOW-----////////
 
   Future loginFormUser(BuildContext context, {email, password}) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+
     var _timezone = await FlutterNativeTimezone.getLocalTimezone();
     // print("*******" + prefs.getString("xyz").toString());
     String tokens = await FirebaseMessaging.instance.getToken();
@@ -342,7 +343,7 @@ class BaseService {
 
   Future signUpUser(BuildContext context, firstName, lastName, email,
       phoneNumber, password) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+
     // FCM_Token = prefs.getString("fcmToken");
     String tokens = await FirebaseMessaging.instance.getToken();
     Map<String, String> requestBody = <String, String>{
@@ -548,6 +549,7 @@ class BaseService {
         }
         if (userProvider != null) {
           userProvider.resetPartnersList();
+          userProvider.restUserProvider();
         }
         if (groupProvider != null) {
           groupProvider.resetGroupsList();
@@ -609,7 +611,7 @@ class BaseService {
   }
 
   Future appleSocialMethod(BuildContext context) async {
-    var userProvider = Provider.of<AppUserProvider>(context, listen: false);
+
     final credential = await SignInWithApple.getAppleIDCredential(
       scopes: [
         AppleIDAuthorizationScopes.email,
@@ -625,7 +627,7 @@ class BaseService {
 
   Future socialLoginApple(
       BuildContext context, accessToken, name, email) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+
     var _timezone = await FlutterNativeTimezone.getLocalTimezone();
     // FCM_Token = prefs.getString("fcmToken");
     String tokens = await FirebaseMessaging.instance.getToken();
@@ -655,7 +657,7 @@ class BaseService {
 
   Future socialLoginFacebook(
       BuildContext context, accessToken, name, email, image) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+
     var _timezone = await FlutterNativeTimezone.getLocalTimezone();
     //FCM_Token = prefs.getString("fcmToken");
     String tokens = await FirebaseMessaging.instance.getToken();
@@ -686,7 +688,7 @@ class BaseService {
 
   Future socialLoginGoogle(
       BuildContext context, accessToken, name, email, image) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+
     var _timezone = await FlutterNativeTimezone.getLocalTimezone();
     // FCM_Token = prefs.getString("fcmToken");
     String tokens = await FirebaseMessaging.instance.getToken();
@@ -1108,7 +1110,7 @@ class BaseService {
     });
   }
 
-  Future fetchNotificationList(BuildContext context) async {
+  Future<List<NotificationModel>> fetchNotificationList(BuildContext context) async {
     var notificationProvider =
         Provider.of<NotificationProvider>(context, listen: false);
 
@@ -1121,6 +1123,7 @@ class BaseService {
         notificationProvider.resetNotificationList();
       }
     });
+    return notificationProvider.notificationList;
   }
 
   /////======== CORE MODULE END =========///////

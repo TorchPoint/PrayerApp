@@ -4,13 +4,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:prayer_hybrid_app/chat_audio_video/screens/audio_screen.dart';
-import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
-import 'package:prayer_hybrid_app/main.dart';
 import 'package:prayer_hybrid_app/services/push_notifications_class.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
-import 'package:prayer_hybrid_app/utils/asset_paths.dart';
-import 'package:prayer_hybrid_app/utils/navigation.dart';
 
 class LocalNotifications {
   PushNotificationsManager pushNotificationsManager =
@@ -55,6 +50,7 @@ class LocalNotifications {
           priority: Priority.high,
           importance: Importance.max,
           color: AppColors.BACKGROUND1_COLOR,
+          icon: "@mipmap/launcher_icon",
         ),
         iOS: IOSNotificationDetails(
             presentAlert: true,

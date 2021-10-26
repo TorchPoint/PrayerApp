@@ -37,9 +37,10 @@ class _TermsPrivacyScreenState extends State<TermsPrivacyScreen> {
     });
   }
 
-  @override
+ @override
   void initState() {
     // TODO: implement initState
+    super.initState();
     getContents(context);
   }
 
