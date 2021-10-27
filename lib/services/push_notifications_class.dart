@@ -80,6 +80,8 @@ class PushNotificationsManager {
     if (remoteMessage["type"] == "call") {
       joinCall(remoteMessage).then((value) {
         if (value["status"] == 1) {
+          print("IF STATUS:" + value["status"].toString());
+          print("IF CHANNEL NAME:" + remoteMessage["channel"].toString());
           String users = prefs.getString("user");
           var data = jsonDecode(users);
           userProvider.setUser(AppUser.fromJson(data));
@@ -91,6 +93,8 @@ class PushNotificationsManager {
                 channelName: remoteMessage["channel"],
               ));
         } else {
+          print("ELSE STATUS:" + value["status"].toString());
+          print("Else CHANNEL NAME:" + remoteMessage["channel"].toString());
           baseService.showToast(value["message"], AppColors.ERROR_COLOR);
           AppNavigation.navigateTo(navigatorKey.currentContext, DrawerScreen());
         }
@@ -99,7 +103,8 @@ class PushNotificationsManager {
       String users = prefs.getString("user");
       var data = jsonDecode(users);
       userProvider.setUser(AppUser.fromJson(data));
-      AppNavigation.navigateToRemovingAll(navigatorKey.currentContext, DrawerScreen());
+      AppNavigation.navigateToRemovingAll(
+          navigatorKey.currentContext, DrawerScreen());
       print("no data found for call");
     }
   }

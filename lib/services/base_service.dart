@@ -30,7 +30,7 @@ class BaseService {
   var id;
   String token;
   String user;
-  String FCM_Token;
+  String fcmToken;
 
   void showToast(message, color) {
     Fluttertoast.showToast(
@@ -309,7 +309,6 @@ class BaseService {
   //---- SIGNUP AND LOGIN FLOW-----////////
 
   Future loginFormUser(BuildContext context, {email, password}) async {
-
     var _timezone = await FlutterNativeTimezone.getLocalTimezone();
     // print("*******" + prefs.getString("xyz").toString());
     String tokens = await FirebaseMessaging.instance.getToken();
@@ -343,7 +342,6 @@ class BaseService {
 
   Future signUpUser(BuildContext context, firstName, lastName, email,
       phoneNumber, password) async {
-
     // FCM_Token = prefs.getString("fcmToken");
     String tokens = await FirebaseMessaging.instance.getToken();
     Map<String, String> requestBody = <String, String>{
@@ -611,7 +609,6 @@ class BaseService {
   }
 
   Future appleSocialMethod(BuildContext context) async {
-
     final credential = await SignInWithApple.getAppleIDCredential(
       scopes: [
         AppleIDAuthorizationScopes.email,
@@ -627,7 +624,6 @@ class BaseService {
 
   Future socialLoginApple(
       BuildContext context, accessToken, name, email) async {
-
     var _timezone = await FlutterNativeTimezone.getLocalTimezone();
     // FCM_Token = prefs.getString("fcmToken");
     String tokens = await FirebaseMessaging.instance.getToken();
@@ -657,7 +653,6 @@ class BaseService {
 
   Future socialLoginFacebook(
       BuildContext context, accessToken, name, email, image) async {
-
     var _timezone = await FlutterNativeTimezone.getLocalTimezone();
     //FCM_Token = prefs.getString("fcmToken");
     String tokens = await FirebaseMessaging.instance.getToken();
@@ -688,7 +683,6 @@ class BaseService {
 
   Future socialLoginGoogle(
       BuildContext context, accessToken, name, email, image) async {
-
     var _timezone = await FlutterNativeTimezone.getLocalTimezone();
     // FCM_Token = prefs.getString("fcmToken");
     String tokens = await FirebaseMessaging.instance.getToken();
@@ -1110,7 +1104,8 @@ class BaseService {
     });
   }
 
-  Future<List<NotificationModel>> fetchNotificationList(BuildContext context) async {
+  Future<List<NotificationModel>> fetchNotificationList(
+      BuildContext context) async {
     var notificationProvider =
         Provider.of<NotificationProvider>(context, listen: false);
 
