@@ -123,7 +123,10 @@ class _PrayerPartnerListScreenState extends State<PrayerPartnerListScreen> {
         AppNavigation.navigateTo(
             context,
             ChatScreen(
-                role: 0, user: userProvider.prayerPartnersList[partnerIndex]));
+                role: 0,
+                user: _searchController.text.isEmpty
+                    ? userProvider.prayerPartnersList[partnerIndex]
+                    : userProvider.searchPartnersList[partnerIndex]));
       },
       child: Container(
         width: MediaQuery.of(context).size.width * 0.85,
@@ -146,12 +149,21 @@ class _PrayerPartnerListScreenState extends State<PrayerPartnerListScreen> {
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                      image: userProvider.prayerPartnersList[partnerIndex]
-                                  .profileImage ==
-                              null
-                          ? AssetImage(AssetPaths.NO_IMAGE)
-                          : NetworkImage(userProvider
-                              .prayerPartnersList[partnerIndex].profileImage),
+                      image: _searchController.text.isEmpty
+                          ? userProvider.prayerPartnersList[partnerIndex]
+                                      .profileImage ==
+                                  null
+                              ? AssetImage(AssetPaths.NO_IMAGE)
+                              : NetworkImage(userProvider
+                                  .prayerPartnersList[partnerIndex]
+                                  .profileImage)
+                          : userProvider.searchPartnersList[partnerIndex]
+                                      .profileImage ==
+                                  null
+                              ? AssetImage(AssetPaths.NO_IMAGE)
+                              : NetworkImage(userProvider
+                                  .searchPartnersList[partnerIndex]
+                                  .profileImage),
                       fit: BoxFit.cover)),
             ),
             SizedBox(

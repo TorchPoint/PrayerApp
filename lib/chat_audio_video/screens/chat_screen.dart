@@ -47,7 +47,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Future getTokenRTC() async {
     var user = Provider.of<AppUserProvider>(context, listen: false);
     return await baseService.postBaseMethod(
-      "http://server.appsstaging.com:3060/rtctoken",
+      "http://server.appsstaging.com:3091/rtctoken",
       {
         "isPublisher": true,
         "sender_id": baseService.id,
@@ -56,7 +56,10 @@ class _ChatScreenState extends State<ChatScreen> {
         "group_name": widget.role == 1 ? widget.groupPrayerModel.name : null,
         "name": user.appUser.firstName
       },
-    );
+    ).onError((error, stackTrace) {
+      baseService.showToast("Server Error", AppColors.ERROR_COLOR);
+      EasyLoading.dismiss();
+    });
   }
 
   void connect(BuildContext context) {
@@ -83,6 +86,7 @@ class _ChatScreenState extends State<ChatScreen> {
     });
     socket.onConnect((data) {
       print("connected");
+
       var dataChatSingle = {
         "sender_id": baseService.id,
         "reciever_id": widget.user?.id ?? 0
@@ -145,9 +149,11 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     // TODO: implement initState
+    var chatProvider = Provider.of<ChatProvider>(context, listen: false);
     connect(context);
 
     baseService.loadLocalUser();
+    chatProvider.messageList.clear();
     super.initState();
   }
 

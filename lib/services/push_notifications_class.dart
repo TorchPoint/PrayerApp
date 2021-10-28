@@ -6,6 +6,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:prayer_hybrid_app/chat_audio_video/screens/audio_screen.dart';
 import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
 import 'package:prayer_hybrid_app/main.dart';
+import 'package:prayer_hybrid_app/models/group_prayer_model.dart';
 import 'package:prayer_hybrid_app/models/user_model.dart';
 import 'package:prayer_hybrid_app/providers/provider.dart';
 import 'package:prayer_hybrid_app/services/base_service.dart';
@@ -31,11 +32,12 @@ class PushNotificationsManager {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print("Channel:" + message["channel"].toString());
     return await baseService
-        .postBaseMethod("http://server.appsstaging.com:3060/joining-call", {
+        .postBaseMethod("http://server.appsstaging.com:3091/joining-call", {
       "isPublisher": false,
       "reciever_id": prefs.getInt("userID"),
       "channel": message["channel"],
-      "sender_id": message["user"]
+      "sender_id": message["user"] ?? null,
+      "group_id": message["group"] ?? null
     });
   }
 
@@ -80,6 +82,7 @@ class PushNotificationsManager {
     if (remoteMessage["type"] == "call") {
       joinCall(remoteMessage).then((value) {
         if (value["status"] == 1) {
+          print("USER:" + value["user"].toString());
           print("IF STATUS:" + value["status"].toString());
           print("IF CHANNEL NAME:" + remoteMessage["channel"].toString());
           String users = prefs.getString("user");
@@ -90,6 +93,30 @@ class PushNotificationsManager {
               AudioScreen(
                 channelToken: remoteMessage["token"],
                 appUser: AppUser.fromJson(value["user"]),
+                channelName: remoteMessage["channel"],
+              ));
+          return value;
+        } else {
+          print("ELSE STATUS:" + value["status"].toString());
+          print("Else CHANNEL NAME:" + remoteMessage["channel"].toString());
+          baseService.showToast(value["message"], AppColors.ERROR_COLOR);
+          AppNavigation.navigateTo(navigatorKey.currentContext, DrawerScreen());
+        }
+      });
+    } else if (remoteMessage["type"] == "group_call") {
+      joinCall(remoteMessage).then((value) {
+        if (value["status"] == 1) {
+          print("IF STATUS:" + value["status"].toString());
+          print("IF CHANNEL NAME:" + remoteMessage["channel"].toString());
+          String users = prefs.getString("user");
+          var data = jsonDecode(users);
+
+          userProvider.setUser(AppUser.fromJson(data));
+          AppNavigation.navigateTo(
+              navigatorKey.currentState.context,
+              AudioScreen(
+                channelToken: remoteMessage["token"],
+                groupPrayerModel: GroupPrayerModel.fromJson(value["group"]),
                 channelName: remoteMessage["channel"],
               ));
         } else {
