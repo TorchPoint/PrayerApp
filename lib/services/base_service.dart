@@ -1121,6 +1121,39 @@ class BaseService {
     return notificationProvider.notificationList;
   }
 
+  /////////CALL SERVICE/////////
+
+  Future joinCall(Map message) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("Channel:" + message["channel"].toString());
+    return await postBaseMethod(
+        "http://server.appsstaging.com:3091/joining-call", {
+      "isPublisher": false,
+      "reciever_id": prefs.getInt("userID"),
+      "channel": message["channel"],
+      "sender_id": message["user"] ?? null,
+      "group_id": message["group"] ?? null
+    });
+  }
+
+  Future rejectCall(Map message) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return await postBaseMethod(
+        "http://server.appsstaging.com:3091/reject-call", {
+      "reciever_id": prefs.getInt("userID"),
+      "sender_id": message["user"] ?? null,
+      "channel": message["channel"],
+      "group_id": message["group_id"] ?? null
+    });
+  }
+
+  Future cancelCall(channelName, id) async {
+    await postBaseMethod("http://server.appsstaging.com:3091/leave-channel",
+        {"channel": channelName, "user_id": id}).then((value) {
+      return value;
+    });
+  }
+
   /////======== CORE MODULE END =========///////
   void login(BuildContext context, {email, password}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

@@ -22,7 +22,8 @@ class CustomTextFormField extends StatelessWidget {
       hintColor,
       textColor,
       cursorColor,
-      prefixIconColor,suffixColor;
+      prefixIconColor,
+      suffixColor;
   final TextInputType keyBoardType;
   final List<TextInputFormatter> textInputFormatter;
   final Function onTextFieldTap, onSuffixIconTap, onChange;
@@ -58,7 +59,8 @@ class CustomTextFormField extends StatelessWidget {
       this.onTextFieldTap,
       this.prefixIconColor,
       this.onSuffixIconTap,
-      this.onChange,this.suffixColor});
+      this.onChange,
+      this.suffixColor});
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +124,11 @@ class CustomTextFormField extends StatelessWidget {
                   onTap: onSuffixIconTap,
                   child: Padding(
                       padding: EdgeInsets.only(right: 14.0),
-                      child: Image.asset(suffixIcon, width: suffixIconWidth,color: suffixColor,)),
+                      child: Image.asset(
+                        suffixIcon,
+                        width: suffixIconWidth,
+                        color: suffixColor,
+                      )),
                 )
               : null,
           suffixIconConstraints: BoxConstraints(),
@@ -135,7 +141,6 @@ class CustomTextFormField extends StatelessWidget {
           color: textColor ?? AppColors.WHITE_COLOR,
           fontWeight: FontWeight.w700,
         ),
-
         keyboardType: keyBoardType ?? TextInputType.emailAddress,
         obscureText: obscureText ?? false,
         cursorColor: cursorColor ?? Colors.white,

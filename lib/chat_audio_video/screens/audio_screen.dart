@@ -26,39 +26,35 @@ class AudioScreen extends StatefulWidget {
   static String id = "audio";
   final AppUser appUser;
   final GroupPrayerModel groupPrayerModel;
-  final String channelName, channelToken;
+  final String channelName, channelToken, type;
 
   AudioScreen(
       {this.appUser,
       this.channelName,
       this.channelToken,
-      this.groupPrayerModel});
+      this.groupPrayerModel,
+      this.type});
 
   @override
   _AudioScreenState createState() => _AudioScreenState();
 }
 
 class _AudioScreenState extends State<AudioScreen> {
-  RtcEngine rtcEngine;
+  // RtcEngine rtcEngine;
   RtcStats rtcStats;
   bool connect = false;
   List userCount = [];
+  Timer t;
 
   bool loudSpeaker = false, mute = false;
   BaseService baseService = BaseService();
 
   Future cancelCall() async {
-    var chatProvider = Provider.of<ChatProvider>(context, listen: false);
-    await baseService.postBaseMethod(
-        "http://server.appsstaging.com:3091/leave-channel", {
-      "channel": widget.channelName,
-      "user_id": baseService.id
-    }).then((value) {
+    baseService.cancelCall(widget.channelName, baseService.id).then((value) {
       rtcEngine.leaveChannel();
       rtcEngine.destroy();
-      log("end call");
-      //chatProvider.resetMessageList();
-      // AppNavigation.navigatorPop(navigatorKey.currentContext);
+      log("www" + value.toString());
+
       AppNavigation.navigateToRemovingAll(
           navigatorKey.currentContext, DrawerScreen());
     });
@@ -67,6 +63,7 @@ class _AudioScreenState extends State<AudioScreen> {
   Future<void> _initAgoraRtcEngine() async {
     await [Permission.microphone, Permission.camera].request();
     rtcEngine = await RtcEngine.create(ApiConst.AGORA_APP_ID);
+
     await rtcEngine.enableAudio();
     rtcEngine.setEventHandler(
       RtcEngineEventHandler(connectionLost: () {
@@ -74,25 +71,19 @@ class _AudioScreenState extends State<AudioScreen> {
         log("gone");
         baseService.showToast("Connection Lost", AppColors.ERROR_COLOR);
         cancelCall();
-      }, rtcStats: (stats) {
-        // if (widget.appUser == null) {
-        //   log("APP USER IS NULL");
-        //   log("-----" + stats.userCount.toString() + "------");
-        //   var time = stats.duration;
-        //   if (time <= 10 || stats.userCount<=1) {
-        //     cancelCall();
-        //     print("TIME:"+time.toString());
-        //     // if (stats.userCount <= 1) {
-        //     //  // cancelCall();
-        //     //   log(stats.userCount.toString());
-        //     //   // Timer(Duration(seconds: time), cancelCall);
-        //     // }
-        //   }
-        // } else if (widget.groupPrayerModel == null) {
-        //   log("GROUP IS NULL");
-        // } else {
-        //   log("NULL");
-        // }
+      }, rtcStats: (stats) async {
+        print(stats.userCount.toString());
+
+        if (stats.userCount <= 1) {
+          print("user=1");
+          if (t == null) {
+            print("user=3");
+            t = Timer(Duration(seconds: 5), cancelCall);
+          }
+        } else {
+          print("user=2");
+          if (t != null) t.cancel();
+        }
       }, tokenPrivilegeWillExpire: (event) {
         print("Expired");
         baseService.showToast("About to Expired", AppColors.ERROR_COLOR);
@@ -102,6 +93,9 @@ class _AudioScreenState extends State<AudioScreen> {
         baseService.showToast("Connection Interrupted", AppColors.ERROR_COLOR);
       }, error: (code) {
         baseService.showToast("${code.toString()}", AppColors.ERROR_COLOR);
+        if (code == ErrorCode.JoinChannelRejected) {
+          cancelCall();
+        }
         print("error: ${code.toString()}");
       }, joinChannelSuccess: (String channel, int uid, int elapsed) {
         print("local user $uid joined");
@@ -110,15 +104,17 @@ class _AudioScreenState extends State<AudioScreen> {
       }, userJoined: (int uid, int elapsed) {
         print("remote user $uid joined");
         userCount.add(uid);
+        if (userCount.length <= 1) {
+          Timer(Duration(seconds: 5), cancelCall);
+        }
         print("LENGTH:" + userCount.length.toString());
       }, userOffline: (int uid, UserOfflineReason reason) {
         print("remote user $uid left channel");
         userCount.remove(uid);
-        print("NEW LENGTH:"+userCount.length.toString());
-        if(userCount.length<=1){
+        print("NEW LENGTH:" + userCount.length.toString());
+        if (userCount.length <= 1) {
           cancelCall();
         }
-
         connect = true;
         if (widget.groupPrayerModel == null) {
           baseService.showToast("${widget.appUser.firstName} left the call",

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,7 @@ void main() async {
 void configLoading() {}
 final GlobalKey<NavigatorState> navigatorKey =
 new GlobalKey<NavigatorState>();
+RtcEngine rtcEngine;
 
 class MyHttpOverrides extends HttpOverrides {
   @override

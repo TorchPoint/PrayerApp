@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
+import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:prayer_hybrid_app/chat_audio_video/screens/audio_screen.dart';
+import 'package:prayer_hybrid_app/chat_audio_video/screens/pre_calling_screen.dart';
 import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
 import 'package:prayer_hybrid_app/main.dart';
 import 'package:prayer_hybrid_app/models/group_prayer_model.dart';
@@ -60,6 +63,12 @@ class PushNotificationsManager {
       if (message != null) {
         print("Title:" + message.notification.title.toString());
         print("Notification Body:" + message.notification.body.toString());
+        if (message.data["type"] == "call_reject") {
+          log("Wowowowoow");
+          rtcEngine.leaveChannel();
+          rtcEngine.destroy();
+          AppNavigation.navigateToRemovingAll(navigatorKey.currentContext, DrawerScreen());
+        }
       }
       print("not clicked on fcm");
       LocalNotifications().showLocalNotifications(message);
@@ -79,53 +88,21 @@ class PushNotificationsManager {
     var userProvider = Provider.of<AppUserProvider>(navigatorKey.currentContext,
         listen: false);
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("MESSAGE:" + remoteMessage.toString());
     if (remoteMessage["type"] == "call") {
-      joinCall(remoteMessage).then((value) {
-        if (value["status"] == 1) {
-          print("USER:" + value["user"].toString());
-          print("IF STATUS:" + value["status"].toString());
-          print("IF CHANNEL NAME:" + remoteMessage["channel"].toString());
-          String users = prefs.getString("user");
-          var data = jsonDecode(users);
-          userProvider.setUser(AppUser.fromJson(data));
-          AppNavigation.navigateTo(
-              navigatorKey.currentState.context,
-              AudioScreen(
-                channelToken: remoteMessage["token"],
-                appUser: AppUser.fromJson(value["user"]),
-                channelName: remoteMessage["channel"],
-              ));
-          return value;
-        } else {
-          print("ELSE STATUS:" + value["status"].toString());
-          print("Else CHANNEL NAME:" + remoteMessage["channel"].toString());
-          baseService.showToast(value["message"], AppColors.ERROR_COLOR);
-          AppNavigation.navigateTo(navigatorKey.currentContext, DrawerScreen());
-        }
-      });
+      AppNavigation.navigateReplacement(
+          navigatorKey.currentContext,
+          PreCallingScreen(
+            appUser: remoteMessage["user_name"],
+            message: remoteMessage,
+          ));
     } else if (remoteMessage["type"] == "group_call") {
-      joinCall(remoteMessage).then((value) {
-        if (value["status"] == 1) {
-          print("IF STATUS:" + value["status"].toString());
-          print("IF CHANNEL NAME:" + remoteMessage["channel"].toString());
-          String users = prefs.getString("user");
-          var data = jsonDecode(users);
-
-          userProvider.setUser(AppUser.fromJson(data));
-          AppNavigation.navigateTo(
-              navigatorKey.currentState.context,
-              AudioScreen(
-                channelToken: remoteMessage["token"],
-                groupPrayerModel: GroupPrayerModel.fromJson(value["group"]),
-                channelName: remoteMessage["channel"],
-              ));
-        } else {
-          print("ELSE STATUS:" + value["status"].toString());
-          print("Else CHANNEL NAME:" + remoteMessage["channel"].toString());
-          baseService.showToast(value["message"], AppColors.ERROR_COLOR);
-          AppNavigation.navigateTo(navigatorKey.currentContext, DrawerScreen());
-        }
-      });
+      AppNavigation.navigateReplacement(
+          navigatorKey.currentContext,
+          PreCallingScreen(
+            appUser: remoteMessage["user_name"],
+            message: remoteMessage,
+          ));
     } else {
       String users = prefs.getString("user");
       var data = jsonDecode(users);
