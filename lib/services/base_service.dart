@@ -1147,9 +1147,10 @@ class BaseService {
     });
   }
 
-  Future cancelCall(channelName, id) async {
+  Future<dynamic> cancelCall(channelName, id) async {
     await postBaseMethod("http://server.appsstaging.com:3091/leave-channel",
         {"channel": channelName, "user_id": id}).then((value) {
+      print("Leave Channel Value:" + value.toString());
       return value;
     });
   }

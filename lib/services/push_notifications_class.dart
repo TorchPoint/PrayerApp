@@ -90,6 +90,9 @@ class PushNotificationsManager {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print("MESSAGE:" + remoteMessage.toString());
     if (remoteMessage["type"] == "call") {
+      String users = prefs.getString("user");
+      var data = jsonDecode(users);
+      userProvider.setUser(AppUser.fromJson(data));
       AppNavigation.navigateReplacement(
           navigatorKey.currentContext,
           PreCallingScreen(
@@ -97,6 +100,9 @@ class PushNotificationsManager {
             message: remoteMessage,
           ));
     } else if (remoteMessage["type"] == "group_call") {
+      String users = prefs.getString("user");
+      var data = jsonDecode(users);
+      userProvider.setUser(AppUser.fromJson(data));
       AppNavigation.navigateReplacement(
           navigatorKey.currentContext,
           PreCallingScreen(

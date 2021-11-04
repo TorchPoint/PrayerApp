@@ -91,6 +91,10 @@ class _PreCallingScreenState extends State<PreCallingScreen> {
                       await SharedPreferences.getInstance();
                   baseService.rejectCall(widget.message).then(
                     (value) {
+                      String users = prefs.getString("user");
+                      var data = jsonDecode(users);
+                      userProvider.setUser(AppUser.fromJson(data));
+                      print("USER DATA******:" + data.toString());
                       baseService.showToast(
                           value["message"], AppColors.ERROR_COLOR);
                       AppNavigation.navigateToRemovingAll(

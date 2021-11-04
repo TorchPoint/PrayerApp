@@ -50,9 +50,15 @@ class _AudioScreenState extends State<AudioScreen> {
   BaseService baseService = BaseService();
 
   Future cancelCall() async {
-    baseService.cancelCall(widget.channelName, baseService.id).then((value) {
+    baseService.postBaseMethod(
+        "http://server.appsstaging.com:3091/leave-channel", {
+      "channel": widget.channelName,
+      "user_id": baseService.id
+    }).then((value) async {
+      print("Cancel Call Response:" + value.toString());
       rtcEngine.leaveChannel();
       rtcEngine.destroy();
+
       log("www" + value.toString());
 
       AppNavigation.navigateToRemovingAll(
@@ -75,13 +81,13 @@ class _AudioScreenState extends State<AudioScreen> {
         print(stats.userCount.toString());
 
         if (stats.userCount <= 1) {
-          print("user=1");
           if (t == null) {
-            print("user=3");
-            t = Timer(Duration(seconds: 5), cancelCall);
+            print("user=1");
+            t = Timer(Duration(seconds: 30), cancelCall);
           }
         } else {
           print("user=2");
+          // t.cancel();
           if (t != null) t.cancel();
         }
       }, tokenPrivilegeWillExpire: (event) {
@@ -92,11 +98,7 @@ class _AudioScreenState extends State<AudioScreen> {
         setState(() {});
         baseService.showToast("Connection Interrupted", AppColors.ERROR_COLOR);
       }, error: (code) {
-        baseService.showToast("${code.toString()}", AppColors.ERROR_COLOR);
-        if (code == ErrorCode.JoinChannelRejected) {
-          cancelCall();
-        }
-        print("error: ${code.toString()}");
+        // baseService.showToast("${code.toString()}", AppColors.ERROR_COLOR);
       }, joinChannelSuccess: (String channel, int uid, int elapsed) {
         print("local user $uid joined");
         userCount.add(uid);
@@ -104,9 +106,9 @@ class _AudioScreenState extends State<AudioScreen> {
       }, userJoined: (int uid, int elapsed) {
         print("remote user $uid joined");
         userCount.add(uid);
-        if (userCount.length <= 1) {
-          Timer(Duration(seconds: 5), cancelCall);
-        }
+        // if (userCount.length <= 1) {
+        //   Timer(Duration(seconds: 5), cancelCall);
+        // }
         print("LENGTH:" + userCount.length.toString());
       }, userOffline: (int uid, UserOfflineReason reason) {
         print("remote user $uid left channel");
