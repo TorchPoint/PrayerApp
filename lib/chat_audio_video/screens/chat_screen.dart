@@ -47,7 +47,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Future getTokenRTC() async {
     var user = Provider.of<AppUserProvider>(context, listen: false);
     return await baseService.postBaseMethod(
-      "http://server.appsstaging.com:3091/rtctoken",
+      "${ApiConst.AGORA_BASE_URL}/rtctoken",
       {
         "isPublisher": true,
         "sender_id": baseService.id,
@@ -65,7 +65,7 @@ class _ChatScreenState extends State<ChatScreen> {
   void connect(BuildContext context) {
     print("----ROLE----:" + widget.role.toString());
     var chatProvider = Provider.of<ChatProvider>(context, listen: false);
-    socket = IO.io('https://server.appsstaging.com:3090', <String, dynamic>{
+    socket = IO.io(ApiConst.SOCKET_BASE_URL, <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
     });

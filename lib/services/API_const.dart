@@ -1,5 +1,8 @@
 class ApiConst {
-  static const BASE_URL = "https://server.appsstaging.com/3048/prayer/api/";
+  // static const BASE_URL = "https://server.appsstaging.com/3048/prayer/api/";
+  static const BASE_URL = "https://myprayerapp.com/webservices/api/";
+  static const SOCKET_BASE_URL = "https://myprayerapp.com:3090/";
+  static const AGORA_BASE_URL = "http://myprayerapp.com:3091";
   static const AGORA_APP_ID = "d16d4a2e151647c18a8a2a99d57593a7";
   static const BIBLE_API_KEY = "1087e0406f67749607a83b2feee32de3";
   static const KING_JAMES_VERSION_ID = "de4e12af7f28f599-01";

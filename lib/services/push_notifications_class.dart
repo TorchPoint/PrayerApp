@@ -12,6 +12,7 @@ import 'package:prayer_hybrid_app/main.dart';
 import 'package:prayer_hybrid_app/models/group_prayer_model.dart';
 import 'package:prayer_hybrid_app/models/user_model.dart';
 import 'package:prayer_hybrid_app/providers/provider.dart';
+import 'package:prayer_hybrid_app/services/API_const.dart';
 import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/services/local_notifications_class.dart';
 
@@ -35,7 +36,7 @@ class PushNotificationsManager {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print("Channel:" + message["channel"].toString());
     return await baseService
-        .postBaseMethod("http://server.appsstaging.com:3091/joining-call", {
+        .postBaseMethod("${ApiConst.AGORA_BASE_URL}/joining-call", {
       "isPublisher": false,
       "reciever_id": prefs.getInt("userID"),
       "channel": message["channel"],

@@ -271,7 +271,15 @@ class BaseService {
     }
     bodyCheck == true ? request.fields.addAll(body) : request.files.addAll({});
 
-    var response = await request.send();
+    var response = await request.send().timeout(
+      Duration(seconds: 10),
+      onTimeout: () {
+        // Time has run out, do what you wanted to do.// Replace 500 with your http code.
+        EasyLoading.dismiss();
+        showToast("Check Your Connection", AppColors.ERROR_COLOR);
+        return;
+      },
+    );
     final respStr = await response.stream.bytesToString();
 
     try {
@@ -281,6 +289,7 @@ class BaseService {
         debugPrint("Response:" + respStr);
         return jsonDecode(respStr);
       } else if (response.statusCode == 401) {
+        prefs.clear();
         print("********${response.statusCode.toString()}*****");
         EasyLoading.dismiss();
         AppNavigation.navigatorPop(context);
@@ -356,7 +365,7 @@ class BaseService {
     await formDataBaseMethod(context, ApiConst.SIGNUP_URL,
             bodyCheck: true, body: requestBody)
         .then((value) {
-      if (value["status"] == 1) {
+      if (value != null) if (value["status"] == 1) {
         showToast(value["message"], AppColors.SUCCESS_COLOR);
 
         AppNavigation.navigateTo(
@@ -421,7 +430,7 @@ class BaseService {
             files: attachment,
             filesCheck: attachment != null ? true : false)
         .then((value) {
-      if (value["status"] == 1) {
+      if (value != null) if (value["status"] == 1) {
         showToast(value["message"], AppColors.SUCCESS_COLOR);
         // setUserData(context, value);
         prefs.setString("user", jsonEncode(AppUser.fromJson(value["data"])));
@@ -535,7 +544,7 @@ class BaseService {
     await formDataBaseMethod(context, ApiConst.LOGOUT_URL,
             bodyCheck: false, tokenCheck: true)
         .then((value) {
-      if (value["status"] == 1) {
+      if (value != null) if (value["status"] == 1) {
         showToast(value["message"], AppColors.SUCCESS_COLOR);
         prefs.clear();
         if (prayerProvider != null) {
@@ -671,7 +680,7 @@ class BaseService {
     await formDataBaseMethod(context, ApiConst.SOCIAL_LOGIN,
             body: requestBody, bodyCheck: true)
         .then((value) {
-      if (value["status"] == 1) {
+      if (value != null) if (value["status"] == 1) {
         setUserData(context, value);
         showToast(value["message"], AppColors.SUCCESS_COLOR);
         AppNavigation.navigateReplacement(context, DrawerScreen());
@@ -701,7 +710,7 @@ class BaseService {
     await formDataBaseMethod(context, ApiConst.SOCIAL_LOGIN,
             body: requestBody, bodyCheck: true)
         .then((value) {
-      if (value["status"] == 1) {
+      if (value != null) if (value["status"] == 1) {
         setUserData(context, value);
         showToast(value["message"], AppColors.SUCCESS_COLOR);
         AppNavigation.navigateReplacement(context, DrawerScreen());
@@ -793,7 +802,7 @@ class BaseService {
     await getBaseMethod(context, ApiConst.FETCH_PRAYERS_URL + "?type=praise",
             tokenCheck: true, loading: true)
         .then((value) {
-      if (value["status"] == 1) {
+      if (value != null) if (value["status"] == 1) {
         praiseProvider.fetchPraiseList(value["data"]);
       } else {
         //showToast(value["message"], AppColors.ERROR_COLOR);
@@ -1126,8 +1135,7 @@ class BaseService {
   Future joinCall(Map message) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print("Channel:" + message["channel"].toString());
-    return await postBaseMethod(
-        "http://server.appsstaging.com:3091/joining-call", {
+    return await postBaseMethod("${ApiConst.AGORA_BASE_URL}/joining-call", {
       "isPublisher": false,
       "reciever_id": prefs.getInt("userID"),
       "channel": message["channel"],
@@ -1138,8 +1146,7 @@ class BaseService {
 
   Future rejectCall(Map message) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return await postBaseMethod(
-        "http://server.appsstaging.com:3091/reject-call", {
+    return await postBaseMethod("${ApiConst.AGORA_BASE_URL}/reject-call", {
       "reciever_id": prefs.getInt("userID"),
       "sender_id": message["user"] ?? null,
       "channel": message["channel"],
@@ -1148,7 +1155,7 @@ class BaseService {
   }
 
   Future<dynamic> cancelCall(channelName, id) async {
-    await postBaseMethod("http://server.appsstaging.com:3091/leave-channel",
+    await postBaseMethod("${ApiConst.AGORA_BASE_URL}/leave-channel",
         {"channel": channelName, "user_id": id}).then((value) {
       print("Leave Channel Value:" + value.toString());
       return value;
@@ -1173,7 +1180,6 @@ class BaseService {
         prefs.setInt("userID", value["data"]["id"]);
         id = prefs.getInt("userID");
         debugPrint("LocalID:" + id.toString());
-
         prefs.setString("token", value["bearer_token"]);
         token = prefs.getString("token");
         debugPrint(token.toString());
