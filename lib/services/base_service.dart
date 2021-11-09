@@ -823,7 +823,7 @@ class BaseService {
     await formDataBaseMethod(context, ApiConst.ADD_PRAYER_URL,
             tokenCheck: true, bodyCheck: true, body: requestBody)
         .then((value) {
-      if (value["status"] == 1) {
+      if (value != null) if (value["status"] == 1) {
         showToast("Praise Added", AppColors.SUCCESS_COLOR);
         AppNavigation.navigatorPop(context);
         AppNavigation.navigateTo(context, PrayerPraiseTabScreen());

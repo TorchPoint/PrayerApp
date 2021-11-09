@@ -69,7 +69,7 @@ class _AddPrayerScreenState extends State<AddPrayerScreen> {
       });
       if (widget.prayerModel != null) {
         newCategories.forEach((element) {
-          if (widget.prayerModel.category.name == element.name) {
+          if (widget.prayerModel.category?.name == element.name) {
             setState(() {
               currentCategoryValue = element;
             });
@@ -258,12 +258,12 @@ class _AddPrayerScreenState extends State<AddPrayerScreen> {
                       top: 14.0, bottom: 14.0, left: 16.0, right: 14.0)),
               isDense: true,
               value: currentCategoryValue,
-              validator: (value) {
-                if (value == null) {
-                  return AppStrings.CATEGORY_EMPTY_ERROR;
-                }
-                return null;
-              },
+              // validator: (value) {
+              //   if (value == null) {
+              //     return AppStrings.CATEGORY_EMPTY_ERROR;
+              //   }
+              //   return null;
+              // },
               onChanged: (Category categoryValue) {
                 //print("current categoryValue:${categoryValue}");
                 setState(() {
@@ -350,7 +350,7 @@ class _AddPrayerScreenState extends State<AddPrayerScreen> {
               AppStrings.ADD_PRAYER_TEXT.toUpperCase()) {
             baseService.addPrayer(
               context,
-              currentCategoryValue.id.toString(),
+              currentCategoryValue?.id.toString() ?? "",
               _descriptionController.text,
               _prayerTitleController.text,
               _addNameController.text,
@@ -358,7 +358,7 @@ class _AddPrayerScreenState extends State<AddPrayerScreen> {
           } else {
             baseService.updatePrayer(
                 context,
-                currentCategoryValue.id,
+                currentCategoryValue?.id ?? "",
                 widget.prayerModel.id,
                 _descriptionController.text,
                 _prayerTitleController.text,

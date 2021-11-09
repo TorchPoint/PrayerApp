@@ -68,7 +68,7 @@ class _AddPraiseScreenState extends State<AddPraiseScreen> {
       });
       if (widget.praiseModel != null) {
         newCategories.forEach((element) {
-          if (widget.praiseModel.category.name == element.name) {
+          if (widget.praiseModel.category?.name == element.name) {
             setState(() {
               currentCategoryValue = element;
             });
@@ -256,12 +256,12 @@ class _AddPraiseScreenState extends State<AddPraiseScreen> {
                       top: 14.0, bottom: 14.0, left: 16.0, right: 14.0)),
               isDense: true,
               value: currentCategoryValue,
-              validator: (value) {
-                if (value == null) {
-                  return AppStrings.CATEGORY_EMPTY_ERROR;
-                }
-                return null;
-              },
+              // validator: (value) {
+              //   if (value == null) {
+              //     return AppStrings.CATEGORY_EMPTY_ERROR;
+              //   }
+              //   return null;
+              // },
               onChanged: (Category categoryValue) {
                 setState(() {
                   currentCategoryValue = categoryValue;
@@ -348,14 +348,14 @@ class _AddPraiseScreenState extends State<AddPraiseScreen> {
               AppStrings.ADD_PRAISE_TEXT.toUpperCase()) {
             baseService.addPraise(
                 context,
-                currentCategoryValue.id.toString(),
+                currentCategoryValue?.id.toString() ?? "",
                 _descriptionController.text,
                 _praiseTitleController.text,
                 _addNameController.text);
           } else {
             baseService.updatePraise(
                 context,
-                currentCategoryValue.id,
+                currentCategoryValue?.id ?? "",
                 widget.praiseModel.id,
                 _descriptionController.text,
                 _praiseTitleController.text,
