@@ -18,13 +18,6 @@ class _PrayersListScreenState extends State<PrayersListScreen> {
   TextEditingController _searchController = TextEditingController();
   int selectIndex = 0;
   BaseService baseService = BaseService();
-  List<String> prayerList = [
-    "Test",
-    "Marriage",
-    "Car",
-    "Medical Emergency",
-    "Loan"
-  ];
 
   @override
   void initState() {
@@ -180,20 +173,6 @@ class _PrayersListScreenState extends State<PrayersListScreen> {
     return selectIndex == prayerIndex
         ? Row(
             children: [
-              GestureDetector(
-                onTap: () {
-                  print("arrow");
-                },
-                child: Container(
-                  color: AppColors.TRANSPARENT_COLOR,
-                  child: Padding(
-                      padding: EdgeInsets.only(left: 3.0, right: 7.5),
-                      child: Image.asset(
-                        AssetPaths.ARROW_ICON,
-                        width: 15.0,
-                      )),
-                ),
-              ),
               GestureDetector(
                 onTap: () {
                   print("delete");

@@ -173,7 +173,7 @@ class _AddPrayerScreenState extends State<AddPrayerScreen> {
         print("Leading tap");
         AppNavigation.navigatorPop(context);
       },
-      trailingIconPath: AssetPaths.NOTIFICATION_ICON,
+      // trailingIconPath: AssetPaths.NOTIFICATION_ICON,
       trailingTap: () {
         print("Notification Icon");
       },
@@ -223,7 +223,7 @@ class _AddPrayerScreenState extends State<AddPrayerScreen> {
           return DropdownButtonHideUnderline(
             child: DropdownButtonFormField<Category>(
               iconEnabledColor: AppColors.WHITE_COLOR,
-              dropdownColor: AppColors.WHITE_COLOR,
+              dropdownColor: AppColors.BACKGROUND2_COLOR,
               decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0),
@@ -296,8 +296,8 @@ class _AddPrayerScreenState extends State<AddPrayerScreen> {
                       style: TextStyle(
                         fontSize: 17.0,
                         color: value == currentCategoryValue
-                            ? AppColors.SETTINGS_OPTIONS_COLOR
-                            : AppColors.MENU_TEXT_COLOR,
+                            ? AppColors.WHITE_COLOR
+                            : AppColors.WHITE_COLOR,
                         fontWeight: value == currentCategoryValue
                             ? FontWeight.w700
                             : FontWeight.w600,

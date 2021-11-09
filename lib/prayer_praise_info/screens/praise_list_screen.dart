@@ -183,20 +183,7 @@ class _PraiseListScreenState extends State<PraiseListScreen> {
     return selectIndex == praiseIndex
         ? Row(
             children: [
-              GestureDetector(
-                onTap: () {
-                  print("arrow");
-                },
-                child: Container(
-                  color: AppColors.TRANSPARENT_COLOR,
-                  child: Padding(
-                      padding: EdgeInsets.only(left: 3.0, right: 7.5),
-                      child: Image.asset(
-                        AssetPaths.ARROW_ICON,
-                        width: 15.0,
-                      )),
-                ),
-              ),
+
               GestureDetector(
                 onTap: () {
                   baseService.deletePraise(

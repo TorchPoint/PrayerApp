@@ -1,3 +1,4 @@
+import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -11,7 +12,6 @@ import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_button.dart';
 import 'package:prayer_hybrid_app/widgets/custom_text_form_field.dart';
-import 'package:prayer_hybrid_app/prayer_partner/screens/prayer_partner_list_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_dialogs.dart';
 
 class AddPrayerPartnerScreen extends StatefulWidget {
@@ -27,6 +27,36 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
   Map<String, dynamic> contactInfo = Map<String, dynamic>();
   final GlobalKey<FormState> _addPrayerPartnerKey = GlobalKey<FormState>();
   BaseService baseService = BaseService();
+
+  void showPicker() {
+    showCountryPicker(
+      context: context,
+      countryListTheme: CountryListThemeData(
+        flagSize: 25,
+        backgroundColor: AppColors.BACKGROUND2_COLOR,
+        textStyle: TextStyle(fontSize: 16, color: AppColors.WHITE_COLOR),
+        //Optional. Sets the border radius for the bottomsheet.
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        ),
+        //Optional. Styles the search field.
+        inputDecoration: InputDecoration(
+          labelText: 'Search',
+          hintText: 'Start typing to search',
+          labelStyle: TextStyle(color: AppColors.WHITE_COLOR),
+          prefixIcon: const Icon(Icons.search),
+          border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: const Color(0xFF8C98A8).withOpacity(0.2),
+            ),
+          ),
+        ),
+      ),
+      onSelect: (Country country) =>
+          print('Select country: ${country.displayName}'),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -140,6 +170,8 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
       textColor: AppColors.WHITE_COLOR,
       cursorColor: AppColors.WHITE_COLOR,
       keyBoardType: TextInputType.phone,
+      // onTextFieldTap: showPicker,
+      // textFieldReadOnly: true,
       onValidate: (value) {
         if (value.trim().isEmpty) {
           return AppStrings.MOBILE_NO_EMPTY_ERROR;

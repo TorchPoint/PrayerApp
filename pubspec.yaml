@@ -72,6 +72,7 @@ dependencies:
   flutter_native_timezone:
   #auto_search:
   #material_floating_search_bar:
+  country_picker:
 
 
 
