@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:prayer_hybrid_app/models/reminder_model.dart';
 import 'package:prayer_hybrid_app/services/base_service.dart';
+import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
@@ -135,6 +136,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
     return CustomAppBar(
         title: AppStrings.REMINDER_TEXT,
         trailingIconPath: AssetPaths.TICK_ICON2,
+        leadingIconPath: AssetPaths.BACK_ICON,
+        leadingTap: () {
+          AppNavigation.navigatorPop(context);
+        },
         paddingTop: 20.0,
         trailingTap: () {
           addReminderMethod();

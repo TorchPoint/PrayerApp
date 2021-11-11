@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/bible/screens/bible_chapter_details_screen.dart';
-import 'package:prayer_hybrid_app/bible/screens/verses_list_screen.dart';
 import 'package:prayer_hybrid_app/models/bible_books_model.dart';
-import 'package:prayer_hybrid_app/models/bible_chapters_model.dart';
 import 'package:prayer_hybrid_app/models/bible_verse_id.dart';
-import 'package:prayer_hybrid_app/services/API_const.dart';
 import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
@@ -13,37 +10,37 @@ import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:prayer_hybrid_app/widgets/custom_app_bar.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 
-class BibleChapterListScreen extends StatefulWidget {
-  final BibleBooksModel bibleBooksModel;
+class VersesListScreen extends StatefulWidget {
+  final bibleiD;
+  final id;
 
-  BibleChapterListScreen({this.bibleBooksModel});
+  VersesListScreen({this.id, this.bibleiD});
 
   @override
-  _BibleChapterListScreenState createState() => _BibleChapterListScreenState();
+  _VersesListScreenState createState() => _VersesListScreenState();
 }
 
-class _BibleChapterListScreenState extends State<BibleChapterListScreen> {
-  List<BibleChaptersModel> chapters = [];
-
+class _VersesListScreenState extends State<VersesListScreen> {
+  List<BibleVerseModel> verses = [];
   BaseService baseService = BaseService();
 
-  Future getChapters() async {
+  Future getVerses(id) async {
     await baseService
         .getBaseMethodBible(context,
-            "https://api.scripture.api.bible/v1/bibles/${widget.bibleBooksModel.bibleId}/books/${widget.bibleBooksModel.id}/chapters",
+            "https://api.scripture.api.bible/v1/bibles/${widget.bibleiD}/chapters/${id}/verses",
             loading: true)
         .then((value) {
       value["data"].forEach((element) {
-        chapters.add(BibleChaptersModel.fromJson(element));
-        setState(() {});
+        verses.add(BibleVerseModel.fromJson(element));
       });
+      setState(() {});
     });
   }
 
   @override
   void initState() {
     // TODO: implement initState
-    getChapters();
+    getVerses(widget.id);
     super.initState();
   }
 
@@ -55,44 +52,25 @@ class _BibleChapterListScreenState extends State<BibleChapterListScreen> {
         body: Column(
           children: [
             _customAppBar(),
+            SizedBox(
+              height: 12.0,
+            ),
             Expanded(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 15.0,
-                  ),
-                  Text(
-                    widget.bibleBooksModel.name,
-                    style: TextStyle(
-                        color: AppColors.WHITE_COLOR,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 1.0),
-                    textScaleFactor: 1.5,
-                  ),
-                  SizedBox(
-                    height: 12.0,
-                  ),
-                  Expanded(
-                    child: ListView.builder(
-                        itemCount: chapters?.length ?? 0,
-                        padding: EdgeInsets.zero,
-                        itemBuilder: (BuildContext ctxt, int index) {
-                          return _bibleChaptersList(index);
-                        }),
-                  ),
-                ],
-              ),
-            )
+                child: ListView.builder(
+                    itemCount: verses.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return _versesList(index);
+                    }))
           ],
         ),
       ),
     );
   }
 
-  //Custom App Bar Widget
   Widget _customAppBar() {
     return CustomAppBar(
-      title: AppStrings.BIBLE_SECOND_TEXT,
+      title: "VERSES",
       leadingIconPath: AssetPaths.BACK_ICON,
       paddingTop: 20.0,
       leadingTap: () {
@@ -101,15 +79,16 @@ class _BibleChapterListScreenState extends State<BibleChapterListScreen> {
     );
   }
 
-  Widget _bibleChaptersList(int bibleChapterIndex) {
+  Widget _versesList(int bibleChapterIndex) {
     return GestureDetector(
       onTap: () {
         print("bible chapter screen");
         AppNavigation.navigateTo(
             context,
-            VersesListScreen(
-              bibleiD: chapters[bibleChapterIndex].bibleId,
-              id: chapters[bibleChapterIndex].id,
+            BibleChapterDetailsScreen(
+              verseID: verses[bibleChapterIndex].id,
+              bibleId: verses[bibleChapterIndex].bibleId,
+              name: verses[bibleChapterIndex].reference,
             ));
       },
       child: Container(
@@ -120,7 +99,7 @@ class _BibleChapterListScreenState extends State<BibleChapterListScreen> {
             top: 7.5,
             bottom: bibleChapterIndex == 9 ? 15.0 : 7.5),
         padding:
-        EdgeInsets.only(top: 13.0, bottom: 13.0, left: 20.0, right: 20.0),
+            EdgeInsets.only(top: 13.0, bottom: 13.0, left: 20.0, right: 20.0),
         decoration: BoxDecoration(
           color: AppColors.WHITE_COLOR,
           borderRadius: BorderRadius.circular(23.0),
@@ -129,7 +108,7 @@ class _BibleChapterListScreenState extends State<BibleChapterListScreen> {
           children: [
             Expanded(
               child: Text(
-                "Chapter ${chapters[bibleChapterIndex].number}",
+                "${verses[bibleChapterIndex].reference}",
                 style: TextStyle(
                     fontSize: 14.5,
                     color: AppColors.BLACK_COLOR,

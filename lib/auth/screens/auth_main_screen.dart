@@ -22,7 +22,7 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
     super.initState();
     authWidgetList = [
       AuthFirstScreen(pageController: _authPageController),
-      AuthSecondScreen(pageController: _authPageController),
+    //  AuthSecondScreen(pageController: _authPageController),
       AuthThirdScreen(pageController: _authPageController),
       AuthSignUpScreen(pageController: _authPageController),
       AuthLoginScreen(pageController: _authPageController)
@@ -42,7 +42,7 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
                 itemBuilder: (context, index) {
                   return authWidgetList[index];
                 },
-                itemCount: 5, // Can be null
+                itemCount: 4, // Can be null
               ),
             ),
             SizedBox(height: 10.0),
@@ -60,7 +60,7 @@ class _AuthMainScreenState extends State<AuthMainScreen> {
   Widget _pageIndicator() {
     return SmoothPageIndicator(
       controller: _authPageController,
-      count: 5,
+      count: 4,
       effect: WormEffect(
           dotWidth: 10.0,
           dotHeight: 10.0,

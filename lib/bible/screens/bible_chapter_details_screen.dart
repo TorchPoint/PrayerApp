@@ -83,7 +83,7 @@ class _BibleChapterDetailsScreenState extends State<BibleChapterDetailsScreen> {
   //Custom App Bar Widget
   Widget _customAppBar() {
     return CustomAppBar(
-      title: "Chapter ${widget.name}" ?? "",
+      title: "${widget.name}" ?? "",
       leadingIconPath: AssetPaths.BACK_ICON,
       paddingTop: 20.0,
       leadingTap: () {
