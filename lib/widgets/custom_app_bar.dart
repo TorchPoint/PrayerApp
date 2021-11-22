@@ -47,7 +47,8 @@ class CustomAppBar extends StatelessWidget {
                         child: Image.asset(
                           AssetPaths.FOREGROUND_IMAGE,
                           width: 110.0,
-                        )))),
+                        ))
+                )),
             Row(
               children: [
                 leadingIconPath != null

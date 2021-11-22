@@ -253,6 +253,8 @@ class _PrayerPartnerListScreenState extends State<PrayerPartnerListScreen> {
   }
 
   void _inviteFriend() {
-    ShareClass.shareMethod(message: AppStrings.SHARE_MESSAGE_TEXT);
+    ShareClass.shareMethod(
+        message:
+            "Join me on PrayerApp! It is an awesome and secure app we can use to connect with each other in prayer Download it at:");
   }
 }

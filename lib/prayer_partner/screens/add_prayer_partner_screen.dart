@@ -22,7 +22,7 @@ class AddPrayerPartnerScreen extends StatefulWidget {
 class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
   TextEditingController _addNameController = TextEditingController();
   TextEditingController _addMobileNoController = TextEditingController();
-  bool errorBoolName = true, errorBoolMobile = true;
+  bool errorBoolName = true, errorBoolMobile = true, contact = false;
   String errorName = "", errorMobile = "";
   Map<String, dynamic> contactInfo = Map<String, dynamic>();
   final GlobalKey<FormState> _addPrayerPartnerKey = GlobalKey<FormState>();
@@ -98,6 +98,14 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
                       Align(
                           alignment: Alignment.center,
                           child: _searchContactButtonWidget()),
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      contact == true
+                          ? Align(
+                              alignment: Alignment.center,
+                              child: _searchContactButtonWidget())
+                          : Container(),
                       SizedBox(
                         height: 15.0,
                       ),
@@ -218,10 +226,17 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
     );
   }
 
-  void _addPrayerPartnerMethod() {
+  void _addPrayerPartnerMethod() async{
     if (_addPrayerPartnerKey.currentState.validate()) {
-      baseService.addPrayerPartners(
-          context, _addMobileNoController.text, _addNameController.text);
+      await baseService
+          .addPrayerPartners(
+        context,
+        _addMobileNoController.text,
+        _addNameController.text,
+      )
+          .then((value) {
+        print("***" + value.toString());
+      });
     }
   }
 
@@ -231,7 +246,7 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
       getContactInfo();
     } else {
       getContactInfo();
-      // _handleInvalidPermissions(permissionStatus);
+      //_handleInvalidPermissions(permissionStatus);
     }
   }
 

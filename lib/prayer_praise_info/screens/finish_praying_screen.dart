@@ -251,6 +251,6 @@ class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
   void _shareMethod() {
     ShareClass.shareMethod(
         message:
-            "${"Title: " + widget.prayerModel.title + "\nName: " + widget.prayerModel.name + "\nDescription: " + widget.prayerModel.description}");
+            "${"I would like to share this prayer request with you. Please join me in prayer:\n" + "Title: " + widget.prayerModel.title + "\nName: " + widget.prayerModel.name + "\nDescription: " + widget.prayerModel.description}");
   }
 }

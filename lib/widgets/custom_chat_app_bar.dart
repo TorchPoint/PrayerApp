@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/asset_paths.dart';
+import 'package:prayer_hybrid_app/utils/navigation.dart';
 
 class CustomChatAppBar extends StatelessWidget {
   final Function leadingTap, trailingVideoTap, trailingAudioTap;
@@ -32,8 +34,11 @@ class CustomChatAppBar extends StatelessWidget {
           children: [
             Visibility(
                 visible: true,
-                child: Padding(
-                    padding: EdgeInsets.only(bottom: 5.0),
+                child: GestureDetector(
+                    onTap: () {
+                      AppNavigation.navigateToRemovingAll(
+                          context, DrawerScreen());
+                    },
                     child: Image.asset(
                       AssetPaths.FOREGROUND_IMAGE,
                       width: 110.0,

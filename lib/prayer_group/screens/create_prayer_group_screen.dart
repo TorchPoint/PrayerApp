@@ -491,7 +491,7 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
                 margin: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
                 borderRadius: BorderRadius.circular(8.0),
                 messageText: Text(
-                 "User is Already Added",
+                  "User is Already Added",
                   style: TextStyle(color: Colors.white),
                 ),
                 backgroundColor: AppColors.BUTTON_COLOR,
@@ -581,7 +581,9 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
   }
 
   void _inviteFriend() {
-    ShareClass.shareMethod(message: AppStrings.SHARE_MESSAGE_TEXT);
+    ShareClass.shareMethod(
+        message:
+            "Join me on PrayerApp! It is an awesome and secure app we can use to connect with each other in prayer Download it at:");
   }
 
   @override

@@ -50,8 +50,7 @@ class _AudioScreenState extends State<AudioScreen> {
   BaseService baseService = BaseService();
 
   Future cancelCall() async {
-    baseService.postBaseMethod(
-        "${ApiConst.AGORA_BASE_URL}/leave-channel", {
+    baseService.postBaseMethod("${ApiConst.AGORA_BASE_URL}/leave-channel", {
       "channel": widget.channelName,
       "user_id": baseService.id
     }).then((value) async {

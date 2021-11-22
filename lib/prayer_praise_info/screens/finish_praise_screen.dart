@@ -263,6 +263,6 @@ class _FinishPraiseScreenState extends State<FinishPraiseScreen> {
   void _shareMethod() {
     ShareClass.shareMethod(
         message:
-            "${"Title: " + widget.praiseModel.title + "\nName: " + widget.praiseModel.name + "\nDescription: " + widget.praiseModel.description}");
+            "${"Join me in praising the Lord:\n" + "Title: " + widget.praiseModel.title + "\nName: " + widget.praiseModel.name + "\nDescription: " + widget.praiseModel.description}");
   }
 }

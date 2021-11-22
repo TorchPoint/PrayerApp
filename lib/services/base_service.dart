@@ -556,7 +556,7 @@ class BaseService {
         }
         if (userProvider != null) {
           userProvider.resetPartnersList();
-          userProvider.restUserProvider();
+          //userProvider.restUserProvider();
         }
         if (groupProvider != null) {
           groupProvider.resetGroupsList();
@@ -730,7 +730,7 @@ class BaseService {
     await getBaseMethod(context, ApiConst.FETCH_PRAYERS_URL + "?type=prayer",
             tokenCheck: true, loading: true)
         .then((value) {
-      if (value["status"] == 1) {
+      if (value != null) if (value["status"] == 1) {
         prayerProvider.fetchPrayerList(value["data"]);
       } else {
         //showToast(value["message"], AppColors.ERROR_COLOR);
@@ -776,7 +776,12 @@ class BaseService {
       if (value["status"] == 1) {
         showToast(value["message"], AppColors.SUCCESS_COLOR);
         AppNavigation.navigatorPop(context);
-        AppNavigation.navigateTo(context, PrayerPraiseTabScreen());
+        AppNavigation.navigatorPop(context);
+        AppNavigation.navigateReplacement(
+            context,
+            PrayerPraiseTabScreen(
+              tabInitialIndex: 0,
+            ));
       }
     });
   }
@@ -848,7 +853,12 @@ class BaseService {
       if (value["status"] == 1) {
         showToast(value["message"], AppColors.SUCCESS_COLOR);
         AppNavigation.navigatorPop(context);
-        AppNavigation.navigateTo(context, PrayerPraiseTabScreen());
+        AppNavigation.navigatorPop(context);
+        AppNavigation.navigateReplacement(
+            context,
+            PrayerPraiseTabScreen(
+              tabInitialIndex: 1,
+            ));
       }
     });
   }
@@ -880,7 +890,8 @@ class BaseService {
       if (value["status"] == 1) {
         showToast("Ended", AppColors.SUCCESS_COLOR);
         AppNavigation.navigatorPop(context);
-        AppNavigation.navigateTo(context, PrayerPraiseTabScreen());
+
+        AppNavigation.navigateReplacement(context, PrayerPraiseTabScreen());
       }
     });
   }
@@ -1012,14 +1023,19 @@ class BaseService {
     await formDataBaseMethod(context, ApiConst.ADD_PARTNERS_URL,
             tokenCheck: true, body: requestBody, bodyCheck: true)
         .then((value) {
+      var contact = false;
       if (value["status"] == 0) {
+        contact = true;
         showToast(value["message"], AppColors.ERROR_COLOR);
-        AppNavigation.navigatorPop(context);
+        return contact;
+        // AppNavigation.navigatorPop(context);
+
       } else {
         showToast(value["message"], AppColors.SUCCESS_COLOR);
         AppNavigation.navigatorPop(context);
         AppNavigation.navigateReplacement(context, PrayerPartnerListScreen());
       }
+      return contact;
     });
   }
 
