@@ -1020,23 +1020,23 @@ class BaseService {
       "name": name,
     };
 
-    await formDataBaseMethod(context, ApiConst.ADD_PARTNERS_URL,
+    var isContact = await formDataBaseMethod(context, ApiConst.ADD_PARTNERS_URL,
             tokenCheck: true, body: requestBody, bodyCheck: true)
         .then((value) {
-      var contact = false;
       if (value["status"] == 0) {
-        contact = true;
         showToast(value["message"], AppColors.ERROR_COLOR);
-        return contact;
+        return value;
+
         // AppNavigation.navigatorPop(context);
 
       } else {
         showToast(value["message"], AppColors.SUCCESS_COLOR);
         AppNavigation.navigatorPop(context);
         AppNavigation.navigateReplacement(context, PrayerPartnerListScreen());
+        return value;
       }
-      return contact;
     });
+    return isContact;
   }
 
   Future fetchGroups(BuildContext context) async {

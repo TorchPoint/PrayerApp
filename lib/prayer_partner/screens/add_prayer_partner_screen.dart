@@ -1,7 +1,10 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_sms/flutter_sms.dart';
+import 'package:flutter_social_content_share/flutter_social_content_share.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:prayer_hybrid_app/common_classes/share_class.dart';
 import 'package:prayer_hybrid_app/prayer_partner/screens/contact_list_screen.dart';
 import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
@@ -104,7 +107,7 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
                       contact == true
                           ? Align(
                               alignment: Alignment.center,
-                              child: _searchContactButtonWidget())
+                              child: _inviteToPrayerAppWidget())
                           : Container(),
                       SizedBox(
                         height: 15.0,
@@ -207,6 +210,41 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
         });
   }
 
+  Widget _inviteToPrayerAppWidget() {
+    return CustomButton(
+      containerWidth: MediaQuery.of(context).size.width * 0.75,
+      buttonColor: AppColors.BUTTON_COLOR,
+      borderColor: AppColors.BUTTON_COLOR,
+      elevation: true,
+      buttonText: AppStrings.INVITE_TO_PRAYER_APP.toUpperCase(),
+      textColor: AppColors.WHITE_COLOR,
+      fontWeight: FontWeight.w700,
+      fontSize: 1.2,
+      paddingTop: 13.5,
+      paddingBottom: 13.5,
+      onTap: () {
+        _sendSMS(
+            "Join me on PrayerApp! It is an awesome and secure app we can use to connect with each other in prayer Download it at:${"App Link"}",
+            [_addMobileNoController.text]);
+      },
+    );
+  }
+
+  void _sendSMS(String message, List<String> recipents) async {
+    String _result = await sendSMS(message: message, recipients: recipents)
+        .catchError((onError) {
+      print(onError);
+    }).then((value) {
+      // if (value == "cancelled") {
+      //   AppNavigation.navigatorPop(context);
+      // }
+      AppNavigation.navigatorPop(context);
+      print(value.toString());
+      return value;
+    });
+    print("RESULT:" + _result);
+  }
+
   //Create Search Contact Button Widget
   Widget _searchContactButtonWidget() {
     return CustomButton(
@@ -226,7 +264,7 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
     );
   }
 
-  void _addPrayerPartnerMethod() async{
+  void _addPrayerPartnerMethod() async {
     if (_addPrayerPartnerKey.currentState.validate()) {
       await baseService
           .addPrayerPartners(
@@ -235,6 +273,15 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
         _addNameController.text,
       )
           .then((value) {
+        if (value["status"] == 0) {
+          setState(() {
+            contact = true;
+          });
+        } else {
+          setState(() {
+            contact = false;
+          });
+        }
         print("***" + value.toString());
       });
     }
