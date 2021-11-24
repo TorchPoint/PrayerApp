@@ -1,3 +1,4 @@
+import 'package:country_picker/country_picker.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -29,6 +30,7 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _confirmPasswordController = TextEditingController();
   TextEditingController _mobileNoController = TextEditingController();
+  TextEditingController _countryCodeController = TextEditingController();
   String emailPattern = Constants.EMAIL_VALIDATION_REGEX;
   RegExp emailRegExp;
   String passwordPattern = Constants.PASSWORD_VALIDATE_REGEX;
@@ -42,6 +44,50 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
     // TODO: implement initState
 
     super.initState();
+  }
+
+  void selectCountry() {
+    showCountryPicker(
+      context: context,
+      showPhoneCode: true,
+      countryListTheme: CountryListThemeData(
+        flagSize: 25,
+        backgroundColor: AppColors.BACKGROUND2_COLOR,
+        textStyle: TextStyle(
+            fontSize: 16,
+            color: AppColors.WHITE_COLOR,
+            fontWeight: FontWeight.w600),
+        //Optional. Sets the border radius for the bottomsheet.
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        ),
+        //Optional. Styles the search field.
+        inputDecoration: InputDecoration(
+          labelText: 'Search',
+          hintText: 'Start typing to search',
+          hintStyle: TextStyle(color: AppColors.WHITE_COLOR),
+          labelStyle: TextStyle(color: AppColors.WHITE_COLOR),
+          prefixIcon: const Icon(
+            Icons.search,
+            color: AppColors.WHITE_COLOR,
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.WHITE_COLOR, width: 2),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.WHITE_COLOR, width: 2),
+          ),
+          border: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.WHITE_COLOR, width: 2),
+          ),
+        ),
+      ),
+      onSelect: (Country country) {
+        _countryCodeController.text = "${"+" + country.phoneCode}";
+        print('Select country: ${country.phoneCode}');
+      },
+    );
   }
 
   @override
@@ -83,7 +129,18 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
               SizedBox(
                 height: 14.0,
               ),
-              _mobileNumberWidget(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: Row(
+                  children: [
+                    Expanded(flex: 0, child: _countryCodesWidget()),
+                    SizedBox(
+                      width: 6.0,
+                    ),
+                    Expanded(child: _mobileNumberWidget()),
+                  ],
+                ),
+              ),
               SizedBox(
                 height: 14.0,
               ),
@@ -186,11 +243,11 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
   }
 
   //Mobile Number Widget
-  Widget _mobileNumberWidget() {
+  Widget _countryCodesWidget() {
     return CustomTextFormField(
-      textController: _mobileNoController,
-      containerWidth: MediaQuery.of(context).size.width * 0.82,
-      hintText: AppStrings.MOBILE_NUMBER_HINT_TEXT,
+      textController: _countryCodeController,
+      containerWidth: MediaQuery.of(context).size.width * 0.3,
+      hintText: "+12",
       borderRadius: 30.0,
       contentPaddingRight: 0.0,
       prefixIcon: AssetPaths.MOBILE_ICON,
@@ -198,6 +255,10 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
       contentPaddingTop: 17.0,
       contentPaddingBottom: 17.0,
       keyBoardType: TextInputType.phone,
+      textFieldReadOnly: true,
+      onTextFieldTap: () {
+        selectCountry();
+      },
       onValidate: (value) {
         if (value.trim().isEmpty) {
           return AppStrings.MOBILE_NUMBER_EMPTY_ERROR;
@@ -208,20 +269,20 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
   }
 
   //First Name Widget
-  Widget _countryCodeWidget() {
+  Widget _mobileNumberWidget() {
     return CustomTextFormField(
-      textController: _firstNameController,
-      containerWidth: MediaQuery.of(context).size.width * 0.82,
-      hintText: AppStrings.FIRST_NAME_HINT_TEXT,
+      textController: _mobileNoController,
+      containerWidth: MediaQuery.of(context).size.width * 0.7,
+      hintText: AppStrings.USER_PHONE_NO_TEXT,
       borderRadius: 30.0,
       contentPaddingRight: 0.0,
-      prefixIcon: AssetPaths.NAME_ICON,
+      prefixIcon: AssetPaths.MOBILE_ICON,
       prefixIconWidth: 16.0,
       contentPaddingTop: 17.0,
       contentPaddingBottom: 17.0,
       onValidate: (value) {
         if (value.trim().isEmpty) {
-          return AppStrings.FIRST_NAME_EMPTY_ERROR;
+          return AppStrings.MOBILE_NUMBER_EMPTY_ERROR;
         }
         return null;
       },
@@ -322,7 +383,8 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
               _lastNameController.text,
               _emailController.text,
               _mobileNoController.text,
-              _passwordController.text);
+              _passwordController.text,
+              _countryCodeController.text);
         }
       },
     );

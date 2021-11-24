@@ -208,7 +208,9 @@ class _DrawerScreenState extends State<DrawerScreen>
                 ? Container()
                 : Text(
                     // userProvider.appUser.contactNo ?? AppStrings.USER_PHONE_NO_TEXT,
-                    userProvider.appUser?.contactNo,
+                    userProvider.appUser.countryCode +
+                        " " +
+                        userProvider.appUser?.contactNo,
                     style: TextStyle(
                         color: AppColors.WHITE_COLOR,
                         fontWeight: FontWeight.w700),

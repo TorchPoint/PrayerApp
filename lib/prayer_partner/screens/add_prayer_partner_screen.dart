@@ -323,6 +323,7 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
     contactInfo =
         await AppNavigation.navigateToUpdate(context, ContactListScreen());
     if (contactInfo != null) {
+      print("info:" + contactInfo.toString());
       _addNameController.text = contactInfo["name"].toString();
       _addMobileNoController.text = contactInfo["phone no"].toString();
     }

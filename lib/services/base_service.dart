@@ -350,7 +350,7 @@ class BaseService {
   }
 
   Future signUpUser(BuildContext context, firstName, lastName, email,
-      phoneNumber, password) async {
+      phoneNumber, password, countryCode) async {
     // FCM_Token = prefs.getString("fcmToken");
     String tokens = await FirebaseMessaging.instance.getToken();
     Map<String, String> requestBody = <String, String>{
@@ -360,7 +360,8 @@ class BaseService {
       "device_type": Platform.operatingSystem ?? "ios",
       "first_name": firstName ?? "",
       "last_name": lastName ?? "",
-      "contact_no": phoneNumber ?? ""
+      "contact_no": phoneNumber ?? "",
+      "country_code": countryCode ?? ""
     };
     await formDataBaseMethod(context, ApiConst.SIGNUP_URL,
             bodyCheck: true, body: requestBody)
@@ -413,7 +414,7 @@ class BaseService {
   }
 
   Future updateUserprofile(
-      BuildContext context, firstName, lastName, phoneNumber,
+      BuildContext context, firstName, lastName, phoneNumber, countryCode,
       {File attachment}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var userProvider = Provider.of<AppUserProvider>(context, listen: false);
@@ -421,6 +422,7 @@ class BaseService {
       "first_name": firstName ?? "",
       "last_name": lastName ?? "",
       "contact_no": phoneNumber ?? "",
+      "country_code": countryCode ?? ""
     };
 
     await formDataBaseMethod(context, ApiConst.UPDATE_PROFILE,
@@ -1005,7 +1007,7 @@ class BaseService {
     await getBaseMethod(context, ApiConst.FETCH_PARTNERS_URL,
             loading: true, tokenCheck: true)
         .then((value) {
-      if (value["status"] == 1) {
+      if (value != null) if (value["status"] == 1) {
         userProvider.fetchPrayerPartners(value["data"]);
       } else {
         //showToast(value["message"], AppColors.ERROR_COLOR);

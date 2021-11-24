@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
@@ -111,7 +113,7 @@ class CustomTextFormField extends StatelessWidget {
               right: contentPaddingRight ?? 14.0),
           prefixIcon: prefixIcon != null
               ? Padding(
-                  padding: EdgeInsets.only(left: 22.0, right: 16.0),
+                  padding: EdgeInsets.only(left: 18.0, right: 10.0),
                   child: Image.asset(
                     prefixIcon,
                     width: prefixIconWidth,
@@ -142,7 +144,9 @@ class CustomTextFormField extends StatelessWidget {
           fontWeight: FontWeight.w700,
         ),
         keyboardType: keyBoardType ?? TextInputType.text,
-        textInputAction: TextInputAction.unspecified,
+        textInputAction: Platform.isAndroid
+            ? TextInputAction.done
+            : TextInputAction.unspecified,
         obscureText: obscureText ?? false,
         cursorColor: cursorColor ?? Colors.white,
         maxLines: maxLines ?? 1,

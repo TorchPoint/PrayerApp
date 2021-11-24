@@ -16,6 +16,7 @@ class AppUser {
   String userDeviceToken;
   String createdAt;
   String updatedAt;
+  String countryCode;
 
   AppUser(
       {this.id,
@@ -34,7 +35,8 @@ class AppUser {
       this.userDeviceType,
       this.userDeviceToken,
       this.createdAt,
-      this.updatedAt});
+      this.updatedAt,
+      this.countryCode});
 
   AppUser.fromJson(Map<String, dynamic> json) {
     id = json['id'] ?? 0;
@@ -54,6 +56,7 @@ class AppUser {
     userDeviceToken = json['user_device_token'] ?? "";
     createdAt = json['created_at'] ?? "";
     updatedAt = json['updated_at'] ?? "";
+    countryCode = json['country_code'] ?? "";
   }
 
   Map<String, dynamic> toJson() {
@@ -75,6 +78,7 @@ class AppUser {
     data['user_device_token'] = this.userDeviceToken;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
+    data['country_code'] = this.countryCode;
     return data;
   }
 }
