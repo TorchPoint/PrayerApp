@@ -25,11 +25,56 @@ class AddPrayerPartnerScreen extends StatefulWidget {
 class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
   TextEditingController _addNameController = TextEditingController();
   TextEditingController _addMobileNoController = TextEditingController();
+  TextEditingController _countryCodeController = TextEditingController();
   bool errorBoolName = true, errorBoolMobile = true, contact = false;
   String errorName = "", errorMobile = "";
   Map<String, dynamic> contactInfo = Map<String, dynamic>();
   final GlobalKey<FormState> _addPrayerPartnerKey = GlobalKey<FormState>();
   BaseService baseService = BaseService();
+
+  void selectCountry() {
+    showCountryPicker(
+      context: context,
+      showPhoneCode: true,
+      countryListTheme: CountryListThemeData(
+        flagSize: 25,
+        backgroundColor: AppColors.BACKGROUND2_COLOR,
+        textStyle: TextStyle(
+            fontSize: 16,
+            color: AppColors.WHITE_COLOR,
+            fontWeight: FontWeight.w600),
+        //Optional. Sets the border radius for the bottomsheet.
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        ),
+        //Optional. Styles the search field.
+        inputDecoration: InputDecoration(
+          labelText: 'Search',
+          hintText: 'Start typing to search',
+          hintStyle: TextStyle(color: AppColors.WHITE_COLOR),
+          labelStyle: TextStyle(color: AppColors.WHITE_COLOR),
+          prefixIcon: const Icon(
+            Icons.search,
+            color: AppColors.WHITE_COLOR,
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.WHITE_COLOR, width: 2),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.WHITE_COLOR, width: 2),
+          ),
+          border: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.WHITE_COLOR, width: 2),
+          ),
+        ),
+      ),
+      onSelect: (Country country) {
+        _countryCodeController.text = "${"+" + country.phoneCode}";
+        print('Select country: ${country.phoneCode}');
+      },
+    );
+  }
 
   void showPicker() {
     showCountryPicker(
@@ -88,9 +133,18 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
                       SizedBox(
                         height: 23.0,
                       ),
-                      Align(
-                          alignment: Alignment.center,
-                          child: _addMobileNoTextFormField()),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        child: Row(
+                          children: [
+                            Expanded(flex: 0, child: _countryCodesWidget()),
+                            SizedBox(
+                              width: 6.0,
+                            ),
+                            Expanded(child: _addMobileNoTextFormField()),
+                          ],
+                        ),
+                      ),
                       SizedBox(height: 23.0),
                       Align(
                           alignment: Alignment.center,
@@ -104,7 +158,7 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
                       SizedBox(
                         height: 20.0,
                       ),
-                      contact == true
+                      contact
                           ? Align(
                               alignment: Alignment.center,
                               child: _inviteToPrayerAppWidget())
@@ -155,6 +209,31 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
       onValidate: (value) {
         if (value.trim().isEmpty) {
           return AppStrings.ADD_NAME_EMPTY_ERROR;
+        }
+        return null;
+      },
+    );
+  }
+
+  Widget _countryCodesWidget() {
+    return CustomTextFormField(
+      textController: _countryCodeController,
+      containerWidth: MediaQuery.of(context).size.width * 0.3,
+      hintText: "+12",
+      borderRadius: 30.0,
+      contentPaddingRight: 0.0,
+      prefixIcon: AssetPaths.MOBILE_ICON,
+      prefixIconWidth: 16.0,
+      contentPaddingTop: 17.0,
+      contentPaddingBottom: 17.0,
+      keyBoardType: TextInputType.phone,
+      textFieldReadOnly: true,
+      onTextFieldTap: () {
+        selectCountry();
+      },
+      onValidate: (value) {
+        if (value.trim().isEmpty) {
+          return AppStrings.MOBILE_NUMBER_EMPTY_ERROR;
         }
         return null;
       },
@@ -271,6 +350,7 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
         context,
         _addMobileNoController.text,
         _addNameController.text,
+        _countryCodeController.text,
       )
           .then((value) {
         if (value["status"] == 0) {

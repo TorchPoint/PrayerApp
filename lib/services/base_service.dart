@@ -1016,10 +1016,12 @@ class BaseService {
     });
   }
 
-  Future addPrayerPartners(BuildContext context, contact, name) async {
+  Future addPrayerPartners(
+      BuildContext context, contact, name, countryCode) async {
     Map<String, String> requestBody = <String, String>{
       "contact_no": contact,
       "name": name,
+      "country_code": countryCode
     };
 
     var isContact = await formDataBaseMethod(context, ApiConst.ADD_PARTNERS_URL,

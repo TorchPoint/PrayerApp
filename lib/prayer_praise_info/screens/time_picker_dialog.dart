@@ -1,16 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prayer_hybrid_app/prayer_praise_info/screens/time_picker_dialog.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 
-class StopWatchAlertScreen {
+class TimePickerDialog extends StatefulWidget {
+  @override
+  _TimePickerDialogState createState() => _TimePickerDialogState();
+}
+
+class _TimePickerDialogState extends State<TimePickerDialog> {
   StopWatchTimer _stopWatchTimer = StopWatchTimer(
     isLapHours: true,
-    // mode: StopWatchMode.countUp,
-    // presetMillisecond: StopWatchTimer.getMilliSecFromMinute(1),
-    // // millisecond => minute.
+    mode: StopWatchMode.countDown,
+    //presetMillisecond: StopWatchTimer.getMilliSecFromMinute(2),
+    // millisecond => minute.
     // onChange: (value) => print('onChange $value'),
     // onChangeRawSecond: (value) => print('onChangeRawSecond $value'),
     // onChangeRawMinute: (value) => print('onChangeRawMinute $value'),
@@ -18,30 +23,95 @@ class StopWatchAlertScreen {
   int value;
   String displayTime;
   Duration initialtimer = new Duration();
+  bool isPicked = false;
+  bool isTimePicked = false;
 
-  // pickTimer(BuildContext context) {
-  //   return CupertinoTimerPicker(
-  //     mode: CupertinoTimerPickerMode.hms,
-  //     minuteInterval: 1,
-  //     secondInterval: 1,
-  //     initialTimerDuration: initialtimer,
-  //     onTimerDurationChanged: (Duration changedTimer) {
-  //       setState(() {
-  //         initialtimer = changedTimer;
-  //       });
-  //     },
-  //   );
-  // }
-
-  void stopWatchAlert(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return TimePickerDialog();
-        });
+  pickTimer(BuildContext context) {
+    return showCupertinoModalBottomSheet(
+      backgroundColor: AppColors.BACKGROUND1_COLOR,
+      context: context,
+      animationCurve: Curves.easeInOutExpo,
+      bounce: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(50),
+      ),
+      expand: false,
+      builder: (context) {
+        return Container(
+          height: 300,
+          child: CupertinoTimerPicker(
+            mode: CupertinoTimerPickerMode.hms,
+            initialTimerDuration: initialtimer,
+            onTimerDurationChanged: (Duration changedTimer) {
+              setState(() {
+                initialtimer = changedTimer;
+              });
+              print(initialtimer.inMinutes.toString());
+            },
+          ),
+        );
+      },
+    );
   }
 
-//Hours Container
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      insetPadding: EdgeInsets.only(
+          left: MediaQuery.of(context).size.width * 0.09,
+          right: MediaQuery.of(context).size.width * 0.09),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+      child: StreamBuilder<int>(
+        stream: _stopWatchTimer.rawTime,
+        initialData: _stopWatchTimer.rawTime.value,
+        builder: (context, snap) {
+          value = snap.data;
+          displayTime =
+              StopWatchTimer.getDisplayTime(value, milliSecond: false);
+
+          // print("Display Time"+displayTime.toString());
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.08,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _hoursContainer(
+                      context, displayTime.substring(0, 2).toString()),
+                  SizedBox(width: 15.0),
+                  _minutesContainer(
+                      context, displayTime.substring(3, 5).toString()),
+                  SizedBox(width: 15.0),
+                  _secondsContainer(
+                      context, displayTime.substring(6, 8).toString())
+                ],
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.05,
+              ),
+              isTimePicked
+                  ? Container()
+                  : Center(child: _pickTimeContainer(context)),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.02,
+              ),
+              isPicked ? _prayNowContainer(context) : Container(),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.08,
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  //Hours Container
   Widget _hoursContainer(BuildContext context, String hours) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.19,
@@ -132,9 +202,12 @@ class StopWatchAlertScreen {
         children: [
           GestureDetector(
             onTap: () {
-              //AppNavigation.navigatorPop(context);
-              // _stopWatchTimer.onExecute.add(StopWatchExecute.stop);
+              _stopWatchTimer.setPresetSecondTime(initialtimer.inSeconds);
               _stopWatchTimer.onExecute.add(StopWatchExecute.start);
+              // setState(() {
+              //   isTimePicked = true;
+              // });
+              // print(isPicked);
             },
             child: Container(
               padding: EdgeInsets.symmetric(
@@ -165,8 +238,31 @@ class StopWatchAlertScreen {
           GestureDetector(
             onTap: () {
               _stopWatchTimer.onExecute.add(StopWatchExecute.stop);
-              print(_stopWatchTimer.secondTime.value.toString());
-              print(displayTime);
+              DateTime now = DateTime.now();
+              DateTime startTime = DateTime(
+                  now.year,
+                  now.month,
+                  now.day,
+                  initialtimer.inHours,
+                  initialtimer.inMinutes,
+                  initialtimer.inSeconds);
+              DateTime endTime = DateTime(
+                now.year,
+                now.month,
+                now.day,
+                int.parse(displayTime.toString().split(":")[0]),
+                int.parse(displayTime.toString().split(":")[1]),
+                int.parse(displayTime.toString().split(":")[2]),
+              );
+              print(initialtimer.inHours);
+              print(initialtimer.inMinutes);
+              print(initialtimer.inSeconds);
+              print(displayTime.toString().split(":")[0]);
+              print(displayTime.toString().split(":")[1]);
+              print(displayTime.toString().split(":")[2]);
+
+              print(startTime.difference(endTime).inSeconds.toString());
+
               AppNavigation.navigatorPop(context);
               // _stopWatchTimer.onExecute
               //     .add(StopWatchExecute.start);
@@ -203,7 +299,10 @@ class StopWatchAlertScreen {
     return GestureDetector(
       onTap: () {
         print("pick time");
-        // pickTimer(context);
+        pickTimer(context);
+        setState(() {
+          isPicked = true;
+        });
       },
       child: Container(
         padding: EdgeInsets.symmetric(

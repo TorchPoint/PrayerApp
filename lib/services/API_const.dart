@@ -51,4 +51,5 @@ class ApiConst {
   static const DELETE_PRAYER_GROUP = "delete-group";
 
   static const NOTIFICATION_URL = "notifications";
+  static const TIME_FCM = "pre-prayer-notice";
 }
