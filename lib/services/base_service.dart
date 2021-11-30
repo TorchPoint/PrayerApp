@@ -894,6 +894,7 @@ class BaseService {
         AppNavigation.navigatorPop(context);
 
         AppNavigation.navigateReplacement(context, PrayerPraiseTabScreen());
+        fetchPrayers(context);
       }
     });
   }

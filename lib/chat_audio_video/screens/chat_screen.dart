@@ -439,7 +439,6 @@ class _ChatScreenState extends State<ChatScreen> {
         color: AppColors.BLACK_COLOR,
         fontWeight: FontWeight.w500,
       ),
-      keyboardType: TextInputType.emailAddress,
       cursorColor: AppColors.BLACK_COLOR,
       maxLines: null,
     );

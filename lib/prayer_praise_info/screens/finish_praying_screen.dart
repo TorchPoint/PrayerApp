@@ -50,25 +50,25 @@ class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
       if (value == 5) {
         //apiTimerAPI();
         await BaseService()
-            .getBaseMethod(navigatorKey.currentContext, ApiConst.TIME_FCM,
-                tokenCheck: true)
+            .getBaseMethod(
+          navigatorKey.currentContext,
+          ApiConst.TIME_FCM,
+          tokenCheck: true,
+          loading: false,
+        )
             .then((value) {
           print(value);
         });
         print("HELLO" + value.toString());
       }
     },
-    //presetMillisecond: StopWatchTimer.getMilliSecFromMinute(2),
-    // millisecond => minute.
-    // onChange: (value) => print('onChange $value'),
-    // onChangeRawSecond: (value) => print('onChangeRawSecond $value'),
-    // onChangeRawMinute: (value) => print('onChangeRawMinute $value'),
   );
   int value;
   String displayTime;
-  Duration initialtimer = new Duration();
+  Duration initialTimer = new Duration();
   bool isPicked = false;
   bool isTimePicked = false;
+  bool isStart = false;
   var newTime;
 
   pickTimer(BuildContext context) {
@@ -84,15 +84,60 @@ class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
       builder: (context) {
         return Container(
           height: 300,
-          child: CupertinoTimerPicker(
-            mode: CupertinoTimerPickerMode.hms,
-            initialTimerDuration: initialtimer,
-            onTimerDurationChanged: (Duration changedTimer) {
-              setState(() {
-                initialtimer = changedTimer;
-              });
-
-            },
+          child: Column(
+            children: [
+              CupertinoTimerPicker(
+                mode: CupertinoTimerPickerMode.hms,
+                initialTimerDuration: initialTimer,
+                onTimerDurationChanged: (Duration changedTimer) {
+                  setState(() {
+                    initialTimer = changedTimer;
+                  });
+                },
+              ),
+              isStart
+                  ? GestureDetector(
+                      onTap: () {
+                        if (isTimePicked == false) {
+                          _stopWatchTimer
+                              .setPresetSecondTime(initialTimer.inSeconds);
+                          _stopWatchTimer.onExecute.add(StopWatchExecute.start);
+                        }
+                        setState(() {
+                          isTimePicked = true;
+                          isStart = false;
+                        });
+                        print(isPicked);
+                        AppNavigation.navigatorPop(context);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal:
+                                MediaQuery.of(context).size.width * 0.10,
+                            vertical: 12.0),
+                        decoration: BoxDecoration(
+                          color: AppColors.BUTTON_COLOR,
+                          borderRadius: BorderRadius.circular(25.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color:
+                                  AppColors.LIGHT_BLACK_COLOR.withOpacity(0.2),
+                              blurRadius: 8,
+                              offset: Offset(1, 8), // Shadow position
+                            ),
+                          ],
+                        ),
+                        child: Text(
+                          "Start Prayer",
+                          style: TextStyle(
+                              color: AppColors.WHITE_COLOR,
+                              fontWeight: FontWeight.w800),
+                          textScaleFactor: 1.0,
+                        ),
+                      ),
+                    )
+                  : Container(),
+            ],
           ),
         );
       },
@@ -339,108 +384,78 @@ class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
     return Center(
       child: Column(
         children: [
-          GestureDetector(
-            onTap: () {
-              if (isTimePicked == false) {
-                _stopWatchTimer.setPresetSecondTime(initialtimer.inSeconds);
-                _stopWatchTimer.onExecute.add(StopWatchExecute.start);
-              }
-              setState(() {
-                isTimePicked = true;
-              });
-              print(isPicked);
-            },
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width * 0.10,
-                  vertical: 12.0),
-              decoration: BoxDecoration(
-                color: AppColors.BUTTON_COLOR,
-                borderRadius: BorderRadius.circular(25.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.LIGHT_BLACK_COLOR.withOpacity(0.2),
-                    blurRadius: 8,
-                    offset: Offset(1, 8), // Shadow position
-                  ),
-                ],
-              ),
-              child: Text(
-                "Start Prayer",
-                style: TextStyle(
-                    color: AppColors.WHITE_COLOR, fontWeight: FontWeight.w800),
-                textScaleFactor: 1.0,
-              ),
-            ),
-          ),
+          // isStart
+          //     ? GestureDetector(
+          //         onTap: () {
+          //           if (isTimePicked == false) {
+          //             _stopWatchTimer
+          //                 .setPresetSecondTime(initialTimer.inSeconds);
+          //             _stopWatchTimer.onExecute.add(StopWatchExecute.start);
+          //           }
+          //           setState(() {
+          //             isTimePicked = true;
+          //             isStart = false;
+          //           });
+          //           print(isPicked);
+          //         },
+          //         child: Container(
+          //           padding: EdgeInsets.symmetric(
+          //               horizontal: MediaQuery.of(context).size.width * 0.10,
+          //               vertical: 12.0),
+          //           decoration: BoxDecoration(
+          //             color: AppColors.BUTTON_COLOR,
+          //             borderRadius: BorderRadius.circular(25.0),
+          //             boxShadow: [
+          //               BoxShadow(
+          //                 color: AppColors.LIGHT_BLACK_COLOR.withOpacity(0.2),
+          //                 blurRadius: 8,
+          //                 offset: Offset(1, 8), // Shadow position
+          //               ),
+          //             ],
+          //           ),
+          //           child: Text(
+          //             "Start Prayer",
+          //             style: TextStyle(
+          //                 color: AppColors.WHITE_COLOR,
+          //                 fontWeight: FontWeight.w800),
+          //             textScaleFactor: 1.0,
+          //           ),
+          //         ),
+          //       )
+          //     : Container(),
           SizedBox(
             height: 10,
           ),
-          GestureDetector(
-            onTap: () {
-              _stopWatchTimer.onExecute.add(StopWatchExecute.stop);
-
-              setState(() {
-                isTimePicked = false;
-              });
-              DateTime now = DateTime.now();
-              DateTime startTime = DateTime(
-                  now.year,
-                  now.month,
-                  now.day,
-                  int.parse(initialtimer.toString().split(":")[0]),
-                  int.parse(initialtimer.toString().split(":")[1]),
-                  int.parse(
-                      initialtimer.toString().split(":")[2].split(".")[0]));
-              DateTime endTime = DateTime(
-                now.year,
-                now.month,
-                now.day,
-                int.parse(displayTime.toString().split(":")[0]),
-                int.parse(displayTime.toString().split(":")[1]),
-                int.parse(displayTime.toString().split(":")[2]),
-              );
-              print(initialtimer.toString().split(":")[2].split(".")[0]);
-              print(initialtimer.inMinutes);
-              print(initialtimer.inSeconds);
-              // print(displayTime.toString().split(":")[0]);
-              // print(displayTime.toString().split(":")[1]);
-              // print(displayTime.toString().split(":")[2]);
-              newTime = startTime.difference(endTime).toString().split(".")[0];
-              print(newTime);
-              print(startTime
-                  .difference(endTime)
-                  .toString()
-                  .split(":")[2]
-                  .split(".")[0]);
-
-              //AppNavigation.navigatorPop(context);
-              // _stopWatchTimer.onExecute
-              //     .add(StopWatchExecute.start);
-            },
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width * 0.10,
-                  vertical: 12.0),
-              decoration: BoxDecoration(
-                color: AppColors.BUTTON_COLOR,
-                borderRadius: BorderRadius.circular(25.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.LIGHT_BLACK_COLOR.withOpacity(0.2),
-                    blurRadius: 8,
-                    offset: Offset(1, 8), // Shadow position
+          isStart
+              ? Container()
+              : GestureDetector(
+                  onTap: () {
+                    _stopWatchTimer.onExecute.add(StopWatchExecute.stop);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: MediaQuery.of(context).size.width * 0.10,
+                        vertical: 12.0),
+                    decoration: BoxDecoration(
+                      color: AppColors.BUTTON_COLOR,
+                      borderRadius: BorderRadius.circular(25.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.LIGHT_BLACK_COLOR.withOpacity(0.2),
+                          blurRadius: 8,
+                          offset: Offset(1, 8), // Shadow position
+                        ),
+                      ],
+                    ),
+                    child: Text(
+                      "End Prayer",
+                      style: TextStyle(
+                          color: AppColors.WHITE_COLOR,
+                          fontWeight: FontWeight.w800),
+                      textScaleFactor: 1.0,
+                    ),
                   ),
-                ],
-              ),
-              child: Text(
-                "End Prayer",
-                style: TextStyle(
-                    color: AppColors.WHITE_COLOR, fontWeight: FontWeight.w800),
-                textScaleFactor: 1.0,
-              ),
-            ),
-          ),
+                ),
         ],
       ),
     );
@@ -453,6 +468,7 @@ class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
         pickTimer(context);
         setState(() {
           isPicked = true;
+          isStart = true;
         });
       },
       child: Container(
@@ -541,6 +557,32 @@ class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
         setState(() {
           answerTick = !answerTick;
         });
+        DateTime now = DateTime.now();
+        DateTime startTime = DateTime(
+            now.year,
+            now.month,
+            now.day,
+            int.parse(initialTimer.toString().split(":")[0]),
+            int.parse(initialTimer.toString().split(":")[1]),
+            int.parse(initialTimer.toString().split(":")[2].split(".")[0]));
+        DateTime endTime = DateTime(
+          now.year,
+          now.month,
+          now.day,
+          int.parse(displayTime.toString().split(":")[0]),
+          int.parse(displayTime.toString().split(":")[1]),
+          int.parse(displayTime.toString().split(":")[2]),
+        );
+        print(initialTimer.toString().split(":")[2].split(".")[0]);
+        print(initialTimer.inMinutes);
+        print(initialTimer.inSeconds);
+        newTime = startTime.difference(endTime).toString().split(".")[0];
+        print(newTime);
+        print(startTime
+            .difference(endTime)
+            .toString()
+            .split(":")[2]
+            .split(".")[0]);
         baseService.finishPrayer(
             context, widget.prayerModel.id.toString(), newTime ?? "00:00:00");
         //AppNavigation.navigatorPop(context);
