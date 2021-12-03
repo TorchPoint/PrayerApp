@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_html/style.dart';
 import 'package:prayer_hybrid_app/bible/screens/bible_chapter_details_screen.dart';
 import 'package:prayer_hybrid_app/models/bible_books_model.dart';
 import 'package:prayer_hybrid_app/models/bible_verse_id.dart';
@@ -23,16 +25,15 @@ class VersesListScreen extends StatefulWidget {
 class _VersesListScreenState extends State<VersesListScreen> {
   List<BibleVerseModel> verses = [];
   BaseService baseService = BaseService();
+  String content = "";
 
   Future getVerses(id) async {
     await baseService
         .getBaseMethodBible(context,
-            "https://api.scripture.api.bible/v1/bibles/${widget.bibleiD}/chapters/${id}/verses",
+            "https://api.scripture.api.bible/v1/bibles/${widget.bibleiD}/chapters/${id}",
             loading: true)
         .then((value) {
-      value["data"].forEach((element) {
-        verses.add(BibleVerseModel.fromJson(element));
-      });
+      content = value["data"]["content"];
       setState(() {});
     });
   }
@@ -56,12 +57,27 @@ class _VersesListScreenState extends State<VersesListScreen> {
               height: 12.0,
             ),
             Expanded(
-                child: ListView.builder(
-                    itemCount: verses.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return _versesList(index);
-                    }))
+                child: SingleChildScrollView(
+                    child: Html(
+              data: content,
+              style: {
+                "p": Style(
+                    textAlign: TextAlign.justify,
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    color: AppColors.WHITE_COLOR,
+                    fontSize: FontSize.large,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 1.2,
+                    lineHeight: LineHeight(1.3)),
+              },
+            ))),
+            // Expanded(
+            //     child: ListView.builder(
+            //         itemCount: verses.length,
+            //         shrinkWrap: true,
+            //         itemBuilder: (context, index) {
+            //           return _versesList(index);
+            //         }))
           ],
         ),
       ),
