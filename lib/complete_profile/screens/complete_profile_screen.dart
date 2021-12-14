@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/common_classes/image_gallery_class.dart';
+import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
 import 'package:prayer_hybrid_app/providers/provider.dart';
 import 'package:prayer_hybrid_app/services/base_service.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
@@ -193,6 +194,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
 
   //Custom App Bar Widget
   Widget _customAppBar() {
+    var userProvider = Provider.of<AppUserProvider>(context, listen: true);
     return CustomAppBar(
       title: AppStrings.EDIT_PROFILE_TEXT,
       leadingIconPath: AssetPaths.BACK_ICON,
@@ -200,7 +202,9 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
       paddingTop: 20.0,
       leadingTap: () {
         print("Leading tap");
-        AppNavigation.navigatorPop(context);
+        userProvider.appUser.contactNo.isEmpty
+            ? null
+            : AppNavigation.navigateToRemovingAll(context, DrawerScreen());
       },
     );
   }
@@ -277,7 +281,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
     return CustomTextFormField(
       textController: _countryCodeController,
       containerWidth: MediaQuery.of(context).size.width * 0.3,
-      hintText: "+12",
+      hintText: "+1",
       borderRadius: 30.0,
       contentPaddingRight: 0.0,
       prefixIcon: AssetPaths.MOBILE_ICON,

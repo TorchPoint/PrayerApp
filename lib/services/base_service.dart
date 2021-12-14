@@ -11,7 +11,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:prayer_hybrid_app/auth/screens/auth_main_screen.dart';
 import 'package:prayer_hybrid_app/auth/screens/auth_verification_screen.dart';
+import 'package:prayer_hybrid_app/complete_profile/screens/complete_profile_screen.dart';
 import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
+import 'package:prayer_hybrid_app/main.dart';
 import 'package:prayer_hybrid_app/models/notification_model.dart';
 import 'package:prayer_hybrid_app/models/user_model.dart';
 import 'package:prayer_hybrid_app/password/screens/reset_password_screen.dart';
@@ -611,11 +613,12 @@ class BaseService {
 
     if (googleSignInAccount != null) {
       socialLoginGoogle(
-          context,
-          googleSignIn.currentUser.id,
-          googleSignIn.currentUser.displayName,
-          googleSignIn.currentUser.email,
-          googleSignIn.currentUser.photoUrl);
+        context,
+        googleSignIn.currentUser.id,
+        googleSignIn.currentUser.displayName,
+        googleSignIn.currentUser.email,
+        googleSignIn.currentUser.photoUrl,
+      );
     }
   }
 
@@ -654,8 +657,12 @@ class BaseService {
         .then((value) {
       if (value["status"] == 1) {
         setUserData(context, value);
-        showToast(value["message"], AppColors.SUCCESS_COLOR);
-        AppNavigation.navigateReplacement(context, DrawerScreen());
+        if (value['data']['contact_no'] == null) {
+          AppNavigation.navigateTo(context, CompleteProfileScreen());
+        } else {
+          showToast(value["message"], AppColors.SUCCESS_COLOR);
+          AppNavigation.navigateReplacement(context, DrawerScreen());
+        }
       } else {
         showToast(value["message"], AppColors.ERROR_COLOR);
       }
@@ -684,8 +691,12 @@ class BaseService {
         .then((value) {
       if (value != null) if (value["status"] == 1) {
         setUserData(context, value);
-        showToast(value["message"], AppColors.SUCCESS_COLOR);
-        AppNavigation.navigateReplacement(context, DrawerScreen());
+        if (value['data']['contact_no'] == null) {
+          AppNavigation.navigateReplacement(context, CompleteProfileScreen());
+        } else {
+          showToast(value["message"], AppColors.SUCCESS_COLOR);
+          AppNavigation.navigateReplacement(context, DrawerScreen());
+        }
       } else {
         showToast(value["message"], AppColors.ERROR_COLOR);
       }
@@ -714,8 +725,12 @@ class BaseService {
         .then((value) {
       if (value != null) if (value["status"] == 1) {
         setUserData(context, value);
-        showToast(value["message"], AppColors.SUCCESS_COLOR);
-        AppNavigation.navigateReplacement(context, DrawerScreen());
+        if (value['data']['contact_no'] == null) {
+          AppNavigation.navigateTo(context, CompleteProfileScreen());
+        } else {
+          showToast(value["message"], AppColors.SUCCESS_COLOR);
+          AppNavigation.navigateReplacement(context, DrawerScreen());
+        }
       } else {
         showToast(value["message"], AppColors.ERROR_COLOR);
       }
