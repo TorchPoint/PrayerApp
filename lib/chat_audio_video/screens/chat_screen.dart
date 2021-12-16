@@ -102,8 +102,10 @@ class _ChatScreenState extends State<ChatScreen> {
       print(widget.role == 0
           ? dataChatSingle.toString()
           : dataChatGroup.toString());
-      socket.emit(widget.role == 0 ? singleChat : groupChat,
-          widget.role == 0 ? dataChatSingle : dataChatGroup);
+      socket.emit(
+        widget.role == 0 ? singleChat : groupChat,
+        widget.role == 0 ? dataChatSingle : dataChatGroup,
+      );
       socket.on("response", (data) {
         EasyLoading.dismiss();
         print("DATA" + data.toString());

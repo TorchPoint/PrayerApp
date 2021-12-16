@@ -203,7 +203,7 @@ class _PrayerGroupListScreenState extends State<PrayerGroupListScreen> {
       paddingTop: 13.5,
       paddingBottom: 13.5,
       onTap: () {
-        AppNavigation.navigateTo(context, BuyNowSubscription());
+        AppNavigation.navigateTo(context, CreatePrayerGroupScreen());
       },
     );
   }

@@ -46,7 +46,6 @@ class LocalNotifications {
         android: AndroidNotificationDetails(
           "prayer",
           "prayer",
-          "this is prayer app",
           priority: Priority.high,
           importance: Importance.max,
           color: AppColors.BACKGROUND1_COLOR,

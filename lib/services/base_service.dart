@@ -630,8 +630,12 @@ class BaseService {
       ],
     );
     if (credential != null) {
-      socialLoginApple(context, credential.userIdentifier, credential.givenName,
-          credential.email);
+      socialLoginApple(
+        context,
+        credential.userIdentifier,
+        credential.givenName,
+        credential.email,
+      );
     }
     // print(credential);
   }
