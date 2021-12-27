@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -13,6 +14,7 @@ import 'package:prayer_hybrid_app/services/push_notifications_class.dart';
 import 'package:prayer_hybrid_app/splash/splash_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_strings.dart';
 import 'package:provider/provider.dart';
+import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 
 Future<void> backGroundHandleFCM(RemoteMessage remoteMessage) async {
   print(remoteMessage.data.toString());
@@ -25,14 +27,16 @@ void main() async {
   LocalNotifications().initialize();
   FirebaseMessaging.onBackgroundMessage(backGroundHandleFCM);
 
-
   HttpOverrides.global = MyHttpOverrides();
+  if (defaultTargetPlatform == TargetPlatform.android) {
+    print("android");
+    InAppPurchaseAndroidPlatformAddition.enablePendingPurchases();
+  }
   runApp(MyApp());
 }
 
 void configLoading() {}
-final GlobalKey<NavigatorState> navigatorKey =
-new GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
 RtcEngine rtcEngine;
 
 class MyHttpOverrides extends HttpOverrides {
@@ -58,7 +62,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarBrightness:
             Brightness.dark // Dark == white status bar -- for IOS.

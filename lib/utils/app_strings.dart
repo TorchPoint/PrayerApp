@@ -70,7 +70,7 @@ class AppStrings {
   static const String GENESIS_ONE_TEXT = "Genesis1";
   static const String SELECT_PACKAGE_TEXT = "Select Package";
   static const String MONTHLY_SUBSCRIPTION_TEXT = "Monthly Subscription";
-  static const String ANNUAL_SUBSCRIPTION_TEXT = "Annual Subscription";
+  static const String ANNUAL_SUBSCRIPTION_TEXT = "Yearly Subscription";
   static const String DOLLAR_ZERO_TEXT = "\$0.99";
   static const String DOLLAR_NINE_TEXT = "\$9.99";
   static const String BUY_NOW_TEXT = "BUY NOW";

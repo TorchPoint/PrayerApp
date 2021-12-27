@@ -17,6 +17,7 @@ class AppUser {
   String createdAt;
   String updatedAt;
   String countryCode;
+  UserPackage userPackage;
 
   AppUser(
       {this.id,
@@ -36,7 +37,8 @@ class AppUser {
       this.userDeviceToken,
       this.createdAt,
       this.updatedAt,
-      this.countryCode});
+      this.countryCode,
+      this.userPackage});
 
   AppUser.fromJson(Map<String, dynamic> json) {
     id = json['id'] ?? 0;
@@ -57,6 +59,9 @@ class AppUser {
     createdAt = json['created_at'] ?? "";
     updatedAt = json['updated_at'] ?? "";
     countryCode = json['country_code'] ?? "";
+    userPackage = json['user_package'] != null
+        ? new UserPackage.fromJson(json['user_package'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -79,6 +84,28 @@ class AppUser {
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     data['country_code'] = this.countryCode;
+    return data;
+  }
+}
+
+class UserPackage {
+  int id;
+  int userId;
+  String verToken;
+
+  UserPackage({this.id, this.userId, this.verToken});
+
+  UserPackage.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    userId = json['user_id'];
+    verToken = json['ver_token'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['user_id'] = this.userId;
+    data['ver_token'] = this.verToken;
     return data;
   }
 }

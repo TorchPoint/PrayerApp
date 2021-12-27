@@ -5,8 +5,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:prayer_hybrid_app/common_classes/share_class.dart';
+import 'package:prayer_hybrid_app/drawer/drawer_screen.dart';
+import 'package:prayer_hybrid_app/home/home_screen.dart';
 import 'package:prayer_hybrid_app/models/group_prayer_model.dart';
 import 'package:prayer_hybrid_app/models/user_model.dart';
+import 'package:prayer_hybrid_app/prayer_group/screens/prayer_group_list_screen.dart';
 import 'package:prayer_hybrid_app/providers/provider.dart';
 import 'package:prayer_hybrid_app/services/API_const.dart';
 import 'package:prayer_hybrid_app/services/base_service.dart';
@@ -197,12 +200,16 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
 
   //Custom App Bar Widget
   Widget _customAppBar() {
+    var userProvider = Provider.of<AppUserProvider>(context, listen: true);
+
     return CustomAppBar(
       title: AppStrings.PRAYER_GROUPS_TEXT,
       leadingIconPath: AssetPaths.BACK_ICON,
       paddingTop: 20.0,
       leadingTap: () {
-        AppNavigation.navigatorPop(context);
+        userProvider.appUser.userPackage == null
+            ? AppNavigation.navigatorPop(context)
+            : AppNavigation.navigateToRemovingAll(context, DrawerScreen());
       },
       // trailingIconPath: AssetPaths.SETTING_ICON,
       // trailingTap: (){

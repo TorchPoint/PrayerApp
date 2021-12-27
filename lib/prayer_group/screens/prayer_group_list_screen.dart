@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/chat_audio_video/screens/chat_screen.dart';
 import 'package:prayer_hybrid_app/prayer_group/screens/create_prayer_group_screen.dart';
@@ -191,6 +193,8 @@ class _PrayerGroupListScreenState extends State<PrayerGroupListScreen> {
 
   //Create Group Button Widget
   Widget _createGroupWidget() {
+    var userProvider = Provider.of<AppUserProvider>(context, listen: true);
+
     return CustomButton(
       containerWidth: MediaQuery.of(context).size.width * 0.73,
       buttonColor: AppColors.BUTTON_COLOR,
@@ -203,7 +207,16 @@ class _PrayerGroupListScreenState extends State<PrayerGroupListScreen> {
       paddingTop: 13.5,
       paddingBottom: 13.5,
       onTap: () {
-        AppNavigation.navigateTo(context, CreatePrayerGroupScreen());
+        //log(userProvider.appUser.userPackage.toString());
+        // AppNavigation.navigateTo(context, BuyNowSubscription());
+        if (userProvider.appUser.userPackage != null) {
+          baseService.verifyPayment(context);
+        } else {
+          AppNavigation.navigateTo(context, BuyNowSubscription());
+        }
+        // userProvider.appUser.userPackage == null
+        //     ? AppNavigation.navigateTo(context, BuyNowSubscription())
+        //     : AppNavigation.navigateTo(context, CreatePrayerGroupScreen());
       },
     );
   }

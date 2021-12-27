@@ -17,11 +17,13 @@ import 'package:prayer_hybrid_app/main.dart';
 import 'package:prayer_hybrid_app/models/notification_model.dart';
 import 'package:prayer_hybrid_app/models/user_model.dart';
 import 'package:prayer_hybrid_app/password/screens/reset_password_screen.dart';
+import 'package:prayer_hybrid_app/prayer_group/screens/create_prayer_group_screen.dart';
 import 'package:prayer_hybrid_app/prayer_partner/screens/prayer_partner_list_screen.dart';
 import 'package:prayer_hybrid_app/prayer_praise_info/screens/prayer_praise_tab_screen.dart';
 import 'package:prayer_hybrid_app/providers/provider.dart';
 import 'package:prayer_hybrid_app/reminder_calendar/screens/reminder_screen.dart';
 import 'package:prayer_hybrid_app/services/API_const.dart';
+import 'package:prayer_hybrid_app/subscription/screens/buy_now_subscription.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
 import 'package:prayer_hybrid_app/utils/navigation.dart';
 import 'package:provider/provider.dart';
@@ -287,7 +289,6 @@ class BaseService {
     try {
       if (response.statusCode == 200) {
         EasyLoading.dismiss();
-
         debugPrint("Response:" + respStr);
         return jsonDecode(respStr);
       } else if (response.statusCode == 401) {
@@ -299,6 +300,7 @@ class BaseService {
         showToast("UnAuthorized", AppColors.ERROR_COLOR);
       } else {
         print("____" + response.reasonPhrase);
+        print(response.statusCode.toString());
         prefs.clear();
         EasyLoading.dismiss();
         AppNavigation.navigatorPop(context);
@@ -308,6 +310,93 @@ class BaseService {
     } catch (e) {
       prefs.clear();
       print("____" + response.reasonPhrase);
+      print(response.statusCode.toString());
+      print(response.persistentConnection);
+      EasyLoading.dismiss();
+      showToast("Internet Not Working", AppColors.ERROR_COLOR);
+      debugPrint('Error: $e');
+    }
+  }
+
+  Future formDataBaseMethodPayment(context, url,
+      {bool tokenCheck = false,
+      bodyCheck = true,
+      Map<String, String> body,
+      File files,
+      filesCheck = false}) async {
+    var uri = Uri.parse(url);
+    debugPrint("Url:" + uri.toString());
+    debugPrint("Body:" + body.toString());
+    EasyLoading.instance
+      ..indicatorType = EasyLoadingIndicatorType.cubeGrid
+      ..loadingStyle = EasyLoadingStyle.custom
+      ..backgroundColor = AppColors.BACKGROUND1_COLOR
+      ..indicatorColor = AppColors.WHITE_COLOR
+      ..textColor = AppColors.WHITE_COLOR
+      ..indicatorSize = 35.0
+      ..radius = 10.0
+      ..maskColor = AppColors.BLACK_COLOR.withOpacity(0.6)
+      ..userInteractions = false
+      ..dismissOnTap = false;
+    EasyLoading.show(status: "Loading", maskType: EasyLoadingMaskType.custom);
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    var request = http.MultipartRequest('POST', uri);
+
+    request.headers.addAll(tokenCheck == true
+        ? {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+            "Authorization": "Bearer ${prefs.getString("token")}"
+          }
+        : {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          });
+
+    if (filesCheck == true) {
+      request.files
+          .add(await http.MultipartFile.fromPath('attachment', files.path));
+    }
+    bodyCheck == true ? request.fields.addAll(body) : request.files.addAll({});
+
+    var response = await request.send().timeout(
+      Duration(seconds: 10),
+      onTimeout: () {
+        // Time has run out, do what you wanted to do.// Replace 500 with your http code.
+        EasyLoading.dismiss();
+        showToast("Check Your Connection", AppColors.ERROR_COLOR);
+        return;
+      },
+    );
+    final respStr = await response.stream.bytesToString();
+
+    try {
+      if (response.statusCode == 200) {
+        EasyLoading.dismiss();
+        debugPrint("Response:" + respStr);
+        return jsonDecode(respStr);
+      } else if (response.statusCode == 401) {
+        prefs.clear();
+        print("********${response.statusCode.toString()}*****");
+        EasyLoading.dismiss();
+        AppNavigation.navigatorPop(context);
+        AppNavigation.navigateToRemovingAll(context, AuthMainScreen());
+        showToast("UnAuthorized", AppColors.ERROR_COLOR);
+      } else {
+        print("____" + response.reasonPhrase);
+        print(response.statusCode.toString());
+        prefs.clear();
+        EasyLoading.dismiss();
+        AppNavigation.navigatorPop(context);
+        AppNavigation.navigateToRemovingAll(context, AuthMainScreen());
+        showToast("UnAuthorized", AppColors.ERROR_COLOR);
+      }
+    } catch (e) {
+      prefs.clear();
+      print("____" + response.reasonPhrase);
+      print(response.statusCode.toString());
       print(response.persistentConnection);
       EasyLoading.dismiss();
       showToast("Internet Not Working", AppColors.ERROR_COLOR);
@@ -1202,7 +1291,59 @@ class BaseService {
     });
   }
 
+  Future createPayment(context, productID, purchaseID, token, type) async {
+    var userProvider = Provider.of<AppUserProvider>(context, listen: false);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Map<String, String> requestBody = <String, String>{
+      "product_id": productID,
+      "purchase_id": purchaseID,
+      "ver_token": token,
+      "name": Platform.operatingSystem ?? "ios",
+      "type": type,
+    };
+
+    formDataBaseMethod(context, "payment",
+            body: requestBody, tokenCheck: true, bodyCheck: true)
+        .then((value) {
+      if (value != null) {
+        if (value['status'] == 1) {
+          userProvider.setUser(AppUser.fromJson(value['data']));
+          prefs.setString(
+              "userPackageToken", value['data']['user_package']['ver_token']);
+          prefs.setString("user", jsonEncode(AppUser.fromJson(value["data"])));
+
+          AppNavigation.navigateTo(context, CreatePrayerGroupScreen());
+        }
+      }
+    });
+  }
+
+  Future verifyPayment(context) async {
+    var userProvider = Provider.of<AppUserProvider>(context, listen: false);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Map<String, String> requestBody = <String, String>{
+      "token": prefs.getString("userPackageToken"),
+      "device_type": Platform.operatingSystem ?? "ios",
+      "action": "verify",
+    };
+
+    formDataBaseMethodPayment(
+            context, "https://myprayerapp.com/webservices/verify/veri.php",
+            body: requestBody, tokenCheck: true)
+        .then((value) {
+      if (value != null) {
+        print(value);
+        if (value['status'] == 0) {
+          AppNavigation.navigateTo(context, BuyNowSubscription());
+        } else {
+          AppNavigation.navigateTo(context, CreatePrayerGroupScreen());
+        }
+      }
+    });
+  }
+
   /////======== CORE MODULE END =========///////
+
   void login(BuildContext context, {email, password}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 

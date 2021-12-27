@@ -1,4 +1,8 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:prayer_hybrid_app/prayer_group/screens/create_prayer_group_screen.dart';
 import 'package:prayer_hybrid_app/prayer_partner/screens/prayer_partner_list_screen.dart';
 import 'package:prayer_hybrid_app/utils/app_colors.dart';
@@ -10,11 +14,30 @@ import 'package:prayer_hybrid_app/widgets/custom_background_container.dart';
 import 'package:prayer_hybrid_app/widgets/custom_button.dart';
 
 class PaySubscription extends StatefulWidget {
+  String amount, type, desc;
+  ProductDetails productDetails;
+
+  PaySubscription({this.amount, this.type, this.desc, this.productDetails});
+
   @override
   _PaySubscriptionState createState() => _PaySubscriptionState();
 }
 
 class _PaySubscriptionState extends State<PaySubscription> {
+  _makePurchase() {
+    // Saved earlier from queryProductDetails().
+    final PurchaseParam purchaseParam =
+        PurchaseParam(productDetails: widget.productDetails);
+    InAppPurchase.instance.buyNonConsumable(purchaseParam: purchaseParam);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print(widget.productDetails.price);
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomBackgroundContainer(
@@ -28,7 +51,7 @@ class _PaySubscriptionState extends State<PaySubscription> {
                 children: [
                   SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                   Text(
-                    AppStrings.ANNUAL_SUBSCRIPTION_TEXT,
+                    widget.type,
                     style: TextStyle(
                         color: AppColors.WHITE_COLOR,
                         fontWeight: FontWeight.w600,
@@ -92,7 +115,7 @@ class _PaySubscriptionState extends State<PaySubscription> {
                   ),
                   child: Center(
                       child: Text(
-                    AppStrings.DOLLAR_NINE_TEXT,
+                    widget.amount,
                     style: TextStyle(
                         color: AppColors.WHITE_COLOR,
                         fontWeight: FontWeight.w700,
@@ -106,37 +129,19 @@ class _PaySubscriptionState extends State<PaySubscription> {
                   fit: FlexFit.tight,
                   child: Container(),
                 ),
-                Flexible(
-                    flex: 8,
-                    fit: FlexFit.tight,
-                    child: ListView.builder(
-                        itemCount: 6,
-                        padding: EdgeInsets.zero,
-                        itemBuilder: (BuildContext ctxt, int index) {
-                          return Padding(
-                            padding: EdgeInsets.only(top: 6.0, bottom: 6.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Padding(
-                                    padding: EdgeInsets.only(top: 3.0),
-                                    child: Image.asset(
-                                      AssetPaths.TICK_ICON,
-                                      width: 10.0,
-                                    )),
-                                SizedBox(
-                                  width: 8.0,
-                                ),
-                                Text(AppStrings.LOREM_IPSUM_TEXT2,
-                                    style: TextStyle(
-                                        color: AppColors.BLACK_COLOR,
-                                        fontWeight: FontWeight.w900,
-                                        letterSpacing: 1.0),
-                                    textScaleFactor: 0.9),
-                              ],
-                            ),
-                          );
-                        })),
+                Center(
+                    child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    widget.desc,
+                    style: TextStyle(
+                        color: AppColors.BLACK_COLOR,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 1.0),
+                    textScaleFactor: 1.2,
+                    textAlign: TextAlign.center,
+                  ),
+                )),
                 Flexible(
                   flex: 2,
                   fit: FlexFit.tight,
@@ -160,14 +165,15 @@ class _PaySubscriptionState extends State<PaySubscription> {
       buttonColor: AppColors.BUTTON_COLOR,
       borderColor: AppColors.BUTTON_COLOR,
       elevation: true,
-      buttonText: AppStrings.PAY_DOLLAR_TEXT,
+      buttonText: widget.amount,
       textColor: AppColors.WHITE_COLOR,
       fontWeight: FontWeight.w700,
       fontSize: 0.9,
       paddingTop: 11.5,
       paddingBottom: 11.5,
       onTap: () {
-        AppNavigation.navigateReplacement(context, CreatePrayerGroupScreen());
+        _makePurchase();
+
       },
     );
   }
