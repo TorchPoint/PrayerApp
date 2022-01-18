@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
@@ -590,7 +591,7 @@ class _CreatePrayerGroupScreenState extends State<CreatePrayerGroupScreen> {
   void _inviteFriend() {
     ShareClass.shareMethod(
         message:
-            "Join me on PrayerApp! It is an awesome and secure app we can use to connect with each other in prayer Download it at:");
+            "Join me on PrayerApp! It is an awesome and secure app we can use to connect with each other in prayer Download it at: ${Platform.isAndroid ? "https://play.google.com/store/apps/details?id=com.fictivestudios.prayer" : "https://apps.apple.com/us/app/prayerapp-invigorate-life/id1594913575"}");
   }
 
   @override

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -303,7 +305,7 @@ class _AddPrayerPartnerScreenState extends State<AddPrayerPartnerScreen> {
       onTap: () {
         ShareClass.shareMethod(
             message:
-                "Join me on PrayerApp! It is an awesome and secure app we can use to connect with each other in prayer Download it at:${"App Link"}");
+            "Join me on PrayerApp! It is an awesome and secure app we can use to connect with each other in prayer Download it at: ${Platform.isAndroid ? "https://play.google.com/store/apps/details?id=com.fictivestudios.prayer" : "https://apps.apple.com/us/app/prayerapp-invigorate-life/id1594913575"}");
         // _sendSMS(
         //     "Join me on PrayerApp! It is an awesome and secure app we can use to connect with each other in prayer Download it at:${"App Link"}",
         //     [_addMobileNoController.text]);

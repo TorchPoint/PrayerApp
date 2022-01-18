@@ -115,13 +115,13 @@ class _BiblePromisesDescriptionScreenState
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
+          SelectableText(
             widget.qoutes[index],
             style: TextStyle(
                 color: AppColors.BLACK_COLOR, fontWeight: FontWeight.w600),
             textScaleFactor: 1.2,
             textAlign: TextAlign.center,
-            maxLines: 7,
+           // maxLines: 7,
             // overflow: TextOverflow.ellipsis,
           ),
           SizedBox(

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/chat_audio_video/screens/chat_screen.dart';
 import 'package:prayer_hybrid_app/common_classes/share_class.dart';
@@ -256,6 +258,6 @@ class _PrayerPartnerListScreenState extends State<PrayerPartnerListScreen> {
   void _inviteFriend() {
     ShareClass.shareMethod(
         message:
-            "Join me on PrayerApp! It is an awesome and secure app we can use to connect with each other in prayer Download it at:");
+        "Join me on PrayerApp! It is an awesome and secure app we can use to connect with each other in prayer Download it at: ${Platform.isAndroid ? "https://play.google.com/store/apps/details?id=com.fictivestudios.prayer" : "https://apps.apple.com/us/app/prayerapp-invigorate-life/id1594913575"}");
   }
 }

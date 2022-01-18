@@ -404,7 +404,7 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
                 letterSpacing: 1.0),
             children: <TextSpan>[
               TextSpan(
-                  text: AppStrings.SIGN_IN_DASH_TEXT,
+                  text: AppStrings.LOGIN_TEXT,
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     letterSpacing: 1.0,

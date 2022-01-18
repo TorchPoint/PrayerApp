@@ -255,7 +255,7 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
                   ),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
-                      widget.pageController.jumpToPage(3);
+                      widget.pageController.jumpToPage(2);
                     }),
             ],
           )),

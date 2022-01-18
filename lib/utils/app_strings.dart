@@ -115,6 +115,7 @@ class AppStrings {
   static const String CONTINUE_TEXT = "CONTINUE";
   static const String RESET_PASSWORD_TEXT = "RESET PASSWORD";
   static const String EDIT_PROFILE_TEXT = "Edit Profile";
+  static const String EDIT_SAVE_TEXT = "SAVE";
   static const String UPDATE_NOW_TEXT = "Update Now";
   static const String CAMERA_TEXT = "CAMERA";
   static const String GALLERY_TEXT = "GALLERY";

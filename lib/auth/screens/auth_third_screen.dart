@@ -126,7 +126,7 @@ class _AuthThirdScreenState extends State<AuthThirdScreen> {
       paddingBottom: 11.0,
       onTap: (){
         print("SignUp");
-        widget.pageController.jumpToPage(3);
+        widget.pageController.jumpToPage(2);
       },
     );
   }

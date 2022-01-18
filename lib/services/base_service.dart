@@ -844,7 +844,9 @@ class BaseService {
         prayerProvider.fetchPrayerList(value["data"]);
       } else {
         //showToast(value["message"], AppColors.ERROR_COLOR);
-        prayerProvider.resetPrayerProvider();
+        // if(prayerProvider.prayerList.isNotEmpty){
+        //   prayerProvider.resetPrayerProvider();
+        // }
       }
     });
   }
@@ -941,7 +943,9 @@ class BaseService {
       if (value != null) if (value["status"] == 1) {
         showToast("Praise Added", AppColors.SUCCESS_COLOR);
         AppNavigation.navigatorPop(context);
-        AppNavigation.navigateTo(context, PrayerPraiseTabScreen());
+        AppNavigation.navigateTo(context, PrayerPraiseTabScreen(
+          tabInitialIndex: 1,
+        ));
       }
     });
   }
@@ -1013,6 +1017,7 @@ class BaseService {
     getBaseMethod(context, ApiConst.SEARCH_PRAYERS_URL + "?search=${search}",
             loading: true, tokenCheck: true)
         .then((value) {
+          if(value!=null)
       if (value["status"] == 1) {
         praiseProvider.fetchSearchList(value["data"]);
       } else {

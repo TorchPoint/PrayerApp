@@ -330,7 +330,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
       buttonColor: AppColors.WHITE_COLOR,
       borderColor: AppColors.WHITE_COLOR,
       elevation: true,
-      buttonText: AppStrings.EDIT_PROFILE_TEXT.toUpperCase(),
+      buttonText: AppStrings.EDIT_SAVE_TEXT.toUpperCase(),
       textColor: AppColors.BLACK_COLOR,
       fontWeight: FontWeight.w700,
       fontSize: 1.25,

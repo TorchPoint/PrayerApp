@@ -59,7 +59,7 @@ class _PraiseListScreenState extends State<PraiseListScreen> {
                       itemCount: praiseProvider.praiseList?.length ?? 0,
                       padding: EdgeInsets.zero,
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
+                     // physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (BuildContext ctxt, int index) {
                         return _praiseList(index);
                       })
