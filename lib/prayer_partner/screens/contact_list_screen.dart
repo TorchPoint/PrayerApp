@@ -207,17 +207,15 @@ class _ContactListScreenState extends State<ContactListScreen> {
   Future<void> getContactsFromDevice() async {
     // Load without thumbnails initially.
     var contacts = (await ContactsService.getContacts(
-            withThumbnails: false, iOSLocalizedLabels: false))
+            withThumbnails: false, iOSLocalizedLabels: false,))
         .toList();
     print("Contacts:${contacts.length}");
     if (contacts != null) {
-      for (int i = 0; i < contacts.length; i++) {
-        Contact c = contacts[i];
-
-        if (c.phones.length != 0) {
-          getContacts.add(c);
+      contacts.forEach((element) {
+        if(element.phones.length!=0){
+          getContacts.add(element);
         }
-      }
+      });
     }
     setState(() {
       showContacts = getContacts;
@@ -245,9 +243,10 @@ class _ContactListScreenState extends State<ContactListScreen> {
       onChange: (val) {
         print(val);
         if (val.length >= 2) {
+          showSearchContacts.clear();
           showContacts.forEach((element) {
             if (element.displayName.toLowerCase().contains(val.toLowerCase())) {
-              showSearchContacts.clear();
+
               showSearchContacts.add(element);
               setState(() {});
             }
