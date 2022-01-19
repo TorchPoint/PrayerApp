@@ -111,32 +111,17 @@ class _BiblePromisesDescriptionScreenState
 
   Widget _quoteDataWidget(index) {
     return Padding(
-      padding: EdgeInsets.only(left: 30.0, right: 30.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SelectableText(
-            widget.qoutes[index],
-            style: TextStyle(
-                color: AppColors.BLACK_COLOR, fontWeight: FontWeight.w600),
-            textScaleFactor: 1.2,
-            textAlign: TextAlign.center,
-           // maxLines: 7,
-            // overflow: TextOverflow.ellipsis,
-          ),
-          SizedBox(
-            height: 20.0,
-          ),
-          Text(
-            widget.qouteWriter[index],
-            style: TextStyle(
-                color: AppColors.BLACK_COLOR, fontWeight: FontWeight.w600),
-            textScaleFactor: 1.2,
-            textAlign: TextAlign.center,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          )
-        ],
+      padding: EdgeInsets.only(left: 30.0, right: 30.0,top: 20),
+      child: Center(
+        child: SelectableText(
+          widget.qoutes[index] +"\n\n"+ widget.qouteWriter[index],
+          style: TextStyle(
+              color: AppColors.BLACK_COLOR, fontWeight: FontWeight.w600),
+          textScaleFactor: 1.2,
+          textAlign: TextAlign.center,
+         // maxLines: 7,
+          // overflow: TextOverflow.ellipsis,
+        ),
       ),
     );
   }

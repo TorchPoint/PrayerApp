@@ -181,8 +181,7 @@ class _FinishPrayingScreenState extends State<FinishPrayingScreen> {
                         padding: EdgeInsets.symmetric(
                             horizontal: 4.0, vertical: 0.0),
                         child: Text(
-                          widget.prayerModel.name ??
-                              AppStrings.PRAYER_USER_TEXT,
+                          widget.prayerModel.name ?? "",
                           style: TextStyle(
                               color: AppColors.WHITE_COLOR,
                               fontWeight: FontWeight.w600,

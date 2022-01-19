@@ -73,7 +73,7 @@ class _FinishPraiseScreenState extends State<FinishPraiseScreen> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 4.0, vertical: 0.0),
                       child: Text(
-                        widget.praiseModel.name ?? AppStrings.PRAYER_USER_TEXT,
+                        widget.praiseModel.name ?? "",
                         style: TextStyle(
                             color: AppColors.WHITE_COLOR,
                             fontWeight: FontWeight.w600,

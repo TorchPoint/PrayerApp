@@ -38,6 +38,7 @@ class _PrayersListScreenState extends State<PrayersListScreen> {
         SizedBox(
           height: 10.0,
         ),
+
         Expanded(
           child: prayerProvider.prayerList == null ||
                   prayerProvider.prayerList.length == 0

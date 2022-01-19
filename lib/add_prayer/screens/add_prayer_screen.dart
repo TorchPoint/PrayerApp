@@ -205,12 +205,12 @@ class _AddPrayerScreenState extends State<AddPrayerScreen> {
       hintText: AppStrings.ADD_NAME_HINT_TEXT,
       borderRadius: 30.0,
       contentPaddingLeft: 16.0,
-      onValidate: (value) {
-        if (value.trim().isEmpty) {
-          return AppStrings.ADD_NAME_EMPTY_ERROR;
-        }
-        return null;
-      },
+      // onValidate: (value) {
+      //   if (value.trim().isEmpty) {
+      //     return AppStrings.ADD_NAME_EMPTY_ERROR;
+      //   }
+      //   return null;
+      // },
     );
   }
 
@@ -322,12 +322,12 @@ class _AddPrayerScreenState extends State<AddPrayerScreen> {
       borderRadius: 13.0,
       contentPaddingLeft: 16.0,
       maxLines: 5,
-      onValidate: (value) {
-        if (value.trim().isEmpty) {
-          return AppStrings.DESCRIPTION_EMPTY_ERROR;
-        }
-        return null;
-      },
+      // onValidate: (value) {
+      //   if (value.trim().isEmpty) {
+      //     return AppStrings.DESCRIPTION_EMPTY_ERROR;
+      //   }
+      //   return null;
+      // },
     );
   }
 
