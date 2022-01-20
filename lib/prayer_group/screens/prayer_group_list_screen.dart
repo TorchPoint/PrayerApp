@@ -209,11 +209,11 @@ class _PrayerGroupListScreenState extends State<PrayerGroupListScreen> {
       onTap: () {
         //log(userProvider.appUser.userPackage.toString());
         // AppNavigation.navigateTo(context, BuyNowSubscription());
-        if (userProvider.appUser.userPackage != null) {
+       // if (userProvider.appUser.userPackage != null) {
           baseService.verifyPayment(context);
-        } else {
-          AppNavigation.navigateTo(context, BuyNowSubscription());
-        }
+        // } else {
+        //   AppNavigation.navigateTo(context, BuyNowSubscription());
+        // }
         // userProvider.appUser.userPackage == null
         //     ? AppNavigation.navigateTo(context, BuyNowSubscription())
         //     : AppNavigation.navigateTo(context, CreatePrayerGroupScreen());

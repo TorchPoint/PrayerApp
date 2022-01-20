@@ -528,6 +528,8 @@ class BaseService {
         // setUserData(context, value);
         prefs.setString("user", jsonEncode(AppUser.fromJson(value["data"])));
         userProvider.setUser(AppUser.fromJson(value["data"]));
+
+        AppNavigation.navigateToRemovingAll(context, DrawerScreen());
       } else {
         showToast(value["message"], AppColors.RED_COLOR);
       }
@@ -1326,18 +1328,19 @@ class BaseService {
   Future verifyPayment(context) async {
     var userProvider = Provider.of<AppUserProvider>(context, listen: false);
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    //String tok = prefs.getString("userPackageToken")??"sda";
     Map<String, String> requestBody = <String, String>{
-      "token": prefs.getString("userPackageToken"),
+      "token": prefs.getString("userPackageToken")??"sda",
       "device_type": Platform.operatingSystem ?? "ios",
       "action": "verify",
     };
-
+    print(requestBody);
     formDataBaseMethodPayment(
             context, "https://myprayerapp.com/webservices/verify/veri.php",
             body: requestBody, tokenCheck: true)
         .then((value) {
       if (value != null) {
-        print(value);
+        print(" ===>>>>>  $value");
         if (value['status'] == 0) {
           AppNavigation.navigateTo(context, BuyNowSubscription());
         } else {
