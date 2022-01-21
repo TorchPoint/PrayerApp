@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:prayer_hybrid_app/chat_audio_video/screens/chat_screen.dart';
@@ -206,14 +207,24 @@ class _PrayerGroupListScreenState extends State<PrayerGroupListScreen> {
       fontSize: 1.2,
       paddingTop: 13.5,
       paddingBottom: 13.5,
-      onTap: () {
+      onTap: ()async {
         //log(userProvider.appUser.userPackage.toString());
         // AppNavigation.navigateTo(context, BuyNowSubscription());
-       // if (userProvider.appUser.userPackage != null) {
+        //userProvider.appUser.userPackage != null
+        if (Platform.isIOS) {
           baseService.verifyPayment(context);
-        // } else {
-        //   AppNavigation.navigateTo(context, BuyNowSubscription());
-        // }
+        } else {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          print("${userProvider.appUser.id}");
+          String token = prefs.getString("${userProvider.appUser.id}")??"empty";
+          print(token);
+          if(token!="empty"){
+            AppNavigation.navigateTo(context, CreatePrayerGroupScreen());
+          }
+          else {
+            AppNavigation.navigateTo(context, BuyNowSubscription());
+          }
+        }
         // userProvider.appUser.userPackage == null
         //     ? AppNavigation.navigateTo(context, BuyNowSubscription())
         //     : AppNavigation.navigateTo(context, CreatePrayerGroupScreen());

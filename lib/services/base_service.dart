@@ -641,7 +641,11 @@ class BaseService {
         .then((value) {
       if (value != null) if (value["status"] == 1) {
         showToast(value["message"], AppColors.SUCCESS_COLOR);
-        prefs.clear();
+        for(String key in prefs.getKeys()) {
+          if (key != "${userProvider.appUser.id}") {
+            prefs.remove(key);
+          }
+        }
         if (prayerProvider != null) {
           prayerProvider.resetPrayerProvider();
           prayerProvider.restPraise();
@@ -1315,8 +1319,8 @@ class BaseService {
       if (value != null) {
         if (value['status'] == 1) {
           userProvider.setUser(AppUser.fromJson(value['data']));
-          prefs.setString(
-              "userPackageToken", value['data']['user_package']['ver_token']);
+          print("${userProvider.appUser.id}");
+          prefs.setString("${userProvider.appUser.id}", value['data']['user_package']['ver_token']);
           prefs.setString("user", jsonEncode(AppUser.fromJson(value["data"])));
 
           AppNavigation.navigateTo(context, CreatePrayerGroupScreen());
@@ -1328,9 +1332,9 @@ class BaseService {
   Future verifyPayment(context) async {
     var userProvider = Provider.of<AppUserProvider>(context, listen: false);
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    //String tok = prefs.getString("userPackageToken")??"sda";
+    String tok = prefs.getString("userPackageToken")??"sda";
     Map<String, String> requestBody = <String, String>{
-      "token": prefs.getString("userPackageToken")??"sda",
+      "token": tok,
       "device_type": Platform.operatingSystem ?? "ios",
       "action": "verify",
     };
