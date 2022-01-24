@@ -641,7 +641,7 @@ class BaseService {
         .then((value) {
       if (value != null) if (value["status"] == 1) {
         showToast(value["message"], AppColors.SUCCESS_COLOR);
-        for(String key in prefs.getKeys()) {
+        for (String key in prefs.getKeys()) {
           if (key != "${userProvider.appUser.id}") {
             prefs.remove(key);
           }
@@ -949,9 +949,11 @@ class BaseService {
       if (value != null) if (value["status"] == 1) {
         showToast("Praise Added", AppColors.SUCCESS_COLOR);
         AppNavigation.navigatorPop(context);
-        AppNavigation.navigateTo(context, PrayerPraiseTabScreen(
-          tabInitialIndex: 1,
-        ));
+        AppNavigation.navigateTo(
+            context,
+            PrayerPraiseTabScreen(
+              tabInitialIndex: 1,
+            ));
       }
     });
   }
@@ -1023,8 +1025,7 @@ class BaseService {
     getBaseMethod(context, ApiConst.SEARCH_PRAYERS_URL + "?search=${search}",
             loading: true, tokenCheck: true)
         .then((value) {
-          if(value!=null)
-      if (value["status"] == 1) {
+      if (value != null) if (value["status"] == 1) {
         praiseProvider.fetchSearchList(value["data"]);
       } else {
         praiseProvider.resetPrayerSearchList();
@@ -1320,7 +1321,8 @@ class BaseService {
         if (value['status'] == 1) {
           userProvider.setUser(AppUser.fromJson(value['data']));
           print("${userProvider.appUser.id}");
-          prefs.setString("${userProvider.appUser.id}", value['data']['user_package']['ver_token']);
+          prefs.setString("${userProvider.appUser.id}",
+              value['data']['user_package']['ver_token']);
           prefs.setString("user", jsonEncode(AppUser.fromJson(value["data"])));
 
           AppNavigation.navigateTo(context, CreatePrayerGroupScreen());
@@ -1332,7 +1334,7 @@ class BaseService {
   Future verifyPayment(context) async {
     var userProvider = Provider.of<AppUserProvider>(context, listen: false);
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String tok = prefs.getString("userPackageToken")??"sda";
+    String tok = prefs.getString("userPackageToken") ?? "sda";
     Map<String, String> requestBody = <String, String>{
       "token": tok,
       "device_type": Platform.operatingSystem ?? "ios",
